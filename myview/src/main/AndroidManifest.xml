@@ -1,2 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.myview" />
+    package="com.example.myview">
+
+    <application>
+        <activity android:name="com.example.myview.ChannelView.ChannelActivity"></activity>
+    </application>
+</manifest>
