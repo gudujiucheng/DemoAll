@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 
 import org.reactivestreams.Publisher;
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,7 @@ import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -37,18 +40,133 @@ public class MainActivity extends AppCompatActivity {
 //                startActivity(new Intent(MainActivity.this,ChannelActivity.class));
 
 //                test();
-                testChangeThread();
+//                testChangeThread();
+//                testMap();
+                testFlatMap();
             }
         });
 
     }
 
 
+
+    @SuppressLint("CheckResult")
+    private void testMap(){
+        //事件对象处理
+        Observable.just("100") // 发射数据
+                .map(new Function<String, Integer>() {
+                    @Override
+                    public Integer apply(String s) {
+                        return Integer.valueOf(s);//变换成int值，（）
+                    }
+                })
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        print("数字："+integer);
+
+                    }
+                });
+    }
+
+    @SuppressLint("CheckResult")
+    private void testFlatMap(){
+        Observable.just("xxxx").flatMap(new Function<String, ObservableSource<String>>() {
+            @Override
+            public ObservableSource<String> apply(String s) throws Exception {
+                return Observable.just("66666");
+            }
+        }).subscribe(new Consumer<String>() {
+            @Override
+            public void accept(String s) throws Exception {
+                print(s);
+            }
+        });
+
+
+        Observable.just("xxxxx").map(new Function<String, String>() {
+            @Override
+            public String apply(String s) throws Exception {
+                return "map66666";
+            }
+        }).subscribe(new Consumer<String>() {
+            @Override
+            public void accept(String s) throws Exception {
+                print(s);
+            }
+        });
+
+
+
+
+    }
+
+
+
+
+
+    @SuppressLint("CheckResult")
+    private void test(){
+        testoncatWith().subscribe(new Consumer<String>() {
+            @Override
+            public void accept(String s) throws Exception {
+                print("回调："+s);
+
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                print("异常----》》》》》");
+            }
+        });
+    }
+
+
+    /**
+     * 测试操作符
+     */
+    private static Flowable<String> testoncatWith(){
+        //缓存和网络串接起来
+        return getFromCache()
+                .concatWith(getFromNet())
+                .distinct();//去重复操作符（ 默认是通过这两个方法实现的 {@code Object.equals()} and {@link Object#hashCode()}）
+
+    }
+
+    private static Flowable<String> getFromCache() {
+        return Flowable.create(new FlowableOnSubscribe<String>() {
+            @Override
+            public void subscribe(FlowableEmitter<String> emitter) {
+
+                String t ="我来自缓存";
+                if (t != null)//传入空值会直接抛异常，这里可以考虑用包装类进行二次包装
+                    emitter.onNext(t);
+                emitter.onComplete();//事件完成
+
+            }
+        }, BackpressureStrategy.LATEST).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+    private static Flowable<String> getFromNet() {
+
+        return Flowable.create(new FlowableOnSubscribe<String>() {
+            @Override
+            public void subscribe(FlowableEmitter<String> emitter) {
+
+                String t ="我来自网络";
+                if (t != null)
+                    emitter.onNext(t);
+                emitter.onComplete();
+
+            }
+        }, BackpressureStrategy.LATEST).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+
+    }
+
     /**
      * 测试错误事件的一个流向
      */
     @SuppressLint("CheckResult")
-    private static void test() {
+    private static void testListError() {
         print("开始————————》》》》");
         Flowable.create(new FlowableOnSubscribe<String>() {
             @Override
@@ -92,10 +210,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private static void print(String s) {
-        Log.e("Test", "Thread:" + Thread.currentThread().getName() + "  " + s + "\n");
-        System.out.print("Thread:" + Thread.currentThread().getName() + "  " + s + "\n");
-    }
+
 
 
 
@@ -150,6 +265,11 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .observeOn(Schedulers.single())
                 .subscribe(observer);
+    }
+
+    private static void print(String s) {
+        Log.e("Test", "Thread:" + Thread.currentThread().getName() + "  " + s + "\n");
+        System.out.print("Thread:" + Thread.currentThread().getName() + "  " + s + "\n");
     }
 
     }
