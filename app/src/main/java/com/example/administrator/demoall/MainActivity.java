@@ -1,10 +1,13 @@
 package com.example.administrator.demoall;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+
+import com.example.myview.ChannelView.ChannelActivity;
 
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
@@ -37,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.tv_text).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startActivity(new Intent(MainActivity.this,ChannelActivity.class));
+                startActivity(new Intent(MainActivity.this,ChannelActivity.class));
 
 //                test();
 //                testChangeThread();
