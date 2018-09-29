@@ -1,4 +1,4 @@
-package com.example.designpattern;
+package com.example.designpattern.single;
 
 import java.util.HashMap;
 import java.util.Map;
