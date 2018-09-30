@@ -1,4 +1,4 @@
-package com.example.designpattern.bean;
+package com.example.designpattern.Builder;
 
 public class Product {
     private String name;

@@ -1,7 +1,5 @@
-package com.example.designpattern;
+package com.example.designpattern.Builder;
 
-
-import com.example.designpattern.bean.Product;
 
 public class BuilderDesign {
     public static void main(String[] args) {

@@ -9,6 +9,9 @@ import android.view.View;
 
 import com.example.myview.ChannelView.ChannelActivity;
 
+import com.example.administrator.demoall.permission.TestActivity;
+import com.example.administrator.demoall.webview.WebviewActivity;
+
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
@@ -33,6 +36,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
     public static String TAG = "Test";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,21 +44,21 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.tv_text).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,ChannelActivity.class));
+//                startActivity(new Intent(MainActivity.this,ChannelActivity.class));
 
 //                test();
 //                testChangeThread();
 //                testMap();
-                testFlatMap();
+//                testFlatMap();
+                startActivity(new Intent(MainActivity.this, WebviewActivity.class));
             }
         });
 
     }
 
 
-
     @SuppressLint("CheckResult")
-    private void testMap(){
+    private void testMap() {
         //事件对象处理
         Observable.just("100") // 发射数据
                 .map(new Function<String, Integer>() {
@@ -66,54 +70,69 @@ public class MainActivity extends AppCompatActivity {
                 .subscribe(new Consumer<Integer>() {
                     @Override
                     public void accept(Integer integer) throws Exception {
-                        print("数字："+integer);
+                        print("数字：" + integer);
 
                     }
                 });
     }
 
     @SuppressLint("CheckResult")
-    private void testFlatMap(){
-        Observable.just("xxxx").flatMap(new Function<String, ObservableSource<String>>() {
+    private void testFlatMap() {
+//        Observable.just("xxxx").flatMap(new Function<String, ObservableSource<String>>() {
+//            @Override
+//            public ObservableSource<String> apply(String s) throws Exception {
+//                return Observable.just("66666");
+//            }
+//        }).subscribe(new Consumer<String>() {
+//            @Override
+//            public void accept(String s) throws Exception {
+//                print(s);
+//            }
+//        });
+        print("sssssssss");
+
+        List<String> list = new ArrayList<>();
+        list.add("a");
+        list.add("b");
+        list.add("c");
+
+        Flowable.fromArray(list).flatMap(new Function<List<String>, Publisher<String>>() {
             @Override
-            public ObservableSource<String> apply(String s) throws Exception {
-                return Observable.just("66666");
+            public Publisher<String> apply(List<String> strings) throws Exception {
+                print("xxx:"+strings);
+                return Flowable.fromIterable(strings);
             }
-        }).subscribe(new Consumer<String>() {
+        }).map(new Function<String, String>() {
             @Override
-            public void accept(String s) throws Exception {
-                print(s);
+            public String apply(String s) {
+                print("x:"+s);
+                return s;
             }
         });
 
 
-        Observable.just("xxxxx").map(new Function<String, String>() {
-            @Override
-            public String apply(String s) throws Exception {
-                return "map66666";
-            }
-        }).subscribe(new Consumer<String>() {
-            @Override
-            public void accept(String s) throws Exception {
-                print(s);
-            }
-        });
-
-
+//        Observable.just("xxxxx").map(new Function<String, String>() {
+//            @Override
+//            public String apply(String s) throws Exception {
+//                return "map66666";
+//            }
+//        }).subscribe(new Consumer<String>() {
+//            @Override
+//            public void accept(String s) throws Exception {
+//                print(s);
+//            }
+//        });
 
 
     }
 
 
-
-
-
     @SuppressLint("CheckResult")
-    private void test(){
+    private void test() {
         testoncatWith().subscribe(new Consumer<String>() {
             @Override
             public void accept(String s) throws Exception {
-                print("回调："+s);
+                print("回调：" + s);
 
             }
         }, new Consumer<Throwable>() {
@@ -128,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * 测试操作符
      */
-    private static Flowable<String> testoncatWith(){
+    private static Flowable<String> testoncatWith() {
         //缓存和网络串接起来
         return getFromCache()
                 .concatWith(getFromNet())
@@ -141,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void subscribe(FlowableEmitter<String> emitter) {
 
-                String t ="我来自缓存";
+                String t = "我来自缓存";
                 if (t != null)//传入空值会直接抛异常，这里可以考虑用包装类进行二次包装
                     emitter.onNext(t);
                 emitter.onComplete();//事件完成
@@ -149,13 +168,14 @@ public class MainActivity extends AppCompatActivity {
             }
         }, BackpressureStrategy.LATEST).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
+
     private static Flowable<String> getFromNet() {
 
         return Flowable.create(new FlowableOnSubscribe<String>() {
             @Override
             public void subscribe(FlowableEmitter<String> emitter) {
 
-                String t ="我来自网络";
+                String t = "我来自网络";
                 if (t != null)
                     emitter.onNext(t);
                 emitter.onComplete();
@@ -213,11 +233,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
     @SuppressLint("CheckResult")
     private void testChangeThread() {
         Observable<Integer> observable = Observable.create(new ObservableOnSubscribe<Integer>() {
@@ -256,14 +271,14 @@ public class MainActivity extends AppCompatActivity {
                 .doOnNext(new Consumer<Integer>() {
                     @Override
                     public void accept(Integer integer) throws Exception {
-                        print("doOnNext："+ integer);
+                        print("doOnNext：" + integer);
                     }
                 })
                 .observeOn(Schedulers.computation())
                 .doOnNext(new Consumer<Integer>() {
                     @Override
                     public void accept(Integer integer) throws Exception {
-                        print("doOnNextX："+ integer);
+                        print("doOnNextX：" + integer);
                     }
                 })
                 .observeOn(Schedulers.single())
@@ -275,5 +290,5 @@ public class MainActivity extends AppCompatActivity {
         System.out.print("Thread:" + Thread.currentThread().getName() + "  " + s + "\n");
     }
 
-    }
+}
 
