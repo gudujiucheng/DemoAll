@@ -1,6 +1,22 @@
 package com.example.algorithm.question;
 
+import java.util.ArrayList;
+
 public class 打印不大于n的最大素数_ {
+
+
+    public static void main(String[] args) {
+        test();
+    }
+
+
+    private static void test() {
+        打印不大于n的最大素数_.printMaxPrime(1000);
+    }
+
+
+
+
 //    质数（prime number）又称素数，有无限个。质数定义为在大于1的自然数中，除了1和它本身以外不再有其他因数。
     /**
      * 打印不大于n的所有素数
