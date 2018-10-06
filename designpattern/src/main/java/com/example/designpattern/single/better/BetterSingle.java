@@ -5,8 +5,6 @@ package com.example.designpattern.single.better;
  */
 public class BetterSingle {
 
-
-
     private BetterSingle(){
 
     }

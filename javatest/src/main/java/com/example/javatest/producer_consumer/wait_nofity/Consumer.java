@@ -20,17 +20,17 @@ public class Consumer extends  Thread{
     public void run() {
 
         while (true){
-            synchronized (queue){
+            synchronized (queue){//线程锁
                 while (queue.isEmpty()){
                     try {
                         System.out .println("消费完了, 消费者[" + name + "] thread 等待 " + "生产者生产");
-                        queue.wait();
+                        queue.wait();//已经没货了，消费线程需要等待，并释放锁，让生产线程继续开始
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
 
-                int x = queue.poll();
+                int x = queue.poll();//取出继续消费
                 System.out.println("[" + name + "] Consuming value : " + x);
                 queue.notifyAll();
 
