@@ -19,7 +19,7 @@ import com.example.administrator.demoall.R;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.Permission;
 
-public class TestActivity extends AppCompatActivity {
+public class PermissionActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_CONTACT = 0x2000;
 
     private static final int REQUEST_CODE_PERMISSION_CONTACT = 0x2010;
