@@ -65,4 +65,86 @@ public class 冒泡排序_ {
             a[i]=key;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ //-----------------------------练习冒泡排序
+ public static void main(String[] args){
+
+        test();
+
+ }
+    //2018年10月11日23:22:53 练习
+    private static void test02() {
+        int[] arr = new int[]{1,4,8,2,3,9,5};
+        int length = arr.length;
+        int count=0;
+        for (int i = 0; i <length-1 ; i++) {//length-1其实只是需要 这些次就够了   最后一次没必要比较了  最后一次就只剩下一个数字了
+            for (int j = 1; j <length-i ; j++) {
+                if(arr[j-1]>arr[j]){
+                    int temp = arr[j-1];
+                    arr[j-1] = arr[j];
+                    arr[j] = temp;
+                    count++;
+                }
+            }
+
+        }
+        System.out.print("互换了几次:"+count+"\n");
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(" "+arr[i]);
+        }
+    }
+
+
+    //2018年10月11日23:22:21 练习
+    private static void test() {
+        int[] arr = new int[]{1,4,8,2,3,9,5};
+        //首先回忆冒泡思想
+        //1、从头开始相邻数据相互比较 较大数字上浮   2、依次重复上述动作，注意去除最后面那个最大的数字
+        int count=0;
+        for (int i = 0; i <arr.length ; i++) {//外循环 负责记录循环了几次的
+
+            for (int j = 1; j <arr.length-i ; j++) {//内循环真正交换冒泡的
+                if(arr[j-1]>arr[j]){
+                    int temp = arr[j-1];
+                    arr[j-1] =arr[j];
+                    arr[j] = temp;
+                   count++;
+                }
+            }
+
+/*
+* 错误写法分析：1、取arr[i]来依次和其他值进行比较，这是不对的，应该取新的截断数组的第一个数arr[j-1]，依次和后面的比
+* */
+//            for (int j = 1; j <arr.length-i ; j++) {//内循环真正交换冒泡的
+//                if(arr[i]>arr[j]){
+//                    int temp = arr[i];
+//                    arr[i] =arr[j];
+//                    arr[j] = temp;
+//                }
+//            }
+
+
+        }
+        System.out.print("互换了几次:"+count+"\n");
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(" "+arr[i]);
+        }
+
+    }
+
+
 }

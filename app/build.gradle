@@ -34,6 +34,8 @@ dependencies {
     implementation project(':rxjava')
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
     implementation 'com.yanzhenjie:permission:2.0.0-rc12'
+    //okhttp
+    implementation "com.squareup.okhttp3:okhttp:${rootProject.ext.okhttp3Version}"
 
 
     implementation 'com.alibaba:fastjson:1.1.46.android'

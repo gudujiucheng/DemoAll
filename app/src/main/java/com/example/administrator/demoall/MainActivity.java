@@ -8,6 +8,10 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.administrator.demoall.weex.WeexTestActivity;
+import com.example.myview.ChannelView.ChannelActivity;
+
+import com.example.administrator.demoall.webview.WebviewActivity;
+import com.example.myview.test.ViewTestActivity;
 
 import org.reactivestreams.Publisher;
 
@@ -37,6 +41,13 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.tv_text).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                startActivity(new Intent(MainActivity.this,ChannelActivity.class));
+
+//                test();
+//                testChangeThread();
+//                testMap();
+//                testFlatMap();
+                startActivity(new Intent(MainActivity.this, ViewTestActivity.class));
                 startActivity(new Intent(MainActivity.this,WeexTestActivity.class));
 //              TestActivity.startTestActivity(MainActivity.this);
             }
