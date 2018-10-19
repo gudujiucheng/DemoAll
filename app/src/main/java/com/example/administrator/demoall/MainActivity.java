@@ -1,10 +1,13 @@
 package com.example.administrator.demoall;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+
+import com.example.administrator.demoall.weex.WeexTestActivity;
 
 import org.reactivestreams.Publisher;
 
@@ -34,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.tv_text).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              TestActivity.startTestActivity(MainActivity.this);
+                startActivity(new Intent(MainActivity.this,WeexTestActivity.class));
+//              TestActivity.startTestActivity(MainActivity.this);
             }
         });
 

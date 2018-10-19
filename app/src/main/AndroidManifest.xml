@@ -27,7 +27,8 @@
         <activity android:name=".permission.PermissionActivity" />
         <activity android:name=".webview.WebviewActivity" />
         <activity android:name=".animation.AnimationActivity" />
-        <activity android:name=".TestActivity"></activity>
+        <activity android:name=".TestActivity" />
+        <activity android:name=".weex.WeexTestActivity"></activity>
     </application>
 
 </manifest>

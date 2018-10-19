@@ -5,11 +5,20 @@ import android.app.Application;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.administrator.demoall.weex.ImageAdapter;
+import com.taobao.weex.InitConfig;
+import com.taobao.weex.WXSDKEngine;
+
 public class App extends Application {
     ActivityLifecycleCallbacks callbacks;
     @Override
     public void onCreate() {
         super.onCreate();
+
+        //初始化weex
+        InitConfig config=new InitConfig.Builder().setImgAdapter(new ImageAdapter()).build();
+        WXSDKEngine.initialize(this,config);
+
         //注册对app内所有activity 的生命周期监听
         registerActivityLifecycleCallbacks(callbacks = new ActivityLifecycleCallbacks() {
             @Override
