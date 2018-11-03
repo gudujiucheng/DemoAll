@@ -12,6 +12,9 @@ import io.reactivex.functions.Consumer;
 
 import static com.example.administrator.demoall.MainActivity.TAG;
 
+/**
+ * 参考文章：https://www.jianshu.com/p/e19f8ed863b1
+ */
 public class RxjavaTestManager {
 
     private RxjavaTestManager() {
