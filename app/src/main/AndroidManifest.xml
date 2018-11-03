@@ -26,10 +26,11 @@
         <activity android:name=".design.BuilderDesignActivity" />
         <activity android:name=".permission.PermissionActivity" />
         <activity android:name=".webview.WebviewActivity" />
-        <activity android:name=".okhttp.OkHttpActivity"></activity>
+        <activity android:name=".okhttp.OkHttpActivity" />
         <activity android:name=".animation.AnimationActivity" />
         <activity android:name=".TestActivity" />
-        <activity android:name=".weex.WeexTestActivity"></activity>
+        <activity android:name=".weex.WeexTestActivity" />
+        <activity android:name=".rxjava.RxjavaTestActivity"></activity>
     </application>
 
 </manifest>
