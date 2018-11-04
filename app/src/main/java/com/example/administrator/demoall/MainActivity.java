@@ -43,8 +43,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                startActivity(new Intent(MainActivity.this,ChannelActivity.class));
-//                startActivity(new Intent(MainActivity.this, ViewTestActivity.class));
-//                startActivity(new Intent(MainActivity.this,WeexTestActivity.class));
+
+//                test();
+//                testChangeThread();
+//                testMap();
+//                testFlatMap();
+                startActivity(new Intent(MainActivity.this, ViewTestActivity.class));
+                startActivity(new Intent(MainActivity.this,WeexTestActivity.class));
 //              TestActivity.startTestActivity(MainActivity.this);
                 startActivity(new Intent(MainActivity.this,RxjavaTestActivity.class));
             }
