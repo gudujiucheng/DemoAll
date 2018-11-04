@@ -1,14 +1,23 @@
 package com.example.administrator.demoall.rxjava;
 
+import android.annotation.SuppressLint;
 import android.nfc.Tag;
 import android.util.Log;
+
+import java.util.Scanner;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 
 import static com.example.administrator.demoall.MainActivity.TAG;
 
@@ -31,7 +40,97 @@ public class RxjavaTestManager {
 
 
     public void test() {
-        testFromArray();
+      testTimer();
+    }
+
+
+    @SuppressLint("CheckResult")
+    private void testMap() {
+        //事件对象处理
+        Observable.just("100") // 发射数据
+                .map(new Function<String, Integer>() {
+                    @Override
+                    public Integer apply(String s) {
+                        return Integer.valueOf(s);//变换成int值，（）
+                    }
+                })
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+//                        print("数字：" + integer);
+
+                    }
+                });
+    }
+
+
+    /**
+     * 延迟指定时间后，发送1个数值0（Long类型）
+     * 注意这个回调不是在调用线程，可以用三个参数的api切换线程
+     */
+    private void testTimer(){
+        final Disposable subscribe = Observable.timer(3, TimeUnit.SECONDS,AndroidSchedulers.mainThread())
+//                .observeOn(AndroidSchedulers.mainThread()) 可以在这里切换线程，也可以在第三个参数切换线程
+                .subscribe(new Consumer<Long>() {
+            @Override
+            public void accept(Long aLong) throws Exception {
+                //注意这里不是调用线程
+                Log.d(TAG, "接收到的整数是" + aLong+" Thread:"+Thread.currentThread().getName());
+
+            }
+        });
+    }
+
+
+    /**
+     * defer
+     * 直到有观察者（Observer ）订阅时，才动态创建被观察者对象（Observable） & 发送事件
+     *
+     * 观察者接收到的值会是15 因为只有当订阅关系发生的时候，才会创建被观察者对象，并发送事件。
+     */
+//        <-- 1. 第1次对i赋值 ->>
+    Integer i = 10;
+
+    public void testDefer() {
+
+
+        // 2. 通过defer 定义被观察者对象
+        // 注：此时被观察者对象还没创建
+        Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
+            @Override
+            public ObservableSource<? extends Integer> call() throws Exception {
+                return Observable.just(i);
+            }
+        });
+
+//        <-- 2. 第2次对i赋值 ->>
+        i = 15;
+
+//        <-- 3. 观察者开始订阅 ->>
+        // 注：此时，才会调用defer（）创建被观察者对象（Observable）
+        observable.subscribe(new Observer<Integer>() {
+
+            @Override
+            public void onSubscribe(Disposable d) {
+                Log.d(TAG, "开始采用subscribe连接");
+            }
+
+            @Override
+            public void onNext(Integer value) {
+                Log.d(TAG, "接收到的整数是" + value);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.d(TAG, "对Error事件作出响应");
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d(TAG, "对Complete事件作出响应");
+            }
+        });
+
     }
 
 

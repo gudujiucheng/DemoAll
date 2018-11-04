@@ -43,24 +43,7 @@ public class RxjavaTestActivity extends AppCompatActivity {
 
 
 
-    @SuppressLint("CheckResult")
-    private void testMap() {
-        //事件对象处理
-        Observable.just("100") // 发射数据
-                .map(new Function<String, Integer>() {
-                    @Override
-                    public Integer apply(String s) {
-                        return Integer.valueOf(s);//变换成int值，（）
-                    }
-                })
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        print("数字：" + integer);
 
-                    }
-                });
-    }
 
     @SuppressLint("CheckResult")
     private void testFlatMap() {
