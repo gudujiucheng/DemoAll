@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.nfc.Tag;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
@@ -40,9 +42,58 @@ public class RxjavaTestManager {
 
 
     public void test() {
-      testTimer();
+        testFlatMap();
     }
 
+
+    /**
+     * 可以将被观察者发送的时间序列进行拆分，或者单独转换，合并成一个新的事件序列，最后在进行发送。
+     *  重要：注：新合并生成的事件序列顺序可能是无序的，即 与旧序列发送事件的顺序无关
+     *
+     * 原理：
+     * 1、为事件序列中每个事件都创建一个 Observable 对象；
+     * 2、将对每个 原始事件 转换后的 新事件 都放入到对应 Observable对象；
+     * 3、将新建的每个Observable 都合并到一个 新建的、总的Observable 对象；
+     * 4、新建的、总的Observable 对象 将 新合并的事件序列 发送给观察者（Observer）
+     */
+    @SuppressLint("CheckResult")
+    private void testFlatMap() {
+        Observable.create(new ObservableOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(ObservableEmitter<Integer> emitter) {
+                emitter.onNext(1);
+                emitter.onNext(10);
+                emitter.onNext(100);
+            }
+        }).flatMap(new Function<Integer, ObservableSource<String>>() {
+            @Override
+            public ObservableSource<String> apply(Integer integer) throws Exception {
+                Log.d(TAG, "接收到的:" + integer);
+                final List<String> list = new ArrayList<>();
+                for (int i = 0; i < 3; i++) {
+                    list.add("\n我是事件 " + integer + "拆分后的子事件" + i);
+                    // 通过flatMap中将被观察者生产的事件序列先进行拆分，再将每个事件转换为一个新的发送三个String事件
+                    // 最终合并，再发送给被观察者
+                }
+                return Observable.fromIterable(list);
+
+                //也可以一个个发出去，下面一个个接收
+//                return Observable.just(integer+"");
+            }
+        }).subscribe(new Consumer<String>() {
+            @Override
+            public void accept(String s) throws Exception {
+                Log.d(TAG, "flatmap:" + s);
+            }
+        });
+    }
+
+
+    /**
+     * 对 被观察者发送的每1个事件都通过 指定的函数 处理，从而变换成另外一种事件【即， 将被观察者发送的事件转换为任意的类型事件。】
+     *
+     * 实验场景：数据类型转换
+     */
 
     @SuppressLint("CheckResult")
     private void testMap() {
@@ -68,24 +119,24 @@ public class RxjavaTestManager {
      * 延迟指定时间后，发送1个数值0（Long类型）
      * 注意这个回调不是在调用线程，可以用三个参数的api切换线程
      */
-    private void testTimer(){
-        final Disposable subscribe = Observable.timer(3, TimeUnit.SECONDS,AndroidSchedulers.mainThread())
+    private void testTimer() {
+        final Disposable subscribe = Observable.timer(3, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
 //                .observeOn(AndroidSchedulers.mainThread()) 可以在这里切换线程，也可以在第三个参数切换线程
                 .subscribe(new Consumer<Long>() {
-            @Override
-            public void accept(Long aLong) throws Exception {
-                //注意这里不是调用线程
-                Log.d(TAG, "接收到的整数是" + aLong+" Thread:"+Thread.currentThread().getName());
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        //注意这里不是调用线程
+                        Log.d(TAG, "接收到的整数是" + aLong + " Thread:" + Thread.currentThread().getName());
 
-            }
-        });
+                    }
+                });
     }
 
 
     /**
      * defer
      * 直到有观察者（Observer ）订阅时，才动态创建被观察者对象（Observable） & 发送事件
-     *
+     * <p>
      * 观察者接收到的值会是15 因为只有当订阅关系发生的时候，才会创建被观察者对象，并发送事件。
      */
 //        <-- 1. 第1次对i赋值 ->>
