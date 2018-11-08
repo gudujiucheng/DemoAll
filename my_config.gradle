@@ -28,14 +28,12 @@ ext {
     neenbedanktPluginVersion = '2.2.1.7'
     butterknifePluginVersion = '8.4.0'
 
-    supportLibraryVersion = '27.1.1'
+
     rxlifecycle2Version = '2.2.1'
-    okhttp3Version = '3.11.0'
     leakcanaryVersion = '1.5.4'
     stethoVersion = '1.5.0'
     dbflowVersion = '4.2.4'
     rxbindingVersion = '2.1.1'
-    glideVersion = '4.7.1'
     arouterApi = '1.2.1.1'
     arouterCompiler = '1.1.2.1'
     constraint_layout = '1.1.2'
@@ -66,4 +64,16 @@ ext {
     rxandroid2Version = '2.1.0'
 
     aarLibStorageVersion = '0.0.3-SNAPSHOT'
+
+    //真实用到的，上面的会逐渐去除
+    okhttp3Version = '3.11.0'
+    supportLibraryVersion = '28.0.0-rc01'
+    designVersion = '28.0.0'
+    constraintVersion = '1.1.2'
+    junitVersion =  '4.12'
+    baseRecyclerViewAdapterHelperVersion =  '2.9.30'
+    permissionVersion = '2.0.0-rc12'
+    glideVersion =  '4.8.0'
+    fastjsonVersion = '1.1.46.android'
+    weexVersion = '0.5.1@aar'
 }
