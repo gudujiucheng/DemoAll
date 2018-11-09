@@ -15,6 +15,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+/**
+ * 文件缓存目录测试
+ * zhanghongyang：https://github.com/hongyangAndroid/base-diskcache
+ */
 public class StorageActivity extends AppCompatActivity {
     int i = 0;
     @Override
