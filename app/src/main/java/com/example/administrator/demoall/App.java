@@ -2,6 +2,7 @@ package com.example.administrator.demoall;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -11,6 +12,10 @@ import com.taobao.weex.WXSDKEngine;
 
 public class App extends Application {
     ActivityLifecycleCallbacks callbacks;
+
+    public  Context getAppContext(){
+        return  getApplicationContext();
+    }
     @Override
     public void onCreate() {
         super.onCreate();

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.administrator.demoall.rxjava.RxjavaTestActivity;
+import com.example.administrator.demoall.storage.StorageActivity;
 import com.example.administrator.demoall.weex.WeexTestActivity;
 import com.example.myview.ChannelView.ChannelActivity;
 
@@ -48,10 +49,11 @@ public class MainActivity extends AppCompatActivity {
 //                testChangeThread();
 //                testMap();
 //                testFlatMap();
-                startActivity(new Intent(MainActivity.this, ViewTestActivity.class));
-                startActivity(new Intent(MainActivity.this,WeexTestActivity.class));
+//                startActivity(new Intent(MainActivity.this, ViewTestActivity.class));
+//                startActivity(new Intent(MainActivity.this,WeexTestActivity.class));
 //              TestActivity.startTestActivity(MainActivity.this);
-                startActivity(new Intent(MainActivity.this,RxjavaTestActivity.class));
+//                startActivity(new Intent(MainActivity.this,RxjavaTestActivity.class));
+                startActivity(new Intent(MainActivity.this,StorageActivity.class));
             }
         });
 
