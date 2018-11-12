@@ -42,7 +42,52 @@ public class RxjavaTestManager {
 
 
     public void test() {
-        testFlatMap();
+        testMap();
+    }
+
+    /**
+     * 缓存被观察者发送的事件
+     */
+    @SuppressLint("CheckResult")
+    private void testBuffer(){
+        Observable.just(1,2,3,4)
+                // 设置缓存区大小 & 步长
+                // 缓存区大小 = 每次从被观察者中获取的事件数量
+                // 步长 = 每次获取新事件的数量
+                .buffer(3,1)
+                .subscribe(new Consumer<List<Integer>>() {
+            @Override
+            public void accept(List<Integer> integers) throws Exception {
+                Log.d(TAG, " 缓存区里的事件数量 = " +  integers.size());
+                for (Integer value : integers) {
+                    Log.d(TAG, " 事件 = " + value);
+                }
+
+            }
+        });
+    }
+
+
+    /**
+     * 与FlatMap（）的 区别在于：拆分 & 重新合并生成的事件序列 的顺序 = 被观察者旧序列生产的顺序
+     */
+    @SuppressLint("CheckResult")
+    private void testConcatMap(){
+        Observable.just(1,2,3).concatMap(new Function<Integer, ObservableSource<String>>() {
+            @Override
+            public ObservableSource<String> apply(Integer integer) throws Exception {
+                List<String> list = new ArrayList<String>();
+                for (int j = 0; j <2 ; j++) {
+                    list.add("第"+integer+"个 的分身"+j);
+                }
+                return Observable.fromIterable(list);
+            }
+        }).subscribe(new Consumer<String>() {
+            @Override
+            public void accept(String s) {
+                Log.e(TAG,s);
+            }
+        });
     }
 
 
@@ -71,7 +116,7 @@ public class RxjavaTestManager {
                 Log.d(TAG, "接收到的:" + integer);
                 final List<String> list = new ArrayList<>();
                 for (int i = 0; i < 3; i++) {
-                    list.add("\n我是事件 " + integer + "拆分后的子事件" + i);
+                    list.add("我是事件 " + integer + "拆分后的子事件" + i);
                     // 通过flatMap中将被观察者生产的事件序列先进行拆分，再将每个事件转换为一个新的发送三个String事件
                     // 最终合并，再发送给被观察者
                 }
@@ -83,7 +128,7 @@ public class RxjavaTestManager {
         }).subscribe(new Consumer<String>() {
             @Override
             public void accept(String s) throws Exception {
-                Log.d(TAG, "flatmap:" + s);
+                Log.d(TAG, "接收:" + s);
             }
         });
     }
