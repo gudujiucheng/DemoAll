@@ -3,9 +3,12 @@ package com.example.administrator.demoall;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+
+import com.example.administrator.demoall.MMKV.MMKVActivity;
 
 public class MainActivity extends AppCompatActivity {
     public static String TAG = "Test";
@@ -23,8 +26,10 @@ public class MainActivity extends AppCompatActivity {
 //              TestActivity.startTestActivity(MainActivity.this);
 //                startActivity(new Intent(MainActivity.this,RxjavaTestActivity.class));
 //                startActivity(new Intent(MainActivity.this,StorageActivity.class));
-                showTipsDialog(MainActivity.this, "xxxxxxx");
+//                showTipsDialog(MainActivity.this, "xxxxxxx");
 //                showOpenSettingTipsDialog(MainActivity.this,"xxxxxxx");
+
+                startActivity(new Intent(MainActivity.this,MMKVActivity.class));
             }
         });
 

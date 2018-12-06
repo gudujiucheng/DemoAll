@@ -76,4 +76,5 @@ ext {
     glideVersion =  '4.8.0'
     fastjsonVersion = '1.1.46.android'
     weexVersion = '0.5.1@aar'
+    mmkvVersion = '1.0.14'
 }

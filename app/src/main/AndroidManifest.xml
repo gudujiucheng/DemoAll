@@ -31,7 +31,8 @@
         <activity android:name=".TestActivity" />
         <activity android:name=".weex.WeexTestActivity" />
         <activity android:name=".rxjava.RxjavaTestActivity" />
-        <activity android:name=".storage.StorageActivity"></activity>
+        <activity android:name=".storage.StorageActivity" />
+        <activity android:name=".MMKV.MMKVActivity"></activity>
     </application>
 
 </manifest>
