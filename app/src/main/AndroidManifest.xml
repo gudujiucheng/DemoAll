@@ -32,7 +32,16 @@
         <activity android:name=".weex.WeexTestActivity" />
         <activity android:name=".rxjava.RxjavaTestActivity" />
         <activity android:name=".storage.StorageActivity" />
-        <activity android:name=".MMKV.MMKVActivity"></activity>
+        <activity android:name=".MMKV.MMKVActivity" />
+
+        <service
+            android:name=".MMKV.service.MyService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":MMKV_progress" />
+
+        <activity android:name=".MMKV.ProcessActivity"
+            android:process=":MMKV_progress_02"/>
     </application>
 
 </manifest>

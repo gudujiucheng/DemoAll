@@ -1,9 +1,13 @@
 package com.example.administrator.demoall.MMKV;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import com.example.administrator.demoall.MMKV.service.MyService;
 import com.example.administrator.demoall.R;
 import com.tencent.mmkv.MMKV;
 
@@ -20,17 +24,33 @@ public class MMKVActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mmkv);
+        SharedPreferences sharedPreferences = getSharedPreferences("Test",MODE_PRIVATE);
         findViewById(R.id.tv).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String s = sharedPreferences.getString("Test","没获取到");
+                Log.e("Test","MMKVActivity :"+s);
+            }
+        });
+        findViewById(R.id.tv_02).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 //                testMMKV();
 //                deleteAndQuery();
 //                createSelfMMKV();
-                moreProgress();
+//                moreProgress();
+
+                //在指定进程启动service  会重新走一次application的on create
+//                startService(new Intent(MMKVActivity.this,MyService.class));
+                sharedPreferences.edit().putString("Test1","我是来自进程1的数据").apply();
+                Log.e("Test","MMKVActivity :插入数据成功");
+                startActivity(new Intent(MMKVActivity.this,ProcessActivity.class));
 
             }
         });
+
+
     }
 
     /**

@@ -5,20 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MMKV.MMKVActivity">
+    tools:context=".MMKV.ProcessActivity">
 
     <TextView
         android:id="@+id/tv"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:gravity="center"
-        android:text=" mkkv 读取" />
+        android:text="process 插入" />
 
     <TextView
         android:id="@+id/tv_02"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="mkkv 插入数据" />
-
+        android:text="process 读取" />
 </LinearLayout>

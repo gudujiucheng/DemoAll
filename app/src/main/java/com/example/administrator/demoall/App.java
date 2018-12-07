@@ -12,6 +12,8 @@ import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXSDKEngine;
 import com.tencent.mmkv.MMKV;
 
+import static com.example.administrator.demoall.MainActivity.TAG;
+
 public class App extends Application {
     ActivityLifecycleCallbacks callbacks;
 
@@ -22,6 +24,8 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        int pid = android.os.Process.myPid();
+        Log.i(TAG, "MyApplication is onCreate===="+"pid="+pid);
         initMMKV();
 
         //初始化weex
