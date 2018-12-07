@@ -71,7 +71,7 @@ public class App extends Application {
 
     private void initMMKV() {
         String rootDir = MMKV.initialize(this);
-        Log.e(MMKVActivity.MMKV, "mmkv root: " + rootDir);
+        Log.e(MMKVActivity.MMKV_TAG, "mmkv root: " + rootDir);
     }
 
 
