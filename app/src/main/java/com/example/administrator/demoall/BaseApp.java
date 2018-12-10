@@ -12,10 +12,13 @@ import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXSDKEngine;
 import com.tencent.mmkv.MMKV;
 
+import java.io.File;
+
 import static com.example.administrator.demoall.MainActivity.TAG;
 
-public class App extends Application {
+public class BaseApp extends Application {
     ActivityLifecycleCallbacks callbacks;
+    public static  Context mContext;
 
     public Context getAppContext() {
         return getApplicationContext();
@@ -24,6 +27,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        mContext =getAppContext();
         int pid = android.os.Process.myPid();
         Log.i(TAG, "MyApplication is onCreate===="+"pid="+pid);
         initMMKV();
@@ -77,6 +81,10 @@ public class App extends Application {
         String rootDir = MMKV.initialize(this);
         Log.e(MMKVActivity.MMKV_TAG, "mmkv root: " + rootDir);
     }
+
+
+
+
 
 
 }
