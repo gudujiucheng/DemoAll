@@ -6,4 +6,8 @@ public class Test {
     private int dev;
     private int  master;
     private int xxx;
+
+    private int twice;
+
+    private int dev01;
 }
