@@ -5,4 +5,5 @@ public class Test {
 
     private int dev;
     private int  master;
+    private int xxx;
 }
