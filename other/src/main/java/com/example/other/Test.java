@@ -7,4 +7,6 @@ public class Test {
     private int  master;
 
     private int twice;
+
+    private int dev01;
 }
