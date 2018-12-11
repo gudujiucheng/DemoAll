@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.example.administrator.demoall.MMKV.MMKVActivity;
+import com.example.administrator.demoall.filemanager.FileTestActivity;
 
 public class MainActivity extends AppCompatActivity {
     public static String TAG = "Test";
@@ -28,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
 //                startActivity(new Intent(MainActivity.this,StorageActivity.class));
 //                showTipsDialog(MainActivity.this, "xxxxxxx");
 //                showOpenSettingTipsDialog(MainActivity.this,"xxxxxxx");
-
-                startActivity(new Intent(MainActivity.this,MMKVActivity.class));
+//                startActivity(new Intent(MainActivity.this,MMKVActivity.class));
+                startActivity(new Intent(MainActivity.this,FileTestActivity.class));
             }
         });
 
