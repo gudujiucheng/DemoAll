@@ -44,6 +44,8 @@
             android:exported="true"
             android:process=":MMKV_progress" />
 
+        <service android:name=".webview.cache.preload.PreLoadService"/>
+
         <activity
             android:name=".MMKV.ProcessActivity"
             android:process=":MMKV_progress_02" />

@@ -10,6 +10,8 @@ import android.view.View;
 
 import com.example.administrator.demoall.MMKV.MMKVActivity;
 import com.example.administrator.demoall.filemanager.FileTestActivity;
+import com.example.administrator.demoall.webview.WebviewActivity;
+import com.example.administrator.demoall.webview.cache.preload.PreLoadService;
 
 public class MainActivity extends AppCompatActivity {
     public static String TAG = "Test";
@@ -30,7 +32,9 @@ public class MainActivity extends AppCompatActivity {
 //                showTipsDialog(MainActivity.this, "xxxxxxx");
 //                showOpenSettingTipsDialog(MainActivity.this,"xxxxxxx");
 //                startActivity(new Intent(MainActivity.this,MMKVActivity.class));
-                startActivity(new Intent(MainActivity.this,FileTestActivity.class));
+//                startActivity(new Intent(MainActivity.this,FileTestActivity.class));
+                startActivity(new Intent(MainActivity.this,WebviewActivity.class));
+//                startService(new Intent(MainActivity.this,PreLoadService.class));
             }
         });
 
