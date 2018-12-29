@@ -1,1 +1,1 @@
-include ':app', ':algorithm', ':myview', ':designpattern', ':libnet', ':javatest', ':rxjava', ':other'
+include ':app', ':algorithm', ':myview', ':designpattern', ':libnet', ':javatest', ':rxjava', ':other', ':sample'
