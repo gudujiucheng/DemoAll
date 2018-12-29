@@ -1,0 +1,241 @@
+{
+  "defaultExtraInfo": {
+    "channel_code": "-1"
+  },
+  "channelInfoList": [
+    {
+      "channel": "dev",
+      "extraInfo": {
+        "channel_code": "0"
+      }
+    },
+    {
+      "channel": "_360",
+      "extraInfo": {
+        "channel_code": "2"
+      }
+    },
+    {
+      "channel": "baiDu",
+      "extraInfo": {
+        "channel_code": "3"
+      }
+    },
+    {
+      "channel": "huaWei",
+      "extraInfo": {
+        "channel_code": "4"
+      }
+    },
+    {
+      "channel": "lenovo",
+      "extraInfo": {
+        "channel_code": "5"
+      }
+    },
+    {
+      "channel": "meiZu",
+      "extraInfo": {
+        "channel_code": "6"
+      }
+    },
+    {
+      "channel": "official",
+      "extraInfo": {
+        "channel_code": "7"
+      }
+    },
+    {
+      "channel": "push",
+      "extraInfo": {
+        "channel_code": "8"
+      }
+    },
+    {
+      "channel": "aLi",
+      "extraInfo": {
+        "channel_code": "9"
+      }
+    },
+    {
+      "channel": "xiaoMi",
+      "extraInfo": {
+        "channel_code": "10"
+      }
+    },
+    {
+      "channel": "yingYongBao",
+      "extraInfo": {
+        "channel_code": "11"
+      }
+    },
+    {
+      "channel": "yingYongHui",
+      "extraInfo": {
+        "channel_code": "12"
+      }
+    },
+    {
+      "channel": "yybcpd",
+      "extraInfo": {
+        "channel_code": "13"
+      }
+    },
+    {
+      "channel": "ucqx",
+      "extraInfo": {
+        "channel_code": "14"
+      }
+    },
+    {
+      "channel": "jrttqx",
+      "extraInfo": {
+        "channel_code": "15"
+      }
+    },
+    {
+      "channel": "ucdm",
+      "extraInfo": {
+        "channel_code": "16"
+      }
+    },
+    {
+      "channel": "jrttdm",
+      "extraInfo": {
+        "channel_code": "17"
+      }
+    },
+    {
+      "channel": "leShi",
+      "extraInfo": {
+        "channel_code": "18"
+      }
+    },
+    {
+      "channel": "jrttzl",
+      "extraInfo": {
+        "channel_code": "19"
+      }
+    },
+    {
+      "channel": "lenovo",
+      "extraInfo": {
+        "channel_code": "20"
+      }
+    },
+    {
+      "channel": "yybcpd1",
+      "extraInfo": {
+        "channel_code": "21"
+      }
+    },
+    {
+      "channel": "souGouZhuShou",
+      "extraInfo": {
+        "channel_code": "22"
+      }
+    },
+    {
+      "channel": "uczl",
+      "extraInfo": {
+        "channel_code": "23"
+      }
+    },
+    {
+      "channel": "oppo",
+      "extraInfo": {
+        "channel_code": "31"
+      }
+    },
+    {
+      "channel": "ppzhushou",
+      "extraInfo": {
+        "channel_code": "33"
+      }
+    },
+    {
+      "channel": "google",
+      "extraInfo": {
+        "channel_code": "36"
+      }
+    },
+    {
+      "channel": "vivo",
+      "extraInfo": {
+        "channel_code": "37"
+      }
+    },
+    {
+      "channel": "Smartisan",
+      "extraInfo": {
+        "channel_code": "38"
+      }
+    },
+    {
+      "channel": "juchuan",
+      "extraInfo": {
+        "channel_code": "39"
+      }
+    },
+    {
+      "channel": "meitu",
+      "extraInfo": {
+        "channel_code": "40"
+      }
+    },
+    {
+      "channel": "bilibili",
+      "extraInfo": {
+        "channel_code": "49"
+      }
+    },
+    {
+      "channel": "samsung",
+      "extraInfo": {
+        "channel_code": "50"
+      }
+    },
+    {
+      "channel": "pay_sdk",
+      "extraInfo": {
+        "channel_code": "800"
+      }
+    },
+    {
+      "channel": "base",
+      "extraInfo": {
+        "channel_code": "997"
+      }
+    },
+    {
+      "channel": "gray",
+      "extraInfo": {
+        "channel_code": "998"
+      }
+    },
+    {
+      "channel": "daily",
+      "extraInfo": {
+        "channel_code": "999"
+      }
+    },
+    {
+      "channel": "merch",
+      "extraInfo": {
+        "channel_code": "1001"
+      }
+    },
+    {
+      "channel": "message",
+      "extraInfo": {
+        "channel_code": "1002"
+      }
+    },
+    {
+      "channel": "ttkuaibao",
+      "extraInfo": {
+        "channel_code": "1003"
+      }
+    }
+  ]
+}

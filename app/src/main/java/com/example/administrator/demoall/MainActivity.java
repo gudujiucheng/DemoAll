@@ -7,11 +7,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.administrator.demoall.MMKV.MMKVActivity;
 import com.example.administrator.demoall.filemanager.FileTestActivity;
 import com.example.administrator.demoall.webview.WebviewActivity;
 import com.example.administrator.demoall.webview.cache.preload.PreLoadService;
+import com.meituan.android.walle.WalleChannelReader;
 
 public class MainActivity extends AppCompatActivity {
     public static String TAG = "Test";
@@ -32,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
 //                showTipsDialog(MainActivity.this, "xxxxxxx");
 //                showOpenSettingTipsDialog(MainActivity.this,"xxxxxxx");
 //                startActivity(new Intent(MainActivity.this,MMKVActivity.class));
-//                startActivity(new Intent(MainActivity.this,FileTestActivity.class));
-                startActivity(new Intent(MainActivity.this,WebviewActivity.class));
+                startActivity(new Intent(MainActivity.this,FileTestActivity.class));
+//                startActivity(new Intent(MainActivity.this,WebviewActivity.class));
 //                startService(new Intent(MainActivity.this,PreLoadService.class));
             }
         });
@@ -61,5 +63,10 @@ public class MainActivity extends AppCompatActivity {
         builder.create().show();
     }
 
+    public void showChannel(View view) {
+        //获取渠道
+        String channel = WalleChannelReader.getChannel(this.getApplicationContext());
+        Toast.makeText(this,"当前包的渠道是："+channel,Toast.LENGTH_LONG).show();
+    }
 }
 

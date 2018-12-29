@@ -19,6 +19,7 @@
         android:layout_alignParentRight="true"
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:src="@mipmap/ic_launcher_round"/>
+        android:background="@color/red_500"
+         />
 
 </RelativeLayout>

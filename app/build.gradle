@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
-
+//美团多渠道打包
+apply from: 'walle-multiple-channel.gradle'
 
 android {
     compileSdkVersion 28
@@ -11,12 +12,35 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    signingConfigs {
+        release {
+            storeFile file("demoall.jks")
+            storePassword "123456"
+            keyAlias "demoall"
+            keyPassword "123456"
+            // 默认情况下，Android Gradle 插件 2.2 同时启用这两个签署架构。
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
+
+
     compileOptions {
         targetCompatibility 1.8
         sourceCompatibility 1.8
@@ -51,5 +75,7 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:${rootProject.ext.glideVersion}"
 
     implementation "com.tencent:mmkv:${rootProject.ext.mmkvVersion}"
+    //美团多渠道打包
+    implementation "com.meituan.android.walle:library:${rootProject.ext.walleVersion}"
 
 }

@@ -26,7 +26,7 @@ android {
     sourceSets {
         main {
             // 单独调试与集成调试时使用不同的 AndroidManifest.xml 文件
-            if (isMyViewNoudle.toBoolean()) {
+            if (!isMyViewNoudle.toBoolean()) {
                 manifest.srcFile 'src/main/test/AndroidManifest.xml'
             } else {
                 manifest.srcFile 'src/main/AndroidManifest.xml'

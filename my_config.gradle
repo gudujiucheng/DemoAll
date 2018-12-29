@@ -77,4 +77,5 @@ ext {
     fastjsonVersion = '1.1.46.android'
     weexVersion = '0.5.1@aar'
     mmkvVersion = '1.0.14'
+    walleVersion = '1.1.6'
 }

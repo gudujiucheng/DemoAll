@@ -27,6 +27,11 @@ public class FileTestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                if (true) {
+                    showPath();
+                    return;
+                }
+
                 String path = null, path2 = null;
                 File file = getExternalCacheDir();//低版本19之下需要权限声明到清单文件，否则会获取不到路径
                 if (file != null)
@@ -98,5 +103,18 @@ public class FileTestActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         Log.e("Test", "申请权限结果：" + requestCode + " " + (grantResults[0] == PackageManager.PERMISSION_DENIED));
+    }
+
+
+    private void showPath() {
+        Log.e("Test",
+                "目录：\ngetExternalCacheDir:" + getExternalCacheDir().getAbsolutePath()
+                        + "\ngetCacheDir:" + getCacheDir().getAbsolutePath()
+                        + "\ngetDir:" + getDir("xx", MODE_PRIVATE).getAbsolutePath()
+                        + "\ngetFilesDir" + getFilesDir().getAbsolutePath());
+//        getExternalCacheDir:/storage/emulated/0/Android/data/com.example.administrator.demoall/cache
+//        getCacheDir:        /data/user/0/com.example.administrator.demoall/cache
+//        getDir:             /data/user/0/com.example.administrator.demoall/app_xx
+//        getFilesDir         /data/user/0/com.example.administrator.demoall/files
     }
 }

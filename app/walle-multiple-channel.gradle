@@ -1,0 +1,14 @@
+apply plugin: 'walle'
+walle {
+    //参考文档：https://github.com/Meituan-Dianping/walle
+    // 指定渠道包的输出路径
+    apkOutputFolder = new File("${project.buildDir}/outputs/channels");
+
+    // 定制渠道包的APK的文件名称
+    apkFileNameFormat = '${appName}-${packageName}-${channel}-${buildType}-v${versionName}-${versionCode}-${buildTime}.apk';
+
+    // 渠道配置文件
+//    configFile = new File("${project.getProjectDir()}/channel_config.json")
+    configFile = new File("${project.getProjectDir()}/channel")
+
+}
