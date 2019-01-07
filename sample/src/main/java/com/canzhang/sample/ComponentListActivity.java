@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.canzhang.sample.adapter.ComponentAdapter;
 import com.canzhang.sample.bean.ComponentItem;
+import com.canzhang.sample.manager.BrightnessDemoManager;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -40,18 +40,13 @@ public class ComponentListActivity extends Activity {
      * 在这里添加要调试的组件数据
      */
     private void initData() {
-        mData.add(share());
+        mData.add(lightDebug());
     }
 
 
 
-    private ComponentItem share() {
-        return new ComponentItem("share 分享组件", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+    private ComponentItem lightDebug() {
+        return new ComponentItem("调节亮度测试", new BrightnessDemoManager());
     }
 
 

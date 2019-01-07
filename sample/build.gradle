@@ -55,8 +55,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation "junit:junit:${rootProject.ext.junitVersion}"
     androidTestImplementation "com.android.support.test:runner:${rootProject.ext.supportTestRunnerVersion}"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:${rootProject.ext.supportTestEspressoCoreVersion}"
@@ -64,5 +63,5 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:${rootProject.ext.supportVersion}"
     //圆角布局
     api 'com.flyco.roundview:FlycoRoundView_Lib:' + rootProject.ext.roundViewVersion
-
+    implementation project(':debug-dialog')
 }

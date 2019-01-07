@@ -6,17 +6,29 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.lexinfintech.component.debugdialog.DebugDialog;
+
 
 /**
  * 调试模式下的 app（simple作为单独工程运行时候使用）
  */
 public class DebugBaseApp extends Application {
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        //调试
+        DebugDialog.getInstance().init(this.getApplicationContext());
+        DebugDialog.setIsDebug(true);
+    }
 
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
 
+
+        this.getApplicationContext();
 
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
