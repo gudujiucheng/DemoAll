@@ -1,4 +1,9 @@
-apply plugin: 'com.android.library'
+//单独工程和lib的声明不同
+if (isSampleRunAsApp.toBoolean()) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+}
 
 android {
 
@@ -11,11 +16,33 @@ android {
         versionCode 1
         versionName "1.0"
 
-        versionCode 1
-        versionName "1.0"
+        //作为单独工程，需要设置applicationID
+        if (isSampleRunAsApp.toBoolean()) {
+            applicationId "com.canzhang.sample"
+        }
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+    }
+
+
+    sourceSets {
+        main {
+            // 单独调试与集成调试时使用不同的 AndroidManifest.xml 文件
+            if (isSampleRunAsApp.toBoolean()) {
+                manifest.srcFile 'src/main/debug/AndroidManifest.xml'
+                //多增加一个资源调试路径 src/main/debug/res
+                res.srcDirs = ['src/main/res', 'src/main/debug/res']
+
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+                java {
+                    //module 模式下要 排除src/test/文件夹下的所有文件
+                    exclude 'src/debug/'
+                }
+            }
+
+        }
     }
 
     buildTypes {

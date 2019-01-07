@@ -1,0 +1,23 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.canzhang.sample">
+
+    <application
+        android:name=".debug.DebugBaseApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/sample_app_name"
+        android:supportsRtl="true"
+        tools:replace="android:allowBackup,android:icon,android:label">
+        <activity android:name=".ComponentListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".CommonComponentSampleActivity" />
+    </application>
+
+</manifest>
+

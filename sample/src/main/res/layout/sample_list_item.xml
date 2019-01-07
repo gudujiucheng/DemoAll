@@ -12,5 +12,5 @@
     android:paddingRight="10dp"
     android:textColor="#17161C"
     android:textSize="12sp"
-    app:rv_backgroundColor="@color/white"
-    app:rv_backgroundPressColor="@color/share_text_gray" />
+    app:rv_backgroundColor="@android:color/white"
+    app:rv_backgroundPressColor="@android:color/darker_gray" />
