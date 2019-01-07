@@ -1,12 +1,13 @@
 package com.example.myview.test;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
 import com.example.myview.R;
 
-public class ViewTestActivity extends AppCompatActivity {
+public class ViewTestActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
