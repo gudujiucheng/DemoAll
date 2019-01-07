@@ -75,12 +75,13 @@ public class BrightnessDemoManager extends BaseManager {
     }
 
     private ComponentItem getNowLight(final Activity activity) {
-        return new ComponentItem("当前系统亮度（非当前窗口亮度）", new View.OnClickListener() {
+        return new ComponentItem("当前系统亮度（非当前窗口亮度】", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 int light = getSystemBrightness(activity);
-                showTipsDialog("当前系统亮度：" + light);
+                //这个值是手动模式下设置的亮度值，跟当前是自动模式还是手动模式，没有关系
+                showTipsDialog("当前系统亮度（手动模式下设置的亮度）：" + light);
 
             }
         });

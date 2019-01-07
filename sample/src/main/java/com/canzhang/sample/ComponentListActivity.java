@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import com.canzhang.sample.adapter.ComponentAdapter;
 import com.canzhang.sample.bean.ComponentItem;
 import com.canzhang.sample.manager.BrightnessDemoManager;
+import com.canzhang.sample.manager.DebugDemoManager;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -40,14 +41,13 @@ public class ComponentListActivity extends Activity {
      * 在这里添加要调试的组件数据
      */
     private void initData() {
-        mData.add(lightDebug());
+        mData.add(new ComponentItem("调试弹窗", new DebugDemoManager()));
+        mData.add(new ComponentItem("调节亮度测试", new BrightnessDemoManager()));
     }
 
 
 
-    private ComponentItem lightDebug() {
-        return new ComponentItem("调节亮度测试", new BrightnessDemoManager());
-    }
+
 
 
 

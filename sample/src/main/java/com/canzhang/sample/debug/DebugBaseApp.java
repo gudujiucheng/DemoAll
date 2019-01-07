@@ -17,9 +17,8 @@ public class DebugBaseApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
         //调试
-        DebugDialog.getInstance().init(this.getApplicationContext());
+        DebugDialog.getInstance().init(this);
         DebugDialog.setIsDebug(true);
     }
 
@@ -43,7 +42,7 @@ public class DebugBaseApp extends Application {
 
             @Override
             public void onActivityResumed(Activity activity) {
-                Log.e("Test",activity.getClass().getSimpleName());
+                Log.e("Test", activity.getClass().getSimpleName());
 
             }
 
@@ -68,16 +67,6 @@ public class DebugBaseApp extends Application {
             }
         });
     }
-
-
-
-
-
-
-
-
-
-
 
 
 }
