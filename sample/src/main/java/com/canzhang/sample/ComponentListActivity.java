@@ -10,7 +10,8 @@ import com.canzhang.sample.base.adapter.ComponentAdapter;
 import com.canzhang.sample.base.bean.ComponentItem;
 import com.canzhang.sample.manager.BrightnessDemoManager;
 import com.canzhang.sample.manager.DebugDemoManager;
-import com.canzhang.sample.yingyong.ApplicationActivity;
+import com.canzhang.sample.recyclerView.RecyclerViewActivity;
+import com.canzhang.sample.viewpager.ViewPagerActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.base.base.BaseActivity;
@@ -47,15 +48,17 @@ public class ComponentListActivity extends BaseActivity {
         mData.add(new ComponentItem("多type类型(非原生)", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                start(ApplicationActivity.class);
+                start(RecyclerViewActivity.class);
+            }
+        }));
+
+        mData.add(new ComponentItem("viewPager", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                start(ViewPagerActivity.class);
             }
         }));
     }
-
-
-
-
-
 
 
     BaseQuickAdapter<ComponentItem, BaseViewHolder> adapter;

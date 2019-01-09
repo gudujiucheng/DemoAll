@@ -1,4 +1,4 @@
-package com.canzhang.sample.yingyong.adapter;
+package com.canzhang.sample.recyclerView.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,8 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.canzhang.sample.R;
-import com.canzhang.sample.yingyong.bean.AppItemBean;
-import com.canzhang.sample.yingyong.bean.PageItem;
+import com.canzhang.sample.recyclerView.bean.AppItemBean;
+import com.canzhang.sample.recyclerView.bean.PageItem;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.base.view.viewpager.CommonViewPager;

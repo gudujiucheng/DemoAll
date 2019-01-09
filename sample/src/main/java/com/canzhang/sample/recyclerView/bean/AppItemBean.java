@@ -1,4 +1,4 @@
-package com.canzhang.sample.yingyong.bean;
+package com.canzhang.sample.recyclerView.bean;
 
 import android.support.annotation.IntDef;
 

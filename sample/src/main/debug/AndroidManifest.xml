@@ -18,7 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".CommonComponentSampleActivity" />
-        <activity android:name=".yingyong.ApplicationActivity"></activity>
+        <activity android:name=".recyclerView.RecyclerViewActivity"/>
+        <activity android:name=".viewpager.ViewPagerActivity"/>
     </application>
 
 </manifest>

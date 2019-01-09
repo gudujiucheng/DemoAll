@@ -1,20 +1,20 @@
-package com.canzhang.sample.yingyong;
+package com.canzhang.sample.recyclerView;
 
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.canzhang.sample.R;
-import com.canzhang.sample.yingyong.adapter.AppAdapter;
-import com.canzhang.sample.yingyong.bean.AppItemBean;
-import com.canzhang.sample.yingyong.bean.PageItem;
+import com.canzhang.sample.recyclerView.adapter.AppAdapter;
+import com.canzhang.sample.recyclerView.bean.AppItemBean;
+import com.canzhang.sample.recyclerView.bean.PageItem;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.base.base.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ApplicationActivity extends BaseActivity {
+public class RecyclerViewActivity extends BaseActivity {
 
     private RecyclerView mRvApp;
     private List<AppItemBean> mData = new ArrayList<>();
@@ -24,7 +24,7 @@ public class ApplicationActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.sample_activity_application);
+        setContentView(R.layout.sample_activity_recyclerview);
         mRvApp = findViewById(R.id.rv_app);
         initData();
         setAdapter();
