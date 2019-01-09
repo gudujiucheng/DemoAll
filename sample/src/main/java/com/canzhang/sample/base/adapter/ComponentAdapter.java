@@ -1,4 +1,4 @@
-package com.canzhang.sample.adapter;
+package com.canzhang.sample.base.adapter;
 
 
 import android.content.Intent;
@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.canzhang.sample.CommonComponentSampleActivity;
 import com.canzhang.sample.R;
-import com.canzhang.sample.bean.ComponentItem;
+import com.canzhang.sample.base.bean.ComponentItem;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 

@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.view.View;
 
 import com.canzhang.sample.base.BaseManager;
-import com.canzhang.sample.bean.ComponentItem;
+import com.canzhang.sample.base.bean.ComponentItem;
 import com.lexinfintech.component.debugdialog.DebugDialog;
 
 

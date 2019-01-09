@@ -29,10 +29,12 @@ dependencies {
     testImplementation "junit:junit:${rootProject.ext.junitVersion}"
     androidTestImplementation "com.android.support.test:runner:${rootProject.ext.supportTestRunnerVersion}"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:${rootProject.ext.supportTestEspressoCoreVersion}"
-    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportVersion}"
+    api "com.android.support:appcompat-v7:${rootProject.ext.supportVersion}"
 
 
     //Arouter
-    api 'com.alibaba:arouter-api:' + rootProject.ext.arouterApiVersion
-    annotationProcessor 'com.alibaba:' + rootProject.ext.arouterCompilerVersion
+//    api 'com.alibaba:arouter-api:' + rootProject.ext.arouterApiVersion
+//    annotationProcessor 'com.alibaba:' + rootProject.ext.arouterCompilerVersion
+
+    api 'com.github.pinguo-zhouwei:CircleIndicatorView:v1.0.1'
 }

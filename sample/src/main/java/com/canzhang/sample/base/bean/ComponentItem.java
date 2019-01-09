@@ -1,4 +1,4 @@
-package com.canzhang.sample.bean;
+package com.canzhang.sample.base.bean;
 
 import android.view.View;
 

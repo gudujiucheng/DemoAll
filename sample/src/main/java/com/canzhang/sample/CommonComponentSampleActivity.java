@@ -6,11 +6,12 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.canzhang.sample.adapter.ComponentAdapter;
+import com.canzhang.sample.base.adapter.ComponentAdapter;
 import com.canzhang.sample.base.IManager;
-import com.canzhang.sample.bean.ComponentItem;
+import com.canzhang.sample.base.bean.ComponentItem;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.example.base.base.BaseActivity;
 
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ import java.util.List;
  */
 
 
-public class CommonComponentSampleActivity extends Activity {
+public class CommonComponentSampleActivity extends BaseActivity {
     private RecyclerView mRecyclerView;
     private List<ComponentItem> mData = new ArrayList<>();
     private static IManager mIManager;

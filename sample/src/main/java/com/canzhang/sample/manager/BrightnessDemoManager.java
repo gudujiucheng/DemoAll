@@ -3,18 +3,19 @@ package com.canzhang.sample.manager;
 import android.app.Activity;
 import android.content.Context;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.canzhang.sample.base.BaseManager;
-import com.canzhang.sample.bean.ComponentItem;
+import com.canzhang.sample.base.bean.ComponentItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * http://www.cnblogs.com/lwbqqyumidi/p/4127012.html
+ */
 public class BrightnessDemoManager extends BaseManager {
 
     private int mBrightness = 0;

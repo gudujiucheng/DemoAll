@@ -64,4 +64,5 @@ dependencies {
     //圆角布局
     api 'com.flyco.roundview:FlycoRoundView_Lib:' + rootProject.ext.roundViewVersion
     implementation project(':debug-dialog')
+    implementation project(':base')
 }
