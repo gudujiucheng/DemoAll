@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.canzhang.sample">
-
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application
         android:name=".debug.DebugBaseApp"
         android:allowBackup="true"
@@ -18,8 +20,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".CommonComponentSampleActivity" />
-        <activity android:name=".recyclerView.RecyclerViewActivity"/>
-        <activity android:name=".viewpager.ViewPagerActivity"/>
+        <activity android:name=".recyclerView.RecyclerViewActivity" />
+        <activity android:name=".viewpager.ViewPagerActivity" />
+        <activity android:name=".qrcode.QRCodeActivity" />
+        <activity android:name=".weex.WeexActivity"></activity>
     </application>
 
 </manifest>

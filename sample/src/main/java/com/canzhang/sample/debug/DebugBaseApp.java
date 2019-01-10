@@ -6,7 +6,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.canzhang.sample.weex.ImageAdapter;
 import com.lexinfintech.component.debugdialog.DebugDialog;
+import com.taobao.weex.InitConfig;
+import com.taobao.weex.WXSDKEngine;
 
 
 /**
@@ -20,6 +23,12 @@ public class DebugBaseApp extends Application {
         //调试
         DebugDialog.getInstance().init(this);
         DebugDialog.setIsDebug(true);
+        initWeex();
+    }
+
+    private void initWeex() {
+        InitConfig config=new InitConfig.Builder().setImgAdapter(new ImageAdapter()).build();
+        WXSDKEngine.initialize(this,config);
     }
 
     @Override

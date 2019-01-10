@@ -67,8 +67,7 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:${rootProject.ext.okhttp3Version}"
 
 
-    implementation "com.alibaba:fastjson:${rootProject.ext.fastjsonVersion}"
-    implementation "com.taobao.android:weex_sdk:${rootProject.ext.weexVersion}"
+
 
 
     implementation "com.github.bumptech.glide:glide:${rootProject.ext.glideVersion}"

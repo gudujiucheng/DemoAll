@@ -10,8 +10,10 @@ import com.canzhang.sample.base.adapter.ComponentAdapter;
 import com.canzhang.sample.base.bean.ComponentItem;
 import com.canzhang.sample.manager.BrightnessDemoManager;
 import com.canzhang.sample.manager.DebugDemoManager;
+import com.canzhang.sample.qrcode.QRCodeActivity;
 import com.canzhang.sample.recyclerView.RecyclerViewActivity;
 import com.canzhang.sample.viewpager.ViewPagerActivity;
+import com.canzhang.sample.weex.WeexActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.base.base.BaseActivity;
@@ -56,6 +58,18 @@ public class ComponentListActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 start(ViewPagerActivity.class);
+            }
+        }));
+        mData.add(new ComponentItem("二维码生成测试", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                start(QRCodeActivity.class);
+            }
+        }));
+        mData.add(new ComponentItem("weex测试", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                start(WeexActivity.class);
             }
         }));
     }
