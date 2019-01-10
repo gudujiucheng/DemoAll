@@ -1,18 +1,16 @@
 package com.canzhang.sample.viewpager;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.canzhang.sample.R;
-import com.canzhang.sample.recyclerView.adapter.AppAdapter;
-import com.canzhang.sample.recyclerView.bean.AppItemBean;
 import com.canzhang.sample.recyclerView.bean.PageItem;
-import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.canzhang.sample.viewpager.loop.LoopPagerAdapter;
 import com.example.base.base.BaseActivity;
 
 import java.util.ArrayList;
@@ -34,30 +32,64 @@ public class ViewPagerActivity extends BaseActivity {
         mIndicator = findViewById(R.id.vp_indicator);
 
         initData();
-        setAdapter();
+//        setAdapter();
+        setLoopAdapter();
+
+
     }
+
+
+
 
     private void initData() {
         for (int i = 0; i < 4; i++) {
-            mData.add(new PageItem(R.mipmap.ic_launcher, "xxxx"));
+            mData.add(new PageItem(R.mipmap.ic_launcher, "xxxx"+i));
         }
-
     }
 
     private void setAdapter() {
         mVp.setAdapter(mCustomPagerAdapter = new CustomPagerAdapter<PageItem>() {
             @Override
             protected View getViewGroupItemView(ViewGroup container, PageItem pageItem, int position) {
-                ImageView iv = new ImageView(ViewPagerActivity.this);
-                iv.setLayoutParams(new ViewGroup.LayoutParams(container.getWidth(), container.getHeight()));
-                iv.setScaleType(ImageView.ScaleType.FIT_XY);
-//                iv.setImageDrawable(getResources().getDrawable(pageItem.res));
-                iv.setImageResource(pageItem.res);
-                return iv;
+                return getRealView(container, pageItem);
             }
         });
+
         mCustomPagerAdapter.setList(mData);
         mIndicator.setViewPager(mVp);
+
+    }
+
+    @NonNull
+    private View getRealView(ViewGroup container, final PageItem pageItem) {
+        ImageView iv = new ImageView(ViewPagerActivity.this);
+        iv.setLayoutParams(new ViewGroup.LayoutParams(container.getWidth(), container.getHeight()));
+        iv.setScaleType(ImageView.ScaleType.FIT_XY);
+//                iv.setImageDrawable(getResources().getDrawable(pageItem.res));
+        iv.setImageResource(pageItem.res);
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ViewPagerActivity.this,pageItem.text,Toast.LENGTH_SHORT).show();
+            }
+        });
+        return iv;
+    }
+
+
+    private void setLoopAdapter() {
+        mVp.setAdapter(new LoopPagerAdapter() {
+            @Override
+            public View getView(ViewGroup container, int position) {
+                return getRealView(container,mData.get(position));
+            }
+
+            @Override
+            public int getSize() {
+                return mData.size();
+            }
+        });
+        mIndicator.setLoopViewPager(mVp);
     }
 
 

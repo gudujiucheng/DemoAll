@@ -6,6 +6,11 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+/**
+ * 无限轮询参考:https://www.imooc.com/article/23396?block_id=tuijian_wz
+ *
+ * @param <T>
+ */
 public abstract class CustomPagerAdapter<T> extends PagerAdapter {
 
     private List<T> mList;

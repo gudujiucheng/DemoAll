@@ -7,10 +7,12 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
 import com.canzhang.sample.R;
+import com.canzhang.sample.viewpager.loop.LoopPagerAdapter;
 
 /**
  * 自定义viewpager指示器  by zc
@@ -234,6 +236,27 @@ public class ViewPagerIndicator extends View implements ViewPager.OnPageChangeLi
         invalidate();
     }
 
+
+    private boolean isLoop;
+
+    public void setLoopViewPager(ViewPager viewPager) {
+        isLoop = true;
+        mSmooth = false;//TODO  平滑的效果不太好  结尾节点应该需要处理一下
+        if (viewPager == null) {
+            return;
+        }
+        PagerAdapter pagerAdapter = viewPager.getAdapter();
+        if (!(pagerAdapter instanceof LoopPagerAdapter)) {
+            throw new RuntimeException("需要传入 LoopPagerAdapter 才能调用此方法");
+        }
+        LoopPagerAdapter loopPagerAdapter = (LoopPagerAdapter) pagerAdapter;
+        mCount = loopPagerAdapter.getSize();
+        viewPager.setOnPageChangeListener(this);
+        mSelectItem = viewPager.getCurrentItem() % mCount;
+        Log.e("Test", "初始位置 " + mSelectItem);
+        invalidate();
+    }
+
     public void setOnPageChangeListener(ViewPager.OnPageChangeListener mPageChangeListener) {
         this.mPageChangeListener = mPageChangeListener;
     }
@@ -241,24 +264,27 @@ public class ViewPagerIndicator extends View implements ViewPager.OnPageChangeLi
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         if (mSmooth) {
-            mSelectItem = position;
+            mSelectItem = isLoop ? position % mCount : position;//TODO 循环最好不要平滑移动，有bug 另外回调的position注意要准确
             mOffset = positionOffset;
             invalidate();
         }
         if (mPageChangeListener != null) {
-            mPageChangeListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            mPageChangeListener.onPageScrolled(isLoop ? position % mCount : position, positionOffset, positionOffsetPixels);
         }
+
+        Log.e("Test", "当前位置 " + mSelectItem  +" position:"+position);
     }
 
     @Override
     public void onPageSelected(int position) {
 
-        mSelectItem = position;
+        mSelectItem = isLoop ? position % mCount : position;//TODO 兼容循环方案
         invalidate();
 
         if (mPageChangeListener != null) {
-            mPageChangeListener.onPageSelected(position);
+            mPageChangeListener.onPageSelected(isLoop ? position % mCount : position);
         }
+        Log.e("Test", "选中位置 " + mSelectItem);
     }
 
     @Override
