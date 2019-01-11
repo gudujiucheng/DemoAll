@@ -6,10 +6,15 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.canzhang.sample.weex.view.FqlWeexFloatingAds;
 import com.canzhang.sample.weex.ImageAdapter;
+import com.canzhang.sample.weex.view.FqlWeexQRCodeView;
+import com.canzhang.sample.weex.view.RichImageview;
+import com.canzhang.sample.weex.view.RichText;
 import com.lexinfintech.component.debugdialog.DebugDialog;
 import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXSDKEngine;
+import com.taobao.weex.common.WXException;
 
 
 /**
@@ -29,6 +34,14 @@ public class DebugBaseApp extends Application {
     private void initWeex() {
         InitConfig config=new InitConfig.Builder().setImgAdapter(new ImageAdapter()).build();
         WXSDKEngine.initialize(this,config);
+        try {
+            WXSDKEngine.registerComponent("FqlWeexFloatingAds", FqlWeexFloatingAds.class);
+            WXSDKEngine.registerComponent("richText", RichText.class);
+            WXSDKEngine.registerComponent("RichImageview", RichImageview.class);
+            WXSDKEngine.registerComponent("FqlWeexQRCodeView", FqlWeexQRCodeView.class);
+        } catch (WXException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

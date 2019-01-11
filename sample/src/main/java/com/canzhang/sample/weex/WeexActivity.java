@@ -14,7 +14,6 @@ public class WeexActivity extends BaseActivity implements IWXRenderListener {
 
 
 
-
     WXSDKInstance mWXSDKInstance;
 
     @Override
@@ -25,7 +24,7 @@ public class WeexActivity extends BaseActivity implements IWXRenderListener {
         mWXSDKInstance = new WXSDKInstance(this);
         mWXSDKInstance.registerRenderListener(this);
         //本地加载
-//        mWXSDKInstance.render("WXSample", WXFileUtils.loadAsset("index.js",this), null, null, WXRenderStrategy.APPEND_ASYNC);
+//        mWXSDKInstance.render("WXSample", WXFileUtils.loadAsset("index2.js",this), null, null, WXRenderStrategy.APPEND_ASYNC);
          String TEST_URL = "http://10.1.18.19:8081/dist/index.js";//对应项目根目录下dist文件夹下的js文件
 //         String TEST_URL = "http://10.1.18.19:8081/web/preview.html?page=index.js&wsport=8082";//对应项目根目录下dist文件夹下的js文件
         //网络加载
