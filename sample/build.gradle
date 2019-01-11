@@ -71,8 +71,11 @@ dependencies {
     //weex
     implementation "com.alibaba:fastjson:${rootProject.ext.fastjsonVersion}"
     implementation "com.taobao.android:weex_sdk:${rootProject.ext.weexVersion}"
-
+    //glide
     implementation 'com.github.bumptech.glide:glide:' + rootProject.ext.glideVersion
     annotationProcessor 'com.github.bumptech.glide:compiler:' + rootProject.ext.glideVersion
+    //rxjava
+    implementation "io.reactivex.rxjava2:rxandroid:${rootProject.ext.rxandroid2Version}"
+    implementation "io.reactivex.rxjava2:rxjava:${rootProject.ext.rxjava2Version}"
     implementation project(':base')
 }
