@@ -17,4 +17,9 @@ public class BaseActivity extends Activity {
         super.onResume();
         Log.e("Test",this.getClass().getSimpleName());
     }
+
+
+    public  void log(String msg){
+        Log.e(this.getClass().getSimpleName(),msg);
+    }
 }
