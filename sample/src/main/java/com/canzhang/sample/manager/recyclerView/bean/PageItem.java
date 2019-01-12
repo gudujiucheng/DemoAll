@@ -1,4 +1,4 @@
-package com.canzhang.sample.recyclerView.bean;
+package com.canzhang.sample.manager.recyclerView.bean;
 
 public class PageItem {
     public int res;

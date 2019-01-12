@@ -1,4 +1,4 @@
-package com.canzhang.sample.viewpager.loop;
+package com.canzhang.sample.manager.viewpager.loop;
 
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;

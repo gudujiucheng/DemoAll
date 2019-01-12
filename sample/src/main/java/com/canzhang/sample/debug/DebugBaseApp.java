@@ -6,11 +6,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.canzhang.sample.weex.view.FqlWeexFloatingAds;
-import com.canzhang.sample.weex.ImageAdapter;
-import com.canzhang.sample.weex.view.FqlWeexQRCodeView;
-import com.canzhang.sample.weex.view.RichImageview;
-import com.canzhang.sample.weex.view.RichText;
+import com.canzhang.sample.manager.weex.view.FqlWeexFloatingAds;
+import com.canzhang.sample.manager.weex.ImageAdapter;
+import com.canzhang.sample.manager.weex.view.FqlWeexQRCodeView;
+import com.canzhang.sample.manager.weex.view.RichImageview;
+import com.canzhang.sample.manager.weex.view.RichText;
 import com.lexinfintech.component.debugdialog.DebugDialog;
 import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXSDKEngine;

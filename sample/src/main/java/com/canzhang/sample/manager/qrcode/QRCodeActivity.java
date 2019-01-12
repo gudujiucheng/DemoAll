@@ -1,4 +1,4 @@
-package com.canzhang.sample.qrcode;
+package com.canzhang.sample.manager.qrcode;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;

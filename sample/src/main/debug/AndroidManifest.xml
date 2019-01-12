@@ -20,10 +20,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".CommonComponentSampleActivity" />
-        <activity android:name=".recyclerView.RecyclerViewActivity" />
-        <activity android:name=".viewpager.ViewPagerActivity" />
-        <activity android:name=".qrcode.QRCodeActivity" />
-        <activity android:name=".weex.WeexActivity"></activity>
+        <activity android:name=".manager.recyclerView.RecyclerViewActivity" />
+        <activity android:name=".manager.viewpager.ViewPagerActivity" />
+        <activity android:name=".manager.qrcode.QRCodeActivity" />
+        <activity android:name=".manager.weex.WeexActivity"></activity>
     </application>
 
 </manifest>

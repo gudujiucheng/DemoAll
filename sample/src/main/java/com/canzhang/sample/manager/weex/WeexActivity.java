@@ -1,4 +1,4 @@
-package com.canzhang.sample.weex;
+package com.canzhang.sample.manager.weex;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,7 +8,6 @@ import com.example.base.base.BaseActivity;
 import com.taobao.weex.IWXRenderListener;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.common.WXRenderStrategy;
-import com.taobao.weex.utils.WXFileUtils;
 
 public class WeexActivity extends BaseActivity implements IWXRenderListener {
 

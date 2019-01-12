@@ -1,10 +1,8 @@
-package com.canzhang.sample.weex.view;
+package com.canzhang.sample.manager.weex.view;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.taobao.weex.WXSDKInstance;

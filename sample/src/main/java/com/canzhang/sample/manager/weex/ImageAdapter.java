@@ -1,4 +1,4 @@
-package com.canzhang.sample.weex;
+package com.canzhang.sample.manager.weex;
 
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;

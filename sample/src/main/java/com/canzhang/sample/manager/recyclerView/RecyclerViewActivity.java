@@ -1,13 +1,13 @@
-package com.canzhang.sample.recyclerView;
+package com.canzhang.sample.manager.recyclerView;
 
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.canzhang.sample.R;
-import com.canzhang.sample.recyclerView.adapter.AppAdapter;
-import com.canzhang.sample.recyclerView.bean.AppItemBean;
-import com.canzhang.sample.recyclerView.bean.PageItem;
+import com.canzhang.sample.manager.recyclerView.adapter.AppAdapter;
+import com.canzhang.sample.manager.recyclerView.bean.AppItemBean;
+import com.canzhang.sample.manager.recyclerView.bean.PageItem;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.base.base.BaseActivity;
 

@@ -1,4 +1,4 @@
-package com.canzhang.sample.viewpager;
+package com.canzhang.sample.manager.viewpager;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -12,7 +12,7 @@ import android.util.TypedValue;
 import android.view.View;
 
 import com.canzhang.sample.R;
-import com.canzhang.sample.viewpager.loop.LoopPagerAdapter;
+import com.canzhang.sample.manager.viewpager.loop.LoopPagerAdapter;
 
 /**
  * 自定义viewpager指示器  by zc

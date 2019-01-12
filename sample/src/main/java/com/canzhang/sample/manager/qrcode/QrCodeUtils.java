@@ -1,66 +1,17 @@
-package com.canzhang.sample.weex.view;
+package com.canzhang.sample.manager.qrcode;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.widget.ImageView;
 
-import com.canzhang.sample.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
-import com.taobao.weex.WXSDKInstance;
-import com.taobao.weex.annotation.Component;
-import com.taobao.weex.annotation.JSMethod;
-import com.taobao.weex.ui.action.BasicComponentData;
-import com.taobao.weex.ui.component.WXComponent;
-import com.taobao.weex.ui.component.WXVContainer;
 
 import java.util.Hashtable;
 
-/**
- * @author canzhang
- * 2019年1月10日14:58:07
- */
-@Component(lazyload = false)
-public class FqlWeexQRCodeView extends WXComponent<ImageView> {
-
-
-    public FqlWeexQRCodeView(WXSDKInstance instance, WXVContainer parent, String instanceId, boolean isLazy, BasicComponentData basicComponentData) {
-        super(instance, parent, instanceId, isLazy, basicComponentData);
-    }
-
-    public FqlWeexQRCodeView(WXSDKInstance instance, WXVContainer parent, boolean isLazy, BasicComponentData basicComponentData) {
-        super(instance, parent, isLazy, basicComponentData);
-    }
-
-    public FqlWeexQRCodeView(WXSDKInstance instance, WXVContainer parent, BasicComponentData basicComponentData) {
-        super(instance, parent, basicComponentData);
-    }
-
-    public FqlWeexQRCodeView(WXSDKInstance instance, WXVContainer parent, int type, BasicComponentData basicComponentData) {
-        super(instance, parent, type, basicComponentData);
-    }
-
-    @Override
-    protected ImageView initComponentHostView(@NonNull Context context) {
-        ImageView imageView = new ImageView(context);
-        imageView.setImageResource(R.mipmap.ic_launcher);
-        return imageView;
-    }
-
-
-    @JSMethod
-    public void setCodeAttr(String content, int width, int height,
-                            String character_set, String error_correction_level,
-                            String margin, int color_black, int color_white) {
-        Bitmap bitmap = createQRCodeBitmap(content, width, height, character_set, error_correction_level, margin, color_black, color_white);
-        getHostView().setImageBitmap(bitmap);
-    }
-
+public class QrCodeUtils {
 
     /**
      * 生成简单二维码
@@ -74,7 +25,7 @@ public class FqlWeexQRCodeView extends WXComponent<ImageView> {
      * @param color_black            黑色色块
      * @param color_white            白色色块
      * @return BitMap
-     * <p>
+     *
      * createQRCodeBitmap(content, 800, 800,"UTF-8","H", "1", Color.BLACK, Color.WHITE);
      */
     public static Bitmap createQRCodeBitmap(String content, int width, int height,

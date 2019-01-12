@@ -1,4 +1,4 @@
-package com.canzhang.sample.qrcode;
+package com.canzhang.sample.manager.qrcode;
 
 import android.content.Context;
 import android.support.annotation.Nullable;

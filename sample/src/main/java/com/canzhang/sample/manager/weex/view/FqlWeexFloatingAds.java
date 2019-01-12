@@ -1,4 +1,4 @@
-package com.canzhang.sample.weex.view;
+package com.canzhang.sample.manager.weex.view;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

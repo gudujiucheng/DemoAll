@@ -1,4 +1,4 @@
-package com.canzhang.sample.viewpager;
+package com.canzhang.sample.manager.viewpager;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.canzhang.sample.R;
-import com.canzhang.sample.recyclerView.bean.PageItem;
-import com.canzhang.sample.viewpager.loop.LoopPagerAdapter;
+import com.canzhang.sample.manager.recyclerView.bean.PageItem;
+import com.canzhang.sample.manager.viewpager.loop.LoopPagerAdapter;
 import com.example.base.base.BaseActivity;
 
 import java.util.ArrayList;
