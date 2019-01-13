@@ -10,6 +10,7 @@ import com.canzhang.sample.base.adapter.ComponentAdapter;
 import com.canzhang.sample.base.bean.ComponentItem;
 import com.canzhang.sample.manager.BrightnessDemoManager;
 import com.canzhang.sample.manager.DebugDemoManager;
+import com.canzhang.sample.manager.JniDemoManager;
 import com.canzhang.sample.manager.qrcode.QRCodeActivity;
 import com.canzhang.sample.manager.recyclerView.RecyclerViewActivity;
 import com.canzhang.sample.manager.viewpager.ViewPagerActivity;
@@ -45,6 +46,7 @@ public class ComponentListActivity extends BaseActivity {
      * 在这里添加要调试的组件数据
      */
     private void initData() {
+        mData.add(new ComponentItem("jni", new JniDemoManager()));
         mData.add(new ComponentItem("调试弹窗", new DebugDemoManager()));
         mData.add(new ComponentItem("调节亮度测试", new BrightnessDemoManager()));
         mData.add(new ComponentItem("多type类型(非原生)", new View.OnClickListener() {

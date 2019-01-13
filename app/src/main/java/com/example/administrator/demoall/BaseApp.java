@@ -7,9 +7,6 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.administrator.demoall.MMKV.MMKVActivity;
-import com.example.administrator.demoall.weex.ImageAdapter;
-import com.taobao.weex.InitConfig;
-import com.taobao.weex.WXSDKEngine;
 import com.tencent.mmkv.MMKV;
 
 import java.io.File;
@@ -18,7 +15,7 @@ import static com.example.administrator.demoall.MainActivity.TAG;
 
 public class BaseApp extends Application {
     ActivityLifecycleCallbacks callbacks;
-    public static  Context mContext;
+    public static Context mContext;
 
     public Context getAppContext() {
         return getApplicationContext();
@@ -27,14 +24,10 @@ public class BaseApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        mContext =getAppContext();
+        mContext = getAppContext();
         int pid = android.os.Process.myPid();
-        Log.i(TAG, "MyApplication is onCreate===="+"pid="+pid);
+        Log.i(TAG, "MyApplication is onCreate====" + "pid=" + pid);
         initMMKV();
-
-        //初始化weex
-        InitConfig config = new InitConfig.Builder().setImgAdapter(new ImageAdapter()).build();
-        WXSDKEngine.initialize(this, config);
 
         //注册对app内所有activity 的生命周期监听
         registerActivityLifecycleCallbacks(callbacks = new ActivityLifecycleCallbacks() {
@@ -81,10 +74,6 @@ public class BaseApp extends Application {
         String rootDir = MMKV.initialize(this);
         Log.e(MMKVActivity.MMKV_TAG, "mmkv root: " + rootDir);
     }
-
-
-
-
 
 
 }

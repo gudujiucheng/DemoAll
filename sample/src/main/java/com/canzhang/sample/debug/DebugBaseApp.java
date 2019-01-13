@@ -11,6 +11,7 @@ import com.canzhang.sample.manager.weex.ImageAdapter;
 import com.canzhang.sample.manager.weex.view.FqlWeexQRCodeView;
 import com.canzhang.sample.manager.weex.view.RichImageview;
 import com.canzhang.sample.manager.weex.view.RichText;
+import com.example.base.base.AppProxy;
 import com.lexinfintech.component.debugdialog.DebugDialog;
 import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXSDKEngine;
@@ -25,10 +26,12 @@ public class DebugBaseApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        AppProxy.getInstance().setApplication(this);
         //调试
         DebugDialog.getInstance().init(this);
         DebugDialog.setIsDebug(true);
         initWeex();
+
     }
 
     private void initWeex() {
