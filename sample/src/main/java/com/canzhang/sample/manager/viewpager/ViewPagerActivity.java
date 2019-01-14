@@ -25,6 +25,9 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
+/**
+ * 最新可参考项目：https://blog.csdn.net/jijinchao2015/article/details/53908298
+ */
 public class ViewPagerActivity extends BaseActivity {
 
     private ViewPager mVp;
