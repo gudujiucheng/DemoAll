@@ -15,6 +15,13 @@ import com.example.base.base.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class ViewPagerActivity extends BaseActivity {
 
@@ -39,11 +46,9 @@ public class ViewPagerActivity extends BaseActivity {
     }
 
 
-
-
     private void initData() {
         for (int i = 0; i < 4; i++) {
-            mData.add(new PageItem(R.mipmap.ic_launcher, "xxxx"+i));
+            mData.add(new PageItem(R.mipmap.ic_launcher, "xxxx" + i));
         }
     }
 
@@ -70,7 +75,7 @@ public class ViewPagerActivity extends BaseActivity {
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ViewPagerActivity.this,pageItem.text,Toast.LENGTH_SHORT).show();
+                Toast.makeText(ViewPagerActivity.this, pageItem.text, Toast.LENGTH_SHORT).show();
             }
         });
         return iv;
@@ -81,7 +86,7 @@ public class ViewPagerActivity extends BaseActivity {
         mVp.setAdapter(new LoopPagerAdapter() {
             @Override
             public View getView(ViewGroup container, int position) {
-                return getRealView(container,mData.get(position));
+                return getRealView(container, mData.get(position));
             }
 
             @Override
@@ -90,7 +95,33 @@ public class ViewPagerActivity extends BaseActivity {
             }
         });
         mIndicator.setLoopViewPager(mVp);
+
+        loop();
     }
 
+    Disposable subscribe;
 
+    private void loop() {
+        subscribe = Observable.interval(1, 1, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.computation())
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long value) throws Exception {
+                        log("接收到了事件" + value + "  " + Thread.currentThread().getName());
+                        if (mVp != null) {
+                            mVp.setCurrentItem(mVp.getCurrentItem() + 1);
+                        }
+
+                    }
+                });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (subscribe != null) {
+            subscribe.dispose();
+        }
+    }
 }

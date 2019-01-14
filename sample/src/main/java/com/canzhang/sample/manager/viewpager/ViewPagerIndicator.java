@@ -140,7 +140,7 @@ public class ViewPagerIndicator extends View implements ViewPager.OnPageChangeLi
         if (mode == MeasureSpec.EXACTLY) {
             height = size;
         } else {
-            int desired = getPaddingTop() + getPaddingBottom() + mIndicatorSize;
+            int desired = getPaddingTop() + getPaddingBottom() + mIndicator.getIntrinsicHeight();//TODO 改造
             if (mode == MeasureSpec.AT_MOST) {
                 height = Math.min(desired, size);
             } else {
