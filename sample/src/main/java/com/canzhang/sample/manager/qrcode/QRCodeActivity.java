@@ -1,10 +1,9 @@
 package com.canzhang.sample.manager.qrcode;
 
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.canzhang.sample.R;
 import com.example.base.base.BaseActivity;
@@ -23,19 +22,35 @@ import io.reactivex.schedulers.Schedulers;
  * 参考文章 ：https://www.cnblogs.com/xch-yang/p/9642255.html
  */
 public class QRCodeActivity extends BaseActivity {
-    ConstraintLayout constraintLayout;
+    LinearLayout linearLayout;
     CompositeDisposable compositeDisposable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sample_activity_qrcode);
-        constraintLayout = findViewById(R.id.root_view);
+        linearLayout = findViewById(R.id.root_view);
         compositeDisposable = new CompositeDisposable();
         addView();
+        addViewTest();
+        addViewTest02();
 
 
+    }
+    private void addViewTest(){
+        final ImageView imageView = new ImageView(this);
+        Bitmap qrCodeBitmap = QRCodeEncoder.syncEncodeBarcode("abs1234",300,150,20);
+        imageView.setImageBitmap(qrCodeBitmap);
+        linearLayout.addView(imageView);
+    }
 
+    private void addViewTest02(){//带有文字的条形码 转换成base64 在转换回来 会有问题
+        final ImageView imageView = new ImageView(this);
+        Bitmap qrCodeBitmap = QRCodeEncoder.syncEncodeBarcode("abs1234",300,150,20);
+        String stringBase64 = ImageUtils.bitmapToBase64(qrCodeBitmap);
+        Bitmap bitmap = ImageUtils.base64ToBitmap(stringBase64);
+        imageView.setImageBitmap(bitmap);
+        linearLayout.addView(imageView);
     }
 
 
@@ -48,14 +63,15 @@ public class QRCodeActivity extends BaseActivity {
                     @Override
                     public String apply(String s) {//转换base64
                         log("线程" + Thread.currentThread().getName() + " " + s);
-                        Bitmap qrCodeBitmap = QrCodeUtils.createQRCodeBitmap("测试", 800, 800, "UTF-8", "H", "1", Color.BLACK, Color.WHITE);
+//                        Bitmap qrCodeBitmap = QrCodeUtils.createQRCodeBitmap("测试", 800, 800, "UTF-8", "H", "1", Color.BLACK, Color.WHITE);
+//                        Bitmap qrCodeBitmap = QRCodeEncoder.syncEncodeQRCode("测试",800);
+                        Bitmap qrCodeBitmap = QRCodeEncoder.syncEncodeBarcode("abs哈哈1234",300,150,20);
 
                         if (qrCodeBitmap != null) {
-                            String stringBase64 = ImageUtils.bitmapToBase64(qrCodeBitmap);
-                            return stringBase64;
+                            return ImageUtils.bitmapToBase64(qrCodeBitmap);
                         }
 
-                        return null;
+                        return "";
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())//可以切换多次
@@ -70,7 +86,7 @@ public class QRCodeActivity extends BaseActivity {
                 });
         compositeDisposable.add(subscribe);
 
-        constraintLayout.addView(imageView);
+        linearLayout.addView(imageView);
     }
 
     @Override
