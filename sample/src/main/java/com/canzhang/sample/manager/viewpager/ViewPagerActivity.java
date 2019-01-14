@@ -1,8 +1,10 @@
 package com.canzhang.sample.manager.viewpager;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -42,6 +44,9 @@ public class ViewPagerActivity extends BaseActivity {
 //        setAdapter();
         setLoopAdapter();
 
+
+        loop(1);
+        setTouchListener();
 
     }
 
@@ -96,13 +101,39 @@ public class ViewPagerActivity extends BaseActivity {
         });
         mIndicator.setLoopViewPager(mVp);
 
-        loop();
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void setTouchListener(){
+        //通过mViewPager去设置触摸滑动的点击事件
+        mVp.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_MOVE:
+                        stop();
+                        log("ACTION_MOVE" );
+                        //移除回调函数和消息
+                    case MotionEvent.ACTION_DOWN:
+                        stop();
+                        log("ACTION_DOWN" );
+                        break;
+                    //当你触摸时停止自动滑动
+                    default:
+                    case MotionEvent.ACTION_UP:
+                        loop(3);
+                        log("ACTION_UP" );
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     Disposable subscribe;
 
-    private void loop() {
-        subscribe = Observable.interval(1, 1, TimeUnit.SECONDS)
+    private void loop(int delay) {
+        subscribe = Observable.interval(delay, 2, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.computation())
                 .subscribe(new Consumer<Long>() {
@@ -120,8 +151,14 @@ public class ViewPagerActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        stop();
+    }
+
+    private void stop() {
         if (subscribe != null) {
             subscribe.dispose();
         }
+
+        log("停止------------------------停止--------------停止---" );
     }
 }
