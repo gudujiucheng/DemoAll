@@ -305,6 +305,12 @@ public class CustomBannerVp extends RelativeLayout implements ViewPager.OnPageCh
         }
     }
 
+    /**
+     * 设置宽高以及间距
+     * @param width
+     * @param height
+     * @param space 点间距
+     */
     public void setPointHeightWidth(int width, int height, int space) {
         this.width = width;
         this.height = height;
