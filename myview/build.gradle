@@ -1,18 +1,39 @@
-apply plugin: 'com.android.library'
+if (!isMyViewNoudle.toBoolean()) {
+    apply plugin: 'com.android.application'
+
+} else {
+    apply plugin: 'com.android.library'
+}
+
 
 android {
-    compileSdkVersion 28
-
-
-
+    resourcePrefix project.getName() + "_"
+    compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 28
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-
+        if (!isMyViewNoudle.toBoolean()) {
+            applicationId "com.example.myview"
+        }
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+    }
+
+    sourceSets {
+        main {
+            // 单独调试与集成调试时使用不同的 AndroidManifest.xml 文件
+            if (!isMyViewNoudle.toBoolean()) {
+                manifest.srcFile 'src/main/test/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+                java {
+                    //排除java/debug文件夹下的所有文件
+                    exclude '*module'
+                }
+            }
+        }
     }
 
     buildTypes {
@@ -26,10 +47,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation 'com.android.support:appcompat-v7:28.0.0-rc01'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation 'com.android.support:recyclerview-v7:28.0.0-rc01'
+    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportVersion}"
+    implementation 'com.android.support:recyclerview-v7:'+rootProject.ext.supportVersion
 }

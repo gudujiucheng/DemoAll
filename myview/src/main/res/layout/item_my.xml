@@ -10,7 +10,6 @@
         android:layout_height="36dp"
         android:layout_margin="8dp"
         android:background="@drawable/bg_channel"
-        android:foreground="?attr/selectableItemBackground"
         android:layout_centerInParent="true"
         android:gravity="center"/>
 
@@ -19,6 +18,7 @@
         android:layout_alignParentRight="true"
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:src="@mipmap/ic_launcher_round"/>
+        android:background="@color/red_500"
+         />
 
 </RelativeLayout>

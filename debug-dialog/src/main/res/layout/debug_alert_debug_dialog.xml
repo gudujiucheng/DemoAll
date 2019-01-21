@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <LinearLayout
+        android:id="@+id/mLlContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/debug_dialog_background"
+        android:elevation="6dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/mTvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:drawableLeft="@drawable/debug_icon_debug"
+            android:drawablePadding="3dp"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:maxEms="40"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:textColor="#1c2838"
+            android:textSize="17sp"
+            android:visibility="visible"
+            tools:text="调试信息调试信息调试信息调试信息调试信息调试信息"/>
+
+
+        <TextView
+            android:id="@+id/mTvContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxEms="48"
+            android:maxLines="10"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:textAlignment="center"
+            android:textColor="#566272"
+            android:textIsSelectable="true"
+            android:textSize="14sp"
+            android:visibility="visible"
+            tools:text="描述内容应该尽可能地简短明了，在正常情况下文本字数不超过48个字符，另外结尾无需标点符号"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.0px"
+            android:layout_marginTop="24dp"
+            android:background="#e8eaee"/>
+
+
+        <TextView
+            android:id="@+id/mTvClick"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/debug_basis_button_background"
+            android:gravity="center"
+            android:textColor="#3b9bff"
+            android:textSize="14sp"
+            tools:text="确定"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
