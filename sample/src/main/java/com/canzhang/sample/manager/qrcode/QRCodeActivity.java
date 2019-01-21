@@ -64,8 +64,8 @@ public class QRCodeActivity extends BaseActivity {
                     public String apply(String s) {//转换base64
                         log("线程" + Thread.currentThread().getName() + " " + s);
 //                        Bitmap qrCodeBitmap = QrCodeUtils.createQRCodeBitmap("测试", 800, 800, "UTF-8", "H", "1", Color.BLACK, Color.WHITE);
-//                        Bitmap qrCodeBitmap = QRCodeEncoder.syncEncodeQRCode("测试",800);
-                        Bitmap qrCodeBitmap = QRCodeEncoder.syncEncodeBarcode("abs哈哈1234",300,150,20);
+                        Bitmap qrCodeBitmap = QRCodeEncoder.syncEncodeQRCode("测试",800);
+//                        Bitmap qrCodeBitmap = QRCodeEncoder.syncEncodeBarcode("abs哈哈1234",300,150,20);
 
                         if (qrCodeBitmap != null) {
                             return ImageUtils.bitmapToBase64(qrCodeBitmap);

@@ -2,6 +2,9 @@ package com.canzhang.sample;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,7 +16,8 @@ import com.canzhang.sample.manager.DebugDemoManager;
 import com.canzhang.sample.manager.JniDemoManager;
 import com.canzhang.sample.manager.qrcode.QRCodeActivity;
 import com.canzhang.sample.manager.recyclerView.RecyclerViewActivity;
-import com.canzhang.sample.manager.viewpager.ViewPagerActivity;
+import com.canzhang.sample.manager.viewpager.ViewPagerFragment;
+import com.canzhang.sample.manager.viewpager.fql.FqlViewPagerFragment;
 import com.canzhang.sample.manager.weex.WeexActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -59,7 +63,14 @@ public class ComponentListActivity extends BaseActivity {
         mData.add(new ComponentItem("viewPager", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                start(ViewPagerActivity.class);
+                showFragment(new ViewPagerFragment());
+            }
+        }));
+
+        mData.add(new ComponentItem("fql viewPager", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFragment(new FqlViewPagerFragment());
             }
         }));
         mData.add(new ComponentItem("二维码生成测试", new View.OnClickListener() {
@@ -87,5 +98,13 @@ public class ComponentListActivity extends BaseActivity {
 
     private void start(Class clazz) {
         startActivity(new Intent(ComponentListActivity.this, clazz));
+    }
+
+    private void showFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fl_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
