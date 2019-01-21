@@ -37,12 +37,13 @@ import java.util.List;
  */
 public class CustomBannerVp extends RelativeLayout implements ViewPager.OnPageChangeListener {
 
+    //默认值
     private int width = (int) ScreenUtil.dip2px(getContext(), 8);
     private int height = (int) ScreenUtil.dip2px(getContext(), 8);
     private int space = (int) ScreenUtil.dip2px(getContext(), 10);
 
     private boolean isNeedPointLeftSpace = true;
-    private boolean isNeedPointBottomSpace = true;
+
 
     public static final int VIEWPAGER_TOTAL_NUMBER = 60 * 60;
     private final Context mContext;
@@ -128,7 +129,6 @@ public class CustomBannerVp extends RelativeLayout implements ViewPager.OnPageCh
             return;
         }
         lp.setMargins(left, top, right, bottom);
-        isNeedPointBottomSpace = false;//屏蔽点设置marginBottom的干扰
     }
 
     /**
@@ -292,14 +292,9 @@ public class CustomBannerVp extends RelativeLayout implements ViewPager.OnPageCh
                 if (isNeedPointLeftSpace) {
                     params.leftMargin = space;
                 }
-                if (isNeedPointBottomSpace) {
-                    params.bottomMargin = space;
-                }
+
             } else {
                 point.setEnabled(false);
-                if (isNeedPointBottomSpace) {
-                    params.bottomMargin = space;
-                }
             }
             mLlPointContain.addView(point, params);
         }
