@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.canzhang.sample.manager.AppStatusManager;
 import com.canzhang.sample.manager.weex.view.FqlWeexFloatingAds;
 import com.canzhang.sample.manager.weex.ImageAdapter;
 import com.canzhang.sample.manager.weex.view.FqlWeexQRCodeView;
@@ -26,11 +27,12 @@ public class DebugBaseApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        AppProxy.getInstance().setApplication(this);
+        AppProxy.getInstance().onApplicationCreate(this);
         //调试
         DebugDialog.getInstance().init(this);
         DebugDialog.setIsDebug(true);
         initWeex();
+        AppStatusManager.register(this);
 
     }
 

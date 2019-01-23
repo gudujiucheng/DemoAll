@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.canzhang.sample.base.adapter.ComponentAdapter;
 import com.canzhang.sample.base.bean.ComponentItem;
+import com.canzhang.sample.manager.AppStatusManager;
 import com.canzhang.sample.manager.BrightnessDemoManager;
 import com.canzhang.sample.manager.DebugDemoManager;
 import com.canzhang.sample.manager.JniDemoManager;
@@ -50,6 +51,7 @@ public class ComponentListActivity extends BaseActivity {
      * 在这里添加要调试的组件数据
      */
     private void initData() {
+        mData.add(new ComponentItem("app前后台检测", new AppStatusManager()));
         mData.add(new ComponentItem("jni", new JniDemoManager()));
         mData.add(new ComponentItem("调试弹窗", new DebugDemoManager()));
         mData.add(new ComponentItem("调节亮度测试", new BrightnessDemoManager()));
