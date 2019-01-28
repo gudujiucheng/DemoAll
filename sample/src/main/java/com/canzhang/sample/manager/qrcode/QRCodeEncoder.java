@@ -3,6 +3,7 @@ package com.canzhang.sample.manager.qrcode;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.text.TextUtils;
 
@@ -167,6 +168,10 @@ public class QRCodeEncoder {
 
         return null;
     }
+
+
+
+
 
     /**
      * 显示条形的内容
