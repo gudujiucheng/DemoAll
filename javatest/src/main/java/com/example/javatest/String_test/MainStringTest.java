@@ -9,13 +9,14 @@ public class MainStringTest {
     public static void main(String[] args){
 //        testIndex();
 
-        System.out.print(getPlatformList("cd"));
+        System.out.print(getPlatformList("cdxxxxxxxxxxxxxxxxxxxxxx"));
 
     }
 
     private static void testIndex() {
         StringBuilder stringBuilder = new StringBuilder("qweqweqcddd");
         int index = stringBuilder.indexOf("c");
+
         stringBuilder.replace(index,index+1,"");
         System.out.print("index:"+index+"  result:"+stringBuilder.toString());
     }
