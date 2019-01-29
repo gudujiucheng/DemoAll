@@ -22,13 +22,19 @@ public class AppProxy {
     private Application application;
 
 
-    public void setApplication(Application application) {
-
+    /**
+     * appliation 初次创建
+     *
+     * @param application
+     */
+    public void onApplicationCreate(Application application) {
         this.application = application;
+        //可以在这里做一些初始化动作
+
 
     }
 
-    public Application getApplication(){
+    public Application getApplication() {
         return application;
     }
 

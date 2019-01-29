@@ -35,7 +35,6 @@ import java.lang.reflect.Method;
 import java.util.LinkedList;
 
 /**
- * Created by liveeili on 2017/11/20.
  * 通过WindowManager实现的队列式弹框
  */
 

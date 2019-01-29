@@ -13,7 +13,6 @@ import java.util.List;
 
 /**
  * DebugDialog 用法展示
- * wiki 文档地址：http://wiki.fenqile.com/pages/viewpage.action?pageId=31442107
  */
 public class DebugDemoManager extends BaseManager {
 
