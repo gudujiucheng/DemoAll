@@ -9,7 +9,7 @@ public class MainStringTest {
     public static void main(String[] args){
 //        testIndex();
 
-        System.out.print(getPlatformList("cd"));
+        System.out.print(getPlatformList("aaaaaaaaaaacd"));
 
     }
 
