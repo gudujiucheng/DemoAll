@@ -10,6 +10,7 @@ public class MainStringTest {
 //        testIndex();
 
         System.out.print(getPlatformList("cdxxxxxxxxxxxxxxxxxxxxxx"));
+        System.out.print(getPlatformList("aaaaaaaaaaacd"));
 
     }
 
