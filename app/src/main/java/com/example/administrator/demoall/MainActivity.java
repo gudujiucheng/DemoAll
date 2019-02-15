@@ -16,7 +16,7 @@ import com.example.administrator.demoall.filemanager.FileTestActivity;
 import com.example.administrator.demoall.myadapter.BaseAdapter;
 import com.example.administrator.demoall.myadapter.test.TestAdapter;
 import com.example.administrator.demoall.myadapter.test.TestBean;
-import com.lxj.xrefreshlayout.XRefreshLayout;
+import com.lxj.xrefreshlayout.FqlRefreshLayout;
 import com.meituan.android.walle.WalleChannelReader;
 
 import java.util.ArrayList;
@@ -46,18 +46,18 @@ public class MainActivity extends AppCompatActivity {
 //                showTipsDialog(MainActivity.this, "xxxxxxx");
 //                showOpenSettingTipsDialog(MainActivity.this,"xxxxxxx");
 //                startActivity(new Intent(MainActivity.this,MMKVActivity.class));
-                startActivity(new Intent(MainActivity.this,FileTestActivity.class));
+                startActivity(new Intent(MainActivity.this, FileTestActivity.class));
 //                startActivity(new Intent(MainActivity.this,WebviewActivity.class));
 //                startService(new Intent(MainActivity.this,PreLoadService.class));
             }
         });
 
         RecyclerView recyclerView = findViewById(R.id.rv);
-        XRefreshLayout  xrefreshLayout = findViewById(R.id.xrefreshLayout);
+        FqlRefreshLayout xrefreshLayout = findViewById(R.id.xrefreshLayout);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         List<TestBean> lists = new ArrayList<>();
-        for (int i = 0; i <10 ; i++) {
-            lists.add(new TestBean().setType(i%2));
+        for (int i = 0; i < 10; i++) {
+            lists.add(new TestBean().setType(i % 2));
         }
 //        recyclerView.setAdapter(new BaseAdapter<TestBean,BaseViewHolder>(R.layout.item_other,lists) {
 //
@@ -74,43 +74,23 @@ public class MainActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
-                Toast.makeText(MainActivity.this,"当前位置："+position,Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "当前位置：" + position, Toast.LENGTH_SHORT).show();
             }
         });
 
 
-
-        xrefreshLayout.setOnRefreshListener(new XRefreshLayout.OnRefreshListener() {
+        xrefreshLayout.setOnRefreshListener(new FqlRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Toast.makeText(MainActivity.this,"刷新",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "刷新", Toast.LENGTH_SHORT).show();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         xrefreshLayout.completeRefresh();
                     }
-                },3000);
-            }
-
-            @Override
-            public void onLoadMore() {
-                Toast.makeText(MainActivity.this,"上拉加载",Toast.LENGTH_SHORT).show();
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        xrefreshLayout.completeRefresh();
-                        for (int i = 0; i <10 ; i++) {
-                            lists.add(new TestBean().setType(i%2));
-                        }
-                        adapter.notifyDataSetChanged();
-
-                    }
-                },3000);
+                }, 3000);
             }
         });
-
-
 
 
 //        recyclerView.setAdapter(new BaseQuickAdapter(lists) {
@@ -151,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
     public void showChannel(View view) {
         //获取渠道
         String channel = WalleChannelReader.getChannel(this.getApplicationContext());
-        Toast.makeText(this,"当前包的渠道是："+channel,Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "当前包的渠道是：" + channel, Toast.LENGTH_LONG).show();
     }
 }
 

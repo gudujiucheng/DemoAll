@@ -1,7 +1,6 @@
 package com.lxj.xrefreshlayout.loadinglayout;
 
 import android.content.Context;
-import android.graphics.drawable.AnimationDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,92 +8,65 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.demoall.R;
+import com.lxj.xrefreshlayout.drawable.DefaultLoadingCircleViewDrawable;
+import com.lxj.xrefreshlayout.drawable.LoadingCircleViewDrawable;
 
-/**
- * Created by dance on 2017/4/2.
- */
+
 
 public class FqlDefaultLoadingLayout implements ILoadingLayout {
 
-    private View headerView;
-    private View footerView;
-    private ImageView ivHeaderProgress,ivHeaderArrow;
-    private ImageView ivFooterProgress,ivFooterArrow;
-    private TextView tvHeaderState,tvFooterState;
+    private ImageView ivHeaderRefresh;
+    private TextView tvFooterState;
 
-    private AnimationDrawable footerAnimdrawable;
-    private AnimationDrawable headerAnimationDrawable;
+
+    private DefaultLoadingCircleViewDrawable pullToRefreshDrawable;
+    private LoadingCircleViewDrawable refreshingDrawable;
 
     @Override
-    public View createLoadingHeader(Context context,ViewGroup parent) {
-        headerView = LayoutInflater.from(context).inflate(R.layout.fql_default_refresh_header, parent, false);
-        tvHeaderState = (TextView) headerView.findViewById(R.id.tv_header_state);
-        ivHeaderProgress = (ImageView) headerView.findViewById(R.id.iv_header_progress);
-        ivHeaderArrow = (ImageView) headerView.findViewById(R.id.iv_header_arrow);
+    public View createLoadingHeader(Context context, ViewGroup parent) {
+        View headerView = LayoutInflater.from(context).inflate(R.layout.fql_default_refresh_header, parent, false);
+        ivHeaderRefresh = headerView.findViewById(R.id.iv_header_refresh);
+
+        pullToRefreshDrawable = new DefaultLoadingCircleViewDrawable(context);
+        refreshingDrawable = new LoadingCircleViewDrawable(context);
         return headerView;
     }
 
-    @Override
-    public View createLoadingFooter(Context context,ViewGroup parent) {
-        footerView = LayoutInflater.from(context).inflate(R.layout.xrl_default_footer, parent, false);
-        tvFooterState = (TextView) footerView.findViewById(R.id.tv_footer_state);
-        ivFooterProgress = (ImageView) footerView.findViewById(R.id.iv_footer_progress);
-        ivFooterArrow = (ImageView) footerView.findViewById(R.id.iv_footer_arrow);
-        return footerView;
-    }
+
 
     @Override
     public void initAndResetHeader() {
-        tvHeaderState.setText("下拉刷新");
-        ivHeaderArrow.setVisibility(View.VISIBLE);
-        ivHeaderArrow.setRotation(0);
-        ivHeaderProgress.setVisibility(View.INVISIBLE);
-        if(headerAnimationDrawable==null){
-            headerAnimationDrawable = (AnimationDrawable) ivHeaderProgress.getBackground();
+        refreshingDrawable.stop();
+    }
+
+
+
+    @Override
+    public void onPullHeader(float percent) {//等于1的时候，可释放刷新
+        if (pullToRefreshDrawable != null) {
+            pullToRefreshDrawable.computeRender(percent - 0.5f < 0 ? 0 : (percent - 0.5f) * 2);
+            ivHeaderRefresh.setImageDrawable(pullToRefreshDrawable);
         }
-        headerAnimationDrawable.stop();
-
-
     }
 
-    @Override
-    public void initAndResetFooter() {
-        tvFooterState.setText("上拉加载");
-        ivFooterArrow.setVisibility(View.VISIBLE);
-        ivFooterArrow.setRotation(0);
-        ivFooterProgress.setVisibility(View.INVISIBLE);
-        if(footerAnimdrawable==null){
-            footerAnimdrawable = (AnimationDrawable) ivFooterProgress.getBackground();
-        }
-        footerAnimdrawable.stop();
-    }
 
-    @Override
-    public void onPullHeader(float percent) {
-        tvHeaderState.setText(percent==1f?"释放立即刷新":"下拉刷新");
-        ivHeaderArrow.setRotation(360*percent);
-    }
-
-    @Override
-    public void onPullFooter(float percent) {
-        tvFooterState.setText(percent==1f?"释放立即加载":"上拉加载");
-        ivFooterArrow.setRotation(360*percent);
-    }
 
     @Override
     public void onHeaderRefreshing() {
-        tvHeaderState.setText("正在刷新...");
-        ivHeaderArrow.setVisibility(View.INVISIBLE);
-        ivHeaderProgress.setVisibility(View.VISIBLE);
-        headerAnimationDrawable.start();
+        ivHeaderRefresh.setImageDrawable(refreshingDrawable);
+        refreshingDrawable.start();
+
     }
 
+
+
     @Override
-    public void onFooterRefreshing() {
-        tvFooterState.setText("正在加载...");
-        ivFooterArrow.setVisibility(View.INVISIBLE);
-        ivFooterProgress.setVisibility(View.VISIBLE);
-        footerAnimdrawable.start();
+    public void onHeaderCompleteRefresh() {
+        if (refreshingDrawable != null) {
+            refreshingDrawable.stop();
+        }
     }
+
+
 
 }
