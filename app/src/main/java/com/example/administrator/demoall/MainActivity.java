@@ -5,19 +5,18 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.demoall.filemanager.FileTestActivity;
 import com.example.administrator.demoall.myadapter.BaseAdapter;
-import com.example.administrator.demoall.myadapter.BaseViewHolder;
 import com.example.administrator.demoall.myadapter.test.TestAdapter;
 import com.example.administrator.demoall.myadapter.test.TestBean;
+import com.lxj.xrefreshlayout.XRefreshLayout;
 import com.meituan.android.walle.WalleChannelReader;
 
 import java.util.ArrayList;
@@ -54,9 +53,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         RecyclerView recyclerView = findViewById(R.id.rv);
+        XRefreshLayout  xrefreshLayout = findViewById(R.id.xrefreshLayout);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         List<TestBean> lists = new ArrayList<>();
-        for (int i = 0; i <100 ; i++) {
+        for (int i = 0; i <10 ; i++) {
             lists.add(new TestBean().setType(i%2));
         }
 //        recyclerView.setAdapter(new BaseAdapter<TestBean,BaseViewHolder>(R.layout.item_other,lists) {
@@ -69,12 +69,44 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
 
-         BaseAdapter adapter;
+        final BaseAdapter adapter;
         recyclerView.setAdapter(adapter = new TestAdapter(lists));
         adapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
                 Toast.makeText(MainActivity.this,"当前位置："+position,Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+        xrefreshLayout.setOnRefreshListener(new XRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Toast.makeText(MainActivity.this,"刷新",Toast.LENGTH_SHORT).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        xrefreshLayout.completeRefresh();
+                    }
+                },3000);
+            }
+
+            @Override
+            public void onLoadMore() {
+                Toast.makeText(MainActivity.this,"上拉加载",Toast.LENGTH_SHORT).show();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        xrefreshLayout.completeRefresh();
+                        for (int i = 0; i <10 ; i++) {
+                            lists.add(new TestBean().setType(i%2));
+                        }
+                        adapter.notifyDataSetChanged();
+
+                    }
+                },3000);
             }
         });
 
