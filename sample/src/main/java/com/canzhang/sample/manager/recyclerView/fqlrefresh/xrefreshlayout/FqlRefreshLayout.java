@@ -1,4 +1,4 @@
-package com.lxj.xrefreshlayout;
+package com.canzhang.sample.manager.recyclerView.fqlrefresh.xrefreshlayout;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -12,9 +12,10 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.OverScroller;
 
-import com.lxj.xrefreshlayout.loadinglayout.FqlDefaultLoadingLayout;
-import com.lxj.xrefreshlayout.loadinglayout.ILoadingLayout;
-import com.lxj.xrefreshlayout.util.DensityUtil;
+import com.canzhang.sample.manager.recyclerView.fqlrefresh.xrefreshlayout.loadinglayout.FqlDefaultLoadingLayout;
+import com.canzhang.sample.manager.recyclerView.fqlrefresh.xrefreshlayout.loadinglayout.ILoadingLayout;
+import com.example.base.utils.ScreenUtil;
+
 
 public class FqlRefreshLayout extends FrameLayout implements NestedScrollingParent {
 
@@ -45,10 +46,11 @@ public class FqlRefreshLayout extends FrameLayout implements NestedScrollingPare
     public FqlRefreshLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
-        MIN_LOADING_LAYOUG_HEIGHT = DensityUtil.dip2px(context, MIN_LOADING_LAYOUG_HEIGHT);
-        OVERSCROLL_RANGE = DensityUtil.dip2px(context, OVERSCROLL_RANGE);
+        MIN_LOADING_LAYOUG_HEIGHT = (int)ScreenUtil.dip2px(context, MIN_LOADING_LAYOUG_HEIGHT);
+        OVERSCROLL_RANGE = (int)ScreenUtil.dip2px(context, OVERSCROLL_RANGE);
 
         scroller = new OverScroller(getContext());
+        //默认选项
         loadingLayout = new FqlDefaultLoadingLayout();
     }
 

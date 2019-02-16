@@ -1,4 +1,4 @@
-package com.lxj.xrefreshlayout.loadinglayout;
+package com.canzhang.sample.manager.recyclerView.fqlrefresh.xrefreshlayout.loadinglayout;
 
 import android.content.Context;
 import android.view.View;

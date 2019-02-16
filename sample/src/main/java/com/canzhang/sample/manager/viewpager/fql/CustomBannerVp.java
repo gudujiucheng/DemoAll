@@ -25,9 +25,9 @@ import java.util.List;
 
 /**
  * 分期乐vp，功能比较完善
- *
- *
- *
+ * <p>
+ * <p>
+ * <p>
  * Created by Carl on 2015/10/14.
  * 功能：1、设置该组件的大小
  * 2、设置vp跳转间隔时间、设置vp跳转过程时间
@@ -76,7 +76,6 @@ public class CustomBannerVp extends RelativeLayout implements ViewPager.OnPageCh
         mVpCustom.addOnPageChangeListener(this);
         mVpCustom.setOverScrollMode(OVER_SCROLL_NEVER);
     }
-
 
 
     public void setAdapterAndData(PagerAdapter adapter, List list) {
@@ -159,16 +158,18 @@ public class CustomBannerVp extends RelativeLayout implements ViewPager.OnPageCh
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+        Log.e("vp", "当前动作" + ev.getAction());
         switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_MOVE:
-            case MotionEvent.ACTION_SCROLL:
+            case MotionEvent.ACTION_DOWN://0
+            case MotionEvent.ACTION_MOVE://2
+            case MotionEvent.ACTION_SCROLL://8
                 stopCustomBannerSwitch();
                 isStopSwitch = true;
                 break;
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL:
+            case MotionEvent.ACTION_UP://1
+            case MotionEvent.ACTION_CANCEL://3
                 if (mList.size() > 1) {
+                    Log.e("vp", "手指离开动作" + ev.getAction());
                     startCustomBannerSwitch();
                 }
                 break;
@@ -207,8 +208,10 @@ public class CustomBannerVp extends RelativeLayout implements ViewPager.OnPageCh
     public void onPageScrollStateChanged(int state) {
         if (state == 2) {
             if (isStopSwitch) {
-                if (mList.size() > 1)
+                if (mList.size() > 1) {
+                    Log.e("vp","onPageScrollStateChanged 触发重新启动");
                     startCustomBannerSwitch();
+                }
                 isStopSwitch = false;
             }
         }
@@ -302,9 +305,10 @@ public class CustomBannerVp extends RelativeLayout implements ViewPager.OnPageCh
 
     /**
      * 设置宽高以及间距
+     *
      * @param width
      * @param height
-     * @param space 点间距
+     * @param space  点间距
      */
     public void setPointHeightWidth(int width, int height, int space) {
         this.width = width;

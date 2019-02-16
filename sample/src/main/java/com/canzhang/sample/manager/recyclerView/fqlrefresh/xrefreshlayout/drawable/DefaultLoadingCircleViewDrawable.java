@@ -1,4 +1,4 @@
-package com.lxj.xrefreshlayout.drawable;
+package com.canzhang.sample.manager.recyclerView.fqlrefresh.xrefreshlayout.drawable;
 
 import android.content.Context;
 import android.graphics.Canvas;

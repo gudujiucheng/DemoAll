@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +15,6 @@ import com.example.administrator.demoall.filemanager.FileTestActivity;
 import com.example.administrator.demoall.myadapter.BaseAdapter;
 import com.example.administrator.demoall.myadapter.test.TestAdapter;
 import com.example.administrator.demoall.myadapter.test.TestBean;
-import com.lxj.xrefreshlayout.FqlRefreshLayout;
 import com.meituan.android.walle.WalleChannelReader;
 
 import java.util.ArrayList;
@@ -53,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         RecyclerView recyclerView = findViewById(R.id.rv);
-        FqlRefreshLayout xrefreshLayout = findViewById(R.id.xrefreshLayout);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         List<TestBean> lists = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
@@ -79,18 +76,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        xrefreshLayout.setOnRefreshListener(new FqlRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                Toast.makeText(MainActivity.this, "刷新", Toast.LENGTH_SHORT).show();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        xrefreshLayout.completeRefresh();
-                    }
-                }, 3000);
-            }
-        });
+
 
 
 //        recyclerView.setAdapter(new BaseQuickAdapter(lists) {

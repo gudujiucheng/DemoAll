@@ -1,4 +1,4 @@
-package com.lxj.xrefreshlayout.drawable;
+package com.canzhang.sample.manager.recyclerView.fqlrefresh.xrefreshlayout.drawable;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
@@ -14,7 +14,8 @@ import android.graphics.drawable.Drawable;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 
-import com.lxj.xrefreshlayout.util.DensityUtil;
+import com.example.base.utils.ScreenUtil;
+
 
 /**
  * Created by Carl on 2017/2/8.
@@ -120,7 +121,7 @@ public class LoadingCircleViewDrawable extends Drawable implements Animatable {
         }
         setupAnimators();
         setupPaint();
-        mStrokeWidth = DensityUtil.dip2px(mContext, DEFAULT_STROKE_WIDTH);
+        mStrokeWidth = ScreenUtil.dip2px(mContext, DEFAULT_STROKE_WIDTH);
     }
 
 

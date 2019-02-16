@@ -20,7 +20,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".CommonComponentSampleActivity" />
-        <activity android:name=".manager.recyclerView.RecyclerViewActivity" />
         <activity android:name=".manager.qrcode.QRCodeActivity" />
         <activity android:name=".manager.weex.WeexActivity"></activity>
     </application>

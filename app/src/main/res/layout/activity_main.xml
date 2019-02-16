@@ -24,16 +24,10 @@
         android:onClick="showChannel"
         android:text="渠道号" />
 
-    <com.lxj.xrefreshlayout.FqlRefreshLayout
-        android:id="@+id/xrefreshLayout"
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </com.lxj.xrefreshlayout.FqlRefreshLayout>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

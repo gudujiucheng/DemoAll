@@ -17,7 +17,7 @@ import com.canzhang.sample.manager.DebugDemoManager;
 import com.canzhang.sample.manager.JniDemoManager;
 import com.canzhang.sample.manager.OtherTestDemoManager;
 import com.canzhang.sample.manager.qrcode.QRCodeActivity;
-import com.canzhang.sample.manager.recyclerView.RecyclerViewActivity;
+import com.canzhang.sample.manager.recyclerView.RecyclerFragment;
 import com.canzhang.sample.manager.rxjava.RxJavaTestDemoManager;
 import com.canzhang.sample.manager.viewpager.ViewPagerFragment;
 import com.canzhang.sample.manager.viewpager.fql.FqlViewPagerFragment;
@@ -59,10 +59,17 @@ public class ComponentListActivity extends BaseActivity {
         mData.add(new ComponentItem("jni", new JniDemoManager()));
         mData.add(new ComponentItem("调试弹窗", new DebugDemoManager()));
         mData.add(new ComponentItem("调节亮度测试", new BrightnessDemoManager()));
-        mData.add(new ComponentItem("多type类型(非原生)", new View.OnClickListener() {
+        mData.add(new ComponentItem("RecyclerView 多type类型(第三方框架)", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                start(RecyclerViewActivity.class);
+                showFragment(new RecyclerFragment());
+            }
+        }));
+
+        mData.add(new ComponentItem("RecyclerView fql 刷新头部", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFragment(new RecyclerFragment());
             }
         }));
 
