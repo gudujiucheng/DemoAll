@@ -1,7 +1,6 @@
 package com.canzhang.sample.manager.recyclerView;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,7 +13,6 @@ import com.canzhang.sample.R;
 import com.canzhang.sample.manager.recyclerView.adapter.AppAdapter;
 import com.canzhang.sample.manager.recyclerView.bean.AppItemBean;
 import com.canzhang.sample.manager.recyclerView.bean.PageItem;
-import com.canzhang.sample.manager.recyclerView.fqlrefresh.xrefreshlayout.FqlRefreshLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.base.base.BaseFragment;
 
@@ -60,8 +58,8 @@ public class RecyclerFragment extends BaseFragment {
 
     private void initData() {
         List<PageItem> list = new ArrayList<>();
-        for (int i = 0; i <10 ; i++) {
-            list.add(new PageItem(R.mipmap.ic_launcher,"xxxx"));
+        for (int i = 0; i < 10; i++) {
+            list.add(new PageItem(R.mipmap.ic_launcher, "xxxx"));
         }
         mData.add(new AppItemBean(list));
 
@@ -72,23 +70,9 @@ public class RecyclerFragment extends BaseFragment {
 
     private void initView(View view) {
         mRvApp = view.findViewById(R.id.rv_app);
-        final FqlRefreshLayout refreshLayout = view.findViewById(R.id.refresh);
-        refreshLayout.setOnRefreshListener(new FqlRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                showToast("刷新");
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        refreshLayout.completeRefresh();
-                    }
-                },2000);
-            }
-        });
         initData();
         setAdapter();
     }
-
 
 
 }

@@ -18,6 +18,7 @@ import com.canzhang.sample.manager.JniDemoManager;
 import com.canzhang.sample.manager.OtherTestDemoManager;
 import com.canzhang.sample.manager.qrcode.QRCodeActivity;
 import com.canzhang.sample.manager.recyclerView.RecyclerFragment;
+import com.canzhang.sample.manager.recyclerView.RecyclerViewHeaderFooterFragment;
 import com.canzhang.sample.manager.rxjava.RxJavaTestDemoManager;
 import com.canzhang.sample.manager.viewpager.ViewPagerFragment;
 import com.canzhang.sample.manager.viewpager.fql.FqlViewPagerFragment;
@@ -69,7 +70,7 @@ public class ComponentListActivity extends BaseActivity {
         mData.add(new ComponentItem("RecyclerView fql 刷新头部", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showFragment(new RecyclerFragment());
+                showFragment(new RecyclerViewHeaderFooterFragment());
             }
         }));
 
