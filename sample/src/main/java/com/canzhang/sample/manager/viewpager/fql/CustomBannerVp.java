@@ -75,6 +75,35 @@ public class CustomBannerVp extends RelativeLayout implements ViewPager.OnPageCh
         mLlPointContain = (LinearLayout) mView.findViewById(R.id.mLlPointContain);
         mVpCustom.addOnPageChangeListener(this);
         mVpCustom.setOverScrollMode(OVER_SCROLL_NEVER);
+        mVpCustom.setOnViewPagerTouchEventListener(new CustomViewPager.OnViewPagerTouchEvent() {
+            @Override
+            public void onTouchDown() {
+                stopCustomBannerSwitch();
+            }
+
+            @Override
+            public void onTouchUp() {
+                startCustomBannerSwitch();
+            }
+        });
+
+        //触摸时不能轮播    不好使  不能响应 down事件了，被item给消费掉了
+//        mVpCustom.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+////                Log.e("Test","onTouch"+event.getAction());
+//                //点击  移动  抬起
+//                if (event.getAction()==MotionEvent.ACTION_UP||event.getAction()==MotionEvent.ACTION_CANCEL){
+//                    //重新轮播
+//                    startCustomBannerSwitch();
+//                }else if(event.getAction()==MotionEvent.ACTION_DOWN){
+//                    //停止轮播
+//                    stopCustomBannerSwitch();
+//                }
+//                return false;
+//            }
+//        });
+
     }
 
 
@@ -156,26 +185,26 @@ public class CustomBannerVp extends RelativeLayout implements ViewPager.OnPageCh
     }
 
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        Log.e("vp", "当前动作" + ev.getAction());
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN://0
-            case MotionEvent.ACTION_MOVE://2
-            case MotionEvent.ACTION_SCROLL://8
-                stopCustomBannerSwitch();
-                isStopSwitch = true;
-                break;
-            case MotionEvent.ACTION_UP://1
-            case MotionEvent.ACTION_CANCEL://3
-                if (mList.size() > 1) {
-                    Log.e("vp", "手指离开动作" + ev.getAction());
-                    startCustomBannerSwitch();
-                }
-                break;
-        }
-        return super.onInterceptTouchEvent(ev);
-    }
+//    @Override
+//    public boolean onInterceptTouchEvent(MotionEvent ev) {
+//        Log.e("vp", "当前动作" + ev.getAction());
+//        switch (ev.getAction()) {
+//            case MotionEvent.ACTION_DOWN://0
+//            case MotionEvent.ACTION_MOVE://2
+//            case MotionEvent.ACTION_SCROLL://8
+//                stopCustomBannerSwitch();
+//                isStopSwitch = true;
+//                break;
+//            case MotionEvent.ACTION_UP://1
+//            case MotionEvent.ACTION_CANCEL://3
+//                if (mList.size() > 1) {
+//                    Log.e("vp", "手指离开动作" + ev.getAction());
+//                    startCustomBannerSwitch();
+//                }
+//                break;
+//        }
+//        return super.onInterceptTouchEvent(ev);
+//    }
 
     public void setBannerScrolledListener(BannerScrolledListener listener) {
         mBannerScrolledListener = listener;
@@ -206,15 +235,15 @@ public class CustomBannerVp extends RelativeLayout implements ViewPager.OnPageCh
 
     @Override
     public void onPageScrollStateChanged(int state) {
-        if (state == 2) {
-            if (isStopSwitch) {
-                if (mList.size() > 1) {
-                    Log.e("vp","onPageScrollStateChanged 触发重新启动");
-                    startCustomBannerSwitch();
-                }
-                isStopSwitch = false;
-            }
-        }
+//        if (state == 2) {
+//            if (isStopSwitch) {
+//                if (mList.size() > 1) {
+//                    Log.e("vp","onPageScrollStateChanged 触发重新启动");
+//                    startCustomBannerSwitch();
+//                }
+//                isStopSwitch = false;
+//            }
+//        }
     }
 
     public void setDurationTime(int time) {

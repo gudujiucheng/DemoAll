@@ -16,6 +16,7 @@ import com.canzhang.sample.manager.BrightnessDemoManager;
 import com.canzhang.sample.manager.DebugDemoManager;
 import com.canzhang.sample.manager.JniDemoManager;
 import com.canzhang.sample.manager.OtherTestDemoManager;
+import com.canzhang.sample.manager.eventdispatch.EventDispatchFragment;
 import com.canzhang.sample.manager.qrcode.QRCodeActivity;
 import com.canzhang.sample.manager.recyclerView.RecyclerFragment;
 import com.canzhang.sample.manager.recyclerView.RecyclerViewHeaderFooterFragment;
@@ -54,6 +55,12 @@ public class ComponentListActivity extends BaseActivity {
      * 在这里添加要调试的组件数据
      */
     private void initData() {
+        mData.add(new ComponentItem("事件分发测试", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFragment(new EventDispatchFragment());
+            }
+        }));
         mData.add(new ComponentItem("平常测试demo", new OtherTestDemoManager()));
         mData.add(new ComponentItem("app前后台检测", new AppStatusManager()));
         mData.add(new ComponentItem("rxJava实际应用", new RxJavaTestDemoManager()));
@@ -66,6 +73,7 @@ public class ComponentListActivity extends BaseActivity {
                 showFragment(new RecyclerFragment());
             }
         }));
+
 
         mData.add(new ComponentItem("RecyclerView fql 刷新头部", new View.OnClickListener() {
             @Override

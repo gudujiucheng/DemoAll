@@ -3,6 +3,7 @@ package com.canzhang.sample.manager.viewpager.fql.other;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 
 /**
@@ -11,6 +12,8 @@ import android.view.MotionEvent;
 public class CustomViewPager extends ViewPager {
 
     private boolean unable = false;
+
+    private OnViewPagerTouchEvent listener;
 
     public CustomViewPager(Context context) {
         super(context);
@@ -36,5 +39,45 @@ public class CustomViewPager extends ViewPager {
             }
         }
     }
+
+
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        Log.e("Test"," vp dispatchTouchEvent:"+ev.getAction());
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                if (listener != null) {
+                    listener.onTouchDown();
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                if (listener != null) {
+                    listener.onTouchUp();
+                }
+                break;
+            default:
+                break;
+        }
+        return super.dispatchTouchEvent(ev);
+
+    }
+
+
+
+    public void setOnViewPagerTouchEventListener(OnViewPagerTouchEvent l){
+        listener = l;
+    }
+
+
+    //    原文：https://blog.csdn.net/tiantianshangcha/article/details/50805050
+    public interface OnViewPagerTouchEvent{
+        void onTouchDown();
+        void onTouchUp();
+    }
+
+
+
 
 }
