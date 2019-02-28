@@ -13,6 +13,10 @@ public class MainTest {
     }
 
     private static void test02() {
+
+        int a = 120*58/168;
+        int b = (int)(120*58f/168);
+        System.out.print("a:"+a+" b:"+b);
     }
 
 

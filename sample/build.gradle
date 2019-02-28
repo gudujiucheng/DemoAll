@@ -84,5 +84,10 @@ dependencies {
     //rxjava
     implementation "io.reactivex.rxjava2:rxandroid:${rootProject.ext.rxandroid2Version}"
     implementation "io.reactivex.rxjava2:rxjava:${rootProject.ext.rxjava2Version}"
+
+    //阴影效果，这个会导致控件变小 https://github.com/JuHonggang/ShadowDrawable
+    implementation 'com.github.JuHonggang:ShadowDrawable:0.1'
+    //阴影效果 https://github.com/harjot-oberai/MaterialShadows
+//    implementation 'com.sdsmdg.harjot:materialshadows:1.2.5'
     implementation project(':base')
 }

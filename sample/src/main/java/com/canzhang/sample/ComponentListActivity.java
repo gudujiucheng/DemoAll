@@ -21,6 +21,7 @@ import com.canzhang.sample.manager.qrcode.QRCodeActivity;
 import com.canzhang.sample.manager.recyclerView.RecyclerFragment;
 import com.canzhang.sample.manager.recyclerView.RecyclerViewHeaderFooterFragment;
 import com.canzhang.sample.manager.rxjava.RxJavaTestDemoManager;
+import com.canzhang.sample.manager.shadow.ShadowFragment;
 import com.canzhang.sample.manager.viewpager.ViewPagerFragment;
 import com.canzhang.sample.manager.viewpager.fql.FqlViewPagerFragment;
 import com.canzhang.sample.manager.weex.WeexActivity;
@@ -55,6 +56,12 @@ public class ComponentListActivity extends BaseActivity {
      * 在这里添加要调试的组件数据
      */
     private void initData() {
+        mData.add(new ComponentItem("阴影测试", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFragment(new ShadowFragment());
+            }
+        }));
         mData.add(new ComponentItem("事件分发测试", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
