@@ -2,9 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.canzhang.sample">
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".debug.DebugBaseApp"
         android:allowBackup="true"
@@ -21,7 +23,7 @@
         </activity>
         <activity android:name=".CommonComponentSampleActivity" />
         <activity android:name=".manager.qrcode.QRCodeActivity" />
-        <activity android:name=".manager.weex.WeexActivity"></activity>
+        <activity android:name=".manager.weex.WeexActivity" />
     </application>
 
 </manifest>
