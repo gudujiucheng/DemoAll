@@ -10,9 +10,7 @@ import android.view.ViewGroup;
 import com.canzhang.sample.R;
 import com.example.base.base.BaseFragment;
 
-/**
- * 方便快速复制
- */
+
 public class CopyFragment extends BaseFragment {
 
 

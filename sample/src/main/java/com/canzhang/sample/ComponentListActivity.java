@@ -18,6 +18,7 @@ import com.canzhang.sample.manager.JniDemoManager;
 import com.canzhang.sample.manager.OtherTestDemoManager;
 import com.canzhang.sample.manager.eventdispatch.EventDispatchFragment;
 import com.canzhang.sample.manager.lifetest.LifeTestFragment;
+import com.canzhang.sample.manager.permission.PermissionFragment;
 import com.canzhang.sample.manager.qrcode.QRCodeActivity;
 import com.canzhang.sample.manager.recyclerView.RecyclerFragment;
 import com.canzhang.sample.manager.recyclerView.RecyclerViewHeaderFooterFragment;
@@ -57,7 +58,13 @@ public class ComponentListActivity extends BaseActivity {
      * 在这里添加要调试的组件数据
      */
     private void initData() {
-        mData.add(new ComponentItem("未绑定生命周期测试", new View.OnClickListener() {
+        mData.add(new ComponentItem("权限测试", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFragment(new PermissionFragment());
+            }
+        }));
+        mData.add(new ComponentItem("未绑定生命周期测试（内存泄露）", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showFragment(new LifeTestFragment());
