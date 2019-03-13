@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.administrator.demoall.dialog.LoadingDialog;
 import com.example.administrator.demoall.fqladapter.BaseTypeFooterAdapter;
 import com.example.administrator.demoall.fqladapter.test.CouponItemAdapter;
 import com.example.administrator.demoall.myadapter.test.TestBean;
@@ -87,6 +88,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+
+    public void test(View view) {
+
+        LoadingDialog.get(this).show();
     }
 }
 
