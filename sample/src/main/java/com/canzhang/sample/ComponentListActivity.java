@@ -16,6 +16,7 @@ import com.canzhang.sample.manager.BrightnessDemoManager;
 import com.canzhang.sample.manager.DebugDemoManager;
 import com.canzhang.sample.manager.JniDemoManager;
 import com.canzhang.sample.manager.OtherTestDemoManager;
+import com.canzhang.sample.manager.UseNonSdkApiDemoManager;
 import com.canzhang.sample.manager.eventdispatch.EventDispatchFragment;
 import com.canzhang.sample.manager.lifetest.LifeTestFragment;
 import com.canzhang.sample.manager.permission.PermissionFragment;
@@ -58,6 +59,7 @@ public class ComponentListActivity extends BaseActivity {
      * 在这里添加要调试的组件数据
      */
     private void initData() {
+        mData.add(new ComponentItem("USE NON SDK API TEST", new UseNonSdkApiDemoManager()));
         mData.add(new ComponentItem("权限测试", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
