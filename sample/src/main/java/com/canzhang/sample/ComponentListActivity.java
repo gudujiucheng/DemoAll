@@ -25,6 +25,7 @@ import com.canzhang.sample.manager.recyclerView.RecyclerFragment;
 import com.canzhang.sample.manager.recyclerView.RecyclerViewHeaderFooterFragment;
 import com.canzhang.sample.manager.rxjava.RxJavaTestDemoManager;
 import com.canzhang.sample.manager.shadow.ShadowFragment;
+import com.canzhang.sample.manager.thread.ThreadTestManager;
 import com.canzhang.sample.manager.viewpager.ViewPagerFragment;
 import com.canzhang.sample.manager.viewpager.fql.FqlViewPagerFragment;
 import com.canzhang.sample.manager.weex.WeexActivity;
@@ -78,6 +79,7 @@ public class ComponentListActivity extends BaseActivity {
                 showFragment(new ShadowFragment());
             }
         }));
+        mData.add(new ComponentItem("线程测试", new ThreadTestManager()));
         mData.add(new ComponentItem("事件分发测试", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
