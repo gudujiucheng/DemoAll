@@ -1,6 +1,9 @@
 package com.canzhang.sample.manager.thread.newThread;
 
-public class MyThread extends Thread {
+/**
+ * implements 的方式创建线程
+ */
+public class ImplementStyleThread implements Runnable {
 
     // 票数
     private int tick = 3;
@@ -9,7 +12,7 @@ public class MyThread extends Thread {
     public void run() {
         while (true) {
             if (tick > 0) {
-                System.out.println(currentThread().getName() + "卖票:" + tick--);
+                System.out.println(Thread.currentThread().getName() + "卖票:" + tick--);
             }
         }
     }
