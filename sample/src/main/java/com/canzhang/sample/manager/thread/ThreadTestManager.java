@@ -33,23 +33,16 @@ public class ThreadTestManager extends BaseManager {
     }
 
 
-    /**
-     *
-     * ﻿同步函数的锁是this
-     */
+
     private ComponentItem syncMethodThreadTest() {
 
         //对多条操作共享数据的语句，只能让一个线程都执行完再执行过程中其他线程不可以参与运行
-        return new ComponentItem("多线程存钱（同步方法 正常）", new View.OnClickListener() {
+        return new ComponentItem("多线程存钱（同步方法 正常）",
+                "1、非静态同步方法的锁是this，不同对象持有的锁自然也是不同的\n" +
+                        "2、静态同步方法的锁是类对象本身，所以和非静态同步方法的锁是不同的，没有竞态关系\n" +
+                        "3、控制域是整个方法（注意不要放非同步的内容进去导致侠侣的降低）", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                /**
-                 * ﻿1.明确哪些代码是多线成运行代码
-                 * 2.明确共享数据
-                 * 3.明确多线成运行代码中哪些语句是操作共享数据的
-                 *
-                 */
                 Runnable runnable = new BankThread();
                 Thread thread = new Thread(runnable);
                 Thread thread2 = new Thread(runnable);
@@ -70,23 +63,14 @@ public class ThreadTestManager extends BaseManager {
     }
 
 
-    /**
-     *
-     * ﻿我们为什么可以这样去同步线程？
-     *
-     * 对象如同锁，持有锁的线程可以在同步中执行，没有执行锁的线程即使获取了CPU的执行权，也进不去，因为没有获取锁，我们可以这样理解
-     * 四个线程，哪一个进去就开始执行，其他的拿不到执行权，所以即使拿到了执行权，也进不去，这个同步能解决线程的安全问题
-     * 但是，同步是有前提的
-     * 1.必须要有两个或者两个以上的线程，不然你同步也没必要呀
-     * 2.必须是多个线程使用同一锁
-     * 必须保证同步中只能有一个线程在运行
-     *
-     * 但是他也有一个弊端：那就是多个线程都需要判断锁，较为消耗资源
-     */
     private ComponentItem syncBlockThreadTest() {
 
         //对多条操作共享数据的语句，只能让一个线程都执行完再执行过程中其他线程不可以参与运行
-        return new ComponentItem("多线程卖票（同步代码块 正常）", new View.OnClickListener() {
+        return new ComponentItem("多线程卖票（同步代码块 正常）",
+                "1、需要保证是同一个锁\n" +
+                        "2、使用一个引用对象的实例变量作为锁并不是一个好的选择，因为同步块在执行过程中可能会改变它的值，" +
+                        "其中就包括将其设置为null，而对一个null对象加锁会产生异常(空指针)，并且对不同的对象加锁也违背了同步的初衷！" +
+                        "一定要理解清楚，这里的锁指的是实际对象，而不是其引用", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -134,7 +118,7 @@ public class ThreadTestManager extends BaseManager {
 
     private ComponentItem moreThreadTest01() {
 
-        return new ComponentItem("多线程卖票（异常）", new View.OnClickListener() {
+        return new ComponentItem("多线程卖票（异常）", "如果不加锁，多个线程同时操作一个共享数据，就会出错",new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -171,7 +155,8 @@ public class ThreadTestManager extends BaseManager {
 
     private ComponentItem createThread() {
 
-        return new ComponentItem("Runnable方式创建线程", new View.OnClickListener() {
+        return new ComponentItem("Runnable方式创建线程",
+                "1、此方式创建线程可以避免多继承问题",new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Thread thread01 = new Thread(new Runnable() {

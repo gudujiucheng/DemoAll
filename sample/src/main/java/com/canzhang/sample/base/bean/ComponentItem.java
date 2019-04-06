@@ -7,6 +7,7 @@ import com.canzhang.sample.base.IManager;
 
 public class ComponentItem {
     public String name;
+    public String desc;
     public View.OnClickListener listener;
     public IManager manager;
 
@@ -19,10 +20,13 @@ public class ComponentItem {
      */
     public ComponentItem(String name, IManager manager) {
         this.name = name;
-        this.listener = listener;
         this.manager = manager;
     }
 
+    public ComponentItem(String name,String desc, View.OnClickListener listener) {
+        this(name, listener);
+        this.desc = desc;
+    }
 
     /**
      * 通用点击item

@@ -60,6 +60,7 @@ public class ComponentListActivity extends BaseActivity {
      * 在这里添加要调试的组件数据
      */
     private void initData() {
+        mData.add(new ComponentItem("多线程相关测试", new ThreadTestManager()));
         mData.add(new ComponentItem("USE NON SDK API TEST", new UseNonSdkApiDemoManager()));
         mData.add(new ComponentItem("权限测试", new View.OnClickListener() {
             @Override

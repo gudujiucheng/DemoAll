@@ -3,6 +3,7 @@ package com.canzhang.sample.base.adapter;
 
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.canzhang.sample.CommonComponentSampleActivity;
@@ -36,6 +37,8 @@ public class ComponentAdapter extends BaseQuickAdapter<ComponentItem, BaseViewHo
     @Override
     protected void convert(BaseViewHolder helper, ComponentItem item) {
         helper.setText(R.id.tv_item, item.name);
+        helper.setText(R.id.tv_desc,item.desc);
+        helper.setGone(R.id.ll_desc,!TextUtils.isEmpty(item.desc));
     }
 
 
