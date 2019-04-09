@@ -9,8 +9,15 @@ public class MainTest {
     static int maxSize = 5;
     static int i;
     public static void main(String[] args) {
-        test02();
+        test03();
     }
+
+    private static void test03() {
+        int a = 0;
+        int b = 1;
+        System.out.print("b%0:"+b%a);
+    }
+
 
     private static void test02() {
 
@@ -18,15 +25,6 @@ public class MainTest {
         int b = (int)(120*58f/168);
         System.out.print("a:"+a+" b:"+b);
     }
-
-
-
-
-
-
-
-
-
 
     private static void test01() {
         int[] s = new int[]{1,-3,4,-5,7,10,-22};

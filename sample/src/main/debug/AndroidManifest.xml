@@ -25,6 +25,7 @@
         <activity android:name=".CommonComponentSampleActivity" />
         <activity android:name=".manager.qrcode.QRCodeActivity" />
         <activity android:name=".manager.weex.WeexActivity" />
+        <activity android:name=".manager.fragment_test.ContainerActivity" />
     </application>
 
 </manifest>
