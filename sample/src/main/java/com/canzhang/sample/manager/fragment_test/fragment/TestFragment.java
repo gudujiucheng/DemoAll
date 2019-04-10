@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.TextView;
 
 import com.canzhang.sample.R;
@@ -56,15 +55,13 @@ public class TestFragment extends BaseFragment {
             mVRoot = inflater.inflate(R.layout.sample_fragment_test, container, false);
             initView(mVRoot);
         } else {
-            log("mVRoot 不为空");
             ViewGroup parentView = (ViewGroup) mVRoot.getParent();
             if (parentView != null) {
-//                parentView.removeView(mVRoot);
-                log("mVRoot  parentView 不为空");
-            } else {
-                log("mVRoot  parentView 为空");
-            }
+                //The specified child already has a parent. You must call removeView() on the child's parent first.
+                parentView.endViewTransition(mVRoot);//有效方案1：主动调用清除动画（需要加上这一句才会生效）
+                parentView.removeView(mVRoot);
 
+            }
         }
         initData();
         return mVRoot;
@@ -73,14 +70,6 @@ public class TestFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-
-        ViewGroup parentView = (ViewGroup) mVRoot.getParent();
-        if (parentView != null) {
-//                parentView.removeView(mVRoot);
-            log("onResume    mVRoot  parentView 不为空");
-        } else {
-            log("onResume    mVRoot  parentView 为空");
-        }
     }
 
     private void initData() {
@@ -92,4 +81,19 @@ public class TestFragment extends BaseFragment {
         textView.setText("当前位置" + mType);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+//有效方案2
+//        if(mVRoot!=null){
+//            ViewGroup parentView = (ViewGroup) mVRoot.getParent();
+//            if (parentView != null) {
+//                parentView.removeView(mVRoot);
+//                log("onDestroyView  mVRoot  parentView 不为空,onDestroyView里面  走了移除逻辑");
+//            } else {
+//                log("onDestroyView  mVRoot  parentView 为空");
+//            }
+//        }
+
+    }
 }
