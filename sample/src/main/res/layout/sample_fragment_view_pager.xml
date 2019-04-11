@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context=".manager.recyclerView.RecyclerViewActivity">
+    tools:context=".manager.view.recyclerView.RecyclerViewActivity">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp"
         android:layout_width="match_parent"
         android:layout_height="200dp" />
 
-    <com.canzhang.sample.manager.viewpager.ViewPagerIndicator
+    <com.canzhang.sample.manager.view.viewpager.ViewPagerIndicator
         android:id="@+id/vp_indicator"
         android:layout_width="match_parent"
         android:layout_below="@+id/vp"

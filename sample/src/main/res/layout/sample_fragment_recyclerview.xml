@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-    <com.canzhang.sample.manager.recyclerView.fqlrefresh.xrefreshlayout.FqlRefreshLayout
+    <com.canzhang.sample.manager.view.recyclerView.fqlrefresh.xrefreshlayout.FqlRefreshLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </com.canzhang.sample.manager.recyclerView.fqlrefresh.xrefreshlayout.FqlRefreshLayout>
+    </com.canzhang.sample.manager.view.recyclerView.fqlrefresh.xrefreshlayout.FqlRefreshLayout>
 
 
 </RelativeLayout>

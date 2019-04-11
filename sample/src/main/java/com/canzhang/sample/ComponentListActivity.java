@@ -22,13 +22,14 @@ import com.canzhang.sample.manager.fragment_test.ContainerActivity;
 import com.canzhang.sample.manager.lifetest.LifeTestFragment;
 import com.canzhang.sample.manager.permission.PermissionFragment;
 import com.canzhang.sample.manager.qrcode.QRCodeActivity;
-import com.canzhang.sample.manager.recyclerView.RecyclerFragment;
-import com.canzhang.sample.manager.recyclerView.RecyclerViewHeaderFooterFragment;
+import com.canzhang.sample.manager.view.editText.TestEditTextFragment;
+import com.canzhang.sample.manager.view.recyclerView.RecyclerFragment;
+import com.canzhang.sample.manager.view.recyclerView.RecyclerViewHeaderFooterFragment;
 import com.canzhang.sample.manager.rxjava.RxJavaTestDemoManager;
-import com.canzhang.sample.manager.shadow.ShadowFragment;
+import com.canzhang.sample.manager.view.shadow.ShadowFragment;
 import com.canzhang.sample.manager.thread.ThreadTestManager;
-import com.canzhang.sample.manager.viewpager.ViewPagerFragment;
-import com.canzhang.sample.manager.viewpager.fql.FqlViewPagerFragment;
+import com.canzhang.sample.manager.view.viewpager.ViewPagerFragment;
+import com.canzhang.sample.manager.view.viewpager.fql.FqlViewPagerFragment;
 import com.canzhang.sample.manager.weex.WeexActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -61,6 +62,12 @@ public class ComponentListActivity extends BaseActivity {
      * 在这里添加要调试的组件数据
      */
     private void initData() {
+        mData.add(new ComponentItem("EditText 相关测试", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFragment(new TestEditTextFragment());
+            }
+        }));
         mData.add(new ComponentItem("fragment相关测试", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
