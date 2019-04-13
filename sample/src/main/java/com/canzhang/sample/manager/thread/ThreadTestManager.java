@@ -34,7 +34,85 @@ public class ThreadTestManager extends BaseManager {
         list.add(sleepTest01());
         list.add(waitTest02());
         list.add(waitTest03());
+        list.add(deadLock());
+        //TODO 多线程、各种锁的介绍、各种集合的应用
         return list;
+    }
+
+
+    private ComponentItem deadLock() {
+
+        //对多条操作共享数据的语句，只能让一个线程都执行完再执行过程中其他线程不可以参与运行
+        return new ComponentItem("死锁",
+                "死锁发生的必要条件\n" +
+                        "1、互斥条件：资源是独占的且排他使用，进程互斥使用资源，即任意时刻一个资源只能给一个进程使用，其他进程若申请一个资源，而该资源被另一进程占有时，则申请者等待直到资源被占有者释放。\n" +
+                        "2、请求和保持条件：指进程已经保持至少一个资源，但又提出了新的资源请求，而该资源已被其它进程占有，此时请求进程阻塞，但又对自己已获得的其它资源保持不放。\n" +
+                        "3、不剥夺条件：指进程已获得的资源，在未使用完之前，不能被剥夺，只能在使用完时由自己释放。\n" +
+                        "4、环路等待条件：指在发生死锁时，必然存在一个进程——资源的环形链，即进程集合{P0，P1，P2，···，Pn}中的P0正在等待一个P1占用的资源；P1正在等待P2占用的资源，……，Pn正在等待已被P0占用的资源。"
+                , new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                final Object left = new Object();
+                final Object right = new Object();
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        log("线程开始");
+
+                        synchronized (left) {
+                            log("得到left 锁");
+
+                            try {
+                                log("休息三秒");
+                                Thread.sleep(3000);//人为制造等待，不然死锁是很难出现的
+                                log("休息完毕，继续执行");
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            synchronized (right) {
+                                log("得到right锁  结束线程");
+                            }
+                        }
+
+                    }
+                }).start();
+
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        log("线程开始");
+                        synchronized (right) {
+                            log("得到right 锁");
+                            synchronized (left) {
+                                log("得到left锁  结束线程");
+                            }
+
+                        }
+
+                    }
+                }).start();
+
+
+/**
+ * 可以看出两个线程都没有没有结束线程，线程0持有left锁，在等待right锁的释放继续执行下一步，线程1则持有right锁，在等待left锁的释放继续执行，双方都在等待对方让步，陷入了死锁
+ *
+ * 这个例子可以通过固定锁的获取顺序来解决，比如都是先left后 right
+ */
+
+//        当前线程：Thread-0 携带数据：线程开始
+//        当前线程：Thread-0 携带数据：得到left 锁
+//        当前线程：Thread-0 携带数据：休息三秒
+//        当前线程：Thread-1 携带数据：线程开始
+//        当前线程：Thread-1 携带数据：得到right 锁
+//        当前线程：Thread-0 携带数据：休息完毕，继续执行
+
+            }
+        });
     }
 
 
