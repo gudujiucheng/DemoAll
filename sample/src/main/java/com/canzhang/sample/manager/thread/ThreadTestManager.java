@@ -29,10 +29,339 @@ public class ThreadTestManager extends BaseManager {
         list.add(moreThreadTest02());
         list.add(syncBlockThreadTest());
         list.add(syncMethodThreadTest());
+        list.add(sleepAndWait());
+        list.add(waitTest01());
+        list.add(sleepTest01());
+        list.add(waitTest02());
+        list.add(waitTest03());
         return list;
     }
 
 
+    private ComponentItem waitTest03() {
+
+        final Object o = new Object();
+
+        //对多条操作共享数据的语句，只能让一个线程都执行完再执行过程中其他线程不可以参与运行
+        return new ComponentItem("notify 和 notifyAll 的区别",
+                "可以用 notify 和 notifyAll 来通知那些等待中的线程重新开始运行。不同之处在于，notify 仅仅通知一个线程，并且我们不知道哪个线程会收到通知，然而 notifyAll 会通知所有等待中的线程。换言之，如果只有一个线程在等待一个信号灯，notify和notifyAll都会通知到这个线程。但如果多个线程在等待这个信号灯，那么notify只会通知到其中一个，而其它线程并不会收到任何通知，而notifyAll会唤醒所有等待中的线程。"
+                , new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        synchronized (o) {
+                            log("进入线程");
+
+                            try {
+                                Thread.sleep(500);
+                                log("休息0.5秒");
+                                log("wait 前");
+                                o.wait();
+                                log("wait 后");
+
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            log("执行结束");
+                        }
+
+                    }
+                }).start();
+
+                try {
+                    log("------------------>>>>>>主线程休息1秒,让三个线程顺序执行");
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        synchronized (o) {
+                            log("进入线程");
+
+                            try {
+                                Thread.sleep(500);
+                                log("休息0.5秒");
+                                log("wait 前");
+                                o.wait();
+                                log("wait 后");
+
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            log("执行结束");
+                        }
+
+                    }
+                }).start();
+
+                try {
+                    log("------------------>>>>>>主线程休息1秒,让三个线程顺序执行");
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        synchronized (o) {
+
+                            log("进入线程");
+
+                            try {
+                                Thread.sleep(500);
+                                log("休息0.5秒");
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            log("执行结束");
+                            log("调用notify 前");
+                            o.notify();
+                            log("调用notify 后");
+
+                        }
+
+                    }
+                }).start();
+
+                /**
+                 * 调用notify的情况（只是唤醒了一个线程）
+                 * 三个线程如果在最下面那个线程只是调用notify的话，只有线程0继续执行完毕了，而线程2则一直停在了wait那一步。
+                 */
+//        当前线程：Thread-0 携带数据：进入线程
+//        当前线程：main 携带数据：------------------>>>>>>主线程休息1秒,让三个线程顺序执行
+//        当前线程：Thread-0 携带数据：休息0.5秒
+//        当前线程：Thread-0 携带数据：wait 前
+//        当前线程：main 携带数据：------------------>>>>>>主线程休息1秒,让三个线程顺序执行
+//        当前线程：Thread-1 携带数据：进入线程
+//        当前线程：Thread-1 携带数据：休息0.5秒
+//        当前线程：Thread-1 携带数据：wait 前
+//        当前线程：Thread-2 携带数据：进入线程
+//        当前线程：Thread-2 携带数据：休息0.5秒
+//        当前线程：Thread-2 携带数据：执行结束
+//        当前线程：Thread-2 携带数据：调用notify 前
+//        当前线程：Thread-2 携带数据：调用notify 后
+//        当前线程：Thread-0 携带数据：wait 后
+//        当前线程：Thread-0 携带数据：执行结束
+
+
+                /**
+                 * 调用notifyAll（唤醒了所有的线程）
+                 */
+
+
+//        当前线程：Thread-0 携带数据：进入线程
+//        当前线程：main 携带数据：------------------>>>>>>主线程休息1秒,让三个线程顺序执行
+//        当前线程：Thread-0 携带数据：休息0.5秒
+//        当前线程：Thread-0 携带数据：wait 前
+//        当前线程：main 携带数据：------------------>>>>>>主线程休息1秒,让三个线程顺序执行
+//        当前线程：Thread-1 携带数据：进入线程
+//        当前线程：Thread-1 携带数据：休息0.5秒
+//        当前线程：Thread-1 携带数据：wait 前
+//        当前线程：Thread-2 携带数据：进入线程
+//        当前线程：Thread-2 携带数据：休息0.5秒
+//        当前线程：Thread-2 携带数据：执行结束
+//        当前线程：Thread-2 携带数据：调用notify 前
+//        当前线程：Thread-2 携带数据：调用notify 后
+//        当前线程：Thread-1 携带数据：wait 后
+//        当前线程：Thread-1 携带数据：执行结束
+//        当前线程：Thread-0 携带数据：wait 后
+//        当前线程：Thread-0 携带数据：执行结束
+//        Process finished with exit code 0    所有线程执行完毕，都有进程结束符提示了，上面那个则没有。
+
+            }
+        });
+
+    }
+
+    private ComponentItem waitTest02() {
+
+        final Object o = new Object();
+
+        //对多条操作共享数据的语句，只能让一个线程都执行完再执行过程中其他线程不可以参与运行
+        return new ComponentItem("wait释放锁测试",
+                "1、调用wait()方法，当前线程会放弃对象锁，进入等待此对象的等待锁定池，wait后面的语句也不会继续执行了，直到调用notify的时候，才会继续向下执行"
+                , new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        synchronized (o) {
+                            log("1-----》》》进入线程");
+
+                            try {
+                                Thread.sleep(3000);
+                                log("1-----》》》休息三秒");
+                                log("1-----》》》wait 前");
+                                o.wait();
+                                log("1-----》》》wait 后");
+
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            log("1-----》》》执行结束");
+                        }
+
+                    }
+                }).start();
+
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        synchronized (o) {
+
+                            log("2-----》》》进入线程");
+
+                            try {
+                                log("2-----》》》休息三秒");
+                                Thread.sleep(3000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            log("2-----》》》执行结束");
+                            log("2-----》》》调用notify 前");
+                            o.notify();
+                            log("2-----》》》调用notify 后");
+
+                        }
+
+                    }
+                }).start();
+
+
+//                当前线程：Thread-0 携带数据：1-----》》》进入线程
+//                当前线程：Thread-0 携带数据：1-----》》》休息三秒
+//                当前线程：Thread-0 携带数据：1-----》》》wait 前
+//                当前线程：Thread-1 携带数据：2-----》》》进入线程
+//                当前线程：Thread-1 携带数据：2-----》》》休息三秒
+//                当前线程：Thread-1 携带数据：2-----》》》执行结束
+//                当前线程：Thread-1 携带数据：2-----》》》调用notify 前
+//                当前线程：Thread-1 携带数据：2-----》》》调用notify 后
+//                当前线程：Thread-0 携带数据：1-----》》》wait 后
+//                当前线程：Thread-0 携带数据：1-----》》》执行结束
+
+            }
+        });
+
+    }
+
+
+    private ComponentItem sleepTest01() {
+
+        final Object o = new Object();
+
+        //对多条操作共享数据的语句，只能让一个线程都执行完再执行过程中其他线程不可以参与运行
+        return new ComponentItem("sleep 不会释放锁 测试", "sleep的时候也不会释放锁，就不给你，我等睡完继续使用，必须等我用完才能给你"
+                , new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        synchronized (o) {
+                            log("1-----》》》进入线程");
+
+                            try {
+                                Thread.sleep(3000);
+                                log("1-----》》》休息三秒");
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            log("1-----》》》执行结束");
+                        }
+
+                    }
+                }).start();
+
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        synchronized (o) {
+
+                            log("2-----》》》进入线程");
+
+                            try {
+                                log("2-----》》》休息三秒");
+                                Thread.sleep(3000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            log("2-----》》》执行结束");
+
+                        }
+
+                    }
+                }).start();
+
+//                当前线程：Thread-0 携带数据：1-----》》》进入线程
+//                当前线程：Thread-0 携带数据：1-----》》》休息三秒
+//                当前线程：Thread-0 携带数据：1-----》》》执行结束
+//                当前线程：Thread-1 携带数据：2-----》》》进入线程
+//                当前线程：Thread-1 携带数据：2-----》》》休息三秒
+//                当前线程：Thread-1 携带数据：2-----》》》执行结束
+
+            }
+        });
+    }
+
+
+    private ComponentItem waitTest01() {
+
+        //对多条操作共享数据的语句，只能让一个线程都执行完再执行过程中其他线程不可以参与运行
+        return new ComponentItem("wait，notify和notifyAll不在同步控制方法或者同步控制块里面使用测试",
+                "1、wait，notify和notifyAll只能在同步控制方法或者同步控制块里面使用(否则会抛异常 IllegalMonitorStateException)\n"
+                , new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Object o = new Object();
+
+                try {
+                    o.wait();
+                } catch (Exception e) {//
+                    log("捕获异常:" + e.getMessage());
+                    e.printStackTrace();
+                }
+
+                o.notify();
+                o.notifyAll();
+
+                //实验表明这三个方法，不在同步代码块或者同步方法里面调用任何一个都会抛出异常，具体可参见：https://blog.csdn.net/wangshuang1631/article/details/53815519
+            }
+        });
+    }
+
+
+    private ComponentItem sleepAndWait() {
+
+        //对多条操作共享数据的语句，只能让一个线程都执行完再执行过程中其他线程不可以参与运行
+        return new ComponentItem("sleep 和 wait",
+                "1、sleep来自Thread，wait是object的方法\n" +
+                        "2、最主要是sleep方法没有释放锁，而wait方法释放了锁（你们先拿去用吧），使得其他线程可以使用同步控制块或者方法\n" +
+                        "3、wait，notify和notifyAll只能在同步控制方法或者同步控制块里面使用(否则会抛异常 IllegalMonitorStateException)，而sleep可以在任何地方使用\n" +
+                        "", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+            }
+        });
+    }
 
     private ComponentItem syncMethodThreadTest() {
 
@@ -40,7 +369,7 @@ public class ThreadTestManager extends BaseManager {
         return new ComponentItem("多线程存钱（同步方法 正常）",
                 "1、非静态同步方法的锁是this，不同对象持有的锁自然也是不同的\n" +
                         "2、静态同步方法的锁是类对象本身，所以和非静态同步方法的锁是不同的，没有竞态关系\n" +
-                        "3、控制域是整个方法（注意不要放非同步的内容进去导致侠侣的降低）", new View.OnClickListener() {
+                        "3、控制域是整个方法（注意不要放非同步的内容进去导致效率的降低）", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Runnable runnable = new BankThread();
@@ -70,7 +399,11 @@ public class ThreadTestManager extends BaseManager {
                 "1、需要保证是同一个锁\n" +
                         "2、使用一个引用对象的实例变量作为锁并不是一个好的选择，因为同步块在执行过程中可能会改变它的值，" +
                         "其中就包括将其设置为null，而对一个null对象加锁会产生异常(空指针)，并且对不同的对象加锁也违背了同步的初衷！" +
-                        "一定要理解清楚，这里的锁指的是实际对象，而不是其引用", new View.OnClickListener() {
+                        "一定要理解清楚，这里的锁指的是实际对象，而不是其引用\n" +
+                        "3、java中每个对象都有一个内置锁,并且每个对象只有一个锁，如果被其他线程占用，别的线程就进入不了，将会进入阻塞状态，该线程进入锁对象的一种池子中等待\n" +
+                        "4、只能同步方法，而不能同步变量和类\n" +
+                        "5、线程sleep时候持有的锁不会释放\n" +
+                        "", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -118,7 +451,7 @@ public class ThreadTestManager extends BaseManager {
 
     private ComponentItem moreThreadTest01() {
 
-        return new ComponentItem("多线程卖票（异常）", "如果不加锁，多个线程同时操作一个共享数据，就会出错",new View.OnClickListener() {
+        return new ComponentItem("多线程卖票（异常）", "如果不加锁，多个线程同时操作一个共享数据，就会出错", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -156,7 +489,7 @@ public class ThreadTestManager extends BaseManager {
     private ComponentItem createThread() {
 
         return new ComponentItem("Runnable方式创建线程",
-                "1、此方式创建线程可以避免多继承问题",new View.OnClickListener() {
+                "1、此方式创建线程可以避免多继承问题", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Thread thread01 = new Thread(new Runnable() {

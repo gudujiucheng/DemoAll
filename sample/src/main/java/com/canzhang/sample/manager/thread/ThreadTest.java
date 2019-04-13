@@ -1,7 +1,5 @@
 package com.canzhang.sample.manager.thread;
 
-import com.canzhang.sample.manager.thread.bingfa.bankdemo.BankThread;
-
 /**
  * 创建线程方法简单示例
  */
@@ -14,8 +12,9 @@ public class ThreadTest {
 
     private static void test() {
 
-        new Thread(new MyRunnable()).start();
-        new Thread(new MyRunnable()).start();
+
+
+
     }
 
 
@@ -24,25 +23,7 @@ public class ThreadTest {
     }
 
 
-    static class  MyRunnable implements  Runnable{
 
-        @Override
-        public void run() {
-            synchronized (o){
-
-                for (int i = 0; i <3; i++) {
-                    log(i+"");
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-
-        }
-    }
 
 
 }
