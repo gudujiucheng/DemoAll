@@ -12,6 +12,9 @@ import android.widget.TextView;
 import com.canzhang.sample.R;
 import com.example.base.base.BaseFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class TestFragment extends BaseFragment {
 
@@ -19,6 +22,12 @@ public class TestFragment extends BaseFragment {
     public static final int TYPE_01 = 1;
     public static final int TYPE_02 = 2;
     public static final int TYPE_03 = 3;
+
+
+    /**
+     * 测试回收
+     */
+    private List<String> testList = new ArrayList<>();
 
 
     @IntDef({TYPE_01, TYPE_02, TYPE_03})
@@ -73,12 +82,22 @@ public class TestFragment extends BaseFragment {
     }
 
     private void initData() {
+        for (int i = 0; i < 10; i++) {
+            testList.add(i + "");
+        }
 
     }
 
     private void initView(View view) {
         TextView textView = view.findViewById(R.id.tv_test);
         textView.setText("当前位置" + mType);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showToast("当前列表长度：" + testList.size());
+
+            }
+        });
     }
 
     @Override
@@ -95,5 +114,12 @@ public class TestFragment extends BaseFragment {
 //            }
 //        }
 
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        testList = null;
     }
 }

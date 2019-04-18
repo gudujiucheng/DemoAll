@@ -1,7 +1,6 @@
 package com.canzhang.sample.manager.view.editText;
 
 import android.os.Bundle;
-import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -59,6 +58,9 @@ public class TestEditTextFragment extends BaseFragment {
 
         EditText et = view.findViewById(R.id.et_test);
         final Button bt = view.findViewById(R.id.bt_test);
+
+        bt.setEnabled(false);
+        //先注册监听
         et.addTextChangedListener(new TextWatcher() {
             /**
              *
@@ -100,6 +102,9 @@ public class TestEditTextFragment extends BaseFragment {
                 log("onTextChanged:" + " Editable:" + s.toString());
             }
         });
+        et.setText("6666666666");
+
+
     }
 
 }
