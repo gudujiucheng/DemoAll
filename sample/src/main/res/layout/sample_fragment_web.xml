@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/bt_jump"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="浏览器打开" />
+
+    <Button
+        android:id="@+id/bt_open_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="webview 打开" />
+
+    <Button
+        android:id="@+id/bt_open_local_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="webview 打开本地文件" />
+
+    <Button
+        android:id="@+id/bt_call_js"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="调用js方法" />
+
+    <Button
+        android:id="@+id/bt_other_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="其他测试" />
+
+    <WebView
+        android:id="@+id/web_test"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+</LinearLayout>

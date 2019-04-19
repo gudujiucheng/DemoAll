@@ -15,7 +15,9 @@ import com.example.base.base.BaseFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * fragment 的相关测试
+ */
 public class TestFragment extends BaseFragment {
 
     private static final String TYPE_KEY = "type_key";
