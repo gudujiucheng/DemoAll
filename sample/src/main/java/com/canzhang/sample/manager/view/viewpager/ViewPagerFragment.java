@@ -29,7 +29,7 @@ import io.reactivex.schedulers.Schedulers;
 
 /**
  * 最新可参考项目：https://blog.csdn.net/jijinchao2015/article/details/53908298
- *
+ * <p>
  * TODO 无限轮播 平滑滚动是否有问题的
  */
 public class ViewPagerFragment extends BaseFragment {
@@ -51,8 +51,8 @@ public class ViewPagerFragment extends BaseFragment {
         for (int i = 0; i < 4; i++) {
             mData.add(new PageItem(R.mipmap.ic_launcher, "xxxx" + i));
         }
-//        initNormal();
-        initLoop();
+        initNormal();
+//        initLoop();
     }
 
     /**
@@ -71,9 +71,20 @@ public class ViewPagerFragment extends BaseFragment {
         setAdapter();
     }
 
+    int i = 0;
+
     private void initView(View view) {
         mVp = view.findViewById(R.id.vp);
         mIndicator = view.findViewById(R.id.vp_indicator);
+
+        view.findViewById(R.id.bt_switch).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mVp.setCurrentItem(i % 4);
+                i++;
+            }
+        });
+
     }
 
 
@@ -84,7 +95,23 @@ public class ViewPagerFragment extends BaseFragment {
                 return getRealView(container, pageItem);
             }
         });
+        mVp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                log("当前position：" + position);
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         mCustomPagerAdapter.setList(mData);
         mIndicator.setViewPager(mVp);
 
