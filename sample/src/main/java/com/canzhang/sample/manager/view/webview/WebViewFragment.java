@@ -1,12 +1,12 @@
 package com.canzhang.sample.manager.view.webview;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,6 +24,7 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 
 import com.canzhang.sample.R;
 import com.example.base.base.BaseFragment;
@@ -33,37 +34,12 @@ import com.example.base.base.BaseFragment;
  * https://blog.csdn.net/qq_24530405/article/details/52067474
  */
 public class WebViewFragment extends BaseFragment implements View.OnClickListener {
-    private static final String TYPE_KEY = "type_key";
-    public static final int TYPE_01 = 1;
-    public static final int TYPE_02 = 2;
-    public static final int TYPE_03 = 3;
-
-
-    @IntDef({TYPE_01, TYPE_02, TYPE_03})
-    public @interface Type {
-
-    }
-
-    private int mType;
+    private LinearLayout mLlContainer;
     private WebView mWebView;
 
-    public static Fragment newInstance(@Type int type) {
-        Fragment fragment = new WebViewFragment();
-        Bundle info = new Bundle();
-        info.putInt(TYPE_KEY, type);
-        fragment.setArguments(info);
-        return fragment;
+    public static Fragment newInstance(int type) {
+        return new WebViewFragment();
     }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Bundle arguments = getArguments();
-        if (arguments != null) {
-            mType = arguments.getInt(TYPE_KEY);
-        }
-    }
-
 
     @Nullable
     @Override
@@ -154,12 +130,21 @@ public class WebViewFragment extends BaseFragment implements View.OnClickListene
                 log("开始加载网页");
             }
 
+            /**
+             * 你永远无法确定当WebView调用这个方法的时候，网页内容是否真的加载完毕了。
+             * 当前正在加载的网页产生跳转的时候这个方法可能会被多次调用，
+             * StackOverflow上有比较具体的解释（How to listen for a Webview finishing loading a URL in Android?）， 但其中列举的解决方法并不完美。
+             * 所以当你的WebView需要加载各种各样的网页并且需要在页面加载完成时采取一些操作的话，
+             * 可能WebChromeClient.onProgressChanged()比WebViewClient.onPageFinished()都要靠谱一些。
+             * @param view
+             * @param url
+             */
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                log("网页加载完成");
+                log("网页加载完成,这个是不准确的");
 
-                //第二步：在WebView的WebViewClient子类中重写onPageFinished()方法添加如下代码：
+                //(加快渲染速度)第二步：在WebView的WebViewClient子类中重写onPageFinished()方法添加如下代码：
                 if (!mWebView.getSettings().getLoadsImagesAutomatically()) {
                     mWebView.getSettings().setLoadsImagesAutomatically(true);
                 }
@@ -250,7 +235,19 @@ public class WebViewFragment extends BaseFragment implements View.OnClickListene
 
 
     private void initView(View view) {
-        mWebView = view.findViewById(R.id.web_test);
+        /**
+         * WebView对象并不是直接写在布局文件中的，而是通过一个LinearLayout容器，使用addview(webview)动态向里面添加的。
+         * 另外需要注意创建webview需要使用applicationContext而不是activity的context，
+         * 销毁时不再占有activity对象，最后离开的时候需要及时销毁webview，
+         * onDestory()中应该先从LinearLayout中remove掉webview,再调用webview.removeAllViews();webview.destory();
+         */
+        mLlContainer = view.findViewById(R.id.ll_container);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        mWebView.setLayoutParams(params);
+        mLlContainer.addView(mWebView);
+
+        log(mLlContainer.toString() + " <<<----------对比----------->>> " + view.toString());
+
         initWeb();
         view.findViewById(R.id.bt_jump).setOnClickListener(this);
         view.findViewById(R.id.bt_open_url).setOnClickListener(this);
@@ -322,16 +319,47 @@ public class WebViewFragment extends BaseFragment implements View.OnClickListene
         new Thread(new Runnable() {
             @Override
             public void run() {
-                log("666666----------线程执行:"+Thread.currentThread().getName());
+                log("666666----------线程执行:" + Thread.currentThread().getName());
                 int j = 10 / 0;
-                log("666666----------线程崩溃后:"+Thread.currentThread().getName());
+                log("666666----------线程崩溃后:" + Thread.currentThread().getName());
 
             }
         }).start();
 
-        log("88888----------主线程:"+Thread.currentThread().getName());
+        log("88888----------主线程:" + Thread.currentThread().getName());
 
     }
 
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mLlContainer.removeView(mWebView);
+        mWebView.stopLoading();
+        mWebView.removeAllViews();
+        mWebView.destroy();
+        mWebView = null;
+
+    }
+
+    /**
+     * 在activity被杀死之后，依然保持webView的状态，方便用户下次打开的时候可以回到之前的状态。
+     * webview支持saveState(bundle)和restoreState(bundle)方法。
+     *
+     * @param outState
+     */
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mWebView.saveState(outState);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mWebView = new WebView(((Activity) mContext).getApplication());
+        if (null != savedInstanceState) {
+            mWebView.restoreState(savedInstanceState);
+        }
+    }
 }
