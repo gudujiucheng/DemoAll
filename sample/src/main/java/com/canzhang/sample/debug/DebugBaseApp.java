@@ -24,6 +24,8 @@ import com.taobao.weex.common.WXException;
  */
 public class DebugBaseApp extends Application {
 
+    public static Context sContext;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -32,6 +34,7 @@ public class DebugBaseApp extends Application {
         DebugDialog.setIsDebug(true);
         initWeex();
         AppStatusManager.register(this);
+        sContext =getApplicationContext();
 
     }
 

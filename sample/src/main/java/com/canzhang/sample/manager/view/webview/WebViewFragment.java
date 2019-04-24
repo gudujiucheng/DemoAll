@@ -10,10 +10,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.DownloadListener;
 import android.webkit.JavascriptInterface;
 import android.webkit.SslErrorHandler;
@@ -27,7 +31,10 @@ import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
 import com.canzhang.sample.R;
+import com.canzhang.sample.debug.DebugBaseApp;
 import com.example.base.base.BaseFragment;
+
+import java.util.Date;
 
 /**
  * webview 相关测试
@@ -254,7 +261,6 @@ public class WebViewFragment extends BaseFragment implements View.OnClickListene
         view.findViewById(R.id.bt_open_local_url).setOnClickListener(this);
         view.findViewById(R.id.bt_call_js).setOnClickListener(this);
         view.findViewById(R.id.bt_other_test).setOnClickListener(this);
-
     }
 
     private int i = 0;
@@ -276,7 +282,6 @@ public class WebViewFragment extends BaseFragment implements View.OnClickListene
                 mWebView.loadUrl("javascript:javaCallJs(" + "'" + "第" + i + "次调用" + "'" + ")");
                 i++;
                 break;
-
             case R.id.bt_other_test: //其他测试
                 otherTest();
                 break;
@@ -316,17 +321,20 @@ public class WebViewFragment extends BaseFragment implements View.OnClickListene
      * 结论：是会崩溃的
      */
     private void otherTest() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                log("666666----------线程执行:" + Thread.currentThread().getName());
-                int j = 10 / 0;
-                log("666666----------线程崩溃后:" + Thread.currentThread().getName());
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                log("666666----------线程执行:" + Thread.currentThread().getName());
+//                int j = 10 / 0;
+//                log("666666----------线程崩溃后:" + Thread.currentThread().getName());
+//
+//            }
+//        }).start();
+//
+//        log("88888----------主线程:" + Thread.currentThread().getName());
 
-            }
-        }).start();
 
-        log("88888----------主线程:" + Thread.currentThread().getName());
+        log("------------------>>>" + new Date(0).toGMTString());
 
     }
 

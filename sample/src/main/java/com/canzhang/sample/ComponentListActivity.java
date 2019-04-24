@@ -30,6 +30,7 @@ import com.canzhang.sample.manager.view.shadow.ShadowFragment;
 import com.canzhang.sample.manager.thread.ThreadTestManager;
 import com.canzhang.sample.manager.view.viewpager.ViewPagerFragment;
 import com.canzhang.sample.manager.view.viewpager.fql.FqlViewPagerFragment;
+import com.canzhang.sample.manager.view.webview.CookieTestManager;
 import com.canzhang.sample.manager.view.webview.WebViewFragment;
 import com.canzhang.sample.manager.weex.WeexActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -63,6 +64,7 @@ public class ComponentListActivity extends BaseActivity {
      * 在这里添加要调试的组件数据
      */
     private void initData() {
+        mData.add(new ComponentItem("cookie 测试",new CookieTestManager()));
         mData.add(new ComponentItem("WebView 相关测试", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
