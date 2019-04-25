@@ -64,6 +64,7 @@ public class ComponentListActivity extends BaseActivity {
      * 在这里添加要调试的组件数据
      */
     private void initData() {
+        mData.add(new ComponentItem("日常测试（实验、异常等）", new OtherTestDemoManager()));
         mData.add(new ComponentItem("cookie 测试",new CookieTestManager()));
         mData.add(new ComponentItem("WebView 相关测试", new View.OnClickListener() {
             @Override
@@ -110,7 +111,6 @@ public class ComponentListActivity extends BaseActivity {
                 showFragment(new EventDispatchFragment());
             }
         }));
-        mData.add(new ComponentItem("平常测试demo", new OtherTestDemoManager()));
         mData.add(new ComponentItem("app前后台检测", new AppStatusManager()));
         mData.add(new ComponentItem("rxJava实际应用", new RxJavaTestDemoManager()));
         mData.add(new ComponentItem("jni", new JniDemoManager()));
