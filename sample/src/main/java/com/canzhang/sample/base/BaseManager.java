@@ -1,9 +1,11 @@
 package com.canzhang.sample.base;
 
 
+import android.app.Application;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.canzhang.sample.debug.DebugBaseApp;
 import com.example.base.base.AppProxy;
 import com.lexinfintech.component.debugdialog.DebugDialog;
 
@@ -12,9 +14,11 @@ public abstract class BaseManager implements IManager {
     public BaseManager() {
 
     }
-    public void showTipsDialog( String msg) {
+
+    public void showTipsDialog(String msg) {
         DebugDialog.getInstance().show("", msg);
     }
+
     public void showTipsDialog(String title, String msg) {
         DebugDialog.getInstance().show(title, msg);
     }
@@ -24,8 +28,14 @@ public abstract class BaseManager implements IManager {
     }
 
 
-    public void showToast(String msg){
-        Toast.makeText(AppProxy.getInstance().getApplication(),msg,Toast.LENGTH_SHORT).show();
+    public void showToast(String msg) {
+        Application application = AppProxy.getInstance().getApplication();
+        if (application != null) {
+            Toast.makeText(application, msg, Toast.LENGTH_SHORT).show();
+        } else if (DebugBaseApp.sContext != null) {
+            Toast.makeText(DebugBaseApp.sContext, msg, Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 

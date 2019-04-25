@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#999999"
-            android:textSize="9sp"
+            android:textSize="11sp"
             tools:text="描述信息" />
 
 
