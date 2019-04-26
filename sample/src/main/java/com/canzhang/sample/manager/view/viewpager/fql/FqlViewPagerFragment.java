@@ -63,18 +63,33 @@ public class FqlViewPagerFragment extends BaseFragment {
         mBannerAdapter.setList(mData);
     }
 
-    private View getItemView(ViewGroup container, final PageItem item, Context mContext) {
-        ImageView iv = new ImageView(mContext);
-        iv.setLayoutParams(new ViewGroup.LayoutParams(container.getWidth(), container.getHeight()));
-        iv.setScaleType(ImageView.ScaleType.FIT_XY);
-        iv.setImageResource(item.res);
-        iv.setOnClickListener(new View.OnClickListener() {
+    private View getItemView(ViewGroup container, final PageItem item, Context context) {
+        View layout = LayoutInflater.from(context).inflate(R.layout.sample_fql_vp_item, container, false);
+        ImageView ivBgIng = layout.findViewById(R.id.iv_bg_img);
+        ImageView ivImg = layout.findViewById(R.id.iv_img);
+        ivBgIng.setImageResource(R.drawable.sample_ic_vp_banner_bg);
+        ivImg.setImageResource(R.drawable.sample_ic_vp_banner);
+        ivImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), item.text, Toast.LENGTH_SHORT).show();
             }
         });
-        return iv;
+
+        return layout;
+
+
+//        ImageView iv = new ImageView(context);
+//        iv.setLayoutParams(new ViewGroup.LayoutParams(container.getWidth(), container.getHeight()));
+//        iv.setScaleType(ImageView.ScaleType.FIT_XY);
+//        iv.setImageResource(item.res);
+//        iv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getContext(), item.text, Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        return iv;
     }
 
     private void initData() {

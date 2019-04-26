@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
  * <p>
  * 参考文章：https://blog.csdn.net/Kelaker/article/details/82751287
  * <p>
- * TODO 还可以继续测试过期时间等等场景
+ * TODO 还可以继续测试 会话cookie等场景
  */
 public class CookieTestManager extends BaseManager {
     /**
