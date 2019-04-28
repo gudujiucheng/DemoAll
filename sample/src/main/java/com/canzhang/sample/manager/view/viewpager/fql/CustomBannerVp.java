@@ -16,7 +16,7 @@ import android.widget.RelativeLayout;
 import com.canzhang.sample.R;
 import com.canzhang.sample.manager.view.viewpager.fql.other.CustomViewPager;
 import com.canzhang.sample.manager.view.viewpager.fql.other.FixedSpeedScroller;
-import com.canzhang.sample.manager.view.viewpager.fql.transformer.ZoomOutPageTransformer;
+import com.canzhang.sample.manager.view.viewpager.fql.transformer.TranslationXPageTransformer;
 import com.example.base.utils.ScreenUtil;
 
 import java.lang.reflect.Field;
@@ -75,7 +75,7 @@ public class CustomBannerVp extends RelativeLayout implements ViewPager.OnPageCh
         mLlPointContain = (LinearLayout) mView.findViewById(R.id.mLlPointContain);
         mVpCustom.addOnPageChangeListener(this);
         mVpCustom.setOverScrollMode(OVER_SCROLL_NEVER);
-        mVpCustom.setPageTransformer(true, new ZoomOutPageTransformer());
+        mVpCustom.setPageTransformer(true, new TranslationXPageTransformer());
         mVpCustom.setOnViewPagerTouchEventListener(new CustomViewPager.OnViewPagerTouchEvent() {
             @Override
             public void onTouchDown() {

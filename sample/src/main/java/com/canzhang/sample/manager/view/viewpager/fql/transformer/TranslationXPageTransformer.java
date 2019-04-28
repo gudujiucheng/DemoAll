@@ -13,14 +13,15 @@ import android.view.View;
 
 import com.canzhang.sample.R;
 
-public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
-    private static final float MIN_PERCENT = 0.85f;
+public class TranslationXPageTransformer implements ViewPager.PageTransformer {
+    private static final float MIN_PERCENT = 0.95f;
 
     @Override
     public void transformPage(@NonNull View page, float position) {
 
 
         View ivImg = page.findViewById(R.id.iv_img);
+//        View ivBgImg = page.findViewById(R.id.iv_bg_img);
         if (ivImg == null) {
             return;
         }
@@ -39,8 +40,10 @@ public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
         float translationX = pageWidth * (1 - scaleFactor) / 2;
         if (position < 0) {
             ivImg.setTranslationX(-translationX);
+//            ivBgImg.setTranslationX(translationX);
         } else {
             ivImg.setTranslationX(translationX);
+//            ivBgImg.setTranslationX(-translationX);
         }
     }
 }
