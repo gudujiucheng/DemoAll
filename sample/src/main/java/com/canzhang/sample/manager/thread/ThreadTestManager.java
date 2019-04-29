@@ -5,9 +5,12 @@ import android.view.View;
 
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
+import com.canzhang.sample.debug.DebugBaseApp;
 import com.canzhang.sample.manager.thread.bingfa.SleepThread;
 import com.canzhang.sample.manager.thread.bingfa.SyncSleepThread;
 import com.canzhang.sample.manager.thread.bingfa.bankdemo.BankThread;
+import com.canzhang.sample.manager.thread.demo.fqlreport.AppEvent;
+import com.canzhang.sample.manager.thread.demo.fqlreport.UniversalReport;
 import com.canzhang.sample.manager.thread.newThread.ExtendStyleThread;
 
 import java.util.ArrayList;
@@ -21,8 +24,11 @@ public class ThreadTestManager extends BaseManager {
 
     @Override
     public List<ComponentItem> getSampleItem(Activity activity) {
+        //初始化上报组件
+        UniversalReport.init(DebugBaseApp.sContext);
 
         List<ComponentItem> list = new ArrayList<>();
+        list.add(fqlReport());
         list.add(createThread());
         list.add(createThread02());
         list.add(moreThreadTest01());
@@ -37,6 +43,16 @@ public class ThreadTestManager extends BaseManager {
         list.add(deadLock());
         //TODO 多线程、各种锁的介绍、各种集合的应用
         return list;
+    }
+
+
+    private ComponentItem fqlReport() {
+        return new ComponentItem("fql report 点击上报", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppEvent.report("eventId", "label", null, true, false);
+            }
+        });
     }
 
 

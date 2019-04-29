@@ -29,13 +29,13 @@ public class DebugBaseApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        AppProxy.getInstance().onApplicationCreate(this);
         //调试
         DebugDialog.getInstance().init(this);
         DebugDialog.setIsDebug(true);
         initWeex();
         AppStatusManager.register(this);
         sContext =getApplicationContext();
-
     }
 
     private void initWeex() {
