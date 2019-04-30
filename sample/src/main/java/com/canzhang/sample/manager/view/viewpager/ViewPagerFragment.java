@@ -5,18 +5,25 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.canzhang.sample.R;
 import com.canzhang.sample.manager.view.recyclerView.bean.PageItem;
+import com.canzhang.sample.manager.view.viewpager.fql.other.FixedSpeedScroller;
+import com.canzhang.sample.manager.view.viewpager.fql.transformer.TranslationXPageTransformer;
 import com.canzhang.sample.manager.view.viewpager.loop.LoopPagerAdapter;
 import com.example.base.base.BaseFragment;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -48,7 +55,7 @@ public class ViewPagerFragment extends BaseFragment {
     }
 
     private void initData() {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 10; i++) {
             mData.add(new PageItem(R.mipmap.ic_launcher, "xxxx" + i));
         }
         initNormal();
@@ -75,16 +82,58 @@ public class ViewPagerFragment extends BaseFragment {
 
     private void initView(View view) {
         mVp = view.findViewById(R.id.vp);
+        mVp.setPageTransformer(true, new TranslationXPageTransformer());
         mIndicator = view.findViewById(R.id.vp_indicator);
 
         view.findViewById(R.id.bt_switch).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mVp.setCurrentItem(i % 4);
+                //触发切换是有 onPageSelected 回调的
+                mVp.setCurrentItem(i % mData.size(),false);
                 i++;
             }
         });
+        view.findViewById(R.id.bt_switch_scroll).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //触发切换是有 onPageSelected 回调的
+                mVp.setCurrentItem(i % mData.size(), true);
+                i++;
+            }
+        });
+        view.findViewById(R.id.bt_set_anim).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mVp.setPageTransformer(i%2==0, new TranslationXPageTransformer());
+            }
+        });
+        final EditText etTime = view.findViewById(R.id.et_time);
+        view.findViewById(R.id.bt_set_anim_time).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String s = etTime.getText().toString();
+                int time=0;
+                if(!TextUtils.isEmpty(s)){
+                    time = Integer.parseInt(s);
+                }
+                setDurationTime(time);
+            }
+        });
 
+    }
+
+
+    public void setDurationTime(int time) {
+        try {
+            Field field = ViewPager.class.getDeclaredField("mScroller");
+            field.setAccessible(true);
+            FixedSpeedScroller scroller = new FixedSpeedScroller(mVp.getContext(),
+                    new AccelerateInterpolator());
+            field.set(mVp, scroller);
+            scroller.setmDuration(time);
+        } catch (Exception e) {
+            Log.e("CustomBannerVp", "setViewPagerDurationTime false");
+        }
     }
 
 
@@ -103,7 +152,7 @@ public class ViewPagerFragment extends BaseFragment {
 
             @Override
             public void onPageSelected(int position) {
-                log("当前position：" + position);
+                log("onPageSelected 当前position：" + position);
 
             }
 
@@ -120,18 +169,19 @@ public class ViewPagerFragment extends BaseFragment {
 
     @NonNull
     private View getRealView(ViewGroup container, final PageItem pageItem) {
-        ImageView iv = new ImageView(getContext());
-        iv.setLayoutParams(new ViewGroup.LayoutParams(container.getWidth(), container.getHeight()));
-        iv.setScaleType(ImageView.ScaleType.FIT_XY);
-//                iv.setImageDrawable(getResources().getDrawable(pageItem.res));
-        iv.setImageResource(pageItem.res);
-        iv.setOnClickListener(new View.OnClickListener() {
+        View layout = LayoutInflater.from(container.getContext()).inflate(R.layout.sample_fql_vp_item, container, false);
+        ImageView ivBgIng = layout.findViewById(R.id.iv_bg_img);
+        ImageView ivImg = layout.findViewById(R.id.iv_img);
+        ivBgIng.setImageResource(R.drawable.sample_ic_vp_banner_bg);
+        ivImg.setImageResource(R.drawable.sample_ic_vp_banner);
+        ivImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), pageItem.text, Toast.LENGTH_SHORT).show();
             }
         });
-        return iv;
+
+        return layout;
     }
 
 

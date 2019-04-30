@@ -51,9 +51,9 @@ public class AppEvent {
         recordList.put(object);
         ReportWrapper reportWrapper;
         if (isImmediately) {
-            reportWrapper = new ReportWrapper(recordList);
+            reportWrapper = new ReportWrapper(0,recordList);
         } else {
-            reportWrapper = new ReportWrapper(recordList);
+            reportWrapper = new ReportWrapper(0,recordList);
         }
         LogUtils.log("上报第二步 ReportWrapper："+reportWrapper.toString());
         UniversalReport.offer(reportWrapper);
