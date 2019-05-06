@@ -7,14 +7,18 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.canzhang.sample.R;
 import com.canzhang.sample.manager.view.recyclerView.bean.PageItem;
+import com.canzhang.sample.manager.view.viewpager.fql.banner.Banner;
+import com.canzhang.sample.manager.view.viewpager.fql.banner.BannerAdapter;
+import com.canzhang.sample.manager.view.viewpager.fql.banner.NewBigBannerPoint;
+import com.canzhang.sample.manager.view.viewpager.fql.transformer.TranslationXPageTransformer;
 import com.example.base.base.BaseFragment;
-import com.example.base.utils.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +27,7 @@ import java.util.List;
  * 分期乐项目使用的
  */
 public class FqlViewPagerFragment extends BaseFragment {
-    private CustomBannerVp mVp;
+    private Banner mVp;
 
     private List<PageItem> mData = new ArrayList<>();
 
@@ -39,28 +43,29 @@ public class FqlViewPagerFragment extends BaseFragment {
 
     private void initView(View view) {
         mVp = view.findViewById(R.id.vp_header);
-        mVp.setPointContainMargin(0, 0, 0, 0);
-        mVp.addPointContainRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        mVp.setPointHeightWidth((int) ScreenUtil.dip2px(mContext, 10), (int) ScreenUtil.dip2px(mContext, 4), (int) ScreenUtil.dip2px(mContext, 10));
-//        mVp.setPointRes(R.drawable.consume_application_header_point);
-
+        LinearLayout llPointContain = view.findViewById(R.id.ll_point_contain);
+        mVp.setBannerPoint(new NewBigBannerPoint(view.getContext(), llPointContain, R.drawable.sample_consume_application_header_point));
+        mVp.setDurationTimeAndInterpolator(700, new DecelerateInterpolator());
+        mVp.setPageTransformer(true, new TranslationXPageTransformer());
         setAdapter();
     }
 
     private void setAdapter() {
 
-
-        CustomBannerAdapter<PageItem> mBannerAdapter = new CustomBannerAdapter<PageItem>() {
+        BannerAdapter<PageItem> mBannerAdapter = new BannerAdapter<PageItem>(mData) {
             @Override
-            protected View getViewGroupItemView(ViewGroup container, final PageItem item, int position) {
-
-                return getItemView(container, item, mContext);
+            public View createView(ViewGroup container, PageItem pageItem, int position) {
+                return getItemView(container, pageItem, mContext);
             }
+
+            @Override
+            public void bindData(View view, PageItem pageItem, int position) {
+
+            }
+
         };
+        mVp.setAdapter(mBannerAdapter);
 
-
-        mVp.setAdapterAndData(mBannerAdapter, mData);
-        mBannerAdapter.setList(mData);
     }
 
     private View getItemView(ViewGroup container, final PageItem item, Context context) {

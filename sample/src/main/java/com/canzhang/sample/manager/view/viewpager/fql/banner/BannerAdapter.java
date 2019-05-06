@@ -1,4 +1,4 @@
-package com.canzhang.sample.manager.view.viewpager.fql.temp.banner;
+package com.canzhang.sample.manager.view.viewpager.fql.banner;
 
 import android.support.v4.view.PagerAdapter;
 import android.view.View;

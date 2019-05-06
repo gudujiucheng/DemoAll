@@ -11,14 +11,14 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.canzhang.sample.R;
 import com.canzhang.sample.manager.view.recyclerView.bean.PageItem;
-import com.canzhang.sample.manager.view.viewpager.fql.other.FixedSpeedScroller;
+import com.canzhang.sample.manager.view.viewpager.fql.banner.FixedSpeedScroller;
 import com.canzhang.sample.manager.view.viewpager.fql.transformer.TranslationXPageTransformer;
 import com.canzhang.sample.manager.view.viewpager.loop.LoopPagerAdapter;
 import com.example.base.base.BaseFragment;
@@ -89,7 +89,7 @@ public class ViewPagerFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 //触发切换是有 onPageSelected 回调的
-                mVp.setCurrentItem(i % mData.size(),false);
+                mVp.setCurrentItem(i % mData.size());
                 i++;
             }
         });
@@ -128,7 +128,7 @@ public class ViewPagerFragment extends BaseFragment {
             Field field = ViewPager.class.getDeclaredField("mScroller");
             field.setAccessible(true);
             FixedSpeedScroller scroller = new FixedSpeedScroller(mVp.getContext(),
-                    new AccelerateInterpolator());
+                    new DecelerateInterpolator());
             field.set(mVp, scroller);
             scroller.setmDuration(time);
         } catch (Exception e) {
@@ -141,7 +141,7 @@ public class ViewPagerFragment extends BaseFragment {
         mVp.setAdapter(mCustomPagerAdapter = new CustomPagerAdapter<PageItem>() {
             @Override
             protected View getViewGroupItemView(ViewGroup container, PageItem pageItem, int position) {
-                return getRealView(container, pageItem);
+                return getRealView(container, pageItem,position);
             }
         });
         mVp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -168,10 +168,11 @@ public class ViewPagerFragment extends BaseFragment {
 
 
     @NonNull
-    private View getRealView(ViewGroup container, final PageItem pageItem) {
+    private View getRealView(ViewGroup container, final PageItem pageItem,int position) {
         View layout = LayoutInflater.from(container.getContext()).inflate(R.layout.sample_fql_vp_item, container, false);
         ImageView ivBgIng = layout.findViewById(R.id.iv_bg_img);
         ImageView ivImg = layout.findViewById(R.id.iv_img);
+        layout.setTag("zc:"+position);
         ivBgIng.setImageResource(R.drawable.sample_ic_vp_banner_bg);
         ivImg.setImageResource(R.drawable.sample_ic_vp_banner);
         ivImg.setOnClickListener(new View.OnClickListener() {
@@ -189,7 +190,7 @@ public class ViewPagerFragment extends BaseFragment {
         mVp.setAdapter(new LoopPagerAdapter() {
             @Override
             public View getView(ViewGroup container, int position) {
-                return getRealView(container, mData.get(position));
+                return getRealView(container, mData.get(position),position);
             }
 
             @Override

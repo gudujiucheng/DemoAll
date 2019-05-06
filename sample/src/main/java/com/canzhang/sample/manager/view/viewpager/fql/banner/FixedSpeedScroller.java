@@ -1,4 +1,4 @@
-package com.canzhang.sample.manager.view.viewpager.fql.other;
+package com.canzhang.sample.manager.view.viewpager.fql.banner;
 
 import android.content.Context;
 import android.view.animation.Interpolator;

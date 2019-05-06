@@ -1,4 +1,4 @@
-package com.canzhang.sample.manager.view.viewpager.fql.temp.banner;
+package com.canzhang.sample.manager.view.viewpager.fql.banner;
 
 /**
  * @Author:Owenli

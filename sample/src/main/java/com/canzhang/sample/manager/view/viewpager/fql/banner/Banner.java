@@ -1,34 +1,48 @@
-package com.canzhang.sample.manager.view.viewpager.fql.temp.banner;
+package com.canzhang.sample.manager.view.viewpager.fql.banner;
 
 import android.content.Context;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Interpolator;
+import android.widget.Scroller;
 
 
-import com.canzhang.sample.manager.view.viewpager.fql.other.CustomViewPager;
-import com.canzhang.sample.manager.view.viewpager.fql.other.FixedSpeedScroller;
+import com.canzhang.sample.BuildConfig;
 
 import java.lang.reflect.Field;
 import java.util.List;
 
 /**
- * @Author:Owenli
- * @Create:2019/3/5
+ * 2019年5月6日17:38:02
+ * 修订版（支持自定义延时和插值器、自动轮播时候使用自定义延时和插值器，手动轮播场景恢复原状（防止手动滑动卡顿现象））
  */
 public class Banner extends CustomViewPager {
 
     public static final int VIEWPAGER_TOTAL_NUMBER = Integer.MAX_VALUE;
     private int mSwitchTime = 5000;
     private int mDurationTime = 400;
+    private Interpolator mInterpolator;
     private AutoSwitchTask mAutoSwitchTask;
     private BannerScrolledListener mBannerScrolledListener;
     private BannerAdapter mAdapter;
     private BannerPointInterface mBannerPoint;
-    private boolean rearrach = false;
+    private boolean isStop = false;
+    private boolean isFromAttachRefresh = false;
+    private Field mScrollerField;
+    Scroller mDefaultScroller = new Scroller(getContext(),
+            new Interpolator() {
+                @Override
+                public float getInterpolation(float t) {
+                    t -= 1.0f;
+                    return t * t * t * t * t + 1.0f;
+                }
+            });
 
     public Banner(Context context) {
         this(context, null);
@@ -39,7 +53,7 @@ public class Banner extends CustomViewPager {
         addOnPageChangeListener(onPageChangeListener);
         setOverScrollMode(OVER_SCROLL_NEVER);
         setOnViewPagerTouchEventListener(onViewPagerTouchEvent);
-        setDurationTime(mDurationTime);
+        setDurationTimeAndInterpolator(mDurationTime, null);
     }
 
     private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -64,7 +78,7 @@ public class Banner extends CustomViewPager {
             List list = mAdapter.getData();
             if (list != null && list.size() > 0) {
                 position = position % list.size();
-                if (mBannerScrolledListener != null) {
+                if (mBannerScrolledListener != null && !isFromAttachRefresh) {
                     mBannerScrolledListener.onPageSelected(position);
                 }
                 if (mBannerPoint != null) {
@@ -100,6 +114,14 @@ public class Banner extends CustomViewPager {
     }
 
     public void setAdapter(BannerAdapter adapter) {
+        setAdapter(adapter, true);
+    }
+
+    /**
+     * @param adapter
+     * @param isNeedStartFormCenter 是否需要从中间开启轮播
+     */
+    public void setAdapter(BannerAdapter adapter, boolean isNeedStartFormCenter) {
         if (adapter == null) {
             return;
         }
@@ -114,7 +136,7 @@ public class Banner extends CustomViewPager {
         if (list.size() > 1) {
             setScrollUnable(false);
             setBannerSwitchable(true);
-            initViewPagerSwitch(list);
+            initViewPagerSwitch(list, isNeedStartFormCenter);
         } else {
             setScrollUnable(true);
             setBannerSwitchable(false);
@@ -127,17 +149,61 @@ public class Banner extends CustomViewPager {
         mBannerScrolledListener = listener;
     }
 
-    public void setDurationTime(int time) {
-        this.mDurationTime = time;
+
+    /**
+     * 设置动画延时时间 和插值器
+     *
+     * @param durationTime
+     * @param interpolator
+     */
+    public void setDurationTimeAndInterpolator(int durationTime, Interpolator interpolator) {
+        this.mInterpolator = interpolator;
+        this.mDurationTime = durationTime;
+        if (mInterpolator == null) {
+            mInterpolator = new AccelerateInterpolator();
+        }
+        if (mDurationTime == 0) {
+            mDurationTime = 400;
+        }
         try {
-            Field field = ViewPager.class.getDeclaredField("mScroller");
-            field.setAccessible(true);
+            Field field = getField();
             FixedSpeedScroller scroller = new FixedSpeedScroller(getContext(),
-                    new AccelerateInterpolator());
+                    mInterpolator);
             field.set(this, scroller);
             scroller.setmDuration(mDurationTime);
         } catch (Exception e) {
+            Log.e("Banner", "setViewPagerDurationTime false");
+        }
+    }
 
+    @NonNull
+    private Field getField() throws NoSuchFieldException {
+        if(mScrollerField==null){
+            mScrollerField = ViewPager.class.getDeclaredField("mScroller");
+            mScrollerField.setAccessible(true);
+        }
+        return mScrollerField;
+    }
+
+
+    /**
+     * 设置自定义动画效果
+     */
+    private void setCustomAnim() {
+        log("设置自定义动画效果");
+        setDurationTimeAndInterpolator(mDurationTime, mInterpolator);
+    }
+
+    /**
+     * 恢复默认动画效果
+     */
+    private void restoreDefaultAnim() {
+        log("恢复默认动画效果");
+        try {
+            Field field = getField();
+            field.set(this, mDefaultScroller);
+        } catch (Exception e) {
+            Log.e("Banner", "revertDurationTime false");
         }
     }
 
@@ -145,13 +211,15 @@ public class Banner extends CustomViewPager {
         this.mSwitchTime = time;
     }
 
-    public void initViewPagerSwitch(List list) {
+    public void initViewPagerSwitch(List list, boolean isNeedStartFormCenter) {
 
         if (list != null && list.size() > 1) {
-            int middle = VIEWPAGER_TOTAL_NUMBER / 2;
-            int extra = middle % list.size();
-            int destItem = middle - extra;
-            setCurrentItem(destItem, false);
+            if (isNeedStartFormCenter) {
+                int middle = VIEWPAGER_TOTAL_NUMBER / 2;
+                int extra = middle % list.size();
+                int destItem = middle - extra;
+                setCurrentItem(destItem, false);
+            }
             if (mAutoSwitchTask == null) {
                 mAutoSwitchTask = new AutoSwitchTask(this);
             }
@@ -176,14 +244,20 @@ public class Banner extends CustomViewPager {
         }
         mAutoSwitchTask.start();
         if (refresh) {
+            isFromAttachRefresh = true;
             setCurrentItem(getCurrentItem() + 1, false);
             setCurrentItem(getCurrentItem() - 1, false);
+            isFromAttachRefresh = false;
         }
     }
 
     public void stopCustomBannerSwitch() {
         if (mAutoSwitchTask != null) {
             mAutoSwitchTask.stop();
+        }
+        if (!isStop) {
+            restoreDefaultAnim();
+            isStop = true;
         }
     }
 
@@ -215,14 +289,13 @@ public class Banner extends CustomViewPager {
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         stopCustomBannerSwitch();
-        rearrach = true;
     }
 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         //解决再次attach切换无动画问题
-        startCustomBannerSwitch(rearrach);
+        startCustomBannerSwitch(true);
     }
 
     @Override
@@ -302,9 +375,20 @@ public class Banner extends CustomViewPager {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
+                if (isStop) {
+                    setCustomAnim();
+                    isStop = false;
+                }
+
                 doSwitch(true);
             }
         };
 
+    }
+
+    private void log(String tips) {
+        if (BuildConfig.DEBUG) {
+            Log.e("Banner", tips);
+        }
     }
 }
