@@ -17,11 +17,13 @@ import com.canzhang.sample.manager.DebugDemoManager;
 import com.canzhang.sample.manager.JniDemoManager;
 import com.canzhang.sample.manager.OtherTestDemoManager;
 import com.canzhang.sample.manager.UseNonSdkApiDemoManager;
+import com.canzhang.sample.manager.activity_test.ActivityTestDemoManager;
 import com.canzhang.sample.manager.eventdispatch.EventDispatchFragment;
 import com.canzhang.sample.manager.fragment_test.ContainerActivity;
 import com.canzhang.sample.manager.lifetest.LifeTestFragment;
 import com.canzhang.sample.manager.permission.PermissionFragment;
 import com.canzhang.sample.manager.qrcode.QRCodeActivity;
+import com.canzhang.sample.manager.view.CommonViewShowFragment;
 import com.canzhang.sample.manager.view.editText.TestEditTextFragment;
 import com.canzhang.sample.manager.view.recyclerView.RecyclerFragment;
 import com.canzhang.sample.manager.view.recyclerView.RecyclerViewHeaderFooterFragment;
@@ -58,6 +60,7 @@ public class ComponentListActivity extends BaseActivity {
         initData();
         initRecyclerView();
         setTitle("组件应用范例");
+        log("onCreate");
     }
 
     /**
@@ -65,7 +68,14 @@ public class ComponentListActivity extends BaseActivity {
      */
     private void initData() {
         mData.add(new ComponentItem("日常测试（实验、异常等）", new OtherTestDemoManager()));
-        mData.add(new ComponentItem("cookie 测试",new CookieTestManager()));
+        mData.add(new ComponentItem("虚线", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFragment(CommonViewShowFragment.newInstance(CommonViewShowFragment.DASH_LINE));
+            }
+        }));
+        mData.add(new ComponentItem("activity 相关测试", new ActivityTestDemoManager()));
+        mData.add(new ComponentItem("cookie 测试", new CookieTestManager()));
         mData.add(new ComponentItem("WebView 相关测试", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,6 +187,43 @@ public class ComponentListActivity extends BaseActivity {
         transaction.replace(R.id.fl_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        log("onStart");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        log("onRestart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        log("onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        log("onPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        log("onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        log("onDestroy");
     }
 
 }

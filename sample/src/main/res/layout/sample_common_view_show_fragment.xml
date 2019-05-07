@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_dash_line"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/dp_40"
+        tools:visibility="visible"
+        android:visibility="gone">
+
+        <com.canzhang.sample.manager.view.DashLineView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            app:dash_line_clearance="5dp"
+            app:dash_line_color="#DCDCDE"
+            app:dash_line_orientation="horizontal"
+            />
+
+
+        <com.canzhang.sample.manager.view.DashLineView
+            android:layout_width="20dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            app:dash_line_clearance="5dp"
+            app:dash_line_color="@color/colorPrimary"
+            app:dash_line_orientation="vertical"
+          />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

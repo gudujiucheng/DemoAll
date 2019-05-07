@@ -42,9 +42,9 @@ android {
                 }
             }
 
-
             //为了让项目能够找到我们的 so 库，在 build.gradle 文件夹的 android 下添加：
-            jni.srcDirs = [] // disable automatic ndk-build call, which ignore our Android.mk(屏蔽掉默认的jni编译生成过程)
+            jni.srcDirs = []
+            // disable automatic ndk-build call, which ignore our Android.mk(屏蔽掉默认的jni编译生成过程)
             jniLibs.srcDir 'src/main/libs'
 
         }

@@ -16,13 +16,13 @@ public class BaseActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("Test",this.getClass().getSimpleName());
     }
 
     public void showToast(String tips) {
         Toast.makeText(this, tips, Toast.LENGTH_SHORT).show();
     }
-    public  void log(String msg){
-        Log.e(this.getClass().getSimpleName(),msg);
+
+    public void log(String msg) {
+        Log.e("ZC:"+this.getClass().getSimpleName(), msg);
     }
 }

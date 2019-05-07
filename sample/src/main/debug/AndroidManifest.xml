@@ -26,6 +26,9 @@
         <activity android:name=".manager.qrcode.QRCodeActivity" />
         <activity android:name=".manager.weex.WeexActivity" />
         <activity android:name=".manager.fragment_test.ContainerActivity" />
+        <activity
+            android:name=".manager.activity_test.TranslateActivity"
+            android:theme="@android:style/Theme.Translucent" />
     </application>
 
 </manifest>

@@ -42,7 +42,7 @@ public class CommonComponentSampleActivity extends BaseActivity {
                 mData.addAll(sampleItem);
             }
         }
-
+        log("onCreate");
 
     }
 
@@ -67,5 +67,42 @@ public class CommonComponentSampleActivity extends BaseActivity {
 
     private void start(Class clazz) {
         startActivity(new Intent(CommonComponentSampleActivity.this, clazz));
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        log("onStart");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        log("onRestart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        log("onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        log("onPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        log("onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        log("onDestroy");
     }
 }
