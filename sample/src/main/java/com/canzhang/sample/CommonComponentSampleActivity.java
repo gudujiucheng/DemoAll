@@ -2,6 +2,7 @@ package com.canzhang.sample;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -104,5 +105,12 @@ public class CommonComponentSampleActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         log("onDestroy");
+    }
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        showToast(newConfig.orientation == 1 ? "竖屏=1" : "横屏=2");
     }
 }
