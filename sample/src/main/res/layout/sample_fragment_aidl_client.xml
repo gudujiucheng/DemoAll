@@ -6,6 +6,17 @@
     android:orientation="vertical">
 
     <Button
+        android:id="@+id/bt_connect_aidl_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="连接远程服务" />
+
+    <Button
+        android:id="@+id/bt_disconnect_aidl_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="断开服务" />
+    <Button
         android:id="@+id/bt_add_book"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

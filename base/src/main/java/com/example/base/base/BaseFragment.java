@@ -92,15 +92,15 @@ public class BaseFragment extends Fragment {
     }
 
     public void log(String msg) {
-        Log.e(this.getClass().getSimpleName(), "tag:" + this.getTag() + " " + msg);
+        Log.e(this.getClass().getSimpleName(),  msg);
     }
 
     public void logE(String msg) {
-        Log.e("BaseFragment", this.getClass().getSimpleName() + " tag:" + this.getTag() + " " + msg);
+        Log.e("BaseFragment", this.getClass().getSimpleName() +msg);
     }
 
     public void logD(String msg) {
-        Log.d("BaseFragment", this.getClass().getSimpleName() + " tag:" + this.getTag() + " " + msg);
+        Log.d("BaseFragment", this.getClass().getSimpleName() + msg);
     }
 
 

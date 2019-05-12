@@ -24,7 +24,7 @@ import java.util.List;
  * aidl 客户端代码
  * <p>
  * https://blog.csdn.net/luoyanglizi/article/details/51980630
- *
+ * <p>
  * https://www.cnblogs.com/huangjialin/p/7738104.html
  */
 public class AidlClientFragment extends BaseFragment {
@@ -67,12 +67,31 @@ public class AidlClientFragment extends BaseFragment {
             }
         });
 
+        view.findViewById(R.id.bt_connect_aidl_service).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!mBound) {
+                    attemptToBindService();
+                }
+            }
+        });
+
+        view.findViewById(R.id.bt_disconnect_aidl_service).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mBound) {
+                    mContext.unbindService(mServiceConnection);
+                    mBound = false;
+                }
+            }
+        });
+
     }
 
 
+    private static int position = 0;
     /**
      * 按钮的点击事件，点击之后调用服务端的addBookIn方法
-     *
      */
     private void addBook() {
         //如果与服务端的连接处于未连接状态，则尝试连接
@@ -84,11 +103,12 @@ public class AidlClientFragment extends BaseFragment {
         if (mBookManager == null) return;
 
         Book book = new Book();
-        book.setName("APP研发录In");
+        book.setName("来自客户端的书 "+position);
         book.setPrice(30);
         try {
             mBookManager.addBook(book);
             log(book.toString());
+            position++;
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -105,13 +125,6 @@ public class AidlClientFragment extends BaseFragment {
         mContext.bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (!mBound) {
-            attemptToBindService();
-        }
-    }
 
     @Override
     public void onStop() {
@@ -125,14 +138,14 @@ public class AidlClientFragment extends BaseFragment {
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            log("service connected");
+            log("log from client :service connected");
             mBookManager = IBookManager.Stub.asInterface(service);
             mBound = true;
 
             if (mBookManager != null) {
                 try {
                     mBooks = mBookManager.getBookList();
-                    log(mBooks.toString());
+                    log("log from client :"+mBooks.toString());
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -141,7 +154,7 @@ public class AidlClientFragment extends BaseFragment {
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            log("service disconnected");
+            log("log from client :service disconnected");
             mBound = false;
         }
     };

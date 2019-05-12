@@ -1,3 +1,8 @@
+
+//TODO 注意aidl文件，服务端和客户端需要在相同包名下，不然会报错。
+
+
+
 // IBookManager.aidl   设置让客户端允许调用的接口
 package com.canzhang.sample.manager.aidl;
 

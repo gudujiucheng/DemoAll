@@ -16,7 +16,7 @@ import java.util.List;
  * 原文：https://blog.csdn.net/luoyanglizi/article/details/51980630
  */
 public class AIDLService extends Service {
-    public final String TAG = this.getClass().getSimpleName();
+    public final String TAG = "AidlClientFragment";
 
     //包含Book对象的list
     private List<Book> mBooks = new ArrayList<>();
@@ -26,7 +26,7 @@ public class AIDLService extends Service {
         @Override
         public List<Book> getBookList() throws RemoteException {
             synchronized (this) {
-                Log.e(TAG, "invoking getBooks() method , now the list is : " + mBooks.toString());
+                Log.e(TAG, "log from service :invoking getBooks() method , now the list is : " + mBooks.toString());
                 if (mBooks != null) {
                     return mBooks;
                 }
@@ -42,7 +42,7 @@ public class AIDLService extends Service {
                     mBooks = new ArrayList<>();
                 }
                 if (book == null) {
-                    Log.e(TAG, "Book is null in In");
+                    Log.e(TAG, "log from service :Book is null in In");
                     book = new Book();
                 }
                 //尝试修改book的参数，主要是为了观察其到客户端的反馈
@@ -51,23 +51,26 @@ public class AIDLService extends Service {
                     mBooks.add(book);
                 }
                 //打印mBooks列表，观察客户端传过来的值
-                Log.e(TAG, "invoking addBooks() method , now the list is : " + mBooks.toString());
+                Log.e(TAG, "log from service :invoking addBooks() method , now the list is : " + mBooks.toString());
             }
         }
     };
+
+    private static int position;
 
     @Override
     public void onCreate() {
         super.onCreate();
         Book book = new Book();
-        book.setName("Android开发艺术探索");
+        book.setName("服务端的书 "+position);
         book.setPrice(28);
+        position++;
         mBooks.add(book);
     }
 
     @Override
     public IBinder onBind(Intent intent) {
-        Log.e(getClass().getSimpleName(), String.format("on bind,intent = %s", intent.toString()));
+        Log.e(TAG, String.format("log from service : on bind,intent = %s", intent.toString()));
         return mBookManager;
     }
 
