@@ -18,18 +18,19 @@ import com.canzhang.sample.manager.JniDemoManager;
 import com.canzhang.sample.manager.OtherTestDemoManager;
 import com.canzhang.sample.manager.UseNonSdkApiDemoManager;
 import com.canzhang.sample.manager.activity_test.ActivityTestDemoManager;
+import com.canzhang.sample.manager.aidl.AidlClientFragment;
 import com.canzhang.sample.manager.eventdispatch.EventDispatchFragment;
 import com.canzhang.sample.manager.fragment_test.ContainerActivity;
 import com.canzhang.sample.manager.lifetest.LifeTestFragment;
 import com.canzhang.sample.manager.permission.PermissionFragment;
 import com.canzhang.sample.manager.qrcode.QRCodeActivity;
+import com.canzhang.sample.manager.rxjava.RxJavaTestDemoManager;
+import com.canzhang.sample.manager.thread.ThreadTestManager;
 import com.canzhang.sample.manager.view.CommonViewShowFragment;
 import com.canzhang.sample.manager.view.editText.TestEditTextFragment;
 import com.canzhang.sample.manager.view.recyclerView.RecyclerFragment;
 import com.canzhang.sample.manager.view.recyclerView.RecyclerViewHeaderFooterFragment;
-import com.canzhang.sample.manager.rxjava.RxJavaTestDemoManager;
 import com.canzhang.sample.manager.view.shadow.ShadowFragment;
-import com.canzhang.sample.manager.thread.ThreadTestManager;
 import com.canzhang.sample.manager.view.viewpager.ViewPagerFragment;
 import com.canzhang.sample.manager.view.viewpager.fql.FqlViewPagerFragment;
 import com.canzhang.sample.manager.view.webview.CookieTestManager;
@@ -68,6 +69,12 @@ public class ComponentListActivity extends BaseActivity {
      */
     private void initData() {
         mData.add(new ComponentItem("日常测试（实验、异常等）", new OtherTestDemoManager()));
+        mData.add(new ComponentItem("ipc之aidl", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFragment(AidlClientFragment.newInstance());
+            }
+        }));
         mData.add(new ComponentItem("虚线", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
