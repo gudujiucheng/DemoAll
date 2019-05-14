@@ -3,6 +3,9 @@ package com.canzhang.sample.manager.activity_test;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
+import android.os.Build;
+import android.os.Messenger;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -27,6 +30,7 @@ public class ActivityTestDemoManager extends BaseManager {
         list.add(lifeTest());
         list.add(landTest());
         list.add(portpaitTest());
+        list.add(fullTest());
         return list;
     }
 
@@ -54,6 +58,17 @@ public class ActivityTestDemoManager extends BaseManager {
             @Override
             public void onClick(View v) {
                 if (mActivity != null) {
+                    //校验方法1
+//                    if(mActivity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+//                        showToast("当前已经是横屏状态");
+//                        return;
+//                    }
+
+                    //校验方法2
+                    if (mActivity.getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+                        showToast("当前已经是横屏状态");
+                        return;
+                    }
                     mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                     mActivity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                             WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -68,6 +83,15 @@ public class ActivityTestDemoManager extends BaseManager {
             @Override
             public void onClick(View v) {
                 if (mActivity != null) {
+//                    if(mActivity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+//                        showToast("当前已经是竖屏状态");
+//                        return;
+//                    }
+
+                    if (mActivity.getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+                        showToast("当前已经是竖屏状态");
+                        return;
+                    }
                     mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                     mActivity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,
                             WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
@@ -75,6 +99,34 @@ public class ActivityTestDemoManager extends BaseManager {
                 }
             }
         });
+    }
+
+
+    private ComponentItem fullTest() {
+        return new ComponentItem("全屏", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideBottomUIMenu();
+            }
+        });
+    }
+
+
+    /**
+     * 隐藏虚拟按键，并且全屏
+     */
+    protected void hideBottomUIMenu() {
+        //隐藏虚拟按键，并且全屏
+        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
+            View v = mActivity.getWindow().getDecorView();
+            v.setSystemUiVisibility(View.GONE);
+        } else if (Build.VERSION.SDK_INT >= 19) {
+            //for new api versions.
+            View decorView = mActivity.getWindow().getDecorView();
+            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
+        }
     }
 
 
