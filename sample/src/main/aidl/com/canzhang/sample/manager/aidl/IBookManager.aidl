@@ -10,6 +10,8 @@ interface IBookManager {
 
     List<Book> getBookList();
 
+
+    //除了基本类型数据，其它类型的参数必须标上方向：in、out、inout。in 表示输入；out 表示输出；inout 表示输入输出型的参数，注意按需使用，因为 out 以及 inout 在底层实现是需要一定开销的。
     void addBook(in Book book);
 
 }

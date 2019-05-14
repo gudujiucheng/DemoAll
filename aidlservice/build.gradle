@@ -11,7 +11,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        applicationId "com.canzhang.aidlservice"
+        applicationId "com.canzhang.aidlservice" 
 
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
