@@ -252,6 +252,12 @@ public class CookieTestManager extends BaseManager {
         CookieSyncManager cookieSyncManager = CookieSyncManager.createInstance(DebugBaseApp.sContext);
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //现在的现象是 用户进入fintech.lexin.com域名之后，这个域名下会发起一个请求，这个请求是走到网关接口中请求数据，
+            //此时，网关接口没有获取到session，认为未登录，所以返回未登录状态码，fintech接受到状态码跳转到passeport登录，
+            // 但是进入passeport登录页面之后，passeport获取到了session，认为已登录，又跳转回了fintech
+//            cookieManager.setAcceptThirdPartyCookies(mWvCustom, true);//TODO 跨域cookie读取(moa之前出现个问题,上面为问题表述)
+        }
         String time = "; path=/; domain=." + topDomain + ";expires=" + (new Date(expiresTime)).toGMTString();
         StringBuilder build = new StringBuilder();
         try {
