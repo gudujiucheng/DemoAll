@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_font"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="自定义字体"
+        android:textColor="@color/colorPrimary"
+        android:textSize="30sp" />
+
+
+    <Button
+        android:id="@+id/bt_font_01"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="设置自定义字体样式(dinPro)"/>
+
+    <Button
+        android:id="@+id/bt_font_02"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="设置自定义字体样式(farrington)"/>
+
+
+    <Button
+        android:id="@+id/bt_font_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="循环设置(dinPro)"/>
+
+
+</LinearLayout>

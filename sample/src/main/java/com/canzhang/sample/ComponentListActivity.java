@@ -28,6 +28,7 @@ import com.canzhang.sample.manager.rxjava.RxJavaTestDemoManager;
 import com.canzhang.sample.manager.thread.ThreadTestManager;
 import com.canzhang.sample.manager.view.CommonViewShowFragment;
 import com.canzhang.sample.manager.view.editText.TestEditTextFragment;
+import com.canzhang.sample.manager.view.font.FontTestFragment;
 import com.canzhang.sample.manager.view.recyclerView.RecyclerFragment;
 import com.canzhang.sample.manager.view.recyclerView.RecyclerViewHeaderFooterFragment;
 import com.canzhang.sample.manager.view.shadow.ShadowFragment;
@@ -69,6 +70,12 @@ public class ComponentListActivity extends BaseActivity {
      */
     private void initData() {
         mData.add(new ComponentItem("日常测试（实验、异常等）", new OtherTestDemoManager()));
+        mData.add(new ComponentItem("字体测试", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFragment(FontTestFragment.newInstance());
+            }
+        }));
         mData.add(new ComponentItem("ipc之aidl", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
