@@ -311,14 +311,14 @@ public class CookieTestManager extends BaseManager {
 
     /**
      * 获取url的顶级域名
-     *
+     * 如果传入类似.fenqile.com 会出异常
      * @param
      * @return
      */
     public static String getTopDomain(String url) {
-        if (TextUtils.isEmpty(url)) {
-            return null;
-        }
+//        if (TextUtils.isEmpty(url)) {
+//            return null;
+//        }
         try {
             //获取值转换为小写
             String host = new URL(url).getHost().toLowerCase();//news.hexun.com

@@ -62,14 +62,15 @@ public class TestFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         if (mVRoot == null) {
-            log("mVRoot 为空");
+            log("mVRoot ----------------------------》》》为空");
             mVRoot = inflater.inflate(R.layout.sample_fragment_test, container, false);
             initView(mVRoot);
         } else {
+            log("mVRoot ----------------------------》》》不为空");
             ViewGroup parentView = (ViewGroup) mVRoot.getParent();
             if (parentView != null) {
                 //The specified child already has a parent. You must call removeView() on the child's parent first.
-                parentView.endViewTransition(mVRoot);//有效方案1：主动调用清除动画（需要加上这一句才会生效）
+//                parentView.endViewTransition(mVRoot);//有效方案1：主动调用清除动画（需要加上这一句才会生效）
                 parentView.removeView(mVRoot);
 
             }
@@ -106,15 +107,16 @@ public class TestFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
 //有效方案2
-//        if(mVRoot!=null){
-//            ViewGroup parentView = (ViewGroup) mVRoot.getParent();
-//            if (parentView != null) {
-//                parentView.removeView(mVRoot);
-//                log("onDestroyView  mVRoot  parentView 不为空,onDestroyView里面  走了移除逻辑");
-//            } else {
-//                log("onDestroyView  mVRoot  parentView 为空");
-//            }
-//        }
+        if(mVRoot!=null){
+            ViewGroup parentView = (ViewGroup) mVRoot.getParent();
+            if (parentView != null) {
+                parentView.removeView(mVRoot);
+                log("onDestroyView  mVRoot  parentView 不为空,onDestroyView里面  走了移除逻辑");
+            } else {
+                log("onDestroyView  mVRoot  parentView 为空");
+            }
+//            mVRoot =null;   好像在底部做这个移除操作，虽然解决了重复加载问题，但是貌似mVRoot 也没有正常回收
+        }
 
     }
 

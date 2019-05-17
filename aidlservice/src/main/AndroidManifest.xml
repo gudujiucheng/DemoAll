@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.canzhang.aidlservice">
 
+    <permission
+        android:name="com.permission.ZC"
+        android:description="@string/app_name"
+        android:label="@string/permission_label"
+        android:protectionLevel="normal" />
+
     <application>
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -21,6 +27,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
+
+        <activity
+            android:name=".CustomPermissionTestActivity"
+            android:permission="com.permission.ZC"
+            android:exported="true"></activity>
     </application>
 
 </manifest>

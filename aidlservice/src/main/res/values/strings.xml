@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AIDLService</string>
+    <string name="permission_label">zc label</string>
 </resources>

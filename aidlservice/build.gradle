@@ -11,7 +11,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        applicationId "com.canzhang.aidlservice" 
+        applicationId "com.canzhang.aidlservice"
 
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -29,7 +29,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     androidTestImplementation "com.android.support.test.espresso:espresso-core:${rootProject.ext.supportTestEspressoCoreVersion}"
     testImplementation "junit:junit:${rootProject.ext.junitVersion}"
     androidTestImplementation "com.android.support.test:runner:${rootProject.ext.supportTestRunnerVersion}"
