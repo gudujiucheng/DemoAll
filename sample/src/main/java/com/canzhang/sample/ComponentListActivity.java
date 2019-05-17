@@ -24,6 +24,7 @@ import com.canzhang.sample.manager.fragment_test.ContainerActivity;
 import com.canzhang.sample.manager.lifetest.LifeTestFragment;
 import com.canzhang.sample.manager.permission.PermissionFragment;
 import com.canzhang.sample.manager.qrcode.QRCodeActivity;
+import com.canzhang.sample.manager.ram.RamManager;
 import com.canzhang.sample.manager.rxjava.RxJavaTestDemoManager;
 import com.canzhang.sample.manager.thread.ThreadTestManager;
 import com.canzhang.sample.manager.view.CommonViewShowFragment;
@@ -70,6 +71,7 @@ public class ComponentListActivity extends BaseActivity {
      */
     private void initData() {
         mData.add(new ComponentItem("日常测试（实验、异常等）", new OtherTestDemoManager()));
+        mData.add(new ComponentItem("回收测试", new RamManager()));
         mData.add(new ComponentItem("字体测试", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
