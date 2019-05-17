@@ -32,31 +32,9 @@ public class ActivityTestDemoManager extends BaseManager {
         list.add(portpaitTest());
         list.add(fullTest());
         list.add(startOtherAppActivity());
-        list.add(customPermission());
         return list;
     }
 
-    /**
-     * 自定义权限
-     * https://www.cnblogs.com/liuzhipenglove/p/7102889.html
-     * https://blog.csdn.net/weixin_37077539/article/details/56279789
-     *
-     * @return
-     */
-    private ComponentItem customPermission() {
-        return new ComponentItem("启动别的app的activity(带有自定义权限)", "1、android:exported=\"true\"" +
-                "\n2、intent.setClassName(\"packageName\",\"全类名\")" +
-                "\n3、声明权限", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //不声明权限会报出异常：Permission Denial: starting Intent { cmp=com.canzhang.aidlservice/.CustomPermissionTestActivity } from ProcessRecord{be91a73 9169:com.canzhang.sample/u0a481} (pid=9169, uid=10481) requires com.permission.ZC
-                Intent intent = new Intent();
-                // 包名、具体类路径
-                intent.setClassName("com.canzhang.aidlservice", "com.canzhang.aidlservice.CustomPermissionTestActivity");
-                mActivity.startActivity(intent);
-            }
-        });
-    }
 
     /**
      * 启动别的activity
@@ -70,7 +48,7 @@ public class ActivityTestDemoManager extends BaseManager {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 // 包名、具体类路径
-                intent.setClassName("com.canzhang.aidlservice", "com.canzhang.aidlservice.CustomPermissionTestActivity");
+                intent.setClassName("com.canzhang.aidlservice", "com.canzhang.aidlservice.MainActivity");
                 mActivity.startActivity(intent);
             }
         });

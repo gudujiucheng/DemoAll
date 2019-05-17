@@ -2,14 +2,29 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.canzhang.aidlservice">
 
+
     <permission
-        android:name="com.permission.ZC"
-        android:description="@string/app_name"
-        android:label="@string/permission_label"
+        android:name="zc.permission.DANGEROUS_TEST"
+        android:description="@string/dangerous_description"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/dangerous_label"
+        android:permissionFlags="costsMoney"
+        android:protectionLevel="dangerous" />
+
+    <permission
+        android:name="zc.permission.NORMAL_TEST"
+        android:description="@string/normal_description"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/normal_label"
         android:protectionLevel="normal" />
 
+    <!--原文：https://blog.csdn.net/weixin_37077539/article/details/56279789-->
+
+
     <application>
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,10 +43,24 @@
             </intent-filter>
         </service>
 
+
         <activity
-            android:name=".CustomPermissionTestActivity"
-            android:permission="com.permission.ZC"
-            android:exported="true"></activity>
+            android:name="com.canzhang.permission.DangerousActivity"
+            android:permission="zc.permission.DANGEROUS_TEST" >
+            <intent-filter>
+                <action android:name="zc.intent.action.DANGER_TEST"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.canzhang.permission.NormalActivity"
+            android:permission="zc.permission.NORMAL_TEST" >
+            <intent-filter>
+                <action android:name="zc.intent.action.NORMAL_TEST"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

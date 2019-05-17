@@ -1,6 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.canzhang.sample">
-    <uses-permission android:name="com.permission.ZC" />
     <application>
         <activity android:name=".ComponentListActivity" />
         <activity

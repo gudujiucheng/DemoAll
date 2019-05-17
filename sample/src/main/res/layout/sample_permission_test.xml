@@ -22,6 +22,25 @@
             android:layout_height="50dp"
             android:gravity="center"
             android:text="getPhoneState" />
+        <Button
+            android:id="@+id/bt_get_normal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="自定义权限normal" />
+
+        <Button
+            android:id="@+id/bt_get_danger_no_permission"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="自定义权限danger no permission" />
+        <Button
+            android:id="@+id/bt_get_danger"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="自定义权限danger" />
 
 
     </LinearLayout>

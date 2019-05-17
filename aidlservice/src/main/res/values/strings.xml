@@ -1,4 +1,7 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ExtraTranslation">
     <string name="app_name">AIDLService</string>
-    <string name="permission_label">zc label</string>
+    <string name="dangerous_description">俺是危险权限</string>
+    <string name="dangerous_label">俺是危险权限label</string>
+    <string name="normal_description">俺是normal权限</string>
+    <string name="normal_label">俺是normal权限label</string>
 </resources>
