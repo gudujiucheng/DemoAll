@@ -6,7 +6,6 @@ if (isSampleRunAsApp.toBoolean()) {
 }
 
 android {
-
     resourcePrefix project.getName() + "_"
     compileSdkVersion rootProject.ext.compileSdkVersion
     resourcePrefix project.getName() + "_"
@@ -23,6 +22,11 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+    }
+
+    compileOptions {//flutter 需要这样声明
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
     }
 
 
@@ -91,4 +95,5 @@ dependencies {
     //阴影效果 https://github.com/harjot-oberai/MaterialShadows
 //    implementation 'com.sdsmdg.harjot:materialshadows:1.2.5'
     implementation project(':base')
+    implementation project(':flutter')
 }

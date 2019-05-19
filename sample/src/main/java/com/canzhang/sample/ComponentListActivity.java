@@ -20,6 +20,8 @@ import com.canzhang.sample.manager.UseNonSdkApiDemoManager;
 import com.canzhang.sample.manager.activity_test.ActivityTestDemoManager;
 import com.canzhang.sample.manager.aidl.AidlClientFragment;
 import com.canzhang.sample.manager.eventdispatch.EventDispatchFragment;
+import com.canzhang.sample.manager.flutter_test.FlutterTestActivity;
+import com.canzhang.sample.manager.flutter_test.FlutterTestFragment;
 import com.canzhang.sample.manager.fragment_test.ContainerActivity;
 import com.canzhang.sample.manager.lifetest.LifeTestFragment;
 import com.canzhang.sample.manager.permission.PermissionFragment;
@@ -71,7 +73,21 @@ public class ComponentListActivity extends BaseActivity {
      */
     private void initData() {
         mData.add(new ComponentItem("日常测试（实验、异常等）", new OtherTestDemoManager()));
+        mData.add(new ComponentItem("flutter 测试2", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                start(FlutterTestActivity.class);
+            }
+        }));
+
+        mData.add(new ComponentItem("flutter 测试", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFragment(FlutterTestFragment.newInstance());
+            }
+        }));
         mData.add(new ComponentItem("回收测试", new RamManager()));
+
         mData.add(new ComponentItem("字体测试", new View.OnClickListener() {
             @Override
             public void onClick(View v) {

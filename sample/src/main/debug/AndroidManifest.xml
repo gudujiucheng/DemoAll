@@ -8,10 +8,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
-    <!--自定义权限-->
-    <uses-permission android:name="zc.permission.DANGEROUS_TEST"/>
-    <uses-permission android:name="zc.permission.NORMAL_TEST"/>
-
+    <!-- 自定义权限 -->
+    <uses-permission android:name="zc.permission.DANGEROUS_TEST" />
+    <uses-permission android:name="zc.permission.NORMAL_TEST" />
 
     <application
         android:name=".debug.DebugBaseApp"
@@ -36,6 +35,7 @@
         <activity
             android:name=".manager.activity_test.TranslateActivity"
             android:theme="@android:style/Theme.Translucent" />
+        <activity android:name=".manager.flutter_test.FlutterTestActivity"></activity>
     </application>
 
 </manifest>
