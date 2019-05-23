@@ -107,4 +107,8 @@ public class ContainerActivity extends BaseActivity {
         if (i > 0)
             i--;
     }
+
+    public void createFragment(View view) {//创建fragment 观察生命周期
+        new TestFragment();
+    }
 }

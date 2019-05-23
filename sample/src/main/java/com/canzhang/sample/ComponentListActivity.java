@@ -16,6 +16,7 @@ import com.canzhang.sample.manager.BrightnessDemoManager;
 import com.canzhang.sample.manager.DebugDemoManager;
 import com.canzhang.sample.manager.JniDemoManager;
 import com.canzhang.sample.manager.OtherTestDemoManager;
+import com.canzhang.sample.manager.url.UrlTestManager;
 import com.canzhang.sample.manager.UseNonSdkApiDemoManager;
 import com.canzhang.sample.manager.activity_test.ActivityTestDemoManager;
 import com.canzhang.sample.manager.aidl.AidlClientFragment;
@@ -73,6 +74,7 @@ public class ComponentListActivity extends BaseActivity {
      */
     private void initData() {
         mData.add(new ComponentItem("日常测试（实验、异常等）", new OtherTestDemoManager()));
+        mData.add(new ComponentItem("url 相关测试", new UrlTestManager()));
         mData.add(new ComponentItem("flutter 测试2", new View.OnClickListener() {
             @Override
             public void onClick(View v) {

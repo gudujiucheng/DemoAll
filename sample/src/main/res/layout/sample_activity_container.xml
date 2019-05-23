@@ -7,7 +7,11 @@
     android:background="@android:color/white"
     android:gravity="center_horizontal"
     android:orientation="vertical">
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="创建fragment"
+        android:onClick="createFragment"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="50dp"
