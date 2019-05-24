@@ -6,6 +6,14 @@ if (isSampleRunAsApp.toBoolean()) {
 }
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'sample'
+            keyPassword '123456'
+            storeFile file('C:/Users/canzhang/AndroidStudioProjects/DemoAll/sample/sample.jks')
+            storePassword '123456'
+        }
+    }
     resourcePrefix project.getName() + "_"
     compileSdkVersion rootProject.ext.compileSdkVersion
     resourcePrefix project.getName() + "_"
@@ -14,22 +22,24 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-
         //作为单独工程，需要设置applicationID
         if (isSampleRunAsApp.toBoolean()) {
             applicationId "com.canzhang.sample"
         }
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        signingConfig signingConfigs.config
     }
-
     compileOptions {//flutter 需要这样声明
         sourceCompatibility 1.8
         targetCompatibility 1.8
     }
 
-
+    lintOptions {//忽略一些命名规则
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
     sourceSets {
         main {
             // 单独调试与集成调试时使用不同的 AndroidManifest.xml 文件
@@ -55,14 +65,14 @@ android {
 
 
     }
-
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
+    productFlavors {
+    }
 }
 
 dependencies {
@@ -89,11 +99,10 @@ dependencies {
     //rxjava
     implementation "io.reactivex.rxjava2:rxandroid:${rootProject.ext.rxandroid2Version}"
     implementation "io.reactivex.rxjava2:rxjava:${rootProject.ext.rxjava2Version}"
-
     //阴影效果，这个会导致控件变小 https://github.com/JuHonggang/ShadowDrawable
     implementation 'com.github.JuHonggang:ShadowDrawable:0.1'
     //阴影效果 https://github.com/harjot-oberai/MaterialShadows
-//    implementation 'com.sdsmdg.harjot:materialshadows:1.2.5'
+    //    implementation 'com.sdsmdg.harjot:materialshadows:1.2.5'
     implementation project(':base')
     implementation project(':flutter')
 }
