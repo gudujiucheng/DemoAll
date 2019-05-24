@@ -28,7 +28,7 @@ public class UrlTestManager extends BaseManager {
 
 
     /**
-     * 带有这种井号 解析会有异常
+     * 带有这种 # 号 解析会有异常,导致参数值，以及后面的参数取不出来。
      */
     private String url = "https://cc.sale.fenqile.com/1902181929/index.html?lexin_channel=AM.NADD2019050700028761.NADP2017121500001001#NADS2017121500001003#AI&event_id=AM.NADD2019050700028761";
 
