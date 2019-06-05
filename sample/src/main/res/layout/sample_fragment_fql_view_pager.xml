@@ -1,24 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
-    <com.canzhang.sample.manager.view.viewpager.fql.banner.Banner
-        android:id="@+id/vp_header"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fadingEdge="none" />
-
-    <!--装点的容器-->
     <LinearLayout
-        android:id="@+id/ll_point_contain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:gravity="center"
-        android:orientation="horizontal" />
+        android:background="@android:color/white"
+        android:orientation="vertical">
 
-</LinearLayout>
+        <com.canzhang.sample.manager.view.viewpager.fql.banner.Banner
+            android:id="@+id/vp_header"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:fadingEdge="none" />
+
+        <!--装点的容器-->
+        <LinearLayout
+            android:id="@+id/ll_point_contain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:orientation="horizontal" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:gravity="center"
+            android:text="占位符，实验移出屏幕是否会触发相关api（实验结果，并不会）" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:gravity="center"
+            android:text="占位符" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:gravity="center"
+            android:text="占位符" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:gravity="center"
+            android:text="占位符" />
+
+    </LinearLayout>
+</ScrollView>

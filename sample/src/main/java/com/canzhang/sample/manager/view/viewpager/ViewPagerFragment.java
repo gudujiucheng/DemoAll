@@ -104,7 +104,7 @@ public class ViewPagerFragment extends BaseFragment {
         view.findViewById(R.id.bt_set_anim).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mVp.setPageTransformer(i%2==0, new TranslationXPageTransformer());
+                mVp.setPageTransformer(i % 2 == 0, new TranslationXPageTransformer());
             }
         });
         final EditText etTime = view.findViewById(R.id.et_time);
@@ -112,8 +112,8 @@ public class ViewPagerFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 String s = etTime.getText().toString();
-                int time=0;
-                if(!TextUtils.isEmpty(s)){
+                int time = 0;
+                if (!TextUtils.isEmpty(s)) {
                     time = Integer.parseInt(s);
                 }
                 setDurationTime(time);
@@ -138,12 +138,6 @@ public class ViewPagerFragment extends BaseFragment {
 
 
     private void setAdapter() {
-        mVp.setAdapter(mCustomPagerAdapter = new CustomPagerAdapter<PageItem>() {
-            @Override
-            protected View getViewGroupItemView(ViewGroup container, PageItem pageItem, int position) {
-                return getRealView(container, pageItem,position);
-            }
-        });
         mVp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -161,18 +155,26 @@ public class ViewPagerFragment extends BaseFragment {
 
             }
         });
+
+        mCustomPagerAdapter = new CustomPagerAdapter<PageItem>() {
+            @Override
+            protected View getViewGroupItemView(ViewGroup container, PageItem pageItem, int position) {
+                return getRealView(container, pageItem, position);
+            }
+        };
         mCustomPagerAdapter.setList(mData);
+        mVp.setAdapter(mCustomPagerAdapter);
         mIndicator.setViewPager(mVp);
 
     }
 
 
     @NonNull
-    private View getRealView(ViewGroup container, final PageItem pageItem,int position) {
+    private View getRealView(ViewGroup container, final PageItem pageItem, int position) {
         View layout = LayoutInflater.from(container.getContext()).inflate(R.layout.sample_fql_vp_item, container, false);
         ImageView ivBgIng = layout.findViewById(R.id.iv_bg_img);
         ImageView ivImg = layout.findViewById(R.id.iv_img);
-        layout.setTag("zc:"+position);
+        layout.setTag("zc:" + position);
         ivBgIng.setImageResource(R.drawable.sample_ic_vp_banner_bg);
         ivImg.setImageResource(R.drawable.sample_ic_vp_banner);
         ivImg.setOnClickListener(new View.OnClickListener() {
@@ -190,7 +192,7 @@ public class ViewPagerFragment extends BaseFragment {
         mVp.setAdapter(new LoopPagerAdapter() {
             @Override
             public View getView(ViewGroup container, int position) {
-                return getRealView(container, mData.get(position),position);
+                return getRealView(container, mData.get(position), position);
             }
 
             @Override

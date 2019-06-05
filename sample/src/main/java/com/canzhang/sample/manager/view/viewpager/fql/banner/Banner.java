@@ -8,12 +8,9 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.Scroller;
-
-
-import com.canzhang.sample.BuildConfig;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -71,6 +68,7 @@ public class Banner extends CustomViewPager {
 
         @Override
         public void onPageSelected(int position) {
+            log("onPageSelected position:"+position);
             if (mAdapter == null) {
                 return;
             }
@@ -157,20 +155,19 @@ public class Banner extends CustomViewPager {
      * @param interpolator
      */
     public void setDurationTimeAndInterpolator(int durationTime, Interpolator interpolator) {
-        this.mInterpolator = interpolator;
         this.mDurationTime = durationTime;
-        if (mInterpolator == null) {
-            mInterpolator = new AccelerateInterpolator();
-        }
-        if (mDurationTime == 0) {
+        this.mInterpolator = interpolator;
+        if (mDurationTime <= 0) {
             mDurationTime = 400;
+        }
+        if (mInterpolator == null) {
+            mInterpolator = new DecelerateInterpolator();
         }
         try {
             Field field = getField();
-            FixedSpeedScroller scroller = new FixedSpeedScroller(getContext(),
-                    mInterpolator);
-            field.set(this, scroller);
+            FixedSpeedScroller scroller = new FixedSpeedScroller(getContext(), mInterpolator);
             scroller.setmDuration(mDurationTime);
+            field.set(this, scroller);
         } catch (Exception e) {
             Log.e("Banner", "setViewPagerDurationTime false");
         }
@@ -178,7 +175,7 @@ public class Banner extends CustomViewPager {
 
     @NonNull
     private Field getField() throws NoSuchFieldException {
-        if(mScrollerField==null){
+        if (mScrollerField == null) {
             mScrollerField = ViewPager.class.getDeclaredField("mScroller");
             mScrollerField.setAccessible(true);
         }
@@ -232,6 +229,7 @@ public class Banner extends CustomViewPager {
     }
 
     public void startCustomBannerSwitch(boolean refresh) {
+        log("startCustomBannerSwitch   VVVVVVVVVVVV");
         //Modify by denny pager的个数大于1时，才转换
         if (mAdapter == null) {
             return;
@@ -252,6 +250,7 @@ public class Banner extends CustomViewPager {
     }
 
     public void stopCustomBannerSwitch() {
+        log("stopCustomBannerSwitch   xxxxxxxxxxxxxxxxxxx");
         if (mAutoSwitchTask != null) {
             mAutoSwitchTask.stop();
         }
@@ -289,6 +288,7 @@ public class Banner extends CustomViewPager {
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         stopCustomBannerSwitch();
+        log("onDetachedFromWindow");
     }
 
     @Override
@@ -296,22 +296,27 @@ public class Banner extends CustomViewPager {
         super.onAttachedToWindow();
         //解决再次attach切换无动画问题
         startCustomBannerSwitch(true);
+        log("onAttachedToWindow");
     }
 
     @Override
     protected void onWindowVisibilityChanged(int visibility) {
         super.onWindowVisibilityChanged(visibility);
+        log("onWindowVisibilityChanged visibility:" + visibility);
         switch (visibility) {
             case VISIBLE:
                 if (getVisibility() == View.VISIBLE) {
                     startCustomBannerSwitch();
+                    log("onWindowVisibilityChanged ------------>>>可见");
                 }
                 break;
             case GONE:
+                log("onWindowVisibilityChanged ------------>>>gone");
                 stopCustomBannerSwitch();
                 break;
             case INVISIBLE:
             default:
+                log("onWindowVisibilityChanged ------------>>>INVISIBLE or others");
                 stopCustomBannerSwitch();
                 break;
         }
@@ -387,8 +392,6 @@ public class Banner extends CustomViewPager {
     }
 
     private void log(String tips) {
-        if (BuildConfig.DEBUG) {
-            Log.e("Banner", tips);
-        }
+        Log.e("Banner", tips);
     }
 }
