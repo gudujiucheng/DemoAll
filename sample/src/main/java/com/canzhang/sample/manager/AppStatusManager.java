@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
+import com.canzhang.sample.manager.view.font.FontTestFragment;
 import com.example.base.base.AppProxy;
 
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class AppStatusManager extends BaseManager {
 
             @Override
             public void onActivityResumed(Activity activity) {
-
+               FontTestFragment.printKey(activity);
             }
 
             @Override
