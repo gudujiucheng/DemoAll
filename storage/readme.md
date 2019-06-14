@@ -2,4 +2,5 @@
 * 首先上传一个json文件到githup，然后找到这个文件的路径
 https://github.com/gudujiucheng/DemoAll/blob/dev/storage/test.json
 * 转换成下面这样
-https://raw.githubusercontent.com/gudujiucheng/DemoAll/robin/dev/storage/test.json
+这个文件直接点击文件旁边的那个小箭头就可以获取了
+https://raw.githubusercontent.com/gudujiucheng/DemoAll/dev/storage/test.json
