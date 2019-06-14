@@ -16,7 +16,6 @@ import com.canzhang.sample.manager.BrightnessDemoManager;
 import com.canzhang.sample.manager.DebugDemoManager;
 import com.canzhang.sample.manager.JniDemoManager;
 import com.canzhang.sample.manager.OtherTestDemoManager;
-import com.canzhang.sample.manager.url.UrlTestManager;
 import com.canzhang.sample.manager.UseNonSdkApiDemoManager;
 import com.canzhang.sample.manager.activity_test.ActivityTestDemoManager;
 import com.canzhang.sample.manager.aidl.AidlClientFragment;
@@ -24,12 +23,14 @@ import com.canzhang.sample.manager.eventdispatch.EventDispatchFragment;
 import com.canzhang.sample.manager.flutter_test.FlutterTestActivity;
 import com.canzhang.sample.manager.flutter_test.FlutterTestFragment;
 import com.canzhang.sample.manager.fragment_test.ContainerActivity;
+import com.canzhang.sample.manager.img.ImgTestFragment;
 import com.canzhang.sample.manager.lifetest.LifeTestFragment;
 import com.canzhang.sample.manager.permission.PermissionFragment;
 import com.canzhang.sample.manager.qrcode.QRCodeActivity;
 import com.canzhang.sample.manager.ram.RamManager;
 import com.canzhang.sample.manager.rxjava.RxJavaTestDemoManager;
 import com.canzhang.sample.manager.thread.ThreadTestManager;
+import com.canzhang.sample.manager.url.UrlTestManager;
 import com.canzhang.sample.manager.view.CommonViewShowFragment;
 import com.canzhang.sample.manager.view.editText.TestEditTextFragment;
 import com.canzhang.sample.manager.view.font.FontTestFragment;
@@ -81,7 +82,12 @@ public class ComponentListActivity extends BaseActivity {
                 start(FlutterTestActivity.class);
             }
         }));
-
+        mData.add(new ComponentItem("图片信息、压缩、旋转等测试", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFragment(ImgTestFragment.newInstance());
+            }
+        }));
         mData.add(new ComponentItem("flutter 测试", new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -13,8 +13,8 @@ public class MainTest {
     }
 
     private static void test() {
-//       String s =  CookieTestManager.getTopDomain("https://data.oa.fenqile.com/live/exhibition/left.html");
-       String s =  CookieTestManager.getTopDomain(".fenqile.com");
+//       String s =  CookieTestManager.getTopDomain("https://data.oa.canzhang.com/live/exhibition/left.html");
+       String s =  CookieTestManager.getTopDomain(".canzhang.com");
        System.out.print(s);
     }
 

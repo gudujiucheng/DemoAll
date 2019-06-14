@@ -56,9 +56,9 @@ public class PreLoadService extends Service {
 
         ArrayList<PreLoadUrl> allPreLoadUrl = new ArrayList<>();
         PreLoadUrl pre =  new PreLoadUrl();
-        pre.url = "https://item.m.fenqile.com/S201709130587049.html";
+        pre.url = "https://item.m.canzhang.com/S201709130587049.html";
         PreLoadUrl pre2 =  new PreLoadUrl();
-        pre2.url = "https://item.m.fenqile.com/S201804130004657.html";
+        pre2.url = "https://item.m.canzhang.com/S201804130004657.html";
         allPreLoadUrl.add(pre);
 //        allPreLoadUrl.add(pre2);
 

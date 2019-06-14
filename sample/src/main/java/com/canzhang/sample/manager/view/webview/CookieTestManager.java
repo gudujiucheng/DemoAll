@@ -85,11 +85,11 @@ public class CookieTestManager extends BaseManager {
         return new ComponentItem("添加cookie(不同path,相同host，存host，取url)", "依host存，这样都能取出", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "https://buy.m.fenqile.com/pay/query_order_line.json";
+                String url = "https://buy.m.canzhang.com/pay/query_order_line.json";
                 Uri uri = Uri.parse(url);
                 setCookie(uri.getHost(), "zc=zrc");
 
-                String url1 = "https://buy.m.fenqile.com/201903180137531/index.html";
+                String url1 = "https://buy.m.canzhang.com/201903180137531/index.html";
                 Uri uri1 = Uri.parse(url1);
                 setCookie(uri1.getHost(), "zk=zdk");
 
@@ -98,7 +98,7 @@ public class CookieTestManager extends BaseManager {
                 log("\nhost:" + uri.getHost() + "\nhost1:" + uri1.getHost());
                 queryCookie("第一个：", url);
                 queryCookie("第二个：", url1);
-                queryCookie("通用host 查询：", "https://buy.m.fenqile.com");
+                queryCookie("通用host 查询：", "https://buy.m.canzhang.com");
 
 
 //                2019-04-24 16:50:09.155 21613-21613/com.canzhang.sample E/Test: CookieTestManager:第一个： zc=zrc; zk=zdk
@@ -112,11 +112,11 @@ public class CookieTestManager extends BaseManager {
         return new ComponentItem("添加cookie(相同host，不同path，存url，取url)", "这样只能各自获取各自的，path局限", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "https://sale.fenqile.com/pay/query_order_line.json";
+                String url = "https://sale.canzhang.com/pay/query_order_line.json";
                 Uri uri = Uri.parse(url);
                 setCookie(url, "zc=zrc");
 
-                String url1 = "https://sale.fenqile.com/201903180137531/index.html";
+                String url1 = "https://sale.canzhang.com/201903180137531/index.html";
                 Uri uri1 = Uri.parse(url1);
                 setCookie(url1, "zk=zdk");
 
@@ -125,7 +125,7 @@ public class CookieTestManager extends BaseManager {
                 log("\nhost:" + uri.getHost() + "\nhost1:" + uri1.getHost());
                 queryCookie("第一个：", url);
                 queryCookie("第二个：", url1);
-                queryCookie("通用host 查询：", "https://sale.fenqile.com");
+                queryCookie("通用host 查询：", "https://sale.canzhang.com");
 
 
 //                2019-04-24 16:51:19.944 21613-21613/com.canzhang.sample E/Test: CookieTestManager:第一个： zc=zrc
@@ -140,21 +140,21 @@ public class CookieTestManager extends BaseManager {
         return new ComponentItem("添加cookie(不同path,相同host，存一级host，取url)", "一级更短的domin都能取出来", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "https://buy.m.fenqile.com/pay/query_order_line.json";
+                String url = "https://buy.m.canzhang.com/pay/query_order_line.json";
                 Uri uri = Uri.parse(url);
-                setCookie("fenqile.com", "zc=zrc");
+                setCookie("canzhang.com", "zc=zrc");
 
-                String url1 = "https://buy.m.fenqile.com/201903180137531/index.html";
+                String url1 = "https://buy.m.canzhang.com/201903180137531/index.html";
                 Uri uri1 = Uri.parse(url1);
-                setCookie("fenqile.com", "zk=zdk");
+                setCookie("canzhang.com", "zk=zdk");
 
 
                 log("\npath:" + uri.getPath() + "\npath1:" + uri1.getPath());
                 log("\nhost:" + uri.getHost() + "\nhost1:" + uri1.getHost());
                 queryCookie("第一个：", url);
                 queryCookie("第二个：", url1);
-                queryCookie("通用host 查询：", "https://buy.m.fenqile.com");
-                queryCookie("通用host 查询2：", "https://fenqile.com");
+                queryCookie("通用host 查询：", "https://buy.m.canzhang.com");
+                queryCookie("通用host 查询2：", "https://canzhang.com");
 
 
 //                2019-04-24 16:50:09.155 21613-21613/com.canzhang.sample E/Test: CookieTestManager:第一个： zc=zrc; zk=zdk
@@ -169,7 +169,7 @@ public class CookieTestManager extends BaseManager {
         return new ComponentItem("设置cookie为过期(不同path,相同host，存一级host，取url)", "设置为过期，就查不到这个cookie了", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "https://buy.m.fenqile.com/pay/query_order_line.json";
+                String url = "https://buy.m.canzhang.com/pay/query_order_line.json";
 
                 setCookie(url, "zc", "is a good man", getCookieExpires());
                 queryCookie("首次添加有效cookie查询查询：", url);
@@ -191,7 +191,7 @@ public class CookieTestManager extends BaseManager {
         return new ComponentItem("removeCookie（置空方式，key还在）", "这里cookie无法单独移除，可以通过置空处理", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setCookie("https://buy.m.fenqile.com/pay/query_order_line.json", "zc=");
+                setCookie("https://buy.m.canzhang.com/pay/query_order_line.json", "zc=");
             }
         });
     }
@@ -253,7 +253,7 @@ public class CookieTestManager extends BaseManager {
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            //现在的现象是 用户进入fintech.lexin.com域名之后，这个域名下会发起一个请求，这个请求是走到网关接口中请求数据，
+            //现在的现象是 用户进入fintech.lx.com域名之后，这个域名下会发起一个请求，这个请求是走到网关接口中请求数据，
             //此时，网关接口没有获取到session，认为未登录，所以返回未登录状态码，fintech接受到状态码跳转到passeport登录，
             // 但是进入passeport登录页面之后，passeport获取到了session，认为已登录，又跳转回了fintech
 //            cookieManager.setAcceptThirdPartyCookies(mWvCustom, true);//TODO 跨域cookie读取(moa之前出现个问题,上面为问题表述)
@@ -311,7 +311,7 @@ public class CookieTestManager extends BaseManager {
 
     /**
      * 获取url的顶级域名
-     * 如果传入类似.fenqile.com 会出异常
+     * 如果传入类似.canzhang.com 会出异常
      * @param
      * @return
      */

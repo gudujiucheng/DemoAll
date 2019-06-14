@@ -7,7 +7,7 @@ import com.example.administrator.SafeLog;
 import java.io.File;
 
 /**
- * 分期乐文件管理中心
+ * 文件管理中心
  * by zc  2018年12月10日16:23:16
  */
 public class FqlFileManager {

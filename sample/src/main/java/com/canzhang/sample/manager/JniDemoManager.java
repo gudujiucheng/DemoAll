@@ -6,7 +6,7 @@ import android.view.View;
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
 import com.canzhang.sample.manager.jni.JNITest;
-import com.lexinfintech.component.debugdialog.DebugDialog;
+import com.component.debugdialog.DebugDialog;
 
 import java.util.ArrayList;
 import java.util.List;

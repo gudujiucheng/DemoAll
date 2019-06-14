@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 分期乐项目使用的
+ * fq项目使用的
  */
 public class FqlViewPagerFragment extends BaseFragment {
     private Banner mVp;

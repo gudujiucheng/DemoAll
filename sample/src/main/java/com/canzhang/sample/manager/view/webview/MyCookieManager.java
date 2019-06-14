@@ -7,7 +7,7 @@ import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
 import com.canzhang.sample.debug.DebugBaseApp;
-import com.lexinfintech.component.debugdialog.DebugDialog;
+import com.component.debugdialog.DebugDialog;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import java.util.Map;
 @SuppressLint("StaticFieldLeak")
 public class MyCookieManager {
 
-    private static final String DEFAULT_PATH_DOMAIN = "; path=/; domain=.fenqile.com; ";
+    private static final String DEFAULT_PATH_DOMAIN = "; path=/; domain=.canzhang.com; ";
     /**
      * @param url          链接
      * @param key          键

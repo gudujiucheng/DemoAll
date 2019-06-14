@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import com.canzhang.sample.debug.DebugBaseApp;
 import com.example.base.base.AppProxy;
-import com.lexinfintech.component.debugdialog.DebugDialog;
+import com.component.debugdialog.DebugDialog;
 
 public abstract class BaseManager implements IManager {
 

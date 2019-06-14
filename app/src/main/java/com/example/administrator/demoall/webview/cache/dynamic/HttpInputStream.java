@@ -34,7 +34,7 @@ public class HttpInputStream extends InputStream {
 
     @Override
     public int read() throws IOException {
-        if (mResourceInputStream == null) {//TODO 204的时候 会陷入死循环    尝试在分期乐上实验下看看
+        if (mResourceInputStream == null) {//TODO 204的时候 会陷入死循环    尝试在fq上实验下看看
             mResourceInputStream = createInputStream();
         }
 

@@ -6,7 +6,7 @@ import org.json.JSONArray;
 /**
  * 上报数据的包装类
  * Created by liveeili on 2017/7/26.
- * http://wiki.fenqile.com/pages/viewpage.action?pageId=26396346
+ * http://wiki.canzhang.com/pages/viewpage.action?pageId=26396346
  */
 public class ReportWrapper {
     /**

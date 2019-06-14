@@ -2792,7 +2792,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "imageHeight": "100",
       "absorb": "1",
       "visible": "1",
-      "imageUrl": "http://cimg1.fenqile.com/product/M00/2F/1C/hhoGAFhjTTSAFvkuAAA_aasAErA714.jpg"
+      "imageUrl": "http://cimg1.canzhang.com/product/M00/2F/1C/hhoGAFhjTTSAFvkuAAA_aasAErA714.jpg"
     }
   })
 },staticRenderFns: []}

@@ -13,7 +13,7 @@ import com.canzhang.sample.manager.weex.view.FqlWeexQRCodeView;
 import com.canzhang.sample.manager.weex.view.RichImageview;
 import com.canzhang.sample.manager.weex.view.RichText;
 import com.example.base.base.AppProxy;
-import com.lexinfintech.component.debugdialog.DebugDialog;
+import com.component.debugdialog.DebugDialog;
 import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.common.WXException;

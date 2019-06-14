@@ -37,10 +37,7 @@ public class WebviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_webview);
         WebView webView = findViewById(R.id.wv);
 
-        String url = "https://item.m.fenqile.com/S201709130587049.html";
-//        pre.url = "https://r.fenqile.com/ep?action=ajax_error&op=&cost=0&attach=&errcode=-1&errmsg=&code=-1&msg=%5B404%5D%5B%22error%22%5D%5BNot%20Found%5D&line=&file=&u=%2Froute0002%2FproductDetailV2%2FgetProductInfo.json&type=4";
-
-//        pre.url = "https://item.m.fenqile.com/route0002/productDetailV2/getProductInfo.json";
+        String url = "https://item.m.xxx.com/S201709130587049.html";
 
         CacheStrategy mCacheStrategy = createCacheStrategy();
         mWebCacheIntercept = new WebCacheIntercept(mCacheStrategy);
