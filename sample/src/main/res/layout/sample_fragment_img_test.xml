@@ -11,5 +11,11 @@
        android:layout_height="wrap_content"
        android:text="获取图片信息"/>
 
+   <ImageView
+       android:id="@+id/iv"
+       android:layout_width="match_parent"
+       android:scaleType="fitCenter"
+       android:layout_height="200dp" />
+
 
 </LinearLayout>

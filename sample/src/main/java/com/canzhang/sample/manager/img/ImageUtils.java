@@ -7,6 +7,7 @@ import com.canzhang.sample.manager.thread.demo.fqlreport.LogUtils;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Description:
@@ -41,12 +42,29 @@ public class ImageUtils {
                     }
                 }
             }
-            LogUtils.log("ExifInterface:"+exifInfo.toString());
+            LogUtils.log("图片信息:"+exifInfo.toString());
             return exifInfo;
         } catch (Throwable throwable) {
-            LogUtils.log("ExifInterface:"+throwable.getMessage());
+            LogUtils.log("图片信息:"+throwable.getMessage());
         }
         return null;
+    }
+
+
+    public static void setExif(String filePath, HashMap<String, String> exif) {
+        if ( filePath == null || exif == null || exif.size() <= 0) {
+            return;
+        }
+        try {
+            ExifInterface exifInterface = new ExifInterface(filePath);
+            for (Map.Entry<String, String> entry : exif.entrySet()) {
+                exifInterface.setAttribute(entry.getKey(), entry.getValue());
+            }
+            exifInterface.saveAttributes();
+            LogUtils.log("setExif");
+        } catch (Throwable throwable) {
+            LogUtils.log("setExif:"+throwable.getMessage());
+        }
     }
 
 }
