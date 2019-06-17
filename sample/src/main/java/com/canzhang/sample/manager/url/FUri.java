@@ -5,6 +5,8 @@ import android.text.TextUtils;
 import android.util.Log;
 
 
+import org.w3c.dom.Text;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -17,12 +19,23 @@ import java.util.Set;
 public class FUri {
 
     private Uri uri;
+    private static final String s = "08d383f559c568de92f5cbbf849bd2b2";
 
     private FUri(Uri uri) {
         this.uri = uri;
     }
 
     public static FUri parse(String uriString) {
+        return new FUri(Uri.parse(uriString));
+    }
+
+    public static FUri parseWithCheck(String uriString) {
+        if (!TextUtils.isEmpty(uriString)) {
+            if (uriString.contains("#")) {
+                uriString = uriString.replaceAll("#", s);
+            }
+
+        }
         return new FUri(Uri.parse(uriString));
     }
 
@@ -41,6 +54,18 @@ public class FUri {
     public String getQueryParameter(String key) {
         try {
             return uri.getQueryParameter(key);
+        } catch (Throwable ignore) {
+            return null;
+        }
+    }
+
+    public String newGetQueryParameter(String key) {
+        try {
+            String parameter = uri.getQueryParameter(key);
+            if(parameter==null){
+                return  null;
+            }
+            return parameter.replaceAll(s,"#");
         } catch (Throwable ignore) {
             return null;
         }

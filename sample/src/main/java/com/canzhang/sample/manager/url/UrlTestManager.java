@@ -34,14 +34,16 @@ public class UrlTestManager extends BaseManager {
 
     private String url02 = "https://cc.sale.canzhang.com/1902181929/index.html?canzhang_channel=AM.NADD2019050700028761.NADP2017121500001001&event_id=AM.NADD2019050700028761";
 
+    private String url03 = "https://mall.m.fenqile.com/jump.html?url=https://pay.m.fenqile.com/index.html#/activity/temp-credit?_OSC=aaabbbccc0001";
+
     private ComponentItem test() {
 
         return new ComponentItem("fql getQueryParameter", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FUri parse = FUri.parse(url);
-                String canzhang_channel = parse.getQueryParameter("canzhang_channel");
-                String event_id = parse.getQueryParameter("event_id");
+                FUri parse = FUri.parseWithCheck(url);
+                String canzhang_channel = parse.newGetQueryParameter("canzhang_channel");
+                String event_id = parse.newGetQueryParameter("event_id");
 
                 log("canzhang_channel:" + canzhang_channel + " event_id:" + event_id);
             }
