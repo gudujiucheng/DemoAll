@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
+import com.canzhang.sample.manager.sqllite.fql.CommonDispatchThread;
 import com.canzhang.sample.manager.sqllite.test.MyDatabaseHelper;
 
 import java.util.ArrayList;
@@ -31,7 +32,18 @@ public class SQLiteTestManager extends BaseManager {
         list.add(update());
         list.add(query());
         list.add(transaction());
+
+        list.add(fql());
         return list;
+    }
+
+    private ComponentItem fql() {
+        return new ComponentItem("测试fql读表异常", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new CommonDispatchThread().reportOldAndSchedule(3000);
+            }
+        });
     }
 
 
