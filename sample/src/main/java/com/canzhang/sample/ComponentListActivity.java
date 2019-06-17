@@ -29,6 +29,7 @@ import com.canzhang.sample.manager.permission.PermissionFragment;
 import com.canzhang.sample.manager.qrcode.QRCodeActivity;
 import com.canzhang.sample.manager.ram.RamManager;
 import com.canzhang.sample.manager.rxjava.RxJavaTestDemoManager;
+import com.canzhang.sample.manager.sqllite.SQLiteTestManager;
 import com.canzhang.sample.manager.thread.ThreadTestManager;
 import com.canzhang.sample.manager.url.UrlTestManager;
 import com.canzhang.sample.manager.view.CommonViewShowFragment;
@@ -75,6 +76,7 @@ public class ComponentListActivity extends BaseActivity {
      */
     private void initData() {
         mData.add(new ComponentItem("日常测试（实验、异常等）", new OtherTestDemoManager()));
+        mData.add(new ComponentItem("sqlite", new SQLiteTestManager()));
         mData.add(new ComponentItem("url 相关测试", new UrlTestManager()));
         mData.add(new ComponentItem("flutter 测试2", new View.OnClickListener() {
             @Override
