@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+
+import top.zibin.luban.CompressionPredicate;
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
 
 /**
  * 图片压缩测试：https://www.jianshu.com/p/cd0cd8a406d4
@@ -62,7 +67,17 @@ public class ImgTestFragment extends BaseFragment {
         inSampleSize(view);
         getImgMsg(view);
 
+        view.findViewById(R.id.bt_get_img_size_luban).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                testLuban();
+            }
+        });
+
     }
+
+
+
 
     /**
      * 获取图片信息
@@ -75,7 +90,7 @@ public class ImgTestFragment extends BaseFragment {
             public void onClick(View v) {
                 InputStream inputStream = getAssetsInputStream(mContext, "test_img.png");
 //                iv.setImageBitmap(BitmapFactory.decodeStream(inputStream));
-                copyFileToCacheDir(mContext, inputStream);
+                copyFileToCacheDir(mContext, inputStream,System.currentTimeMillis()+"");
             }
         });
     }
@@ -211,7 +226,7 @@ public class ImgTestFragment extends BaseFragment {
     }
 
 
-    public void copyFileToCacheDir(Context context, InputStream inputStream) {
+    public File copyFileToCacheDir(Context context, InputStream inputStream,String name) {
 
         log("copyFileToCacheDir");
         File cacheDir = context.getExternalCacheDir();
@@ -221,7 +236,7 @@ public class ImgTestFragment extends BaseFragment {
 
         String filePath = cacheDir.getAbsolutePath() + File.separator + "canzhang" +
                 File.separator + "photo" + File.separator;
-        String fileName = filePath + System.currentTimeMillis() + ".jpg";
+        String fileName = filePath +name + ".jpg";
         File tempFile = new File(fileName);
         if (!tempFile.getParentFile().exists()) {
             File parentFile = new File(filePath);
@@ -257,6 +272,55 @@ public class ImgTestFragment extends BaseFragment {
         ImageUtils.setExif(tempFile.getAbsolutePath(), hashMap);
         ImageUtils.getExif(tempFile.getAbsolutePath());
 
+        return  tempFile;
+
 
     }
+
+
+    private void testLuban(){
+        InputStream inputStream = getAssetsInputStream(mContext, "img/test.jpg");
+        File file = copyFileToCacheDir(mContext, inputStream, "xxxxx");
+        HashMap<String, String> exif = ImageUtils.getExif(file.getAbsolutePath());
+        ImageUtils.printFileSize(file);
+
+        String dirPath = mContext.getExternalCacheDir().getAbsolutePath() + File.separator + "canzhang" +
+                File.separator + "photo" + File.separator;
+        Luban.with(mContext)
+                .load(file)
+                .ignoreBy(100)
+//                .setTargetDir(dirPath) //可以不设置
+                .filter(new CompressionPredicate() {
+                    @Override
+                    public boolean apply(String path) {
+                        return !(TextUtils.isEmpty(path) || path.toLowerCase().endsWith(".gif"));
+                    }
+                })
+                .setCompressListener(new OnCompressListener() {
+                    @Override
+                    public void onStart() {
+                        log("开始压缩");
+                    }
+
+                    @Override
+                    public void onSuccess(File file) {
+                        // TODO 压缩成功后调用，返回压缩后的图片文件
+                        log("压缩成功"+file.getAbsolutePath());
+                        ImageUtils.setExif(file.getAbsolutePath(),exif);
+                        ImageUtils.getExif(file.getAbsolutePath());
+                        ImageUtils.printFileSize(file);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        // TODO 当压缩过程出现问题时调用
+                        log("压缩失败"+e.getMessage());
+                    }
+                }).launch();
+
+    }
+
+
+
+
 }

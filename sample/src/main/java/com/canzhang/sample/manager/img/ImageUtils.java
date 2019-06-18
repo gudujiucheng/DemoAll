@@ -5,6 +5,10 @@ import android.text.TextUtils;
 
 import com.canzhang.sample.manager.thread.demo.fqlreport.LogUtils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,17 +46,17 @@ public class ImageUtils {
                     }
                 }
             }
-            LogUtils.log("图片信息:"+exifInfo.toString());
+            LogUtils.log("图片信息:" + exifInfo.toString());
             return exifInfo;
         } catch (Throwable throwable) {
-            LogUtils.log("图片信息:"+throwable.getMessage());
+            LogUtils.log("图片信息:" + throwable.getMessage());
         }
         return null;
     }
 
 
     public static void setExif(String filePath, HashMap<String, String> exif) {
-        if ( filePath == null || exif == null || exif.size() <= 0) {
+        if (filePath == null || exif == null || exif.size() <= 0) {
             return;
         }
         try {
@@ -63,8 +67,29 @@ public class ImageUtils {
             exifInterface.saveAttributes();
             LogUtils.log("setExif");
         } catch (Throwable throwable) {
-            LogUtils.log("setExif:"+throwable.getMessage());
+            LogUtils.log("setExif:" + throwable.getMessage());
         }
+    }
+
+
+    public static void printFileSize(File file) {
+        LogUtils.log("printFileSize:" + file.length() / 1024f / 1024f + "M");
+    }
+
+    public static void printFileSize02(File file) {
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            LogUtils.log("printFileSize:" + fis.available() / 1024f / 1024f + "M");
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
     }
 
 }

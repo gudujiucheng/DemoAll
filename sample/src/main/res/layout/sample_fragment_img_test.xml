@@ -69,11 +69,20 @@
             android:layout_height="wrap_content"
             android:text="获取图片信息" />
 
+        <Button
+            android:id="@+id/bt_get_img_size_luban"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="第三方框架Luban" />
+
         <ImageView
             android:id="@+id/iv"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="fitCenter" />
+
+
+
 
 
     </LinearLayout>

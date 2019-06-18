@@ -103,6 +103,9 @@ dependencies {
     implementation 'com.github.JuHonggang:ShadowDrawable:0.1'
     //阴影效果 https://github.com/harjot-oberai/MaterialShadows
     //    implementation 'com.sdsmdg.harjot:materialshadows:1.2.5'
+
+    //图片压缩
+    implementation 'top.zibin:Luban:1.1.8'
     implementation project(':base')
     implementation project(':flutter')
 }
