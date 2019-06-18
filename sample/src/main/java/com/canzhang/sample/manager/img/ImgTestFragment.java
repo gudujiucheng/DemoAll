@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.media.ExifInterface;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,25 +13,24 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.canzhang.sample.R;
-import com.canzhang.sample.manager.thread.demo.fqlreport.LogUtils;
 import com.example.base.base.BaseFragment;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
-import java.util.logging.Handler;
 
-
+/**
+ * 图片压缩测试：https://www.jianshu.com/p/cd0cd8a406d4
+ */
 public class ImgTestFragment extends BaseFragment {
 
 
@@ -57,7 +56,20 @@ public class ImgTestFragment extends BaseFragment {
 
     private void initView(View view) {
         ImageView iv = view.findViewById(R.id.iv);
+        compress(view);
+        RGB_565(view);
+        matrix(view);
+        inSampleSize(view);
+        getImgMsg(view);
 
+    }
+
+    /**
+     * 获取图片信息
+     *
+     * @param view
+     */
+    private void getImgMsg(View view) {
         view.findViewById(R.id.bt_get_img_msg).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +78,115 @@ public class ImgTestFragment extends BaseFragment {
                 copyFileToCacheDir(mContext, inputStream);
             }
         });
+    }
 
+    /**
+     * RGB_565 压缩法
+     *
+     * @param view
+     */
+    private void RGB_565(View view) {
+        EditText editText = view.findViewById(R.id.et_test_RGB_565);
+        view.findViewById(R.id.bt_get_img_size_RGB_565).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                float num = Float.valueOf(editText.getText().toString());
+                InputStream inputStream = getAssetsInputStream(mContext, "img/test.jpg");
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                String config;
+                if (num == 1) {
+                    options.inPreferredConfig = Bitmap.Config.RGB_565;
+                    config = "RGB_565";
+                } else if (num == 2) {
+                    options.inPreferredConfig = Bitmap.Config.ARGB_4444;
+                    config = "ARGB_4444";
+                } else {
+                    options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                    config = "ARGB_8888";
+                }
+
+                Bitmap bm = BitmapFactory.decodeStream(inputStream, null, options);
+                log("压缩后图片的大小" + (bm.getByteCount() / 1024f / 1024f)
+                        + "M 宽度为" + bm.getWidth() + " 高度为" + bm.getHeight()+" 模式："+config);
+                bm.recycle();
+                bm =null;
+            }
+        });
+    }
+
+    /**
+     * 缩放压缩（基于bitmap的 不太适合内存压缩，因为这个时候bitmap已经加载到内存中了）
+     *
+     * @param view
+     */
+    private void matrix(View view) {
+        EditText editText = view.findViewById(R.id.et_test_matrix);
+
+        view.findViewById(R.id.bt_get_img_size_matrix).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                float num = Float.valueOf(editText.getText().toString());
+                InputStream inputStream = getAssetsInputStream(mContext, "img/ic_launcher.png");
+                Bitmap bm = BitmapFactory.decodeStream(inputStream);
+                Matrix matrix = new Matrix();
+                matrix.setScale(num, num);
+                bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(),
+                        bm.getHeight(), matrix, true);
+
+                log("压缩后图片的大小" + (bm.getByteCount() / 1024f / 1024f)
+                        + "M 宽度为" + bm.getWidth() + " 高度为" + bm.getHeight() + " 缩放比" + num);
+            }
+        });
+    }
+
+    /**
+     * 采样率压缩
+     *
+     * @param view
+     */
+    private void inSampleSize(View view) {
+        EditText editText = view.findViewById(R.id.et_test_inSampleSize);
+        view.findViewById(R.id.bt_get_img_size_inSampleSize).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputStream inputStream = getAssetsInputStream(mContext, "img/ic_launcher.png");
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                int inSampleSize;
+                options.inSampleSize = inSampleSize = Integer.valueOf(editText.getText().toString());
+                Bitmap bm = BitmapFactory.decodeStream(inputStream, null, options);
+                log("压缩后图片的大小" + (bm.getByteCount() / 1024f / 1024f)
+                        + "M 宽度为" + bm.getWidth() + " 高度为" + bm.getHeight() + " 当前采样率为" + inSampleSize);
+            }
+        });
+    }
+
+    /**
+     * 有损压缩
+     *
+     * @param view
+     */
+    private void compress(View view) {
+        EditText editText = view.findViewById(R.id.et_test);
+        view.findViewById(R.id.bt_get_img_size).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputStream inputStream = getAssetsInputStream(mContext, "img/ic_launcher.png");
+                Bitmap bit = BitmapFactory.decodeStream(inputStream);
+                log("压缩前 bitmap 大小" + (bit.getByteCount() / 1024f / 1024f)
+                        + "M 宽度为" + bit.getWidth() + " 高度为" + bit.getHeight());
+
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                int quality = Integer.valueOf(editText.getText().toString());
+                //这里如果选择png模式的话，则大小不会变
+                bit.compress(Bitmap.CompressFormat.JPEG, quality, baos);
+                byte[] bytes = baos.toByteArray();
+                Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                log("压缩后 bitmap 大小" + (bm.getByteCount() / 1024f / 1024f)
+                        + "M 宽度为" + bm.getWidth() + " 高度为" + bm.getHeight()
+                        + " bytes.length=  " + (bytes.length / 1024) + "KB"
+                        + " quality=" + quality);
+            }
+        });
     }
 
 
