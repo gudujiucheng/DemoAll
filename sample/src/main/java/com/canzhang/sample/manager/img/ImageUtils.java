@@ -1,7 +1,10 @@
 package com.canzhang.sample.manager.img;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.ExifInterface;
 import android.text.TextUtils;
+import android.util.Base64;
 
 import com.canzhang.sample.manager.thread.demo.fqlreport.LogUtils;
 
@@ -84,12 +87,22 @@ public class ImageUtils {
             e.printStackTrace();
         }
         try {
-            LogUtils.log("printFileSize:" + fis.available() / 1024f / 1024f + "M");
+            LogUtils.log("printFileSize:" + fis.available() / 1024f / 1024f + "M ");
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
     }
+
+    /**
+     * base64转为bitmap
+     * @return
+     */
+    public static Bitmap base64ToBitmap(String base64Data) {
+        byte[] bytes = Base64.decode(base64Data, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+    }
+
 
 }

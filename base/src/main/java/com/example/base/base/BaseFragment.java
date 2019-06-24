@@ -58,6 +58,7 @@ public class BaseFragment extends Fragment {
     public void onResume() {
         super.onResume();
         logD("onResume");
+        Log.e("Test",getClass().getSimpleName());
     }
 
     @Override

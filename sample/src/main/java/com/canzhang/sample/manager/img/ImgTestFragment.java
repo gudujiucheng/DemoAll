@@ -22,11 +22,13 @@ import com.example.base.base.BaseFragment;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 
 import top.zibin.luban.CompressionPredicate;
@@ -60,7 +62,7 @@ public class ImgTestFragment extends BaseFragment {
 
 
     private void initView(View view) {
-        ImageView iv = view.findViewById(R.id.iv);
+        ImageView iv = view.findViewById(R.id.iv_test);
         compress(view);
         RGB_565(view);
         matrix(view);
@@ -74,6 +76,33 @@ public class ImgTestFragment extends BaseFragment {
             }
         });
 
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //测试base64 转图片
+                InputStream assetsInputStream = getAssetsInputStream(mContext, "Base64.txt");
+                try {
+                    String s = inputStream2String(assetsInputStream);
+                    iv.setImageBitmap(ImageUtils.base64ToBitmap(s));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+    }
+
+
+
+    public static String inputStream2String(InputStream in_st) throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(in_st));
+        StringBuffer buffer = new StringBuffer();
+        String line = "";
+        while ((line = in.readLine()) != null){
+            buffer.append(line);
+        }
+        return buffer.toString();
     }
 
 
@@ -88,7 +117,7 @@ public class ImgTestFragment extends BaseFragment {
         view.findViewById(R.id.bt_get_img_msg).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                InputStream inputStream = getAssetsInputStream(mContext, "test_img.png");
+                InputStream inputStream = getAssetsInputStream(mContext, "img/xx.png");
 //                iv.setImageBitmap(BitmapFactory.decodeStream(inputStream));
                 copyFileToCacheDir(mContext, inputStream,System.currentTimeMillis()+"");
             }
@@ -305,7 +334,7 @@ public class ImgTestFragment extends BaseFragment {
                     @Override
                     public void onSuccess(File file) {
                         // TODO 压缩成功后调用，返回压缩后的图片文件
-                        log("压缩成功"+file.getAbsolutePath());
+                        log("压缩成功 "+file.getAbsolutePath());
                         ImageUtils.setExif(file.getAbsolutePath(),exif);
                         ImageUtils.getExif(file.getAbsolutePath());
                         ImageUtils.printFileSize(file);
