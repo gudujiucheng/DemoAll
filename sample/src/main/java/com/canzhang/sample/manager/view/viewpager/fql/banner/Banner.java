@@ -32,6 +32,7 @@ public class Banner extends CustomViewPager {
     private boolean isStop = false;
     private boolean isFromAttachRefresh = false;
     private Field mScrollerField;
+    private long mLastOnTouchUpTime = -1;
     Scroller mDefaultScroller = new Scroller(getContext(),
             new Interpolator() {
                 @Override
@@ -64,13 +65,24 @@ public class Banner extends CustomViewPager {
                     mBannerScrolledListener.onPageScrolledOffset(positionOffset, 0, 0);
                 }
             }
+
+//            log("-------------------------->>>onPageScrolled:  position:"+position+" positionOffset:"+positionOffset);
         }
 
         @Override
         public void onPageSelected(int position) {
-            log("onPageSelected position:"+position);
+            log("onPageSelected position:" + position);
             if (mAdapter == null) {
                 return;
+            }
+            long temp = 0;
+            //思路：记录手指离开屏幕的时间，如果下次onPageSelected的时间差值小于固定差值，则为手动滑动，否则为自动滑动
+            if (mLastOnTouchUpTime != -1 && (temp = System.currentTimeMillis() - mLastOnTouchUpTime) < mSwitchTime) {//是手动滑动
+                log("--------------------------------->>>>>>>>手动滑动：last:" + mLastOnTouchUpTime + " switch:" + mSwitchTime + " temp:" + temp);
+                mLastOnTouchUpTime = -1;//清空记录的时间
+            } else {//是自动滚动
+                mLastOnTouchUpTime = -1;//清空记录的时间
+                log("--------------------------------->>>>>>>>自动·····滑动：" + mLastOnTouchUpTime);
             }
 
             List list = mAdapter.getData();
@@ -87,18 +99,21 @@ public class Banner extends CustomViewPager {
 
         @Override
         public void onPageScrollStateChanged(int state) {
-
+//            log("-------------------------->>>onPageScrollStateChanged:  state:" + state);
         }
     };
-
     private OnViewPagerTouchEvent onViewPagerTouchEvent = new CustomViewPager.OnViewPagerTouchEvent() {
         @Override
         public void onTouchDown() {
+            log("-------------------------->>>onTouchDown");
             stopCustomBannerSwitch();
         }
 
         @Override
         public void onTouchUp() {
+            mLastOnTouchUpTime = System.currentTimeMillis();
+            log("-------------------------->>>onTouchUp 记录离开时间：" + mLastOnTouchUpTime);
+
             if (mAdapter != null
                     && mAdapter.getData() != null
                     && mAdapter.getData().size() > 1) {

@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:gravity="center"
-            android:text="占位符，实验移出屏幕是否会触发相关api（实验结果，并不会）" />
+            android:text="占位符，实验移出屏幕是否会触发相关api（实验结果，并不会）,在recycleview里面是会的，这个需要留意" />
 
         <TextView
             android:layout_width="match_parent"
