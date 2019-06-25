@@ -231,6 +231,11 @@ public class ComponentListActivity extends BaseActivity {
         transaction.commit();
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        log("onNewIntent");
+    }
 
     @Override
     protected void onStart() {

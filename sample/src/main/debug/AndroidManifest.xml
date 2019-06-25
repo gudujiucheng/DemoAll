@@ -19,11 +19,25 @@
         android:label="@string/sample_app_name"
         android:supportsRtl="true"
         tools:replace="android:allowBackup,android:icon,android:label">
-        <activity android:name=".ComponentListActivity">
+        <!--android:alwaysRetainTaskState="true"-->
+        <activity
+            android:name=".ComponentListActivity"
+            android:alwaysRetainTaskState="true"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="app"
+                    android:scheme="fenqile" />
             </intent-filter>
         </activity>
         <activity

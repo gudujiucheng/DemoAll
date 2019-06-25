@@ -23,6 +23,6 @@ public class BaseActivity extends FragmentActivity {
     }
 
     public void log(String msg) {
-        Log.e("ZC:"+this.getClass().getSimpleName(), msg);
+        Log.e("Test", "current class:"+getClass().getSimpleName()+" msg:"+msg+" hash:"+this.toString());
     }
 }

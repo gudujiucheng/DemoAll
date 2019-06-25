@@ -8,8 +8,10 @@ import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * url 相关测试
@@ -23,6 +25,7 @@ public class UrlTestManager extends BaseManager {
         list.add(test());
         list.add(test02());
         list.add(test03());
+        list.add(test04());
         return list;
     }
 
@@ -34,7 +37,41 @@ public class UrlTestManager extends BaseManager {
 
     private String url02 = "https://cc.sale.canzhang.com/1902181929/index.html?canzhang_channel=AM.NADD2019050700028761.NADP2017121500001001&event_id=AM.NADD2019050700028761";
 
-    private String url03 = "https://mall.m.fenqile.com/jump.html?url=https://pay.m.fenqile.com/index.html#/activity/temp-credit?_OSC=aaabbbccc0001";
+    private String url03 = "https://mall.m.fenqile.com/jump.html#/activity?url=https://pay.m.fenqile.com/index.html#/activity/temp-credit?_OSC=aaabbbccc0001&test=xxx";
+
+    private ComponentItem test04() {
+
+        return new ComponentItem("getQueryParameter（替换特殊字符#）", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomUri uri = CustomUri.parse(url03);
+                String url = uri.getQueryParameter("url");
+                String _OSC = uri.getQueryParameter("_OSC");
+                String test = uri.getQueryParameter("test");
+
+                log("url:" + url + " _OSC:" + _OSC + " test:" + test);
+
+                //测试fql中截取部分，防止异常出现
+                Set<String> names;
+                names = new HashSet<>();
+                String tempUrl = uri.toString();
+                log("tempUrl:"+tempUrl);
+                String vars = tempUrl.substring(tempUrl.indexOf("?") + 1, tempUrl.length());
+                log("vars:"+vars);
+                String[] keys = vars.split("&");
+
+                if (keys.length == 0) {
+                    return;
+                }
+                for (String key : keys) {
+                    log("key:" + key);
+                    names.add(key.split("=")[0]);
+                }
+
+                log("names:" + names.toString());
+            }
+        });
+    }
 
     private ComponentItem test() {
 
@@ -72,7 +109,7 @@ public class UrlTestManager extends BaseManager {
                 Map<String, String> urlParams = UrlParse.getUrlParams(url);
                 String canzhang_channel = urlParams.get("canzhang_channel");
                 String event_id = urlParams.get("event_id");
-                log("canzhang_channel:" + canzhang_channel + " event_id:" + event_id +" urlParams:"+urlParams.toString());
+                log("canzhang_channel:" + canzhang_channel + " event_id:" + event_id + " urlParams:" + urlParams.toString());
             }
         });
     }

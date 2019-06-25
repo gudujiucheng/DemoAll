@@ -273,7 +273,8 @@ public class WebViewFragment extends BaseFragment implements View.OnClickListene
                 startActivity(new Intent(Intent.ACTION_VIEW, parse));
                 break;
             case R.id.bt_open_url: //webView 内打开
-                mWebView.loadUrl("https://www.baidu.com/");
+//                mWebView.loadUrl("https://www.baidu.com/");
+                mWebView.loadUrl("https://pt.m.fenqile.com/index.html#/app-video");
                 break;
             case R.id.bt_open_local_url: //打开本地html文件
                 mWebView.loadUrl("file:///android_asset/JavaAndJavaScriptCall.html");
