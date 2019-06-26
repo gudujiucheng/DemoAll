@@ -371,4 +371,16 @@ public class WebViewFragment extends BaseFragment implements View.OnClickListene
             mWebView.restoreState(savedInstanceState);
         }
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mWebView.onPause();//可以较小影响的处理后台后 音频继续播放问题（如果想把js也停掉 可以用pauseTimers）
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mWebView.onResume();
+    }
 }
