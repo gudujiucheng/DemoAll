@@ -79,7 +79,7 @@ public class SQLiteTestManager extends BaseManager {
                 for (int i = 0; i < 10; i++) {
                     CommonReportInfo info = new CommonReportInfo();
                     info.setData("data" + i);
-                    info.setId((long) i);
+//                    info.setId((long) i);
                     info.setType(i);
                     info.setReportId("xxxxxx report id "+i);
                     storage.save(info);

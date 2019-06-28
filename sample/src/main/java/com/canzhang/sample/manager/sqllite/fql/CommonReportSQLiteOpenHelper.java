@@ -47,7 +47,7 @@ public class CommonReportSQLiteOpenHelper extends SQLiteOpenHelper {
             + COLUMN_ID
             + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_REPORT_ID
-            + " TEXT DEFAULT NULL,"
+            + " TEXT DEFAULT NULL UNIQUE,"
             + COLUMN_TYPE
             + " INTEGER DEFAULT 0,"
             + COLUMN_DATA
@@ -99,7 +99,7 @@ public class CommonReportSQLiteOpenHelper extends SQLiteOpenHelper {
         switch (oldVersion) {
             case 1://数据库升级，新增一列
                 Log.e("Test", "add new column reportId");
-                db.execSQL("alter table " + TABLE_NAME + " add column " + COLUMN_REPORT_ID + " TEXT DEFAULT NULL");
+                db.execSQL("alter table " + TABLE_NAME + " add column " + COLUMN_REPORT_ID + " TEXT DEFAULT NULL UNIQUE");
                 setDefaultReportId(db);
             default: {
 
