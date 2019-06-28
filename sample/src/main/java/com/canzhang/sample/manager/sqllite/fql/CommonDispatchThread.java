@@ -48,10 +48,7 @@ public class CommonDispatchThread {
 
         List<CommonReportInfo> result = new ArrayList<>();
         Cursor c = database.query(CommonReportSQLiteOpenHelper.TABLE_NAME,
-                new String[]{CommonReportSQLiteOpenHelper.COLUMN_ID,
-                        CommonReportSQLiteOpenHelper.COLUMN_TYPE,
-                        CommonReportSQLiteOpenHelper.COLUMN_DATA,
-                },
+                null,
                 null, null, null, null, null);
         if (c == null) {
             return null;
@@ -60,12 +57,18 @@ public class CommonDispatchThread {
             while (c.moveToNext()) {
                 CommonReportInfo reportInfo = new CommonReportInfo();
                 reportInfo.setId(c.getLong(c.getColumnIndex(CommonReportSQLiteOpenHelper.COLUMN_ID)));
+                if (CommonReportSQLiteOpenHelper.DATABASE_VERSION == 2) {
+                    reportInfo.setReportId(c.getString(c.getColumnIndex(CommonReportSQLiteOpenHelper.COLUMN_REPORT_ID)));
+                }
                 reportInfo.setType(c.getInt(c.getColumnIndex(CommonReportSQLiteOpenHelper.COLUMN_TYPE)));
                 reportInfo.setData(c.getString(c.getColumnIndex(CommonReportSQLiteOpenHelper.COLUMN_DATA)));
                 result.add(reportInfo);
+
+                Log.e("Test", "读取的数据：" + reportInfo.toString());
             }
             return result;
         } catch (Exception e) {
+            Log.e("Test", "不好有异常：" + e.getMessage());
             return null;
         } finally {
             c.close();

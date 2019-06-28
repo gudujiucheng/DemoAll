@@ -7,9 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.View;
 
+import com.canzhang.sample.INotifyListener;
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
 import com.canzhang.sample.manager.sqllite.fql.CommonDispatchThread;
+import com.canzhang.sample.manager.sqllite.fql.CommonReportInfo;
+import com.canzhang.sample.manager.sqllite.fql.CommonReportSQLiteOpenHelper;
+import com.canzhang.sample.manager.sqllite.fql.CommonReportStorage;
 import com.canzhang.sample.manager.sqllite.test.MyDatabaseHelper;
 
 import java.util.ArrayList;
@@ -25,6 +29,11 @@ public class SQLiteTestManager extends BaseManager {
     public List<ComponentItem> getSampleItem(Activity activity) {
         mActivity = activity;
         List<ComponentItem> list = new ArrayList<>();
+        list.add(switchVersion());
+        list.add(fql());
+        list.add(addFqlData());
+
+
         list.add(createDB());
         list.add(addNewTable());
         list.add(insert());
@@ -33,15 +42,51 @@ public class SQLiteTestManager extends BaseManager {
         list.add(query());
         list.add(transaction());
 
-        list.add(fql());
+
         return list;
     }
 
-    private ComponentItem fql() {
-        return new ComponentItem("测试fql读表异常", new View.OnClickListener() {
+    private ComponentItem switchVersion() {
+        final ComponentItem item = new ComponentItem();
+        item.name = "切换版本";
+        item.listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new CommonDispatchThread().reportOldAndSchedule(3000);
+                CommonReportSQLiteOpenHelper.DATABASE_VERSION = CommonReportSQLiteOpenHelper.DATABASE_VERSION == 1 ? 2 : 1;
+                item.name = "当前版本：" + CommonReportSQLiteOpenHelper.DATABASE_VERSION;
+                if (mActivity instanceof INotifyListener) {
+                    ((INotifyListener) mActivity).onNotify();
+                }
+            }
+        };
+        return item;
+    }
+
+    private ComponentItem fql() {
+        return new ComponentItem("查询fql表", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new CommonDispatchThread().reportOldAndSchedule(3);
+            }
+        });
+    }
+
+    private ComponentItem addFqlData() {
+        return new ComponentItem("添加fql数据", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CommonReportStorage storage = new CommonReportStorage(mActivity);
+                for (int i = 0; i < 10; i++) {
+                    CommonReportInfo info = new CommonReportInfo();
+                    info.setData("data" + i);
+                    info.setId((long) i);
+                    info.setType(i);
+                    info.setReportId("xxxxxx report id "+i);
+                    storage.save(info);
+                }
+
+                Log.e("Test","添加数据完毕");
+
             }
         });
     }
@@ -74,7 +119,7 @@ public class SQLiteTestManager extends BaseManager {
         return new ComponentItem("表内添加数据", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyDatabaseHelper dbHelper = new MyDatabaseHelper(mActivity, "BookStore.db", null, 2);//升级到2
+                MyDatabaseHelper dbHelper = new MyDatabaseHelper(mActivity, "BookStore.db", null, 1);//升级到2
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
                 ContentValues values = new ContentValues();
                 //没有赋值id，因为建表语句里面设置了自增id
@@ -127,7 +172,7 @@ public class SQLiteTestManager extends BaseManager {
         return new ComponentItem("查询数据", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyDatabaseHelper dbHelper = new MyDatabaseHelper(mActivity, "BookStore.db", null, 2);//升级到2
+                MyDatabaseHelper dbHelper = new MyDatabaseHelper(mActivity, "BookStore.db", null, 1);//升级到2
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
                 // 查询Book表中所有的数据(后面的参数全部为null。这就表示希望查询这张表中的所有数据)
                 Cursor cursor = db.query("Book", null, null, null, null, null, null);

@@ -1,7 +1,5 @@
 package com.canzhang.sample.manager.sqllite.fql;
 
-import java.util.List;
-
 /**
  * 上报数据备份数据库bean
  * Created by liveeili on 2017/7/27.
@@ -9,6 +7,7 @@ import java.util.List;
 public class CommonReportInfo {
 
     private Long id;
+    private String reportId;
 
     public int type;
 
@@ -22,6 +21,14 @@ public class CommonReportInfo {
         this.id = id;
         this.type = type;
         this.data = data;
+    }
+
+    public String getReportId() {
+        return reportId;
+    }
+
+    public void setReportId(String reportId) {
+        this.reportId = reportId;
     }
 
     public Long getId() {
@@ -48,6 +55,13 @@ public class CommonReportInfo {
         this.data = data;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "CommonReportInfo{" +
+                "id=" + id +
+                ", reportId='" + reportId + '\'' +
+                ", type=" + type +
+                ", data='" + data + '\'' +
+                '}';
+    }
 }

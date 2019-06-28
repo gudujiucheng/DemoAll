@@ -5,16 +5,19 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
-/**
- * Created by owenli on 2018/6/27.
- */
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class CommonReportSQLiteOpenHelper extends SQLiteOpenHelper {
+
 
     private static CommonReportSQLiteOpenHelper instance;
 
     static final String DB_NAME = "Report.db";
-    private static final int DATABASE_VERSION = 1;
+    public static int DATABASE_VERSION = 2;
 
     static final long DEFAULT_DB_SIZE = 10 * 1024 * 1024L;//10mb
     private long mMaximumDatabaseSize;
@@ -27,10 +30,24 @@ public class CommonReportSQLiteOpenHelper extends SQLiteOpenHelper {
     static final String COLUMN_DATA = "data";
 
     private static final int SLEEP_TIME_MS = 30;
+    /**
+     * 升级表
+     */
+    static final String COLUMN_REPORT_ID = "reportId";
 
-    private static final String STATEMENT_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ("
+    static String s1 = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ("
             + COLUMN_ID
             + " INTEGER PRIMARY KEY,"
+            + COLUMN_TYPE
+            + " INTEGER DEFAULT 0,"
+            + COLUMN_DATA
+            + " TEXT NOT NULL"
+            + ")";
+    static String s2 = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ("
+            + COLUMN_ID
+            + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_REPORT_ID
+            + " TEXT DEFAULT NULL,"
             + COLUMN_TYPE
             + " INTEGER DEFAULT 0,"
             + COLUMN_DATA
@@ -48,7 +65,7 @@ public class CommonReportSQLiteOpenHelper extends SQLiteOpenHelper {
         mMaximumDatabaseSize = maxSize > 0 ? maxSize : DEFAULT_DB_SIZE;
     }
 
-    public static CommonReportSQLiteOpenHelper getInstance(Context context){
+    public static CommonReportSQLiteOpenHelper getInstance(Context context) {
         if (instance == null) {
             synchronized (CommonReportSQLiteOpenHelper.class) {
                 if (instance == null) {
@@ -71,16 +88,62 @@ public class CommonReportSQLiteOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(STATEMENT_CREATE_TABLE);
+        db.execSQL(getTableSql());
     }
 
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        deleteDB();
-        onCreate(db);
+        Log.e("Test", "sqlite oldVersion:" + oldVersion + " newVersion:" + newVersion);
+
+        switch (oldVersion) {
+            case 1://数据库升级，新增一列
+                Log.e("Test", "add new column reportId");
+                db.execSQL("alter table " + TABLE_NAME + " add column " + COLUMN_REPORT_ID + " TEXT DEFAULT NULL");
+                setDefaultReportId(db);
+            default: {
+
+            }
+        }
     }
 
+    private void setDefaultReportId(SQLiteDatabase db) {
+        Log.e("Test", "setDefaultReportId");
+        if (db == null) {
+            return;
+        }
+
+        List<Long> result = new ArrayList<>();
+        Cursor c = db.query(TABLE_NAME,
+                null,
+                null, null, null, null, null);
+        if (c == null) {
+            return;
+        }
+        try {
+            while (c.moveToNext()) {
+                long id = c.getLong(c.getColumnIndex(COLUMN_ID));
+//                String reportID = c.getString(c.getColumnIndex(COLUMN_REPORT_ID));
+                result.add(id);
+            }
+            Log.e("Test", "setDefaultReportId  开始更新数据");
+            for (int i = 0; i < result.size(); i++) {
+                long id = result.get(i);
+                Log.e("Test", "setDefaultReportId  当前更新的id:" + id);
+                db.execSQL("update " + TABLE_NAME + " set " + COLUMN_REPORT_ID + " = ? where " + COLUMN_ID + " = ?", new String[]{ReportUtils.getReportId(), id + ""});
+            }
+
+            throw new NullPointerException("xxxxx");//测试异常的抛出
+
+        } catch (Exception e) {
+            Log.e("Test", "靠靠靠，有异常" + e.getMessage());//FIXME 可以删除db 重新建表
+            db.execSQL("drop table if exists " + TABLE_NAME);
+
+        } finally {
+            c.close();
+        }
+
+    }
 
     synchronized void ensureDatabase() {
         if (mDb != null && mDb.isOpen()) {
@@ -92,11 +155,13 @@ public class CommonReportSQLiteOpenHelper extends SQLiteOpenHelper {
             try {
                 if (tries > 0) {
                     //delete db and recreate
-                    deleteDB();
+                    Log.e("Test", "删除数据库 tries:" + tries);
+                    deleteDB();//FIXME 走了删除数据库操作  为何
                 }
                 mDb = getWritableDatabase();
                 break;
             } catch (SQLiteException e) {
+                Log.e("Test", "getWritableDatabase 出现异常:" + e.getMessage());
                 e.printStackTrace();
             }
             // Wait before retrying.
@@ -122,6 +187,7 @@ public class CommonReportSQLiteOpenHelper extends SQLiteOpenHelper {
     }
 
     private boolean deleteDB() {
+        Log.e("Test", "删除数据库");
         closeDatabase();
         return mContext.deleteDatabase(DB_NAME);
     }
@@ -138,14 +204,21 @@ public class CommonReportSQLiteOpenHelper extends SQLiteOpenHelper {
         try {
             cursor = db.rawQuery("SELECT DISTINCT tbl_name FROM sqlite_master WHERE tbl_name = '" + TABLE_NAME + "'", null);
             if (cursor != null && cursor.getCount() > 0) {
+                Log.e("Test", "表存在");
                 return;
             }
-            db.execSQL(STATEMENT_CREATE_TABLE);
+            Log.e("Test", "表不存在");
+            db.execSQL(getTableSql());
         } catch (Exception e) {
         } finally {
             if (cursor != null) {
                 cursor.close();
             }
         }
+    }
+
+
+    private static String getTableSql() {
+        return DATABASE_VERSION == 1 ? s1 : s2;
     }
 }

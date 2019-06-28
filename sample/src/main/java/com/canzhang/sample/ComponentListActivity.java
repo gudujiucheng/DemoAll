@@ -30,6 +30,7 @@ import com.canzhang.sample.manager.qrcode.QRCodeActivity;
 import com.canzhang.sample.manager.ram.RamManager;
 import com.canzhang.sample.manager.rxjava.RxJavaTestDemoManager;
 import com.canzhang.sample.manager.sqllite.SQLiteTestManager;
+import com.canzhang.sample.manager.sqllite.test.SQLiteUpdateTestManager;
 import com.canzhang.sample.manager.thread.ThreadTestManager;
 import com.canzhang.sample.manager.url.UrlTestManager;
 import com.canzhang.sample.manager.view.CommonViewShowFragment;
@@ -56,7 +57,7 @@ import java.util.List;
  */
 
 //@Route(path = "/sample/sampleList")
-public class ComponentListActivity extends BaseActivity {
+public class ComponentListActivity extends BaseActivity implements  INotifyListener{
     private RecyclerView mRecyclerView;
     private List<ComponentItem> mData = new ArrayList<>();
 
@@ -77,6 +78,7 @@ public class ComponentListActivity extends BaseActivity {
     private void initData() {
         mData.add(new ComponentItem("日常测试（实验、异常等）", new OtherTestDemoManager()));
         mData.add(new ComponentItem("sqlite", new SQLiteTestManager()));
+        mData.add(new ComponentItem("sqlite 升级专项测试", new SQLiteUpdateTestManager()));
         mData.add(new ComponentItem("url 相关测试", new UrlTestManager()));
         mData.add(new ComponentItem("flutter 测试2", new View.OnClickListener() {
             @Override
@@ -273,4 +275,10 @@ public class ComponentListActivity extends BaseActivity {
         log("onDestroy");
     }
 
+    @Override
+    public void onNotify() {
+        if(adapter!=null){
+            adapter.notifyDataSetChanged();
+        }
+    }
 }

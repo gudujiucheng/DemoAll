@@ -23,6 +23,10 @@ public class ComponentItem {
         this.manager = manager;
     }
 
+    public ComponentItem() {
+
+    }
+
     public ComponentItem(String name,String desc, View.OnClickListener listener) {
         this(name, listener);
         this.desc = desc;

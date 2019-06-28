@@ -24,7 +24,7 @@ import java.util.List;
  */
 
 
-public class CommonComponentSampleActivity extends BaseActivity {
+public class CommonComponentSampleActivity extends BaseActivity implements INotifyListener {
     private RecyclerView mRecyclerView;
     private List<ComponentItem> mData = new ArrayList<>();
     private static IManager mIManager;
@@ -112,5 +112,12 @@ public class CommonComponentSampleActivity extends BaseActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         showToast(newConfig.orientation == 1 ? "竖屏=1" : "横屏=2");
+    }
+
+    @Override
+    public void onNotify() {
+        if(adapter!=null){
+            adapter.notifyDataSetChanged();
+        }
     }
 }
