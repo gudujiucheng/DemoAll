@@ -145,6 +145,8 @@ public class MessengerClientFragment extends BaseFragment {
         //TODO 第一步 ：首先bindService
         Intent intent = new Intent();
         intent.setAction("com.zhy.aidl.calc");
+        //从 Android 5.0开始 隐式Intent绑定服务的方式已不能使用,所以这里需要设置Service所在服务端的包名
+        intent.setPackage("com.canzhang.aidlservice");
         mContext.bindService(intent, mConn, Context.BIND_AUTO_CREATE);
         log("bindService invoked !");
     }

@@ -93,7 +93,7 @@ public class BaseFragment extends Fragment {
     }
 
     public void log(String msg) {
-        Log.e(this.getClass().getSimpleName(),  msg);
+        Log.e("Test",  msg);
     }
 
     public void logE(String msg) {
