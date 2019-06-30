@@ -42,22 +42,32 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
+        <service
+            android:name="com.canzhang.oterTest.messenger.MessengerService"
+            android:enabled="true"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="com.zhy.aidl.calc"></action>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
 
 
         <activity
             android:name="com.canzhang.permission.DangerousActivity"
-            android:permission="zc.permission.DANGEROUS_TEST" >
+            android:permission="zc.permission.DANGEROUS_TEST">
             <intent-filter>
-                <action android:name="zc.intent.action.DANGER_TEST"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="zc.intent.action.DANGER_TEST" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name="com.canzhang.permission.NormalActivity"
-            android:permission="zc.permission.NORMAL_TEST" >
+            android:permission="zc.permission.NORMAL_TEST">
             <intent-filter>
-                <action android:name="zc.intent.action.NORMAL_TEST"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="zc.intent.action.NORMAL_TEST" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 

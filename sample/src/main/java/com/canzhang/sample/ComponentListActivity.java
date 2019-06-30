@@ -25,6 +25,7 @@ import com.canzhang.sample.manager.flutter_test.FlutterTestFragment;
 import com.canzhang.sample.manager.fragment_test.ContainerActivity;
 import com.canzhang.sample.manager.img.ImgTestFragment;
 import com.canzhang.sample.manager.lifetest.LifeTestFragment;
+import com.canzhang.sample.manager.messenger.MessengerClientFragment;
 import com.canzhang.sample.manager.permission.PermissionFragment;
 import com.canzhang.sample.manager.qrcode.QRCodeActivity;
 import com.canzhang.sample.manager.ram.RamManager;
@@ -57,7 +58,7 @@ import java.util.List;
  */
 
 //@Route(path = "/sample/sampleList")
-public class ComponentListActivity extends BaseActivity implements  INotifyListener{
+public class ComponentListActivity extends BaseActivity implements INotifyListener {
     private RecyclerView mRecyclerView;
     private List<ComponentItem> mData = new ArrayList<>();
 
@@ -77,6 +78,18 @@ public class ComponentListActivity extends BaseActivity implements  INotifyListe
      */
     private void initData() {
         mData.add(new ComponentItem("日常测试（实验、异常等）", new OtherTestDemoManager()));
+        mData.add(new ComponentItem("Messenger 跨进程应用", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFragment(MessengerClientFragment.newInstance());
+            }
+        }));
+        mData.add(new ComponentItem("ipc之aidl", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFragment(AidlClientFragment.newInstance());
+            }
+        }));
         mData.add(new ComponentItem("sqlite", new SQLiteTestManager()));
         mData.add(new ComponentItem("sqlite 升级专项测试", new SQLiteUpdateTestManager()));
         mData.add(new ComponentItem("url 相关测试", new UrlTestManager()));
@@ -86,6 +99,7 @@ public class ComponentListActivity extends BaseActivity implements  INotifyListe
                 start(FlutterTestActivity.class);
             }
         }));
+
         mData.add(new ComponentItem("图片信息、压缩、旋转等测试", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,12 +120,7 @@ public class ComponentListActivity extends BaseActivity implements  INotifyListe
                 showFragment(FontTestFragment.newInstance());
             }
         }));
-        mData.add(new ComponentItem("ipc之aidl", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showFragment(AidlClientFragment.newInstance());
-            }
-        }));
+
         mData.add(new ComponentItem("虚线", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -277,7 +286,7 @@ public class ComponentListActivity extends BaseActivity implements  INotifyListe
 
     @Override
     public void onNotify() {
-        if(adapter!=null){
+        if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
     }

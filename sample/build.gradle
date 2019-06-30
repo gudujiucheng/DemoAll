@@ -10,7 +10,7 @@ android {
         config {
             keyAlias 'sample'
             keyPassword '123456'
-            storeFile file('C:/Users/canzhang/AndroidStudioProjects/DemoAll/sample/sample.jks')
+            storeFile file('sample.jks')
             storePassword '123456'
         }
     }
