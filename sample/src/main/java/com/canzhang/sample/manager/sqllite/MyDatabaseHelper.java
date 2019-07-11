@@ -1,4 +1,4 @@
-package com.canzhang.sample.manager.sqllite.test;
+package com.canzhang.sample.manager.sqllite;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

@@ -47,7 +47,10 @@ public class TestDatabaseHelper extends SQLiteOpenHelper {
         Toast.makeText(mContext, "onUpgrade：" + oldVersion + " to " + newVersion, Toast.LENGTH_SHORT).show();
         switch (oldVersion) {
             case 1://突然表又要求新增一列，这个时候就可以这么操作（不过要注意建表语句也需要同步更新，因为有可能存在用户直接安装最新版app）
-                db.execSQL("alter table Book add column category_id integer");
+                //FIXME 这个大坑会报错 UNIQUE
+                db.execSQL("alter table Book add column category_id integer UNIQUE");
+                //不带UNIQUE 就正常
+//                db.execSQL("alter table Book add column category_id integer ");
             default:
         }
 

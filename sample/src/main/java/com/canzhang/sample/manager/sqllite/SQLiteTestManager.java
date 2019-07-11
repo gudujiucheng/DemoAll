@@ -14,7 +14,6 @@ import com.canzhang.sample.manager.sqllite.fql.CommonDispatchThread;
 import com.canzhang.sample.manager.sqllite.fql.CommonReportInfo;
 import com.canzhang.sample.manager.sqllite.fql.CommonReportSQLiteOpenHelper;
 import com.canzhang.sample.manager.sqllite.fql.CommonReportStorage;
-import com.canzhang.sample.manager.sqllite.test.MyDatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;

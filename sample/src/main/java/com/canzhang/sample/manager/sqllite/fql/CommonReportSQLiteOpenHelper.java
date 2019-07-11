@@ -99,6 +99,7 @@ public class CommonReportSQLiteOpenHelper extends SQLiteOpenHelper {
         switch (oldVersion) {
             case 1://数据库升级，新增一列
                 Log.e("Test", "add new column reportId");
+                //这里有坑  UNIQUE 字符不能随便使用貌似，升级走到这里会抛异常（no such dic）
                 db.execSQL("alter table " + TABLE_NAME + " add column " + COLUMN_REPORT_ID + " TEXT DEFAULT NULL UNIQUE");
                 setDefaultReportId(db);
             default: {

@@ -23,16 +23,13 @@ public class SQLiteUpdateTestManager extends BaseManager {
         mActivity = activity;
         List<ComponentItem> list = new ArrayList<>();
         list.add(insert());
-        list.add(addNewTable());
+        list.add(addNewColumn());
         list.add(query());
         list.add(query02());
 
 
         return list;
     }
-
-
-
 
     private ComponentItem insert() {
 
@@ -60,9 +57,10 @@ public class SQLiteUpdateTestManager extends BaseManager {
         });
     }
 
-    private ComponentItem addNewTable() {
 
-        return new ComponentItem("升级表（添加类别信息 2）", new View.OnClickListener() {
+    private ComponentItem addNewColumn() {
+
+        return new ComponentItem("升级到版本：2（添加列 ）", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TestDatabaseHelper dbHelper = new TestDatabaseHelper(mActivity, "BookStore.db", null, 2);//升级到2
@@ -80,7 +78,7 @@ public class SQLiteUpdateTestManager extends BaseManager {
                 TestDatabaseHelper dbHelper = new TestDatabaseHelper(mActivity, "BookStore.db", null, 1);
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
                 // 查询Book表中所有的数据(后面的参数全部为null。这就表示希望查询这张表中的所有数据)
-                Cursor cursor = db.query("Book", null, null, null, null, null, null);
+                Cursor cursor = db.query("book", null, null, null, null, null, null);
                 if (cursor.moveToFirst()) {
                     do {
                         // 遍历Cursor对象，取出数据并打印
@@ -153,7 +151,7 @@ public class SQLiteUpdateTestManager extends BaseManager {
                         log("book pages is " + pages);
                         log("book price is " + price);
                     } while (cursor.moveToNext());
-                }else{
+                } else {
                     showToast("木有数据");
                 }
                 cursor.close();
