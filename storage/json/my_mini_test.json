@@ -1,0 +1,42 @@
+{
+  "debug": false,
+  "babel": true,
+  "appname": "debug",
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black",
+    "pages": {
+      "pages/index/index": {
+        "navigationBarTitleText": "首页",
+        "usingComponents": {}
+      },
+      "pages/test/test": {
+        "navigationBarTitleText": "test页面",
+        "usingComponents": {}
+      },
+      "pages/get_system_info/get_system_info": {
+        "navigationBarTitleText": "获取手机系统信息"
+      }
+    }
+  },
+  "pages": ["pages/index/index", "pages/test/test", "pages/get_system_info/get_system_info"],
+  "tabBar": {
+    "list": [{
+      "pagePath": "pages/index/index",
+      "iconPath": "image/icon_component.png",
+      "selectedIconPath": "image/icon_component_HL.png",
+      "text": "首页"
+    }, {
+      "pagePath": "pages/get_system_info/get_system_info",
+      "iconPath": "image/icon_API.png",
+      "selectedIconPath": "image/icon_API_HL.png",
+      "text": "API"
+    }]
+  },
+  "sitemapLocation": "sitemap.json",
+  "root": "pages/index/index",
+  "appid": "touristappid",
+  "isTourist": true
+}
