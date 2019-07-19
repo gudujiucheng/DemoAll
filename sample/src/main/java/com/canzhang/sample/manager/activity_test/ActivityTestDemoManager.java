@@ -11,12 +11,17 @@ import android.view.WindowManager;
 
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
+import com.canzhang.sample.manager.activity_test.task.SingleInstanceActivity;
+import com.canzhang.sample.manager.activity_test.task.SingleTaskActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 小测试
+ * activity 相关测试
+ *
+ * https://www.jianshu.com/p/a8f695841008
+ *
  */
 public class ActivityTestDemoManager extends BaseManager {
 
@@ -27,6 +32,8 @@ public class ActivityTestDemoManager extends BaseManager {
     public List<ComponentItem> getSampleItem(Activity activity) {
         mActivity = activity;
         List<ComponentItem> list = new ArrayList<>();
+        list.add(singleInstance());
+        list.add(singleTask());
         list.add(lifeTest());
         list.add(landTest());
         list.add(portpaitTest());
@@ -34,8 +41,25 @@ public class ActivityTestDemoManager extends BaseManager {
         list.add(startOtherAppActivity());
         return list;
     }
+    private  static int singleInstanceIndex = 0 ;
+    private ComponentItem singleInstance() {
+        return new ComponentItem("任务栈 singleInstance",  new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SingleInstanceActivity.start(mActivity,"singleInstance"+singleInstanceIndex++);
+            }
+        });
+    }
 
-
+    private  static int singleTaskIndex = 0 ;
+    private ComponentItem singleTask() {
+        return new ComponentItem("任务栈 singleTask",  new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SingleTaskActivity.start(mActivity,"singleTask"+singleTaskIndex++);
+            }
+        });
+    }
     /**
      * 启动别的activity
      *

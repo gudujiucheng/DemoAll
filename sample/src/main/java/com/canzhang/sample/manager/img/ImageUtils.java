@@ -1,10 +1,14 @@
 package com.canzhang.sample.manager.img;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ExifInterface;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 
 import com.canzhang.sample.manager.thread.demo.fqlreport.LogUtils;
 
@@ -12,6 +16,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
@@ -75,6 +80,43 @@ public class ImageUtils {
     }
 
 
+    /**
+     * android q 获取图片地理位置信息
+     *
+     * @param exifMap
+     */
+    public static void getLocationExif(Context context, Uri uri) {
+        if (context == null) {
+            return;
+        }
+//        if (Build.VERSION.SDK_INT < 29) {
+//            return;
+//        }
+        float[] returnedLatLong = new float[2];
+        try {
+            uri = MediaStore.setRequireOriginal(uri);
+            InputStream stream = context.getContentResolver().openInputStream(uri);//一直有异常，不知为何
+            if (stream != null) {
+                ExifInterface exifInterface = new ExifInterface(stream);
+                exifInterface.getLatLong(returnedLatLong);
+                stream.close();
+            }
+            //FIXME 注意这里需要对比真实数据是否准确
+            String GPSLatitude = returnedLatLong[0] + "";
+            String GPSLongitude = returnedLatLong[1] + "";
+
+
+            Log.e("Test", "获取的信息  GPSLatitude:" + GPSLatitude + " GPSLongitude:" + GPSLongitude);
+
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+            Log.e("Test", "有异常：" + throwable.getMessage());
+        }
+
+
+    }
+
+
     public static void printFileSize(File file) {
         LogUtils.log("printFileSize:" + file.length() / 1024f / 1024f + "M");
     }
@@ -97,6 +139,7 @@ public class ImageUtils {
 
     /**
      * base64转为bitmap
+     *
      * @return
      */
     public static Bitmap base64ToBitmap(String base64Data) {

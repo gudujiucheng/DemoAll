@@ -19,11 +19,11 @@
         android:label="@string/sample_app_name"
         android:supportsRtl="true"
         tools:replace="android:allowBackup,android:icon,android:label">
-        <!--android:alwaysRetainTaskState="true"-->
+
+        <!-- android:alwaysRetainTaskState="true" -->
         <activity
             android:name=".ComponentListActivity"
-            android:alwaysRetainTaskState="true"
-            >
+            android:alwaysRetainTaskState="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -49,7 +49,14 @@
         <activity
             android:name=".manager.activity_test.TranslateActivity"
             android:theme="@android:style/Theme.Translucent" />
-        <activity android:name=".manager.flutter_test.FlutterTestActivity"></activity>
+        <activity android:name=".manager.flutter_test.FlutterTestActivity" />
+        <activity android:name=".manager.activity_test.task.StandardActivity" />
+        <activity
+            android:name=".manager.activity_test.task.SingleInstanceActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".manager.activity_test.task.SingleTaskActivity"
+            android:launchMode="singleTask" />
     </application>
 
 </manifest>

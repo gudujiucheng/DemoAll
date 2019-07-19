@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -300,6 +301,8 @@ public class ImgTestFragment extends BaseFragment {
         hashMap.put(ExifInterface.TAG_MAKE, "canzhang");//可以
         ImageUtils.setExif(tempFile.getAbsolutePath(), hashMap);
         ImageUtils.getExif(tempFile.getAbsolutePath());
+        ImageUtils.getLocationExif(mContext, Uri.fromFile(tempFile));
+
 
         return  tempFile;
 

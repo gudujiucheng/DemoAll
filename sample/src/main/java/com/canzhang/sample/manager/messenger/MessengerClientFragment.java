@@ -125,6 +125,7 @@ public class MessengerClientFragment extends BaseFragment {
                     mLyContainer.addView(tv);
 
                     Message msgFromClient = Message.obtain(null, MSG_SUM, a, b);
+                    //赋值，方便远端获取此值并调用
                     msgFromClient.replyTo = mMessenger;
                     if (isConn) {
                         //TODO 第三步：然后就可以使用mService.send(msg)给服务端了。

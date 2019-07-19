@@ -187,7 +187,8 @@ public class QrCodeUtils {
         canvas.setBitmap(bitmap);
         canvas.drawBitmap(bCBitmap, 0, 0, null);
         canvas.drawText(content, bCBitmap.getWidth() / 10, baseLine, paint);
-        canvas.save(Canvas.ALL_SAVE_FLAG);
+        canvas.save();
+//        canvas.save(Canvas.ALL_SAVE_FLAG);
         canvas.restore();
         return bitmap;
 
