@@ -77,6 +77,12 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
      * 在这里添加要调试的组件数据
      */
     private void initData() {
+        mData.add(new ComponentItem("flutter 测试", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFragment(FlutterTestFragment.newInstance());
+            }
+        }));
         mData.add(new ComponentItem("日常测试（实验、异常等）", new OtherTestDemoManager()));
         mData.add(new ComponentItem("Messenger 跨进程应用", new View.OnClickListener() {
             @Override
@@ -106,12 +112,7 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
                 showFragment(ImgTestFragment.newInstance());
             }
         }));
-        mData.add(new ComponentItem("flutter 测试", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showFragment(FlutterTestFragment.newInstance());
-            }
-        }));
+
         mData.add(new ComponentItem("回收测试", new RamManager()));
 
         mData.add(new ComponentItem("字体测试", new View.OnClickListener() {
