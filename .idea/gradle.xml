@@ -12,13 +12,12 @@
             <option value="$PROJECT_DIR$/algorithm" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/base" />
+            <option value="$PROJECT_DIR$/bury-point-plugin" />
             <option value="$PROJECT_DIR$/debug-dialog" />
-            <option value="$PROJECT_DIR$/designpattern" />
             <option value="$PROJECT_DIR$/javatest" />
             <option value="$PROJECT_DIR$/libnet" />
             <option value="$PROJECT_DIR$/my_flutter/.android/Flutter" />
             <option value="$PROJECT_DIR$/myview" />
-            <option value="$PROJECT_DIR$/other" />
             <option value="$PROJECT_DIR$/rxjava" />
             <option value="$PROJECT_DIR$/sample" />
           </set>
