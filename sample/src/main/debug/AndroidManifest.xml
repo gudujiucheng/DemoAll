@@ -7,6 +7,11 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <!--截屏所需 貌似没有这样的权限-->
+    <uses-permission android:name="MediaStore.Images.Media.INTERNAL_CONTENT_URI"/>
+    <uses-permission android:name="MediaStore.Images.Media.EXTERNAL_CONTENT_URI"/>
 
     <!-- 自定义权限 -->
     <uses-permission android:name="zc.permission.DANGEROUS_TEST" />
@@ -57,6 +62,7 @@
         <activity
             android:name=".manager.activity_test.task.SingleTaskActivity"
             android:launchMode="singleTask" />
+        <activity android:name=".manager.behavior.BehaviorTestActivity"></activity>
     </application>
 
 </manifest>

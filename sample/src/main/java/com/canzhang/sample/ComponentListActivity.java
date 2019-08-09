@@ -19,6 +19,7 @@ import com.canzhang.sample.manager.OtherTestDemoManager;
 import com.canzhang.sample.manager.UseNonSdkApiDemoManager;
 import com.canzhang.sample.manager.activity_test.ActivityTestDemoManager;
 import com.canzhang.sample.manager.aidl.AidlClientFragment;
+import com.canzhang.sample.manager.behavior.BehaviorTestActivity;
 import com.canzhang.sample.manager.eventdispatch.EventDispatchFragment;
 import com.canzhang.sample.manager.flutter_test.FlutterTestActivity;
 import com.canzhang.sample.manager.flutter_test.FlutterTestFragment;
@@ -81,6 +82,12 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
             @Override
             public void onClick(View v) {
                 showFragment(FlutterTestFragment.newInstance());
+            }
+        }));
+        mData.add(new ComponentItem("用户行为监听", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                start(BehaviorTestActivity.class);
             }
         }));
         mData.add(new ComponentItem("日常测试（实验、异常等）", new OtherTestDemoManager()));
