@@ -18,4 +18,17 @@
         android:onClick="stopScreenShotListener"
         android:text="停止截屏监听" />
 
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="startClipBoardListener"
+        android:text="开启剪贴板监听" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="startPhoneStateListener"
+        android:text="开启电话监听" />
+
 </LinearLayout>

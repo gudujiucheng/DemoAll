@@ -1,4 +1,4 @@
-package com.canzhang.sample.manager.behavior.ScreenShot;
+package com.canzhang.sample.manager.behavior.screenshot;
 
 import android.os.Handler;
 import android.os.HandlerThread;

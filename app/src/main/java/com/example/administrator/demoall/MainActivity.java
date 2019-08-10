@@ -1,10 +1,13 @@
 package com.example.administrator.demoall;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -23,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        showIntent();
         setContentView(R.layout.activity_main);
         TabLayout tabLayout = findViewById(R.id.tab_coupon);
         for (int i = 0; i <3 ; i++) {
@@ -90,9 +94,27 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void showIntent() {
+        Intent intent = getIntent();
+        Log.e("Test","---------------->>getPackage"+intent.getPackage());
+        Log.e("Test","---------------->>getCategories"+intent.getCategories());
+        Log.e("Test","---------------->>getClipData"+intent.getClipData());
+        Log.e("Test","---------------->>getScheme"+intent.getScheme());
+        Log.e("Test","---------------->>getData"+intent.getData());
+        Log.e("Test","---------------->>getDataString"+intent.getDataString());
+        Log.e("Test","---------------->>getType"+intent.getType());
+    }
+
     public void test(View view) {
 
-        LoadingDialog.get(this).show();
+//        LoadingDialog.get(this).show();
+
+        Intent action = new Intent(Intent.ACTION_VIEW, Uri.parse("fenqile://app"));
+        startActivity(action);
+
+
+
+
     }
 }
 
