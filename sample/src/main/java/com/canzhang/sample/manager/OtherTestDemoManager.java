@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
+import com.canzhang.sample.utils.AppUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,13 +28,24 @@ public class OtherTestDemoManager extends BaseManager {
     @Override
     public List<ComponentItem> getSampleItem(Activity activity) {
         List<ComponentItem> list = new ArrayList<>();
+        list.add(clearAppData(activity));
         list.add(jsonTest());
         list.add(mainTest());
         return list;
     }
 
+    private ComponentItem clearAppData(Activity activity) {
+        return new ComponentItem("清除 app数据，等价重装", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppUtils.clearAppUserData(activity);
+
+            }
+        });
+    }
+
     private ComponentItem jsonTest() {
-        return new ComponentItem("jsonObject 并发修改异常","1、不同线程操作jsonObject可能会出现并发修改异常（这里需要多开几个线程，更好复现，狂点击也行）" +
+        return new ComponentItem("jsonObject 并发修改异常", "1、不同线程操作jsonObject可能会出现并发修改异常（这里需要多开几个线程，更好复现，狂点击也行）" +
                 "\n2、这是因为jsonObject本身是维护了一个LinkedHashMap，同时读写就可能发生并发修改异常", new View.OnClickListener() {
             @Override
             public void onClick(View v) {

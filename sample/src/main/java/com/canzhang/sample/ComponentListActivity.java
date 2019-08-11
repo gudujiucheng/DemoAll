@@ -24,6 +24,8 @@ import com.canzhang.sample.manager.eventdispatch.EventDispatchFragment;
 import com.canzhang.sample.manager.flutter_test.FlutterTestActivity;
 import com.canzhang.sample.manager.flutter_test.FlutterTestFragment;
 import com.canzhang.sample.manager.fragment_test.ContainerActivity;
+import com.canzhang.sample.manager.gif.GifFragment;
+import com.canzhang.sample.manager.gif.GifUtils;
 import com.canzhang.sample.manager.img.ImgTestFragment;
 import com.canzhang.sample.manager.lifetest.LifeTestFragment;
 import com.canzhang.sample.manager.messenger.MessengerClientFragment;
@@ -68,10 +70,18 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sample_activity_component_list);
         mRecyclerView = findViewById(R.id.rv_test);
+        preLoad();
         initData();
         initRecyclerView();
         setTitle("组件应用范例");
         log("onCreate");
+    }
+
+    /**
+     * 需要提前做的一些事情
+     */
+    private void preLoad() {
+//        GifUtils.preLoadGif(this, GifFragment.gifUrl);
     }
 
     /**
@@ -82,6 +92,13 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
             @Override
             public void onClick(View v) {
                 showFragment(FlutterTestFragment.newInstance());
+            }
+        }));
+
+        mData.add(new ComponentItem("gif 测试", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFragment(GifFragment.newInstance());
             }
         }));
         mData.add(new ComponentItem("用户行为监听", new View.OnClickListener() {
