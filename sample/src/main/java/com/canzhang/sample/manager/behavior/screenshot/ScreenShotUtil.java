@@ -17,6 +17,8 @@ import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.canzhang.sample.manager.behavior.BehaviorTestActivity;
+
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -153,7 +155,7 @@ public class ScreenShotUtil {
      * 处理媒体数据库的内容改变
      */
     private void handleMediaContentChange(Uri contentUri) {
-        Log.d("SCREEN_SHOT", "handleMediaContentChange:" + contentUri);
+        Log.d(BehaviorTestActivity.TAG, "handleMediaContentChange:" + contentUri);
         Cursor cursor = null;
         try {
             // 数据改变时查询数据库中最后加入的一条数据
@@ -166,11 +168,11 @@ public class ScreenShotUtil {
             );
 
             if (cursor == null) {
-                Log.d("SCREEN_SHOT", "cursor is null");
+                Log.d(BehaviorTestActivity.TAG, "cursor is null");
                 return;
             }
             if (!cursor.moveToFirst()) {
-                Log.d("SCREEN_SHOT", "cursor not moveToFirst");
+                Log.d(BehaviorTestActivity.TAG, "cursor not moveToFirst");
                 return;
             }
 
@@ -201,7 +203,7 @@ public class ScreenShotUtil {
 
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d("SCREEN_SHOT", "handleMediaContentChange: 有异常" + e.getMessage());
+            Log.d(BehaviorTestActivity.TAG, "handleMediaContentChange: 有异常" + e.getMessage());
 
         } finally {
             if (cursor != null && !cursor.isClosed()) {
@@ -215,9 +217,9 @@ public class ScreenShotUtil {
      * 处理获取到的一行数据
      */
     private void handleMediaRowData(final String data, long dateTaken, int width, int height) {
-        Log.d("SCREEN_SHOT", "handleMediaRowData  data：" + data + " dateTaken:" + dateTaken + " width:" + width + " height:" + height);
+        Log.d(BehaviorTestActivity.TAG, "handleMediaRowData  data：" + data + " dateTaken:" + dateTaken + " width:" + width + " height:" + height);
         if (checkScreenShot(data, dateTaken, width, height)) {
-            Log.d("SCREEN_SHOT", "go go go go");
+            Log.d(BehaviorTestActivity.TAG, "go go go go");
             if (mListener != null && !checkCallback(data)) {
                 mUiHandler.post(new Runnable() {
                     @Override
@@ -237,7 +239,7 @@ public class ScreenShotUtil {
          * 判断依据一: 路径判断
          */
         if (TextUtils.isEmpty(data)) {
-            Log.d("SCREEN_SHOT", "checkScreenShot data is null");
+            Log.d(BehaviorTestActivity.TAG, "checkScreenShot data is null");
             return false;
         }
         if (Build.VERSION.SDK_INT >= 29) {
@@ -245,11 +247,11 @@ public class ScreenShotUtil {
             if (imgFile.isFile() && imgFile.exists()) {
                 dateTaken = imgFile.lastModified();
                 if (dateTaken < mStartListenTime) {
-                    Log.d("SCREEN_SHOT", "time is not right");
+                    Log.d(BehaviorTestActivity.TAG, "time is not right");
                     return false;
                 }
             } else {
-                Log.d("SCREEN_SHOT", "file is not exists");
+                Log.d(BehaviorTestActivity.TAG, "file is not exists");
                 return false;
             }
         } else {
@@ -258,7 +260,7 @@ public class ScreenShotUtil {
              */
             // 如果加入数据库的时间在开始监听之前
             if (dateTaken < mStartListenTime) {
-                Log.d("SCREEN_SHOT", "time is not right");
+                Log.d(BehaviorTestActivity.TAG, "time is not right");
                 return false;
             }
 
@@ -269,7 +271,7 @@ public class ScreenShotUtil {
                 // 如果图片尺寸超出屏幕, 则认为当前没有截屏
                 if (!((width <= sScreenRealSize.x && height <= sScreenRealSize.y) ||
                         (height <= sScreenRealSize.x && width <= sScreenRealSize.y))) {
-                    Log.d("SCREEN_SHOT", "size is not right");
+                    Log.d(BehaviorTestActivity.TAG, "size is not right");
 
                     return false;
                 }
@@ -282,7 +284,7 @@ public class ScreenShotUtil {
                 return true;
             }
         }
-        Log.d("SCREEN_SHOT", "keyword is not right");
+        Log.d(BehaviorTestActivity.TAG, "keyword is not right");
         return false;
     }
 
@@ -292,7 +294,7 @@ public class ScreenShotUtil {
      */
     private boolean checkCallback(String imagePath) {
         if (sHasCallbackPaths.contains(imagePath)) {
-            Log.d("SCREEN_SHOT", "已经回调过了 ");
+            Log.d(BehaviorTestActivity.TAG, "已经回调过了 ");
             return true;
         }
         // 大概缓存15~20条记录便可
@@ -302,7 +304,7 @@ public class ScreenShotUtil {
             }
         }
         sHasCallbackPaths.add(imagePath);
-        Log.d("SCREEN_SHOT", "搞定 ");
+        Log.d(BehaviorTestActivity.TAG, "搞定 ");
         return false;
     }
 
@@ -357,14 +359,14 @@ public class ScreenShotUtil {
 
         public MediaContentObserver(Uri contentUri, Handler handler) {
             super(handler);
-            Log.d("SCREEN_SHOT", "contentUri:" + contentUri);
+            Log.d(BehaviorTestActivity.TAG, "contentUri:" + contentUri);
             mContentUri = contentUri;
         }
 
         @Override
         public void onChange(boolean selfChange) {
             super.onChange(selfChange);
-            Log.d("SCREEN_SHOT", "selfChange:" + selfChange);
+            Log.d(BehaviorTestActivity.TAG, "selfChange:" + selfChange);
             handleMediaContentChange(mContentUri);
         }
     }

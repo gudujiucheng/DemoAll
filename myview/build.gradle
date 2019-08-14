@@ -7,7 +7,7 @@ if (!isMyViewNoudle.toBoolean()) {
 
 
 android {
-    resourcePrefix project.getName() + "_"
+//    resourcePrefix project.getName() + "_"
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion

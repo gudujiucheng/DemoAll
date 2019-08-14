@@ -30,5 +30,9 @@
         android:layout_height="wrap_content"
         android:onClick="startPhoneStateListener"
         android:text="开启电话监听" />
+    
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="100dp" />
 
 </LinearLayout>

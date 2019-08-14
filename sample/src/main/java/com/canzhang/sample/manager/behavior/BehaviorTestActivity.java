@@ -4,17 +4,18 @@ import android.Manifest;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.telephony.PhoneStateListener;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 
 import com.canzhang.sample.R;
+import com.canzhang.sample.manager.behavior.phonestate.PhoneStateManager;
 import com.canzhang.sample.manager.behavior.screenshot.ScreenShotUtil;
+import com.canzhang.sample.manager.behavior.service.BehaviorService;
 import com.example.base.base.AppProxy;
 import com.example.base.base.BaseActivity;
 import com.example.base.utils.ToastUtil;
@@ -23,6 +24,8 @@ import com.example.base.utils.ToastUtil;
  * 用户行为测试
  */
 public class BehaviorTestActivity extends BaseActivity {
+
+    public static final String TAG = "BehaviorTestActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,16 +87,18 @@ public class BehaviorTestActivity extends BaseActivity {
     }
 
     /**
-     * 开启剪贴板的监听
+     * 开启剪贴板的监听（在android Q 版本，只有当当前应用处于前台的时候才能监听到剪贴板内容，处于后台是拿不到剪贴板内容的。）
      *
      * @param view
      */
     public void startClipBoardListener(View view) {
+        Log.d(BehaviorTestActivity.TAG, "开启剪贴板监听");
         ClipboardManager clipBoardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         if (clipBoardManager != null) {
             clipBoardManager.addPrimaryClipChangedListener(new ClipboardManager.OnPrimaryClipChangedListener() {
                 @Override
                 public void onPrimaryClipChanged() {
+                    Log.d(BehaviorTestActivity.TAG, "剪贴板内容有变动");
                     ClipData clipData = clipBoardManager.getPrimaryClip();
                     if (clipData != null && clipData.getItemCount() > 0) {
                         CharSequence text = clipData.getItemAt(0).getText();
@@ -101,12 +106,14 @@ public class BehaviorTestActivity extends BaseActivity {
                         if (text != null) {
                             pasteString = text.toString();
                         }
-                        Log.d("ClipData", "getFromClipboard text=" + pasteString);
+                        Log.d(BehaviorTestActivity.TAG, "getFromClipboard text=" + pasteString);
                     }
 
                 }
             });
         }
+
+// FIXME 取消注册逻辑       clipBoardManager.removePrimaryClipChangedListener();
     }
 
 
@@ -116,30 +123,8 @@ public class BehaviorTestActivity extends BaseActivity {
      * @param view
      */
     public void startPhoneStateListener(View view) {
-        PhoneStateListener phoneStateListener = new PhoneStateListener() {
-            @Override
-            public void onCallStateChanged(int state, String incomingNumber) {
-                super.onCallStateChanged(state, incomingNumber);
+//        this.startService(new Intent(this, BehaviorService.class));
 
-                switch (state) {
-                    case TelephonyManager.CALL_STATE_IDLE: // 待机，即无电话时，挂断时触发
-                        ToastUtil.toastShort("挂断");
-                        break;
-                    case TelephonyManager.CALL_STATE_RINGING: // 响铃，来电时触发
-                        ToastUtil.toastShort("来电");
-                        break;
-                    case TelephonyManager.CALL_STATE_OFFHOOK: // 摘机，接听或打电话时触发
-                        ToastUtil.toastShort("接听");
-                        break;
-                    default:
-                        break;
-                }
-            }
-        };
-        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-        if (telephonyManager != null) {
-            // 设置来电监听
-            telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
-        }
+        PhoneStateManager.getInstance().startPhoneStateListener(this);
     }
 }

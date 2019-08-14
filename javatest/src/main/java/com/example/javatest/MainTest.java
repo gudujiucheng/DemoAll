@@ -6,10 +6,18 @@ import java.util.Queue;
 public class MainTest {
 
     public static Queue<Integer> queue = new LinkedList<>();
+    private static String a = "666";
     static int maxSize = 5;
     static int i;
     public static void main(String[] args) {
-        test03();
+        test04();
+    }
+
+    private static void test04() {
+        String b = a;
+        a = null;
+        System.out.print("b:"+b+" a:"+a);
+
     }
 
     private static void test03() {
