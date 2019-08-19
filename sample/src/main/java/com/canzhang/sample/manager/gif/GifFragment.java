@@ -44,8 +44,6 @@ public class GifFragment extends BaseFragment {
     private static int index = 0;
     long startTime;
 
-    public static String gifUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1565414279953&di=0d3b6b58386810c22365244f2a228c33&imgtype=0&src=http%3A%2F%2Fimg.mp.itc.cn%2Fupload%2F20160409%2F60b9806423ea4053aa74a0f4a10932ce_th.jpg";
-
     private void initView(View view) {
         ivGif = view.findViewById(R.id.iv_gif);
 
@@ -54,7 +52,7 @@ public class GifFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 startTime = System.currentTimeMillis();
-                GifUtils.loadOneTimeGif(gifUrl, ivGif, new GifUtils.GifListener() {
+                GifUtils.loadOneTimeGif(getUrl(), ivGif, new GifUtils.GifListener() {
                     @Override
                     public void gifPlayComplete() {
                         showToast("gif加载完成");
@@ -75,7 +73,7 @@ public class GifFragment extends BaseFragment {
         } else if (index % 3 == 1) {
             return "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1565414279953&di=0d3b6b58386810c22365244f2a228c33&imgtype=0&src=http%3A%2F%2Fimg.mp.itc.cn%2Fupload%2F20160409%2F60b9806423ea4053aa74a0f4a10932ce_th.jpg";
         } else {
-            return "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1565415175531&di=9c2b70779df944842436603af9824295&imgtype=0&src=http%3A%2F%2Fmmbiz.qpic.cn%2Fmmbiz%2FRIQJDM7oiajdno4vw8Mf2kNBnkcmXpUMwAgia0lsibudxXicYx29ZtQ013scO0JsK5pvHmAoicwwK3ibyCjRNmERsonw%2F640%3Fwx_fmt%3Dgif";
+            return "https://cimg1.fenqile.com/ibanner2/M00/00/57/kKgHAF1VMQqAdFZrAA2D7_-AWnk982.gif";
         }
     }
 

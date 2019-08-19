@@ -3,20 +3,15 @@ package com.canzhang.sample.manager.gif;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.gif.GifDrawable;
-import com.bumptech.glide.request.FutureTarget;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.canzhang.sample.debug.DebugBaseApp;
 
-import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -26,6 +21,7 @@ public class GifUtils {
 
     /**
      * 这个不太好  还是需要提前下载下来，这样后续比较方便控制
+     *
      * @param context
      * @param gifUrl
      */
@@ -114,28 +110,5 @@ public class GifUtils {
         void gifPlayComplete();
     }
 
-
-    /**
-     * https://blog.csdn.net/laizhixue/article/details/79296304
-     *
-     * @param view
-     */
-    public void downloadImage(View view) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    String url = "http://cn.bing.com/az/hprichbg/rb/TOAD_ZH-CN7336795473_1920x1080.jpg";
-                    final Context context = DebugBaseApp.sContext;
-                    FutureTarget<File> target = Glide.with(context)
-                            .load(url)
-                            .downloadOnly(new Target<>());
-                    final File imageFile = target.get();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
 
 }

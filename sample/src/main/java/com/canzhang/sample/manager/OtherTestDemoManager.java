@@ -2,6 +2,7 @@ package com.canzhang.sample.manager;
 
 import android.app.Activity;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 
 import com.canzhang.sample.base.BaseManager;
@@ -29,6 +30,7 @@ public class OtherTestDemoManager extends BaseManager {
     public List<ComponentItem> getSampleItem(Activity activity) {
         List<ComponentItem> list = new ArrayList<>();
         list.add(clearAppData(activity));
+        list.add(methodTest());
         list.add(jsonTest());
         list.add(mainTest());
         return list;
@@ -42,6 +44,26 @@ public class OtherTestDemoManager extends BaseManager {
 
             }
         });
+    }
+
+
+    private ComponentItem methodTest() {
+        return new ComponentItem("入参修改测试", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ComponentItem testItem = new ComponentItem("测试", (View.OnClickListener) null);
+                print(testItem);
+                Log.e("Test", "原来的值：" + testItem.name);
+            }
+        });
+    }
+
+    private void print(ComponentItem item) {
+        Log.e("Test", "变化前：" + item.name);
+        item = new ComponentItem("xxxxx", (View.OnClickListener) null);
+        Log.e("Test", "变化后：" + item.name);
+
+
     }
 
     private ComponentItem jsonTest() {
