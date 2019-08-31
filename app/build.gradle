@@ -65,7 +65,6 @@ dependencies {
     if (isMyViewNoudle.toBoolean()) {
         implementation project(':myview')
     }
-    implementation project(':rxjava')
     implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:${rootProject.ext.baseRecyclerViewAdapterHelperVersion}"
     implementation "com.yanzhenjie:permission:${rootProject.ext.permissionVersion}"
     //okhttp

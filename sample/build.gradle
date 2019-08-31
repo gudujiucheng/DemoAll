@@ -121,7 +121,10 @@ dependencies {
     //图片压缩
     implementation 'top.zibin:Luban:1.1.8'
     implementation project(':base')
-    implementation project(':flutter')
+//    implementation project(':flutter')
 
     implementation 'com.android.support:design:' + rootProject.ext.supportVersion
+
+    api "io.reactivex.rxjava2:rxandroid:${rootProject.ext.rxandroid2Version}"
+    api "io.reactivex.rxjava2:rxjava:${rootProject.ext.rxjava2Version}"
 }

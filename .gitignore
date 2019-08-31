@@ -10,3 +10,7 @@
 .externalNativeBuild
 libs/
 src/main/res/drawable/
+.idea/caches/
+.idea/gradle.xml
+.idea/misc.xml
+.idea/vcs.xml

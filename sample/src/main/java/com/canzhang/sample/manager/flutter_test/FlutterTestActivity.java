@@ -7,7 +7,7 @@ import android.widget.FrameLayout;
 import com.canzhang.sample.R;
 import com.example.base.base.BaseActivity;
 
-import io.flutter.facade.Flutter;
+//import io.flutter.facade.Flutter;
 
 public class FlutterTestActivity extends BaseActivity {
 
