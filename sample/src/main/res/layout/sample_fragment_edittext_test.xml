@@ -21,4 +21,34 @@
         android:textColor="@android:color/white" />
 
 
+
+    <Button
+        android:id="@+id/bt_set"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="@dimen/dp_10"
+        android:background="@drawable/sample_selector_btn_bg"
+        android:text="设置重复内容测试"
+        android:textColor="@android:color/white" />
+
+
+    <Button
+        android:id="@+id/bt_remove"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="@dimen/dp_10"
+        android:background="@drawable/sample_selector_btn_bg"
+        android:text="移除监听"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/bt_add"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="@dimen/dp_10"
+        android:background="@drawable/sample_selector_btn_bg"
+        android:text="添加监听"
+        android:textColor="@android:color/white" />
+
+
 </LinearLayout>

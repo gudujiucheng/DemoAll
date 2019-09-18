@@ -19,9 +19,11 @@ import com.example.base.base.BaseFragment;
 /**
  * 测试EditText
  */
-public class TestEditTextFragment extends BaseFragment {
+public class TestEditTextFragment extends BaseFragment implements TextWatcher {
     private static final String TYPE_KEY = "type_key";
     private int mType;
+    Button bt;
+    EditText et;
 
     public static Fragment newInstance(int type) {
         Fragment fragment = new TestEditTextFragment();
@@ -56,55 +58,78 @@ public class TestEditTextFragment extends BaseFragment {
 
     private void initView(View view) {
 
-        EditText et = view.findViewById(R.id.et_test);
-        final Button bt = view.findViewById(R.id.bt_test);
-
+        et = view.findViewById(R.id.et_test);
+        bt = view.findViewById(R.id.bt_test);
+        et.setText("注册之前的文字");
         bt.setEnabled(false);
         //先注册监听
-        et.addTextChangedListener(new TextWatcher() {
-            /**
-             *
-             * @param s 改变之前的值
-             * @param start 改变的起始位置
-             * @param count
-             * @param after
-             */
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                log("beforeTextChanged:" + " s:" + s + " start:" + start + " count:" + count + " after:" + after);
-            }
+        et.addTextChangedListener(this);
 
-            /**
-             *
-             * @param s 改变之后的值
-             * @param start
-             * @param before
-             * @param count
-             */
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                log("onTextChanged:" + " s:" + s + " start:" + start + " count:" + count + " before:" + before);
-                if (TextUtils.isEmpty(s)) {
-                    bt.setEnabled(false);
-                    log("------------------------------------------->>>false");
-                } else {
-                    bt.setEnabled(true);
-                    log("------------------------------------------->>>true");
-                }
-            }
+        et.setText("注册之后");
 
-            /**
-             *
-             * @param s 这个也是改变后的值
-             */
+        //设置重复内容，看看是否有触发回调（是有回调的）
+        view.findViewById(R.id.bt_set).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void afterTextChanged(Editable s) {
-                log("onTextChanged:" + " Editable:" + s.toString());
+            public void onClick(View v) {
+                et.setText("注册之后");
             }
         });
-        et.setText("6666666666");
+
+        view.findViewById(R.id.bt_remove).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                et.removeTextChangedListener(TestEditTextFragment.this);
+            }
+        });
 
 
+        view.findViewById(R.id.bt_add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                et.removeTextChangedListener(TestEditTextFragment.this);
+                et.addTextChangedListener(TestEditTextFragment.this);
+                et.setText(et.getText().toString());
+            }
+        });
+
+    }
+
+
+    /**
+     * @param s     改变之前的值
+     * @param start 改变的起始位置
+     * @param count
+     * @param after
+     */
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        log("beforeTextChanged:" + " s:" + s + " start:" + start + " count:" + count + " after:" + after);
+    }
+
+    /**
+     * @param s      改变之后的值
+     * @param start
+     * @param before
+     * @param count
+     */
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        log("onTextChanged:" + " s:" + s + " start:" + start + " count:" + count + " before:" + before);
+        if (TextUtils.isEmpty(s)) {
+            bt.setEnabled(false);
+            log("------------------------------------------->>>false");
+        } else {
+            bt.setEnabled(true);
+            log("------------------------------------------->>>true");
+        }
+    }
+
+    /**
+     * @param s 这个也是改变后的值
+     */
+    @Override
+    public void afterTextChanged(Editable s) {
+        log("onTextChanged:" + " Editable:" + s.toString());
     }
 
 }
