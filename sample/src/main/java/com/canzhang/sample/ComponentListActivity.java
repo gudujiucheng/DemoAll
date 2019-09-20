@@ -88,12 +88,21 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
      * 在这里添加要调试的组件数据
      */
     private void initData() {
+        mData.add(new ComponentItem("线程测试", new ThreadTestManager()));
         mData.add(new ComponentItem("flutter 测试", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showFragment(FlutterTestFragment.newInstance());
             }
         }));
+
+        mData.add(new ComponentItem("flutter 测试2", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                start(FlutterTestActivity.class);
+            }
+        }));
+
 
         mData.add(new ComponentItem("gif 测试", new View.OnClickListener() {
             @Override
@@ -123,12 +132,6 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
         mData.add(new ComponentItem("sqlite", new SQLiteTestManager()));
         mData.add(new ComponentItem("sqlite 升级专项测试", new SQLiteUpdateTestManager()));
         mData.add(new ComponentItem("url 相关测试", new UrlTestManager()));
-        mData.add(new ComponentItem("flutter 测试2", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                start(FlutterTestActivity.class);
-            }
-        }));
 
         mData.add(new ComponentItem("图片信息、压缩、旋转等测试", new View.OnClickListener() {
             @Override
@@ -192,7 +195,7 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
                 showFragment(new ShadowFragment());
             }
         }));
-        mData.add(new ComponentItem("线程测试", new ThreadTestManager()));
+
         mData.add(new ComponentItem("事件分发测试", new View.OnClickListener() {
             @Override
             public void onClick(View v) {

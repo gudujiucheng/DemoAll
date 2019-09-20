@@ -11,6 +11,7 @@ import com.canzhang.sample.manager.thread.bingfa.SyncSleepThread;
 import com.canzhang.sample.manager.thread.bingfa.bankdemo.BankThread;
 import com.canzhang.sample.manager.thread.demo.fqlreport.AppEvent;
 import com.canzhang.sample.manager.thread.demo.fqlreport.UniversalReport;
+import com.canzhang.sample.manager.thread.fqlthreadpool.ThreadPoolUtils;
 import com.canzhang.sample.manager.thread.newThread.ExtendStyleThread;
 
 import java.util.ArrayList;
@@ -28,6 +29,9 @@ public class ThreadTestManager extends BaseManager {
         UniversalReport.init(DebugBaseApp.sContext);
 
         List<ComponentItem> list = new ArrayList<>();
+        list.add(testSync());
+        list.add(testLocal());
+        list.add(testFqlThreadPool());
         list.add(fqlReport());
         list.add(createThread());
         list.add(createThread02());
@@ -43,6 +47,113 @@ public class ThreadTestManager extends BaseManager {
         list.add(deadLock());
         //TODO 多线程、各种锁的介绍、各种集合的应用
         return list;
+    }
+
+    private ComponentItem testSync() {
+
+        return new ComponentItem("测试同步代码块存取", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i = 0; i < 20; i++) {
+                    int finalI = i;
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            testWrite(finalI);
+                        }
+                    }, "写入线程：" + i).start();
+                }
+
+
+                for (int i = 0; i <20; i++) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            testRead();
+                        }
+                    }, "读取线程----------->>>：" + i).start();
+                }
+
+            }
+        });
+    }
+
+    private int nowIndex = -1;
+
+    private void testRead() {
+        synchronized (ThreadTestManager.class) {
+            log("读取到的索引：" + nowIndex);
+        }
+    }
+
+    private void testWrite(int i) {
+        synchronized (ThreadTestManager.class) {
+            nowIndex = i;
+            log("写入的索引：" + nowIndex);
+        }
+    }
+
+
+    private ComponentItem testLocal() {
+        return new ComponentItem("fql 线程池执行顺序测试", "结论：是乱序执行的", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i = 0; i < 100; i++) {
+                    int finalI = i;
+                    ThreadPoolUtils.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            //确实是乱序执行的，这里是个bug
+                            log("编号：" + finalI);
+//                            2019-09-19 11:37:33.231 31846-32757/com.canzhang.sample E/Test: ThreadTestManager:编号：11
+//                            2019-09-19 11:37:33.231 31846-32757/com.canzhang.sample E/Test: ThreadTestManager:编号：8
+//                            2019-09-19 11:37:33.231 31846-32758/com.canzhang.sample E/Test: ThreadTestManager:编号：9
+//                            2019-09-19 11:37:33.231 31846-32756/com.canzhang.sample E/Test: ThreadTestManager:编号：10
+//                            2019-09-19 11:37:33.231 31846-32757/com.canzhang.sample E/Test: ThreadTestManager:编号：7
+//                            2019-09-19 11:37:33.231 31846-32760/com.canzhang.sample E/Test: ThreadTestManager:编号：6
+                        }
+                    });
+                }
+
+            }
+        });
+    }
+
+    private ComponentItem testFqlThreadPool() {
+        return new ComponentItem("测试多线程中的局部变量", "局部变量是在堆栈中运行。每个运行的线程都有自己的堆栈。\n" +
+                "别的线程无法访问得到，因此我们说，局部变量是“安全”的。\n" +
+                "全局变量在堆中，堆是对所有的线程都可见的。\n" +
+                "因此在两个以上的线程访问全局变量时，就会出现所谓的\n" +
+                "“不安全”，a线程访问全局变量，赋值为a，然后中间睡眠了0.001秒，在此期间b进程访问了全局变量，赋值为b了，此时a线程醒来了，抢了处理机，发现全局变量是b，显然不是我们a线程所要到的值，这时就要加入同步机制或者定义为局部变量，比如如果是方法的话就加同步方法，代码块就加同步代码块。", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        testLocalVariable(10);
+                    }
+                }, "线程----1").start();
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        testLocalVariable(5);
+                    }
+                }, "线程2").start();
+
+            }
+        });
+    }
+
+    private void testLocalVariable(int num) {
+        for (int i = 0; i < num; i++) {
+            log("当前线程：" + Thread.currentThread().getName() + " i:" + i);
+        }
+        int s = 3;
+        for (int i = 0; i < s; i++) {
+            log("当前线程：" + Thread.currentThread().getName() + " s------------->>>:" + i);
+        }
     }
 
 
