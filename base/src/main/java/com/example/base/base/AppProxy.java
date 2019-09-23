@@ -2,6 +2,8 @@ package com.example.base.base;
 
 import android.app.Application;
 
+import java.io.File;
+
 public class AppProxy {
 
 
@@ -19,7 +21,7 @@ public class AppProxy {
         return SingleHolder.single;
     }
 
-    private Application application;
+    private static Application sApplication;
 
 
     /**
@@ -28,15 +30,21 @@ public class AppProxy {
      * @param application
      */
     public void onApplicationCreate(Application application) {
-        this.application = application;
+        sApplication = application;
         //可以在这里做一些初始化动作
 
 
     }
 
     public Application getApplication() {
-        return application;
+        return sApplication;
     }
 
+    public File getCacheDir() {
+        return sApplication.getCacheDir();
+    }
 
+    public File getExternalCacheDir() {
+        return sApplication.getExternalCacheDir();
+    }
 }

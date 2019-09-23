@@ -20,6 +20,7 @@ import com.canzhang.sample.manager.UseNonSdkApiDemoManager;
 import com.canzhang.sample.manager.activity_test.ActivityTestDemoManager;
 import com.canzhang.sample.manager.aidl.AidlClientFragment;
 import com.canzhang.sample.manager.behavior.BehaviorTestActivity;
+import com.canzhang.sample.manager.crash.CrashManager;
 import com.canzhang.sample.manager.eventdispatch.EventDispatchFragment;
 import com.canzhang.sample.manager.flutter_test.FlutterTestActivity;
 import com.canzhang.sample.manager.flutter_test.FlutterTestFragment;
@@ -88,6 +89,7 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
      * 在这里添加要调试的组件数据
      */
     private void initData() {
+        mData.add(new ComponentItem("捕获异常测试", new CrashManager()));
         mData.add(new ComponentItem("线程测试", new ThreadTestManager()));
         mData.add(new ComponentItem("flutter 测试", new View.OnClickListener() {
             @Override

@@ -23,7 +23,7 @@ public abstract class BaseManager implements IManager {
         DebugDialog.getInstance().show(title, msg);
     }
 
-    public void log(String msg) {
+    public  void log(String msg) {
         Log.e("Test", getClass().getSimpleName() + ":" + msg);
     }
 
