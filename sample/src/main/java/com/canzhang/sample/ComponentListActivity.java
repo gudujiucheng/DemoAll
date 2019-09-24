@@ -90,6 +90,7 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
      */
     private void initData() {
         mData.add(new ComponentItem("日常测试（实验、异常等）", new OtherTestDemoManager()));
+        mData.add(new ComponentItem("jni", new JniDemoManager()));
         mData.add(new ComponentItem("捕获异常测试", new CrashManager()));
         mData.add(new ComponentItem("线程测试", new ThreadTestManager()));
         mData.add(new ComponentItem("flutter 测试", new View.OnClickListener() {
@@ -206,7 +207,6 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
         }));
         mData.add(new ComponentItem("app前后台检测", new AppStatusManager()));
         mData.add(new ComponentItem("rxJava实际应用", new RxJavaTestDemoManager()));
-        mData.add(new ComponentItem("jni", new JniDemoManager()));
         mData.add(new ComponentItem("调试弹窗", new DebugDemoManager()));
         mData.add(new ComponentItem("调节亮度测试", new BrightnessDemoManager()));
         mData.add(new ComponentItem("RecyclerView 多type类型(第三方框架)", new View.OnClickListener() {

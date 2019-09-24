@@ -1,0 +1,26 @@
+//这里要这么写
+apply plugin: 'application'
+
+//jar包名称和版本
+group 'canzhanglibrary'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+mainClassName = 'MainTest'//这个貌似没啥用
+repositories {
+    mavenCentral()
+}
+
+jar {
+    manifest {
+        //这里要写明执行类的索引
+        attributes 'Main-Class': 'com.canzhang.mycanrunlibrary.MainTest'
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
