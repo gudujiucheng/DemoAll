@@ -17,6 +17,19 @@ import javax.crypto.spec.DESKeySpec;
  * @CreateDate: 2019/9/24 20:05
  */
 public class MainTest {
+
+    /**
+     * 我们是可以给main函数传递参数的
+     *  java -jar mycanrunlibrary-1.0-SNAPSHOT.jar   hahah  我去  什么情况
+     * @param argus
+     */
+//    public static void main(String[] argus) {
+//        System.out.println("start---------->>>>>>");
+//        System.out.println(argus[0]);//hahah
+//        System.out.println(argus[1]);//我去
+//        System.out.println(argus[2]);//什么情况
+//    }
+
     public static void main(String[] argus) {
         System.out.println("start---------->>>>>>");
         try {
