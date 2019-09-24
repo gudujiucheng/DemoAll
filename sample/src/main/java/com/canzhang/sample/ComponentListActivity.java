@@ -86,9 +86,10 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
     }
 
     /**
-     * 在这里添加要调试的组件数据
+     * 在这里添加要调试的组件数据(经常用的或者最新调整的，向前提)
      */
     private void initData() {
+        mData.add(new ComponentItem("日常测试（实验、异常等）", new OtherTestDemoManager()));
         mData.add(new ComponentItem("捕获异常测试", new CrashManager()));
         mData.add(new ComponentItem("线程测试", new ThreadTestManager()));
         mData.add(new ComponentItem("flutter 测试", new View.OnClickListener() {
@@ -118,7 +119,6 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
                 start(BehaviorTestActivity.class);
             }
         }));
-        mData.add(new ComponentItem("日常测试（实验、异常等）", new OtherTestDemoManager()));
         mData.add(new ComponentItem("Messenger 跨进程应用", new View.OnClickListener() {
             @Override
             public void onClick(View v) {

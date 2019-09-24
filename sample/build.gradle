@@ -26,6 +26,9 @@ android {
             keyPassword '123456'
             storeFile file('sample.jks')
             storePassword '123456'
+            // 默认情况下，Android Gradle 插件 2.2 同时启用这两个签署架构。
+            v1SigningEnabled true
+            v2SigningEnabled true
         }
     }
     resourcePrefix project.getName() + "_"
@@ -81,8 +84,15 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true//开启混淆
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+
+        debug {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
     productFlavors {
