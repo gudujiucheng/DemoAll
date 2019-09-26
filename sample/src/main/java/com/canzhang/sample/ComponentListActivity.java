@@ -11,7 +11,6 @@ import android.view.View;
 
 import com.canzhang.sample.base.adapter.ComponentAdapter;
 import com.canzhang.sample.base.bean.ComponentItem;
-import com.canzhang.sample.manager.AppStatusManager;
 import com.canzhang.sample.manager.BrightnessDemoManager;
 import com.canzhang.sample.manager.DebugDemoManager;
 import com.canzhang.sample.manager.JniDemoManager;
@@ -20,13 +19,13 @@ import com.canzhang.sample.manager.UseNonSdkApiDemoManager;
 import com.canzhang.sample.manager.activity_test.ActivityTestDemoManager;
 import com.canzhang.sample.manager.aidl.AidlClientFragment;
 import com.canzhang.sample.manager.behavior.BehaviorTestActivity;
+import com.canzhang.sample.manager.block.BlockTestManager;
 import com.canzhang.sample.manager.crash.CrashManager;
 import com.canzhang.sample.manager.eventdispatch.EventDispatchFragment;
 import com.canzhang.sample.manager.flutter_test.FlutterTestActivity;
 import com.canzhang.sample.manager.flutter_test.FlutterTestFragment;
 import com.canzhang.sample.manager.fragment_test.ContainerActivity;
 import com.canzhang.sample.manager.gif.GifFragment;
-import com.canzhang.sample.manager.gif.GifUtils;
 import com.canzhang.sample.manager.img.ImgTestFragment;
 import com.canzhang.sample.manager.lifetest.LifeTestFragment;
 import com.canzhang.sample.manager.messenger.MessengerClientFragment;
@@ -91,6 +90,7 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
     private void initData() {
         mData.add(new ComponentItem("日常测试（实验、异常等）", new OtherTestDemoManager()));
         mData.add(new ComponentItem("jni", new JniDemoManager()));
+        mData.add(new ComponentItem("卡顿测试", new BlockTestManager()));
         mData.add(new ComponentItem("捕获异常测试", new CrashManager()));
         mData.add(new ComponentItem("线程测试", new ThreadTestManager()));
         mData.add(new ComponentItem("flutter 测试", new View.OnClickListener() {
@@ -205,7 +205,6 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
                 showFragment(new EventDispatchFragment());
             }
         }));
-        mData.add(new ComponentItem("app前后台检测", new AppStatusManager()));
         mData.add(new ComponentItem("rxJava实际应用", new RxJavaTestDemoManager()));
         mData.add(new ComponentItem("调试弹窗", new DebugDemoManager()));
         mData.add(new ComponentItem("调节亮度测试", new BrightnessDemoManager()));

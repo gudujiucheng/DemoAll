@@ -6,14 +6,16 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.canzhang.sample.manager.AppStatusManager;
-import com.canzhang.sample.manager.weex.view.FqlWeexFloatingAds;
+import com.canzhang.sample.manager.appstatus.AppStatus;
+import com.canzhang.sample.manager.appstatus.AppStatusChangeListener;
 import com.canzhang.sample.manager.weex.ImageAdapter;
+import com.canzhang.sample.manager.weex.view.FqlWeexFloatingAds;
 import com.canzhang.sample.manager.weex.view.FqlWeexQRCodeView;
 import com.canzhang.sample.manager.weex.view.RichImageview;
 import com.canzhang.sample.manager.weex.view.RichText;
-import com.example.base.base.AppProxy;
 import com.component.debugdialog.DebugDialog;
+import com.example.base.base.AppProxy;
+import com.example.base.utils.ToastUtil;
 import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.common.WXException;
@@ -34,13 +36,28 @@ public class DebugBaseApp extends Application {
         DebugDialog.getInstance().init(this);
         DebugDialog.setIsDebug(true);
         initWeex();
-        AppStatusManager.register(this);
-        sContext =getApplicationContext();
+        AppStatus.getInstance().addChangeListener(new AppStatusChangeListener() {
+            @Override
+            public void onAppToBackground() {
+                ToastUtil.toastShort("APP后台");
+            }
+
+            @Override
+            public void onAppToFront() {
+                ToastUtil.toastShort("APP前台");
+            }
+
+            @Override
+            public void onAppFirstCreate() {
+                ToastUtil.toastShort("初次启动");
+            }
+        });
+        sContext = getApplicationContext();
     }
 
     private void initWeex() {
-        InitConfig config=new InitConfig.Builder().setImgAdapter(new ImageAdapter()).build();
-        WXSDKEngine.initialize(this,config);
+        InitConfig config = new InitConfig.Builder().setImgAdapter(new ImageAdapter()).build();
+        WXSDKEngine.initialize(this, config);
         try {
             WXSDKEngine.registerComponent("FqlWeexFloatingAds", FqlWeexFloatingAds.class);
             WXSDKEngine.registerComponent("richText", RichText.class);
