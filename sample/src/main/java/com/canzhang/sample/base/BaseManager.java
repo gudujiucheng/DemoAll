@@ -23,7 +23,7 @@ public abstract class BaseManager implements IManager {
         DebugDialog.getInstance().show(title, msg);
     }
 
-    public  void log(String msg) {
+    public void log(String msg) {
         Log.e("Test", getClass().getSimpleName() + ":" + msg);
     }
 
@@ -32,10 +32,7 @@ public abstract class BaseManager implements IManager {
         Application application = AppProxy.getInstance().getApplication();
         if (application != null) {
             Toast.makeText(application, msg, Toast.LENGTH_SHORT).show();
-        } else if (DebugBaseApp.sContext != null) {
-            Toast.makeText(DebugBaseApp.sContext, msg, Toast.LENGTH_SHORT).show();
         }
-
     }
 
 

@@ -11,6 +11,7 @@ import android.webkit.CookieSyncManager;
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
 import com.canzhang.sample.debug.DebugBaseApp;
+import com.example.base.base.AppProxy;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -43,7 +44,7 @@ public class CookieTestManager extends BaseManager {
 
     {
         //初始化实际上是会被提取到类的构造器中被执行的，但是会比类构造器中的代码块优先执行到
-        cookieSyncManager = CookieSyncManager.createInstance(DebugBaseApp.sContext);
+        cookieSyncManager = CookieSyncManager.createInstance(AppProxy.getInstance().getApplication());
         cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
     }
@@ -249,7 +250,7 @@ public class CookieTestManager extends BaseManager {
      */
     private void setCookie(String url, String key, String value, long expiresTime) {
         String topDomain = getTopDomain(url);
-        CookieSyncManager cookieSyncManager = CookieSyncManager.createInstance(DebugBaseApp.sContext);
+        CookieSyncManager cookieSyncManager = CookieSyncManager.createInstance(AppProxy.getInstance().getApplication());
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

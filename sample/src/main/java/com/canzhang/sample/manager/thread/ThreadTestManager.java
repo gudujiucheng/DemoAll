@@ -13,6 +13,7 @@ import com.canzhang.sample.manager.thread.demo.fqlreport.AppEvent;
 import com.canzhang.sample.manager.thread.demo.fqlreport.UniversalReport;
 import com.canzhang.sample.manager.thread.fqlthreadpool.ThreadPoolUtils;
 import com.canzhang.sample.manager.thread.newThread.ExtendStyleThread;
+import com.example.base.base.AppProxy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class ThreadTestManager extends BaseManager {
     @Override
     public List<ComponentItem> getSampleItem(Activity activity) {
         //初始化上报组件
-        UniversalReport.init(DebugBaseApp.sContext);
+        UniversalReport.init(AppProxy.getInstance().getApplication());
 
         List<ComponentItem> list = new ArrayList<>();
         list.add(testSync());

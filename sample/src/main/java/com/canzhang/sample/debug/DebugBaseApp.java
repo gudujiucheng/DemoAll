@@ -26,8 +26,6 @@ import com.taobao.weex.common.WXException;
  */
 public class DebugBaseApp extends Application {
 
-    public static Context sContext;
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -36,6 +34,7 @@ public class DebugBaseApp extends Application {
         DebugDialog.getInstance().init(this);
         DebugDialog.setIsDebug(true);
         initWeex();
+        AppStatus.getInstance().setActivityLifeCallBack(this);
         AppStatus.getInstance().addChangeListener(new AppStatusChangeListener() {
             @Override
             public void onAppToBackground() {
@@ -52,7 +51,6 @@ public class DebugBaseApp extends Application {
                 ToastUtil.toastShort("初次启动");
             }
         });
-        sContext = getApplicationContext();
     }
 
     private void initWeex() {

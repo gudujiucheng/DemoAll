@@ -8,6 +8,7 @@ import android.webkit.CookieSyncManager;
 
 import com.canzhang.sample.debug.DebugBaseApp;
 import com.component.debugdialog.DebugDialog;
+import com.example.base.base.AppProxy;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -92,7 +93,7 @@ public class MyCookieManager {
             return;
         }
         Log.e("Test","cookieList:"+cookieList.toString());
-        CookieSyncManager cookieSyncManager = CookieSyncManager.createInstance(DebugBaseApp.sContext);
+        CookieSyncManager cookieSyncManager = CookieSyncManager.createInstance(AppProxy.getInstance().getApplication());
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
         try {
