@@ -33,7 +33,7 @@ public class UrlTestManager extends BaseManager {
     /**
      * 带有这种 # 号 解析会有异常,导致参数值，以及后面的参数取不出来。
      */
-    private String url = "https://cc.sale.canzhang.com/1902181929/index.html?canzhang_channel=AM.NADD2019050700028761.NADP2017121500001001#NADS2017121500001003#AI&event_id=AM.NADD2019050700028761";
+    private String url = "https://cc.sale.canzhang.com/1902181929/index.html?canzhang_channel=A#B#C&event_id=AM.NADD2019050700028761";
 
     private String url02 = "https://cc.sale.canzhang.com/1902181929/index.html?canzhang_channel=AM.NADD2019050700028761.NADP2017121500001001&event_id=AM.NADD2019050700028761";
 
@@ -92,7 +92,7 @@ public class UrlTestManager extends BaseManager {
         return new ComponentItem("getQueryParameter", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri parse = Uri.parse(url02);
+                Uri parse = Uri.parse(url);
                 String canzhang_channel = parse.getQueryParameter("canzhang_channel");
                 String event_id = parse.getQueryParameter("event_id");
                 log("canzhang_channel:" + canzhang_channel + " event_id:" + event_id);

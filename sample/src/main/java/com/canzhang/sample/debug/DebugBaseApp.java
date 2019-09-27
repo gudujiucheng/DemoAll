@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.canzhang.sample.manager.appstatus.AppStatus;
 import com.canzhang.sample.manager.appstatus.AppStatusChangeListener;
+import com.canzhang.sample.manager.block.githup.AppBlockCanaryContext;
 import com.canzhang.sample.manager.weex.ImageAdapter;
 import com.canzhang.sample.manager.weex.view.FqlWeexFloatingAds;
 import com.canzhang.sample.manager.weex.view.FqlWeexQRCodeView;
@@ -16,6 +17,7 @@ import com.canzhang.sample.manager.weex.view.RichText;
 import com.component.debugdialog.DebugDialog;
 import com.example.base.base.AppProxy;
 import com.example.base.utils.ToastUtil;
+import com.github.moduth.blockcanary.BlockCanary;
 import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.common.WXException;
@@ -51,6 +53,13 @@ public class DebugBaseApp extends Application {
                 ToastUtil.toastShort("初次启动");
             }
         });
+
+        initBlockCanary();
+    }
+
+    private void initBlockCanary() {
+        // 在主进程初始化调用哈
+        BlockCanary.install(this, new AppBlockCanaryContext()).start();
     }
 
     private void initWeex() {
