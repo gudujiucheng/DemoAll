@@ -1,9 +1,8 @@
-package com.canzhang.sample.manager.block.githup;
+package com.canzhang.sample.manager.block.githup_test_use;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.example.base.utils.ToastUtil;
 import com.github.moduth.blockcanary.BlockCanaryContext;
 import com.github.moduth.blockcanary.internal.BlockInfo;
 

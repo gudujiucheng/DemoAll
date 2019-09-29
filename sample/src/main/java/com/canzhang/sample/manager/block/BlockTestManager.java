@@ -5,7 +5,8 @@ import android.view.View;
 
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
-import com.canzhang.sample.manager.block.block.BlockManager;
+import com.canzhang.sample.manager.block.fql_old.BlockManager;
+import com.canzhang.sample.manager.block.githup_test_refactor.BlockCanary;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,8 @@ public class BlockTestManager extends BaseManager {
 
 
         List<ComponentItem> list = new ArrayList<>();
+        list.add(openNewBlockCheck());
+        list.add(closeNewBlockCheck());
         list.add(openBlockCheck());
         list.add(closeBlockCheck());
         list.add(makeBlock());
@@ -42,7 +45,7 @@ public class BlockTestManager extends BaseManager {
 
     private ComponentItem openBlockCheck() {
 
-        return new ComponentItem("开启监测", new View.OnClickListener() {
+        return new ComponentItem("开启fql老监控监测", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 BlockManager.getInstance().setBlockCheckerEnable();
@@ -51,13 +54,34 @@ public class BlockTestManager extends BaseManager {
     }
 
 
-
     private ComponentItem closeBlockCheck() {
 
-        return new ComponentItem("关闭监测", new View.OnClickListener() {
+        return new ComponentItem("关闭fql老监控监测", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 BlockManager.getInstance().disableBlockChecker();
+            }
+        });
+    }
+
+
+    private ComponentItem openNewBlockCheck() {
+
+        return new ComponentItem("开启新卡顿监测", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BlockCanary.getInstance().start();
+            }
+        });
+    }
+
+
+    private ComponentItem closeNewBlockCheck() {
+
+        return new ComponentItem("关闭新卡顿监测", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BlockCanary.getInstance().stop();
             }
         });
     }

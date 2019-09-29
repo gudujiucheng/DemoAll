@@ -8,7 +8,7 @@ import android.util.Log;
 
 import com.canzhang.sample.manager.appstatus.AppStatus;
 import com.canzhang.sample.manager.appstatus.AppStatusChangeListener;
-import com.canzhang.sample.manager.block.githup.AppBlockCanaryContext;
+import com.canzhang.sample.manager.block.githup_test_use.AppBlockCanaryContext;
 import com.canzhang.sample.manager.weex.ImageAdapter;
 import com.canzhang.sample.manager.weex.view.FqlWeexFloatingAds;
 import com.canzhang.sample.manager.weex.view.FqlWeexQRCodeView;

@@ -1,4 +1,4 @@
-package com.canzhang.sample.manager.block.block;
+package com.canzhang.sample.manager.block.fql_old;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -15,7 +15,6 @@ public class BlockManager {
 
     private static volatile BlockManager mInstance;
     private Handler sHandler = new Handler(Looper.getMainLooper());
-
     private BlockManager() {
         AppStatus.getInstance().addChangeListener(new AppStatusChangeListener() {
             @Override

@@ -1,4 +1,4 @@
-package com.canzhang.sample.manager.block.block.stack;
+package com.canzhang.sample.manager.block.githup_test_refactor;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -41,11 +41,7 @@ abstract class AbstractSampler {
 
         HandlerThreadFactory.getTimerThreadHandler().removeCallbacks(mRunnable);
         HandlerThreadFactory.getTimerThreadHandler().postDelayed(mRunnable,
-                getSampleDelay());
-    }
-
-    private long getSampleDelay() {
-        return (long) (mSampleInterval * 0.8f);//FIXME 这里原来取的是卡顿阈值的0.8f
+                BlockCanaryInternals.getInstance().getSampleDelay());
     }
 
     public void stop() {

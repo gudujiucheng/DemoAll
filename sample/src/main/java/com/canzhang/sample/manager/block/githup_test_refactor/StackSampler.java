@@ -1,4 +1,4 @@
-package com.canzhang.sample.manager.block.block.stack;
+package com.canzhang.sample.manager.block.githup_test_refactor;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -32,7 +32,6 @@ public class StackSampler extends AbstractSampler {
             for (Long entryTime : sStackMap.keySet()) {
                 if (startTime < entryTime && entryTime < endTime) {
                     result.add(SEPARATOR
-                            + SEPARATOR
                             + sStackMap.get(entryTime));
                 }
             }
