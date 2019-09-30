@@ -9,6 +9,8 @@ import android.util.Log;
 import com.canzhang.sample.manager.appstatus.AppStatus;
 import com.canzhang.sample.manager.appstatus.AppStatusChangeListener;
 import com.canzhang.sample.manager.block.githup_test_use.AppBlockCanaryContext;
+import com.canzhang.sample.manager.block.tencent_use.DynamicConfigImplDemo;
+import com.canzhang.sample.manager.block.tencent_use.TestPluginListener;
 import com.canzhang.sample.manager.weex.ImageAdapter;
 import com.canzhang.sample.manager.weex.view.FqlWeexFloatingAds;
 import com.canzhang.sample.manager.weex.view.FqlWeexQRCodeView;
@@ -21,6 +23,7 @@ import com.github.moduth.blockcanary.BlockCanary;
 import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.common.WXException;
+import com.tencent.matrix.Matrix;
 
 
 /**
@@ -54,7 +57,15 @@ public class DebugBaseApp extends Application {
             }
         });
 
-        initBlockCanary();
+//        initBlockCanary();
+        initTencentMatrix();
+    }
+
+    private void initTencentMatrix() {
+        Matrix.Builder builder = new Matrix.Builder(this); // build matrix
+        builder.patchListener(new TestPluginListener(this)); // add general pluginListener
+        //init matrix
+        Matrix.init(builder.build());
     }
 
     private void initBlockCanary() {

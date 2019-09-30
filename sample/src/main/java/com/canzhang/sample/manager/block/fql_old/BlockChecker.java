@@ -9,6 +9,8 @@ import com.example.base.utils.ToastUtil;
 
 
 /**
+ * 重点关注：这个是在子线程开启的轮训，这个就还好，如果UI线程一直处于卡顿状态，这个也不会受到影响，能继续检测到卡顿现象
+ *
  * Created by owenli on 2018/11/8.
  *
  * 更为详细的代码部分参考：http://blog.zhaiyifan.cn/2016/01/16/BlockCanaryTransparentPerformanceMonitor/

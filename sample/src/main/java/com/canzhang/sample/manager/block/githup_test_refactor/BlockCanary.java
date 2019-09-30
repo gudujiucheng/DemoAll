@@ -3,7 +3,7 @@ package com.canzhang.sample.manager.block.githup_test_refactor;
 import android.os.Looper;
 
 /**
- * @Description:
+ * @Description: 这种方法可用在UI卡顿一段时间后就正常的情况。如果UI一直处于卡顿状态，那么不生效，因为主线程卡顿导致BlockCanary框架的检测和读写方法不会被执行
  * @Author: canzhang
  * @CreateDate: 2019/9/29 15:40
  */
