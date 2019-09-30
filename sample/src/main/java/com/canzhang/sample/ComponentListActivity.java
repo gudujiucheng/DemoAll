@@ -18,6 +18,7 @@ import com.canzhang.sample.manager.OtherTestDemoManager;
 import com.canzhang.sample.manager.UseNonSdkApiDemoManager;
 import com.canzhang.sample.manager.activity_test.ActivityTestDemoManager;
 import com.canzhang.sample.manager.aidl.AidlClientFragment;
+import com.canzhang.sample.manager.antifraud.AntiFraudManager;
 import com.canzhang.sample.manager.behavior.BehaviorTestActivity;
 import com.canzhang.sample.manager.block.BlockTestManager;
 import com.canzhang.sample.manager.crash.CrashManager;
@@ -89,6 +90,7 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
      */
     private void initData() {
         mData.add(new ComponentItem("日常测试（实验、异常等）", new OtherTestDemoManager()));
+        mData.add(new ComponentItem("反欺诈数据采集测试", new AntiFraudManager()));
         mData.add(new ComponentItem("jni", new JniDemoManager()));
         mData.add(new ComponentItem("卡顿测试", new BlockTestManager()));
         mData.add(new ComponentItem("捕获异常测试", new CrashManager()));
