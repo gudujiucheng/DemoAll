@@ -24,6 +24,8 @@ import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.common.WXException;
 import com.tencent.matrix.Matrix;
+import com.tencent.matrix.trace.TracePlugin;
+import com.tencent.matrix.trace.config.TraceConfig;
 
 
 /**
@@ -58,14 +60,42 @@ public class DebugBaseApp extends Application {
         });
 
 //        initBlockCanary();
-        initTencentMatrix();
+//        initTencentMatrix();
     }
 
     private void initTencentMatrix() {
+
+        DynamicConfigImplDemo dynamicConfig = new DynamicConfigImplDemo();
+        boolean matrixEnable = dynamicConfig.isMatrixEnable();
+        boolean fpsEnable = dynamicConfig.isFPSEnable();
+        boolean traceEnable = dynamicConfig.isTraceEnable();
+
+
         Matrix.Builder builder = new Matrix.Builder(this); // build matrix
         builder.patchListener(new TestPluginListener(this)); // add general pluginListener
+
+        //trace
+        TraceConfig traceConfig = new TraceConfig.Builder()
+                .dynamicConfig(dynamicConfig)
+                .enableFPS(fpsEnable)
+                .enableEvilMethodTrace(traceEnable)
+                .enableAnrTrace(traceEnable)
+                .enableStartup(traceEnable)
+                .splashActivities("sample.tencent.matrix.SplashActivity;")
+                .isDebug(true)
+                .isDevEnv(false)
+                .build();
+
+        TracePlugin tracePlugin = (new TracePlugin(traceConfig));
+
+        builder.plugin(tracePlugin);
+
         //init matrix
         Matrix.init(builder.build());
+
+        //start only startup tracer, close other tracer.
+        tracePlugin.start();
+
     }
 
     private void initBlockCanary() {

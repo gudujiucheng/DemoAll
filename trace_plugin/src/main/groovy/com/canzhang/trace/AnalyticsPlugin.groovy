@@ -10,22 +10,22 @@ import org.gradle.api.Project
 class AnalyticsPlugin implements Plugin<Project> {
     void apply(Project project) {
 
-        AnalyticsExtension extension = project.extensions.create("fqlAnalytics", AnalyticsExtension)
+        AnalyticsExtension extension = project.extensions.create("slowMethodConfig", AnalyticsExtension)
 
         boolean disableAnalyticsPlugin = false
         Properties properties = new Properties()
         if (project.rootProject.file('gradle.properties').exists()) {
             properties.load(project.rootProject.file('gradle.properties').newDataInputStream())
-            disableAnalyticsPlugin = Boolean.parseBoolean(properties.getProperty("fqlAnalytics.disablePlugin", "false"))
+            disableAnalyticsPlugin = Boolean.parseBoolean(properties.getProperty("slowMethodConfig.disablePlugin", "false"))
         }
 
         if (!disableAnalyticsPlugin) {
-            println("------------xxx您开启了全埋点插桩插件--------------")
+            println("------------您开启了慢方法检测插桩插件--------------")
             AppExtension appExtension = project.extensions.findByType(AppExtension.class)
             //注册我们的transform类
             appExtension.registerTransform(new AnalyticsTransform(project, extension))
         } else {
-            println("------------xxx您已关闭了全埋点插桩插件--------------")
+            println("------------您已关闭了慢方法检测插桩插件--------------")
         }
     }
 }

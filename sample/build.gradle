@@ -6,6 +6,7 @@ if (isSampleRunAsApp.toBoolean()) {
 }
 
 apply plugin: 'com.canzhang.bury_point'
+
 fqlAnalytics {
     isShowDebugInfo = true
     //需要排除的包
@@ -13,16 +14,30 @@ fqlAnalytics {
                           'com/lexinfintech/component/debugdialog',
                           'android/support',
                           'com/mob',
+                          'com/tencent',
                           'cn/sharesdk',
                           'com/taobao']
     //排除包中  需要定向插桩的包（仅针对属于needExcludePackageList 中部分需要插桩的子包，方便配置，例如 'android/support'大部分不需要埋点，而其中的TabLayout需要特殊埋点需求）
     needModifyPackageList = ['android/support/design/widget/TabLayout']
 }
 
+apply plugin: 'com.canzhang.slow_method_plugin'
+slowMethodConfig {
+    isShowDebugInfo = true
+    //需要排除的包
+    excludePackageList = ['com/canzhang/sample/manager/asm/slow_method',
+                          'SlowMethodHelper',
+                          'android/support',
+                          'com/mob',
+                          'com/tencent',
+                          'cn/sharesdk',
+                          'com/taobao']
+}
+
 apply plugin: 'com.tencent.matrix-plugin'
 matrix {
     trace {
-        enable = true    //if you don't want to use trace canary, set false
+        enable = false    //if you don't want to use trace canary, set false
         baseMethodMapFile = "${project.buildDir}/matrix_output/Debug.methodmap"
         blackListFile = "${project.projectDir}/matrixTrace/blackMethodList.txt"
     }

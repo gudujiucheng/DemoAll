@@ -1,6 +1,7 @@
 package com.canzhang.sample.manager.block;
 
 import android.app.Activity;
+import android.os.Debug;
 import android.view.View;
 
 import com.canzhang.sample.base.BaseManager;
@@ -25,6 +26,7 @@ public class BlockTestManager extends BaseManager {
         list.add(openBlockCheck());
         list.add(closeBlockCheck());
         list.add(makeBlock());
+        list.add(testEvilMethod());
         return list;
     }
 
@@ -86,5 +88,33 @@ public class BlockTestManager extends BaseManager {
         });
     }
 
+
+    private ComponentItem testEvilMethod() {
+
+        return new ComponentItem("测试慢方法检测", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                testJank();
+            }
+        });
+    }
+
+
+    //点击按钮触发 为放大耗时，循环执行200次
+    public void testJank() {
+        for (int i = 0; i < 200; i++) {
+            wrapper();
+        }
+    }
+
+    //包装方法用于测试调用深度
+    void wrapper() {
+        tryHeavyMethod();
+    }
+
+    //dump内存是耗时方法
+    private void tryHeavyMethod() {
+        Debug.getMemoryInfo(new Debug.MemoryInfo());
+    }
 
 }

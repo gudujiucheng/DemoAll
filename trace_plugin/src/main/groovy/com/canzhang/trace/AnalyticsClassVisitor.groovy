@@ -55,11 +55,9 @@ class AnalyticsClassVisitor extends ClassVisitor implements Opcodes {
     @Override
     MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
         MethodVisitor methodVisitor = super.visitMethod(access, name, desc, signature, exceptions)
-
         String nameDesc = name + desc
 
         methodVisitor = new AnalyticsDefaultMethodVisitor(methodVisitor, access, name, desc) {
-            boolean isDataTrackViewOnClickAnnotation = false
 
             @Override
             void visitEnd() {
@@ -74,74 +72,33 @@ class AnalyticsClassVisitor extends ClassVisitor implements Opcodes {
             @Override
             protected void onMethodExit(int opcode) {//方法退出节点
                 super.onMethodExit(opcode)
+
+                mv.visitLdcInsn(name);
+                mv.visitMethodInsn(INVOKESTATIC, "java/lang/System", "nanoTime", "()J", false);
+                mv.visitMethodInsn(INVOKESTATIC, AnalyticsSetting.GENERATE_SDK_API_CLASS_PATH,  "setEndTime", "(Ljava/lang/String;J)V", false);
+
+                mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+                mv.visitLdcInsn(name);
+                mv.visitMethodInsn(INVOKESTATIC, AnalyticsSetting.GENERATE_SDK_API_CLASS_PATH, "getCostTime", "(Ljava/lang/String;)Ljava/lang/String;", false);
+                mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
             }
 
             @Override
             protected void onMethodEnter() {//方法进入节点
                 super.onMethodEnter()
 
-                if (isDataTrackViewOnClickAnnotation) {//注解
-                    if (desc == '(Landroid/view/View;)V') {
-                        AnalyticsUtils.logD("插桩：自定义注解类方法插入 nameDesc:" + nameDesc + " currentClassName:" + mCurrentClassName)
-                        methodVisitor.visitVarInsn(ALOAD, 1)
-                        methodVisitor.visitMethodInsn(INVOKESTATIC, AnalyticsSetting.GENERATE_SDK_API_CLASS_PATH, "trackViewOnClick", "(Landroid/view/View;)V", false)
-                        return
-                    }
-                }
-                if ('android/support/design/widget/TabLayout' == mCurrentClassName) {//tablayout
-                    if ('selectTab(Landroid/support/design/widget/TabLayout$Tab;)V' == nameDesc) {
-                        AnalyticsUtils.logD("插桩：tabLayout nameDesc:" + nameDesc + " currentClassName:" + mCurrentClassName)
-                        methodVisitor.visitVarInsn(ALOAD, 1)
-                        methodVisitor.visitMethodInsn(INVOKESTATIC, AnalyticsSetting.GENERATE_SDK_API_CLASS_PATH, "trackTabOnSelect", '(Landroid/support/design/widget/TabLayout$Tab;)V', false)
-                    }
-                }
+                AnalyticsUtils.logD("方法进入 nameDesc:" + nameDesc + " currentClassName:" + mCurrentClassName)
 
-                if ((mInterfaces != null && mInterfaces.length > 0)) {
-                    if ((mInterfaces.contains('android/view/View$OnClickListener') && nameDesc == 'onClick(Landroid/view/View;)V')) {
-                        AnalyticsUtils.logD("插桩：OnClickListener nameDesc:" + nameDesc + " currentClassName:" + mCurrentClassName)
-                        methodVisitor.visitVarInsn(ALOAD, 1)
-                        methodVisitor.visitMethodInsn(INVOKESTATIC, AnalyticsSetting.GENERATE_SDK_API_CLASS_PATH, "trackViewOnClick", "(Landroid/view/View;)V", false)
-                    } else if (mInterfaces.contains('android/content/DialogInterface$OnClickListener') && nameDesc == 'onClick(Landroid/content/DialogInterface;I)V') {
-                        AnalyticsUtils.logD("插桩：DialogInterface.OnClickListener nameDesc:" + nameDesc + " currentClassName:" + mCurrentClassName)
-                        methodVisitor.visitVarInsn(ALOAD, 1)
-                        methodVisitor.visitVarInsn(ILOAD, 2)
-                        methodVisitor.visitMethodInsn(INVOKESTATIC, AnalyticsSetting.GENERATE_SDK_API_CLASS_PATH, "trackViewOnClick", "(Landroid/content/DialogInterface;I)V", false)
-                    } else if (mInterfaces.contains('android/content/DialogInterface$OnMultiChoiceClickListener') && nameDesc == 'onClick(Landroid/content/DialogInterface;IZ)V') {
-                        AnalyticsUtils.logD("插桩：DialogInterface.OnMultiChoiceClickListener nameDesc:" + nameDesc + " currentClassName:" + mCurrentClassName)
-                        methodVisitor.visitVarInsn(ALOAD, 1)
-                        methodVisitor.visitVarInsn(ILOAD, 2)
-                        methodVisitor.visitVarInsn(ILOAD, 3)
-                        methodVisitor.visitMethodInsn(INVOKESTATIC, AnalyticsSetting.GENERATE_SDK_API_CLASS_PATH, "trackViewOnClick", "(Landroid/content/DialogInterface;IZ)V", false)
-                    } else if (mInterfaces.contains('android/widget/CompoundButton$OnCheckedChangeListener') && nameDesc == 'onCheckedChanged(Landroid/widget/CompoundButton;Z)V') {
-                        AnalyticsUtils.logD("插桩：CompoundButton.OnCheckedChangeListener nameDesc:" + nameDesc + " currentClassName:" + mCurrentClassName)
-                        methodVisitor.visitVarInsn(ALOAD, 1)
-                        methodVisitor.visitVarInsn(ILOAD, 2)
-                        methodVisitor.visitMethodInsn(INVOKESTATIC, AnalyticsSetting.GENERATE_SDK_API_CLASS_PATH, "trackViewOnClick", "(Landroid/widget/CompoundButton;Z)V", false)
-                    } else if (mInterfaces.contains('android/widget/AdapterView$OnItemSelectedListener') && nameDesc == 'onItemSelected(Landroid/widget/AdapterView;Landroid/view/View;IJ)V') {
-                        AnalyticsUtils.logD("插桩：AdapterView.OnItemSelectedListener nameDesc:" + nameDesc + " currentClassName:" + mCurrentClassName)
-                        methodVisitor.visitVarInsn(ALOAD, 1)
-                        methodVisitor.visitVarInsn(ALOAD, 2)
-                        methodVisitor.visitVarInsn(ILOAD, 3)
-                        methodVisitor.visitMethodInsn(INVOKESTATIC, AnalyticsSetting.GENERATE_SDK_API_CLASS_PATH, "trackViewOnClick", "(Landroid/widget/AdapterView;Landroid/view/View;I)V", false)
-                    } else if (mInterfaces.contains('android/widget/AdapterView$OnItemClickListener') && nameDesc == 'onItemClick(Landroid/widget/AdapterView;Landroid/view/View;IJ)V') {
-                        AnalyticsUtils.logD("插桩：AdapterView.OnItemClickListener nameDesc:" + nameDesc + " currentClassName:" + mCurrentClassName)
-                        methodVisitor.visitVarInsn(ALOAD, 1)
-                        methodVisitor.visitVarInsn(ALOAD, 2)
-                        methodVisitor.visitVarInsn(ILOAD, 3)
-                        methodVisitor.visitMethodInsn(INVOKESTATIC, AnalyticsSetting.GENERATE_SDK_API_CLASS_PATH, "trackViewOnClick", "(Landroid/widget/AdapterView;Landroid/view/View;I)V", false)
-                    }
-                }
+                mv.visitLdcInsn(name);
+                mv.visitMethodInsn(INVOKESTATIC, "java/lang/System", "nanoTime", "()J", false);
+                mv.visitMethodInsn(INVOKESTATIC,  AnalyticsSetting.GENERATE_SDK_API_CLASS_PATH, "setStartTime", "(Ljava/lang/String;J)V", false);
+
+
+
             }
 
             @Override
             AnnotationVisitor visitAnnotation(String s, boolean b) {
-                /**
-                 * 针对布局内定义android：onClick事件的，要在对应的方法上面加上注解才能操作到
-                 */
-                if (s == AnalyticsSetting.ON_CLICK_ANNOTATION_PATH) {
-                    isDataTrackViewOnClickAnnotation = true
-                }
-
                 return super.visitAnnotation(s, b)
             }
         }

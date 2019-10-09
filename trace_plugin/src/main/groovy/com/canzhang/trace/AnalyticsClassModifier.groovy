@@ -90,7 +90,7 @@ class AnalyticsClassModifier {
                 className.contains('R.class') ||
                 className.contains('R2.class') ||
                 className.contains('BuildConfig.class')) {
-            AnalyticsUtils.logD("全埋点R/Build过滤>>>" + className)
+            AnalyticsUtils.logD("插桩R/Build过滤>>>" + className)
             return false
         }
         /**
@@ -101,7 +101,7 @@ class AnalyticsClassModifier {
             while (iterator.hasNext()) {
                 String packageName = iterator.next()
                 if (className.startsWith(packageName)) {
-                    AnalyticsUtils.logD("需要埋点的包名>>>packageName:" + packageName)
+                    AnalyticsUtils.logD("需要插桩的包名>>>packageName:" + packageName)
                     AnalyticsUtils.logD("需要插桩的类>>>" + className)
                     return true
                 }
