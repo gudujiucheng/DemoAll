@@ -26,7 +26,6 @@ slowMethodConfig {
     isShowDebugInfo = true
     //需要排除的包
     excludePackageList = ['com/canzhang/sample/manager/asm/slow_method',
-                          'SlowMethodHelper',
                           'android/support',
                           'com/mob',
                           'com/tencent',

@@ -1,4 +1,5 @@
 package com.canzhang.trace
+
 import com.android.build.api.transform.*
 import com.android.build.gradle.internal.pipeline.TransformManager
 import groovy.io.FileType
@@ -89,12 +90,17 @@ class AnalyticsTransform extends Transform {
                     /**遍历以某一扩展名结尾的文件*/
                     dir.traverse(type: FileType.FILES, nameFilter: ~/.*\.class/) {
                         File classFile ->
-                            if (AnalyticsClassModifier.isShouldModify(classFile.name, analyticsExtension)) {
+                            /**key 为包名 + 类名，如：/cn/data/autotrack/android/app/MainActivity.class*/
+                            String key = classFile.absolutePath.replace(dir.absolutePath, "")
+                            String className = null
+                            if (key != null && key.length() > 1) {//这里调整是为了和jar包过滤方式一致(还需要注意mac系统是否有不一致问题)
+                                className = key.substring(1, key.length()).replace("\\", "/").replace(".class", "")
+                            }
+                            if (AnalyticsClassModifier.isShouldModify(className, analyticsExtension)) {
                                 File modified = AnalyticsClassModifier.modifyClassFile(dir, classFile, context.getTemporaryDir())
                                 if (modified != null) {
-                                    /**key 为包名 + 类名，如：/cn/data/autotrack/android/app/MainActivity.class*/
-                                    String ke = classFile.absolutePath.replace(dir.absolutePath, "")
-                                    modifyMap.put(ke, modified)//修改过后的放到一个map中然后在写回源目录，覆盖原来的文件
+
+                                    modifyMap.put(key, modified)//修改过后的放到一个map中然后在写回源目录，覆盖原来的文件
                                 }
                             }
                     }
