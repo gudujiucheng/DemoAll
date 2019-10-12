@@ -47,14 +47,14 @@ class LooperMonitor implements Printer {
             mStartTimestamp = System.currentTimeMillis();
             mStartThreadTimestamp = SystemClock.currentThreadTimeMillis();
             mPrintingStarted = true;
-            startDump();
+            startDump();//TODO 注意采集点
         } else {
             final long endTime = System.currentTimeMillis();
             mPrintingStarted = false;
             if (isBlock(endTime)) {
                 notifyBlockEvent(endTime);
             }
-            stopDump();
+            stopDump();//TODO 注意采集点
         }
     }
 

@@ -69,7 +69,7 @@ public class BlockTestManager extends BaseManager {
 
     private ComponentItem openNewBlockCheck() {
 
-        return new ComponentItem("开启新卡顿监测", new View.OnClickListener() {
+        return new ComponentItem("开启新卡顿监测(BlockCanary)", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 BlockCanary.getInstance().start();
@@ -80,7 +80,7 @@ public class BlockTestManager extends BaseManager {
 
     private ComponentItem closeNewBlockCheck() {
 
-        return new ComponentItem("关闭新卡顿监测", new View.OnClickListener() {
+        return new ComponentItem("开启新卡顿监测(BlockCanary)", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 BlockCanary.getInstance().stop();

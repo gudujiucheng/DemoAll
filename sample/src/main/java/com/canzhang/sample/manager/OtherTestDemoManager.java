@@ -12,6 +12,7 @@ import com.canzhang.sample.utils.AppUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -29,11 +30,25 @@ public class OtherTestDemoManager extends BaseManager {
     @Override
     public List<ComponentItem> getSampleItem(Activity activity) {
         List<ComponentItem> list = new ArrayList<>();
+        list.add(testTimeMillis());
         list.add(clearAppData(activity));
         list.add(methodTest());
         list.add(jsonTest());
         list.add(mainTest());
         return list;
+    }
+
+    private ComponentItem testTimeMillis() {
+        /**
+         * https://github.com/instacart/truetime-android/issues
+         */
+        return new ComponentItem("修改系统时间、测试时间戳","时间戳会随着更改系统的时间而更改，如果需要精准，可获取服务器时间，或者使用第三方获取库", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String timeStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(System.currentTimeMillis());
+                showToast("当前时间:" + timeStr);
+            }
+        });
     }
 
     private ComponentItem clearAppData(Activity activity) {
