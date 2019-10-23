@@ -90,6 +90,12 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
      */
     private void initData() {
         mData.add(new ComponentItem("日常测试（实验、异常等）", new OtherTestDemoManager()));
+        mData.add(new ComponentItem("图片信息、压缩、旋转、颜色修改等测试", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFragment(ImgTestFragment.newInstance());
+            }
+        }));
         mData.add(new ComponentItem("反欺诈数据采集测试", new AntiFraudManager()));
         mData.add(new ComponentItem("jni", new JniDemoManager()));
         mData.add(new ComponentItem("卡顿测试", new BlockTestManager()));
@@ -137,13 +143,6 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
         mData.add(new ComponentItem("sqlite", new SQLiteTestManager()));
         mData.add(new ComponentItem("sqlite 升级专项测试", new SQLiteUpdateTestManager()));
         mData.add(new ComponentItem("url 相关测试", new UrlTestManager()));
-
-        mData.add(new ComponentItem("图片信息、压缩、旋转等测试", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showFragment(ImgTestFragment.newInstance());
-            }
-        }));
 
         mData.add(new ComponentItem("回收测试", new RamManager()));
 

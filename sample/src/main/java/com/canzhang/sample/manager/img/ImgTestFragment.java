@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
@@ -11,6 +13,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,6 +66,24 @@ public class ImgTestFragment extends BaseFragment {
 
 
     private void initView(View view) {
+        //图标颜色尝试修改
+        ImageView ivIcon = view.findViewById(R.id.iv_icon);
+        EditText etColor = view.findViewById(R.id.et_input_color);
+        view.findViewById(R.id.bt_change_icon_color).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    changeIconColor(ivIcon, etColor.getText().toString());
+                } catch (Exception e) {
+                    showToast("有异常：" + e.getMessage());
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+
+        //图片压缩相关
         ImageView iv = view.findViewById(R.id.iv_test);
         compress(view);
         RGB_565(view);
@@ -94,19 +115,46 @@ public class ImgTestFragment extends BaseFragment {
 
     }
 
+    /**
+     * 调整纯色图标颜色
+     *
+     * @param iconView 图标所在view
+     * @param colorStr 颜色值
+     */
+    public static void changeIconColor(ImageView iconView, String colorStr) {
+        if (iconView == null || TextUtils.isEmpty(colorStr)) {
+            return;
+        }
+        try {
+            int color = Color.parseColor(colorStr);
+            int r = Color.red(color);
+            int g = Color.green(color);
+            int b = Color.blue(color);
+            int a = Color.alpha(color);
+
+            float[] colorMatrix = new float[]{
+                    0, 0, 0, 0, r,
+                    0, 0, 0, 0, g,
+                    0, 0, 0, 0, b,
+                    0, 0, 0, (float) a / 255, 0
+            };
+            iconView.setColorFilter(new ColorMatrixColorFilter(colorMatrix));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
 
     public static String inputStream2String(InputStream in_st) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(in_st));
         StringBuffer buffer = new StringBuffer();
         String line = "";
-        while ((line = in.readLine()) != null){
+        while ((line = in.readLine()) != null) {
             buffer.append(line);
         }
         return buffer.toString();
     }
-
-
 
 
     /**
@@ -120,7 +168,7 @@ public class ImgTestFragment extends BaseFragment {
             public void onClick(View v) {
                 InputStream inputStream = getAssetsInputStream(mContext, "img/xx.png");
 //                iv.setImageBitmap(BitmapFactory.decodeStream(inputStream));
-                copyFileToCacheDir(mContext, inputStream,System.currentTimeMillis()+"");
+                copyFileToCacheDir(mContext, inputStream, System.currentTimeMillis() + "");
             }
         });
     }
@@ -152,9 +200,9 @@ public class ImgTestFragment extends BaseFragment {
 
                 Bitmap bm = BitmapFactory.decodeStream(inputStream, null, options);
                 log("压缩后图片的大小" + (bm.getByteCount() / 1024f / 1024f)
-                        + "M 宽度为" + bm.getWidth() + " 高度为" + bm.getHeight()+" 模式："+config);
+                        + "M 宽度为" + bm.getWidth() + " 高度为" + bm.getHeight() + " 模式：" + config);
                 bm.recycle();
-                bm =null;
+                bm = null;
             }
         });
     }
@@ -256,7 +304,7 @@ public class ImgTestFragment extends BaseFragment {
     }
 
 
-    public File copyFileToCacheDir(Context context, InputStream inputStream,String name) {
+    public File copyFileToCacheDir(Context context, InputStream inputStream, String name) {
 
         log("copyFileToCacheDir");
         File cacheDir = context.getExternalCacheDir();
@@ -266,7 +314,7 @@ public class ImgTestFragment extends BaseFragment {
 
         String filePath = cacheDir.getAbsolutePath() + File.separator + "canzhang" +
                 File.separator + "photo" + File.separator;
-        String fileName = filePath +name + ".jpg";
+        String fileName = filePath + name + ".jpg";
         File tempFile = new File(fileName);
         if (!tempFile.getParentFile().exists()) {
             File parentFile = new File(filePath);
@@ -304,13 +352,13 @@ public class ImgTestFragment extends BaseFragment {
         ImageUtils.getLocationExif(mContext, Uri.fromFile(tempFile));
 
 
-        return  tempFile;
+        return tempFile;
 
 
     }
 
 
-    private void testLuban(){
+    private void testLuban() {
         InputStream inputStream = getAssetsInputStream(mContext, "img/test.jpg");
         File file = copyFileToCacheDir(mContext, inputStream, "xxxxx");
         HashMap<String, String> exif = ImageUtils.getExif(file.getAbsolutePath());
@@ -337,8 +385,8 @@ public class ImgTestFragment extends BaseFragment {
                     @Override
                     public void onSuccess(File file) {
                         // TODO 压缩成功后调用，返回压缩后的图片文件
-                        log("压缩成功 "+file.getAbsolutePath());
-                        ImageUtils.setExif(file.getAbsolutePath(),exif);
+                        log("压缩成功 " + file.getAbsolutePath());
+                        ImageUtils.setExif(file.getAbsolutePath(), exif);
                         ImageUtils.getExif(file.getAbsolutePath());
                         ImageUtils.printFileSize(file);
                     }
@@ -346,13 +394,11 @@ public class ImgTestFragment extends BaseFragment {
                     @Override
                     public void onError(Throwable e) {
                         // TODO 当压缩过程出现问题时调用
-                        log("压缩失败"+e.getMessage());
+                        log("压缩失败" + e.getMessage());
                     }
                 }).launch();
 
     }
-
-
 
 
 }

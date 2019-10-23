@@ -1,14 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:clickable="false"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:clickable="false">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
         android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/sample_close" />
+
+        <EditText
+            android:id="@+id/et_input_color"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="输入颜色，尝试更改图标颜色"
+            android:text="#FF4081" />
+
+        <Button
+            android:id="@+id/bt_change_icon_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="更改图标颜色" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="-----------我是分割线，下方是压缩相关代码----------" />
+
+
         <EditText
             android:id="@+id/et_test_RGB_565"
             android:layout_width="match_parent"
@@ -16,11 +44,13 @@
             android:hint="选择模式 1-3"
             android:inputType="numberDecimal"
             android:text="1" />
+
         <Button
             android:id="@+id/bt_get_img_size_RGB_565"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="RGB_565/ARGB_8888/ARGB_4444" />
+
         <EditText
             android:id="@+id/et_test_matrix"
             android:layout_width="match_parent"
@@ -78,12 +108,9 @@
         <ImageView
             android:id="@+id/iv_test"
             android:layout_width="match_parent"
-            android:minHeight="200dp"
             android:layout_height="wrap_content"
+            android:minHeight="200dp"
             android:scaleType="fitCenter" />
-
-
-
 
 
     </LinearLayout>
