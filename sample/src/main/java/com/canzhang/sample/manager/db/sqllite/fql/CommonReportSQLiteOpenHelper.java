@@ -1,4 +1,4 @@
-package com.canzhang.sample.manager.sqllite.fql;
+package com.canzhang.sample.manager.db.sqllite.fql;
 
 import android.content.Context;
 import android.database.Cursor;

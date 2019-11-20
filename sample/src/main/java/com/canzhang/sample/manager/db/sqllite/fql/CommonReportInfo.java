@@ -1,4 +1,4 @@
-package com.canzhang.sample.manager.sqllite.fql;
+package com.canzhang.sample.manager.db.sqllite.fql;
 
 /**
  * 上报数据备份数据库bean

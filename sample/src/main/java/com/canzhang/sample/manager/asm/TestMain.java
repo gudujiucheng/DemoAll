@@ -12,4 +12,11 @@ public class TestMain {
         SlowMethodHelper.setStartTime("Test", System.nanoTime());
         SlowMethodHelper.setEndTime("Test2", System.nanoTime());
     }
+
+
+    public static void main(String [] args){
+        String a = "abcdefg";
+        String b = a.replace(a,"");
+        System.out.print("666:"+b);
+    }
 }

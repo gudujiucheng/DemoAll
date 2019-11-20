@@ -1,4 +1,4 @@
-package com.canzhang.sample.manager.sqllite.fql;
+package com.canzhang.sample.manager.db.sqllite.fql;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -10,9 +10,9 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.canzhang.sample.manager.sqllite.fql.CommonReportSQLiteOpenHelper.COLUMN_DATA;
-import static com.canzhang.sample.manager.sqllite.fql.CommonReportSQLiteOpenHelper.COLUMN_REPORT_ID;
-import static com.canzhang.sample.manager.sqllite.fql.CommonReportSQLiteOpenHelper.COLUMN_TYPE;
+import static com.canzhang.sample.manager.db.sqllite.fql.CommonReportSQLiteOpenHelper.COLUMN_DATA;
+import static com.canzhang.sample.manager.db.sqllite.fql.CommonReportSQLiteOpenHelper.COLUMN_REPORT_ID;
+import static com.canzhang.sample.manager.db.sqllite.fql.CommonReportSQLiteOpenHelper.COLUMN_TYPE;
 
 
 public class CommonReportStorage {

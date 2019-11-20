@@ -1,4 +1,4 @@
-package com.canzhang.sample.manager.sqllite.fql;
+package com.canzhang.sample.manager.db.sqllite.fql;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;

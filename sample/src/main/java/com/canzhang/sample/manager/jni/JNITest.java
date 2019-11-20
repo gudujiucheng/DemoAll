@@ -1,7 +1,7 @@
 package com.canzhang.sample.manager.jni;
 
 /**
- * https://blog.csdn.net/young_time/article/details/80346631
+ * 传统方式：https://blog.csdn.net/young_time/article/details/80346631
  */
 
 public class JNITest {

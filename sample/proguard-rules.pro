@@ -89,3 +89,4 @@ public *;
 -keep class io.flutter.**  { *; }
 -keep class io.flutter.plugins.**  { *; }
 #######################Flutter---end#############################
+-keep class com.tencent.wcdb.** {*;}

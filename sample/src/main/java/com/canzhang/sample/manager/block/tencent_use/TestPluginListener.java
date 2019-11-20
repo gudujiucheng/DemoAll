@@ -23,7 +23,7 @@ public class TestPluginListener extends DefaultPluginListener {
     public void onReportIssue(Issue issue) {
         super.onReportIssue(issue);
         MatrixLog.e(TAG, issue.toString());
-        Log.e("Test", "异常信息信息----------------------》》》》："+issue.toString());
+        Log.e("TestMatrix", "异常信息信息----------------------》》》》："+issue.toString());
 
         //add your code to process data
     }

@@ -68,6 +68,12 @@ android {
         }
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.config
+
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++14"
+            }
+        }
     }
     compileOptions {//flutter 需要这样声明
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -119,6 +125,12 @@ android {
         }
     }
     productFlavors {
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
     }
 }
 
@@ -175,4 +187,9 @@ dependencies {
 
     //权限
     implementation 'com.yanzhenjie.permission:support:2.0.1'
+
+    //数据库 WCDB  https://github.com/Tencent/wcdb/wiki/Android%E6%8E%A5%E5%85%A5%E4%B8%8E%E8%BF%81%E7%A7%BB
+//    implementation 'com.tencent.wcdb:wcdb-android:1.0.5'
+
+//    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.17'
 }
