@@ -17,6 +17,15 @@ add_library( # 库名：Sets the name of the library.
 
         # 库所在的相对路径：Provides a relative path to your source file(s).
         src/main/cpp/native-lib.cpp)
+
+add_library( # 库名：Sets the name of the library.
+        jni_crash_demo
+
+        # 库的分享类型：Sets the library as a shared library.
+        SHARED
+
+        # 库所在的相对路径：Provides a relative path to your source file(s).
+        src/main/cpp/crash.cpp)
 # NDK提供了一套实用的原生API和库，可以使用find_library搜索NDK中存在的库，只需要加入所需要使用库的名称即可，如下面的日志库log-lib。
 # 更多的库可参考https://developer.android.com/ndk/guides/stable_apis
 find_library( # Sets the name of the path variable.
@@ -29,6 +38,12 @@ find_library( # Sets the name of the path variable.
 # 指定CMake连接到目标库中，可以链接多个库，如上面的JNITest库以及NDK中自带的log-lib库
 target_link_libraries( # Specifies the target library.
         native-lib
+
+        # Links the target library to the log library
+        # included in the NDK.
+        ${log-lib})
+target_link_libraries( # Specifies the target library.
+        jni_crash_demo
 
         # Links the target library to the log library
         # included in the NDK.

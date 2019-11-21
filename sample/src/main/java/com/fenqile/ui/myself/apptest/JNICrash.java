@@ -1,4 +1,4 @@
-package com.canzhang.sample.manager.jni;
+package com.fenqile.ui.myself.apptest;
 
 /**
  * @Description: cmake方式：https://blog.csdn.net/u013564742/article/details/86512271
@@ -10,5 +10,5 @@ public class JNICrash {
     static {
         System.loadLibrary("jni_crash_demo");
     }
-    public native static String crash();
+    public native static void crash();
 }
