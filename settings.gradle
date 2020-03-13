@@ -1,7 +1,16 @@
-
-include ':app', ':algorithm', ':javatest', ':sample', ':base', ':debug-dialog', ':aidlservice', ':bury-point-plugin', ':mylibrary', ':mycanrunlibrary', ':trace_plugin'
-setBinding(new Binding([gradle: this]))
-evaluate(new File(
-        settingsDir,    //若做为原应用的子mudule，则为settingsDir
-        'my_flutter/.android/include_flutter.groovy'
-))
+include ':app',
+        ':algorithm',
+        ':javatest',
+//        ':sample',
+        ':base',
+        ':debug-dialog',
+        ':aidlservice',
+        ':bury-point-plugin',
+        ':mylibrary',
+        ':mycanrunlibrary',
+        ':trace_plugin'
+//setBinding(new Binding([gradle: this]))
+//evaluate(new File(
+//        settingsDir,    //若做为原应用的子mudule，则为settingsDir
+//        'my_flutter/.android/include_flutter.groovy'
+//))

@@ -92,7 +92,7 @@ public class UrlTestManager extends BaseManager {
         return new ComponentItem("getQueryParameter", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri parse = Uri.parse(url);
+                Uri parse = Uri.parse("https://rcs.fenqile.com/csactivity.html#/index?source_type=35&lexin_channel=AM.NADD2019122300050256.NADP2019092400010002_NADS2019092400010503_MAN&event_id=AM.NADP2019092400010002");
                 String canzhang_channel = parse.getQueryParameter("canzhang_channel");
                 String event_id = parse.getQueryParameter("event_id");
                 log("canzhang_channel:" + canzhang_channel + " event_id:" + event_id);
@@ -107,9 +107,9 @@ public class UrlTestManager extends BaseManager {
             @Override
             public void onClick(View v) {
                 Map<String, String> urlParams = UrlParse.getUrlParams(url);
-                String canzhang_channel = urlParams.get("canzhang_channel");
+                String lexin_channel = urlParams.get("lexin_channel");
                 String event_id = urlParams.get("event_id");
-                log("canzhang_channel:" + canzhang_channel + " event_id:" + event_id + " urlParams:" + urlParams.toString());
+                log("canzhang_channel:" + lexin_channel + " event_id:" + event_id + " urlParams:" + urlParams.toString());
             }
         });
     }

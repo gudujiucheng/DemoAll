@@ -89,7 +89,10 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
      * 在这里添加要调试的组件数据(经常用的或者最新调整的，向前提)
      */
     private void initData() {
+
         mData.add(new ComponentItem("日常测试（实验、异常等）", new OtherTestDemoManager()));
+        mData.add(new ComponentItem("sqlite", new SQLiteTestManager()));
+        mData.add(new ComponentItem("sqlite 升级专项测试", new SQLiteUpdateTestManager()));
         mData.add(new ComponentItem("图片信息、压缩、旋转、颜色修改等测试", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,8 +143,6 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
                 showFragment(AidlClientFragment.newInstance());
             }
         }));
-        mData.add(new ComponentItem("sqlite", new SQLiteTestManager()));
-        mData.add(new ComponentItem("sqlite 升级专项测试", new SQLiteUpdateTestManager()));
         mData.add(new ComponentItem("url 相关测试", new UrlTestManager()));
 
         mData.add(new ComponentItem("回收测试", new RamManager()));

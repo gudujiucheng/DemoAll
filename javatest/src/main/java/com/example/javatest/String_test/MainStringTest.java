@@ -2,6 +2,9 @@ package com.example.javatest.String_test;
 
 import android.text.TextUtils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,9 +12,20 @@ public class MainStringTest {
     public static void main(String[] args){
 //        testIndex();
 
-        System.out.print(getPlatformList("cdxxxxxxxxxxxxxxxxxxxxxx"));
-        System.out.print(getPlatformList("aaaaaaaaaaacd"));
+//        System.out.print(getPlatformList("cdxxxxxxxxxxxxxxxxxxxxxx"));
+//        System.out.print(getPlatformList("aaaaaaaaaaacd"));
 
+        String value = "%7B%22csc%22%3A13132%2C%22channel%22%3A3434343%2C%22entry%22%3A%22asdasd%22%7D";
+
+        String s = "{\"csc\":13132,\"channel\":3434343,\"entry\":\"xxxxxxxxxxxxxx\"}";
+        try {
+            value = URLDecoder.decode(value, "UTF-8");
+            s = URLDecoder.decode(s, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        System.out.print(value);
+        System.out.print(s);
     }
 
     private static void testIndex() {
