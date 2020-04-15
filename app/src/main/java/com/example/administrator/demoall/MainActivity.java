@@ -109,7 +109,9 @@ public class MainActivity extends AppCompatActivity {
 
 //        LoadingDialog.get(this).show();
 
-        Intent action = new Intent(Intent.ACTION_VIEW, Uri.parse("fenqile://app"));
+        //fenqile:// 这个是打不开的
+        //fenqile://app 这样才能打得开
+        Intent action = new Intent(Intent.ACTION_VIEW, Uri.parse("fenqile://app/webview?url=\"https://www.baidu.com/\""));
         startActivity(action);
 
 

@@ -10,9 +10,10 @@ public class MainTest {
     public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, NoSuchFieldException, InstantiationException, NoSuchMethodException, InvocationTargetException {
 //        getMClass();
 //        getField();
+        getFieldValue();
 //        setFieldValue();
 //        getCon();
-        getMethod();
+//        getMethod();
     }
 
     private static void getMethod() throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
@@ -141,6 +142,31 @@ public class MainTest {
 
 
 
+
+    }
+
+    //反射获取对象成员变量的值
+    private static void getFieldValue() throws ClassNotFoundException, NoSuchFieldException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        Class stuClass =  Class.forName("com.example.javatest.reflect.Dog");
+
+        //获取一个对象
+        Object obj = stuClass.getConstructor().newInstance();
+        Dog stu = (Dog)obj;
+        stu.height = 100;
+
+        System.out.println("**************获取公有&私有字段的值********************************");
+
+        Field weightField = stuClass.getDeclaredField("weight"); //私有的
+        System.out.println(weightField);
+        weightField.setAccessible(true);//暴力反射，解除私有限定
+        Object fieldValue = weightField.get(stu);
+        System.out.println("验证weight：" + fieldValue);
+
+
+        Field heightField = stuClass.getDeclaredField("height");//公开的
+        System.out.println(heightField);
+        Object heightFieldValue = heightField.get(stu);
+        System.out.println("验证height：" + heightFieldValue);
 
     }
 
