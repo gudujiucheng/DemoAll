@@ -81,4 +81,6 @@ dependencies {
     //美团多渠道打包
     implementation "com.meituan.android.walle:library:${rootProject.ext.walleVersion}"
 
+//    implementation 'com.imuxuan:floatingview:1.5'
+
 }

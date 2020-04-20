@@ -1,7 +1,6 @@
 package com.example.administrator.demoall;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -11,10 +10,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.administrator.demoall.dialog.LoadingDialog;
 import com.example.administrator.demoall.fqladapter.BaseTypeFooterAdapter;
 import com.example.administrator.demoall.fqladapter.test.CouponItemAdapter;
 import com.example.administrator.demoall.myadapter.test.TestBean;
+import com.imuxuan.floatingview.FloatingView;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,14 +105,36 @@ public class MainActivity extends AppCompatActivity {
         Log.e("Test","---------------->>getType"+intent.getType());
     }
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+//        FloatingView.get().detach(this);
+    }
+
     public void test(View view) {
 
 //        LoadingDialog.get(this).show();
 
         //fenqile:// 这个是打不开的
         //fenqile://app 这样才能打得开
-        Intent action = new Intent(Intent.ACTION_VIEW, Uri.parse("fenqile://app/webview?url=\"https://www.baidu.com/\""));
-        startActivity(action);
+//        Intent action = new Intent(Intent.ACTION_VIEW, Uri.parse("fenqile://app/webview?url=\"https://www.baidu.com/\""));
+//        startActivity(action);
+//
+//        FloatingView floatingView = new FloatingView();
+//        floatingView.customView(R.layout.lx_floating_view);
+//        floatingView.customView(new LXCustomView(MainActivity.this));
+//        floatingView.getView().setLayoutParams(floatingView.getParams());
+
+        FloatingView.get().attach(this).add();
+
+
 
 
 
