@@ -10,8 +10,8 @@ public class MainTest {
     public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, NoSuchFieldException, InstantiationException, NoSuchMethodException, InvocationTargetException {
 //        getMClass();
 //        getField();
-        getFieldValue();
-//        setFieldValue();
+//        getFieldValue();
+        setFieldValue();
 //        getCon();
 //        getMethod();
     }
@@ -95,6 +95,8 @@ public class MainTest {
 
         Field f = c.getDeclaredField("weight");//私有成员变量
 
+
+
         //打破封装（针对私有变量，不提前声明这个直接操作变量的话会报错）
         f.setAccessible(true); //使用反射机制可以打破封装性，导致了java对象的属性不安全。
         //给属性赋值
@@ -102,6 +104,24 @@ public class MainTest {
         //get
         System.out.println(f.get(o));
 
+
+
+        Field age = c.getDeclaredField("age");//final 类型
+        //打破封装（针对私有变量，不提前声明这个直接操作变量的话会报错）
+        age.setAccessible(true); //使用反射机制可以打破封装性，导致了java对象的属性不安全。
+        //给属性赋值
+        age.set(o, 123); //set
+        //get
+        System.out.println("测试final 是否可以改："+age.get(o));
+
+
+        Field desc = c.getDeclaredField("desc");//final 类型
+        //打破封装（针对私有变量，不提前声明这个直接操作变量的话会报错）
+        desc.setAccessible(true); //使用反射机制可以打破封装性，导致了java对象的属性不安全。
+        //给属性赋值
+        desc.set(o, "desc改成功了"); //set
+        //get
+        System.out.println("测试final 是否可以改："+desc.get(o));
 
     }
 

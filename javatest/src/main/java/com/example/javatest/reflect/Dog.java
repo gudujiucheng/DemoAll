@@ -3,6 +3,8 @@ package com.example.javatest.reflect;
 public class Dog  extends  Animal{
     public int height;
     private int weight = -1;
+    final int age = 100;//测试final 变量是否可以更改
+    private final String  desc = "xxxx";//测试final 字符串 变量是否可以更改
 
 
 

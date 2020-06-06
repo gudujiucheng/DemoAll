@@ -1,8 +1,8 @@
-package com.example.algorithm.leetcode;
+package com.example.algorithm.jiegou;
 
 import java.util.Iterator;
 
-public class Stack<T> implements Iterable<T> {
+public class 栈_Stack<T> implements Iterable<T> {
     private Node first;
     private int N;
 
