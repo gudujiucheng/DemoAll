@@ -6,7 +6,7 @@ import java.util.HashMap;
 /**
  * https://leetcode-cn.com/problems/reverse-string/
  */
-public class L_344 {
+public class L_344_反转str {
     public static void main(String[] args) {
         reverseString(new char[]{'H', 'a', 'n', 'n', 'a', 'h' });
     }

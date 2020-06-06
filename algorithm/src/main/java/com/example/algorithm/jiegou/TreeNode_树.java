@@ -1,7 +1,8 @@
-package com.example.algorithm.leetcode;
+package com.example.algorithm.jiegou;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * @Description: 树
@@ -9,10 +10,10 @@ import java.util.List;
  * @CreateDate: 2020/5/25 15:18
  * 原文链接：https://blog.csdn.net/qq_39240270/java/article/details/88614859
  */
-public class TreeNodeTest {
+public class TreeNode_树 {
 
     public static void main(String[] args) {
-        TreeNode root =  new TreeNode(5);
+        TreeNode root = new TreeNode(5);
         root.left = new TreeNode(3);
         root.right = new TreeNode(6);
 
@@ -26,15 +27,13 @@ public class TreeNodeTest {
     }
 
 
-
-
     public static List<Integer> list = new ArrayList<>();
 
     //1.前序遍历    前序遍历是根节点首先输出，然后左子树输出，最后右子树输出
     public static void preorder(TreeNode root) {
         if (root != null) {
 //            list.add(root.val);
-            System.out.println("节点："+root.val);
+            System.out.println("节点：" + root.val);
             preorder(root.left);
             preorder(root.right);
         }
@@ -44,7 +43,7 @@ public class TreeNodeTest {
     public void inorder1(TreeNode root) {
         if (root != null) {
             inorder(root.left);
-            System.out.println("节点："+root.val);
+            System.out.println("节点：" + root.val);
 //            list.add(root.val);
             inorder(root.right);
         }
@@ -70,7 +69,7 @@ public class TreeNodeTest {
             backorder(root.left);
             backorder(root.right);
 //            list.add(root.val);
-            System.out.println("节点："+root.val);
+            System.out.println("节点：" + root.val);
         }
     }
 
