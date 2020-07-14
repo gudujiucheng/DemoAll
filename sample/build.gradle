@@ -7,31 +7,31 @@ if (isSampleRunAsApp.toBoolean()) {
 
 apply plugin: 'com.canzhang.bury_point'
 
-fqlAnalytics {
-    isShowDebugInfo = true
-    //需要排除的包
-    excludePackageList = ['com/lexinfintech/component/auto_view_point',
-                          'com/lexinfintech/component/debugdialog',
-                          'android/support',
-                          'com/mob',
-                          'com/tencent',
-                          'cn/sharesdk',
-                          'com/taobao']
-    //排除包中  需要定向插桩的包（仅针对属于needExcludePackageList 中部分需要插桩的子包，方便配置，例如 'android/support'大部分不需要埋点，而其中的TabLayout需要特殊埋点需求）
-    needModifyPackageList = ['android/support/design/widget/TabLayout']
-}
+//fqlAnalytics {
+//    isShowDebugInfo = true
+//    //需要排除的包
+//    excludePackageList = ['com/lexinfintech/component/auto_view_point',
+//                          'com/lexinfintech/component/debugdialog',
+//                          'android/support',
+//                          'com/mob',
+//                          'com/tencent',
+//                          'cn/sharesdk',
+//                          'com/taobao']
+//    //排除包中  需要定向插桩的包（仅针对属于needExcludePackageList 中部分需要插桩的子包，方便配置，例如 'android/support'大部分不需要埋点，而其中的TabLayout需要特殊埋点需求）
+//    needModifyPackageList = ['android/support/design/widget/TabLayout']
+//}
 
-apply plugin: 'com.canzhang.slow_method_plugin'
-slowMethodConfig {
-    isShowDebugInfo = true
-    //需要排除的包
-    excludePackageList = ['com/canzhang/sample/manager/asm/slow_method',
-                          'android/support',
-                          'com/mob',
-                          'com/tencent',
-                          'cn/sharesdk',
-                          'com/taobao']
-}
+//apply plugin: 'com.canzhang.slow_method_plugin'
+//slowMethodConfig {
+//    isShowDebugInfo = true
+//    //需要排除的包
+//    excludePackageList = ['com/canzhang/sample/manager/asm/slow_method',
+//                          'android/support',
+//                          'com/mob',
+//                          'com/tencent',
+//                          'cn/sharesdk',
+//                          'com/taobao']
+//}
 
 apply plugin: 'com.tencent.matrix-plugin'
 matrix {
@@ -79,7 +79,7 @@ android {
             // 设置支持的SO库架构  注意部分SDK架构支持不全
             // Specifies the ABI configurations of your native
             // libraries Gradle should build and package with your APK.
-            abiFilters 'armeabi-v7a', 'x86'
+            abiFilters 'armeabi-v7a', 'x86','arm64-v8a'
             // 还可以添加 'x86', 'armeabi-v7a', 'arm64-v8a', 'mips', 'mips64'
         }
     }

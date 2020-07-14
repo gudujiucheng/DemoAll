@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import com.canzhang.sample.R;
 import com.example.base.base.BaseFragment;
 
-import io.flutter.facade.Flutter;
+//import io.flutter.facade.Flutter;
 
 
 public class FlutterTestFragment extends BaseFragment {
@@ -44,8 +44,8 @@ public class FlutterTestFragment extends BaseFragment {
         view.findViewById(R.id.bt_jump_flutter).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               View  flutterView= Flutter.createView((Activity) mContext,getLifecycle(),"route1");
-                llContainer.addView(flutterView);
+//               View  flutterView= Flutter.createView((Activity) mContext,getLifecycle(),"route1");
+//                llContainer.addView(flutterView);
             }
         });
 

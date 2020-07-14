@@ -1,7 +1,7 @@
 include ':app',
         ':algorithm',
         ':javatest',
-//        ':sample',
+        ':sample',
         ':base',
         ':debug-dialog',
         ':aidlservice',
