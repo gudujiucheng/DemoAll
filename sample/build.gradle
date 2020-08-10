@@ -55,11 +55,11 @@ android {
         }
     }
     resourcePrefix project.getName() + "_"
-    compileSdkVersion 28
-    resourcePrefix project.getName() + "_"
+    compileSdkVersion 30
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+//        targetSdkVersion rootProject.ext.targetSdkVersion
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         //作为单独工程，需要设置applicationID

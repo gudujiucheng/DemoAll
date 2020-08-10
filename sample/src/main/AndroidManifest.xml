@@ -10,5 +10,5 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:hardwareAccelerated="true" />
     </application>
-    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="26"></uses-sdk>
+    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="26"/>
 </manifest>

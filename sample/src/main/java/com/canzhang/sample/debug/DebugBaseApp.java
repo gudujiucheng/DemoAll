@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.canzhang.sample.R;
 import com.canzhang.sample.manager.appstatus.AppStatus;
 import com.canzhang.sample.manager.appstatus.AppStatusChangeListener;
 import com.canzhang.sample.manager.block.githup_test_use.AppBlockCanaryContext;
@@ -36,6 +37,7 @@ public class DebugBaseApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        setTheme(R.style.Sample_AppThemeSplash);
         AppProxy.getInstance().onApplicationCreate(this);
         //调试
         DebugDialog.getInstance().init(this);

@@ -18,10 +18,12 @@ import com.canzhang.sample.manager.OtherTestDemoManager;
 import com.canzhang.sample.manager.UseNonSdkApiDemoManager;
 import com.canzhang.sample.manager.activity_test.ActivityTestDemoManager;
 import com.canzhang.sample.manager.aidl.AidlClientFragment;
+import com.canzhang.sample.manager.android_11.Android11TestManager;
 import com.canzhang.sample.manager.antifraud.AntiFraudManager;
 import com.canzhang.sample.manager.behavior.BehaviorTestActivity;
 import com.canzhang.sample.manager.block.BlockTestManager;
 import com.canzhang.sample.manager.crash.CrashManager;
+import com.canzhang.sample.manager.device.DeviceInfoTestManager;
 import com.canzhang.sample.manager.eventdispatch.EventDispatchFragment;
 import com.canzhang.sample.manager.flutter_test.FlutterTestActivity;
 import com.canzhang.sample.manager.flutter_test.FlutterTestFragment;
@@ -68,6 +70,8 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        getApplication().setTheme(R.style.Sample_AppThemeSplash);
+//        setTheme(R.style.Sample_AppThemeSplash);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sample_activity_component_list);
         mRecyclerView = findViewById(R.id.rv_test);
@@ -91,6 +95,8 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
     private void initData() {
 
         mData.add(new ComponentItem("日常测试（实验、异常等）", new OtherTestDemoManager()));
+        mData.add(new ComponentItem("设备信息获取相关", new DeviceInfoTestManager()));
+        mData.add(new ComponentItem("android11适配测试", new Android11TestManager()));
         mData.add(new ComponentItem("sqlite", new SQLiteTestManager()));
         mData.add(new ComponentItem("sqlite 升级专项测试", new SQLiteUpdateTestManager()));
         mData.add(new ComponentItem("图片信息、压缩、旋转、颜色修改等测试", new View.OnClickListener() {

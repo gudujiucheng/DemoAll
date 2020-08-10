@@ -1,5 +1,16 @@
 <resources>
 
+    <style name="Sample_AppThemeSplash" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash</item>
+        <item name="android:windowIsTranslucent">false</item>
+    </style>
+B
 
+    <style name="Sample_AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <!--空背景 减少Overdraw-->
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="colorAccent">@color/sample_theme_color</item>
+    </style>
 
 </resources>
