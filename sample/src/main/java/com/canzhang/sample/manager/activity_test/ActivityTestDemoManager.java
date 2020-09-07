@@ -13,6 +13,7 @@ import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
 import com.canzhang.sample.manager.activity_test.task.SingleInstanceActivity;
 import com.canzhang.sample.manager.activity_test.task.SingleTaskActivity;
+import com.canzhang.sample.manager.activity_test.task.StandardActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,7 @@ public class ActivityTestDemoManager extends BaseManager {
     public List<ComponentItem> getSampleItem(Activity activity) {
         mActivity = activity;
         List<ComponentItem> list = new ArrayList<>();
+        list.add(standardInstance());
         list.add(singleInstance());
         list.add(singleTask());
         list.add(lifeTest());
@@ -42,6 +44,14 @@ public class ActivityTestDemoManager extends BaseManager {
         return list;
     }
     private  static int singleInstanceIndex = 0 ;
+    private ComponentItem standardInstance() {
+        return new ComponentItem("默认模式 生命周期测试",  new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StandardActivity.start(mActivity,"Standard");
+            }
+        });
+    }
     private ComponentItem singleInstance() {
         return new ComponentItem("任务栈 singleInstance",  new View.OnClickListener() {
             @Override
