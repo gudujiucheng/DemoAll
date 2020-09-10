@@ -31,17 +31,22 @@ public class BlockTestManager extends BaseManager {
     }
 
     private ComponentItem makeBlock() {
+
         return new ComponentItem("制造测试ANR", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //开始埋点，“block_test”是最后生成的性能分析文件
+                Debug.startMethodTracing("block_test");
                 try {
                     Thread.sleep(5000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
+                //埋点结束，期间start 到 stop 之间的代码，就是你要测试的代码范围
+                Debug.stopMethodTracing();
             }
         });
+
     }
 
 
