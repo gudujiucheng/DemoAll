@@ -1,6 +1,7 @@
 package com.canzhang.sample.manager.zhujie;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.IntDef;
 import android.view.View;
 
@@ -28,6 +29,7 @@ public class ZhuJieManager extends BaseManager {
     //调试模式
     public static @ModeType
     int mModeType = RELEASE;
+    private Activity mActivity;
 
     /**
      * 调试模式 0、正式使用（默认模式） 1、校验方法是否完整实现 2、调试方法
@@ -44,13 +46,15 @@ public class ZhuJieManager extends BaseManager {
     @Override
     public List<ComponentItem> getSampleItem(Activity activity) {
 
-
+        mActivity = activity;
         List<ComponentItem> list = new ArrayList<>();
         list.add(test());
         list.add(testGet());
+        list.add(testBind());
 
         return list;
     }
+
 
     private ComponentItem test() {
         return new ComponentItem("注解优雅用法", "注解的简单用法：如何利用注解优雅的传递固定的几个数值示例", new View.OnClickListener() {
@@ -92,7 +96,7 @@ public class ZhuJieManager extends BaseManager {
 //                    e.printStackTrace();
 //                }
                 for (Method method : methods) {
-                    log("运行时注解内容获取 当前方法名："+method.getName());
+                    log("运行时注解内容获取 当前方法名：" + method.getName());
                     MethodInfo annotation = method.getAnnotation(MethodInfo.class);
                     if (annotation != null) {
                         log("author:" + annotation.author());
@@ -106,5 +110,14 @@ public class ZhuJieManager extends BaseManager {
         });
     }
 
+    private ComponentItem testBind() {
+        return new ComponentItem("CLASS注解 编译生成类（butterknife原理）", "class注解：注解会被编译器记录在 class 文件中，但不需要被 VM 保留到运行时", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //测试通过注解获取的view设置文字是否成功
+                mActivity.startActivity(new Intent(mActivity,BindTestActivity.class));
+            }
+        });
+    }
 
 }

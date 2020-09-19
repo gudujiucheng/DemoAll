@@ -1,3 +1,6 @@
+include ':simplebutterknife-annotations'
+include ':simplebutterknife-compiler'//include ':simplebutterknife-compiler'
+//include ':simplebutterknife-annotations'
 include ':app',
         ':algorithm',
         ':javatest',
