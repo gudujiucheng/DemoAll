@@ -51,6 +51,7 @@ import com.canzhang.sample.manager.view.viewpager.fql.FqlViewPagerFragment;
 import com.canzhang.sample.manager.view.webview.CookieTestManager;
 import com.canzhang.sample.manager.view.webview.WebViewFragment;
 import com.canzhang.sample.manager.weex.WeexActivity;
+import com.canzhang.sample.manager.zhujie.ZhuJieManager;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.base.base.BaseActivity;
@@ -94,8 +95,9 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
      */
     private void initData() {
 
-        mData.add(new ComponentItem("日常测试（实验、异常等）", new OtherTestDemoManager()));
         mData.add(new ComponentItem("设备信息获取相关", new DeviceInfoTestManager()));
+        mData.add(new ComponentItem("注解测试", new ZhuJieManager()));//TODO 这些代码也可以尝试使用注解实现，不用手动添加了
+
         mData.add(new ComponentItem("android11适配测试", new Android11TestManager()));
         mData.add(new ComponentItem("sqlite", new SQLiteTestManager()));
         mData.add(new ComponentItem("sqlite 升级专项测试", new SQLiteUpdateTestManager()));
