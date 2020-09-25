@@ -17,6 +17,7 @@ import com.example.base.base.AppProxy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * 线程操作相关（并发等场景测试）
@@ -46,8 +47,62 @@ public class ThreadTestManager extends BaseManager {
         list.add(waitTest02());
         list.add(waitTest03());
         list.add(deadLock());
+        list.add(countDownLatchTest());//https://www.jianshu.com/p/e233bb37d2e6
         //TODO 多线程、各种锁的介绍、各种集合的应用
         return list;
+    }
+
+    private ComponentItem countDownLatchTest() {
+        return new ComponentItem("测试 countDownLatch应用 ", "countDownLatch这个类使一个线程等待其他线程各自执行完毕后再执行。",new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //是通过一个计数器来实现的，计数器的初始值是线程的数量。每当一个线程执行完毕后，计数器的值就-1，当计数器的值为0时，表示所有线程都执行完毕，然后在闭锁上等待的线程就可以恢复工作了。
+                final CountDownLatch latch = new CountDownLatch(2);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(3000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        latch.countDown();
+                        log("线程1执行完毕");
+
+                    }
+                }).start();
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(3000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        latch.countDown();
+                        log("线程2执行完毕");
+                    }
+                }).start();
+                try {
+                    log("主线程等待 start");
+                    latch.await();//调用await()方法的线程会被挂起，它会等待直到count值为0才继续执行
+                    log("主线程等待 end");
+
+
+                    //还有一个重载方法 和await()类似，只不过等待一定的时间后count值还没变为0的话就会继续执行
+                    //public boolean await(long timeout, TimeUnit unit) throws InterruptedException { };
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                //测试效果
+//                2020-09-25 15:41:35.840 11129-11129/com.canzhang.sample E/Test: ThreadTestManager:主线程等待 start
+//                2020-09-25 15:41:38.842 11129-12130/com.canzhang.sample E/Test: ThreadTestManager:线程2执行完毕
+//                2020-09-25 15:41:38.842 11129-12129/com.canzhang.sample E/Test: ThreadTestManager:线程1执行完毕
+//                2020-09-25 15:41:38.843 11129-11129/com.canzhang.sample E/Test: ThreadTestManager:主线程等待 end
+            }
+        });
     }
 
     private ComponentItem testSync() {
