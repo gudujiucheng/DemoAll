@@ -7,6 +7,9 @@ import android.widget.TextView;
 import com.canzhang.sample.R;
 import com.example.simplebutterknife_annotations.BindView;
 
+/**
+ * 测试实际应用
+ */
 public class BindTestActivity extends AppCompatActivity {
     @BindView(R.id.bind_test)
     TextView mTitleTextView;

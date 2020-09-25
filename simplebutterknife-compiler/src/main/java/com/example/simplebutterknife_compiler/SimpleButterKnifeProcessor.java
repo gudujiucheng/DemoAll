@@ -56,6 +56,7 @@ public class SimpleButterKnifeProcessor extends AbstractProcessor {
     @Override
     public Set<String> getSupportedAnnotationTypes() {
         Set<String> types = new LinkedHashSet<>();
+        //本例子 就是 处理BINDView
         types.add(BindView.class.getCanonicalName());
         return types;
     }
