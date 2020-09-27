@@ -34,12 +34,14 @@ import javax.tools.Diagnostic;
  * <p>
  * 利用了 Google 的 AutoService 为注解处理器自动生成 metadata 文件并将注解处理器jar文件加入构建路径，
  * 这样也就不需要再手动创建并更新 META-INF/services/javax.annotation.processing.Processor 文件了
+ *参考 java sip：https://www.jianshu.com/p/deeb39ccdc53
+ *
  */
 @AutoService(Processor.class)
 public class SimpleButterKnifeProcessor extends AbstractProcessor {
 
     /**
-     * 方法指定可以支持最新的 Java 版本
+     * 方法指定可以支持最新的 Java 版本（直接指定最新的就可以了）
      *
      * @return
      */
@@ -129,25 +131,45 @@ public class SimpleButterKnifeProcessor extends AbstractProcessor {
                 TypeName targetTypeName = binding.targetTypeName;
                 ClassName bindingClassName = binding.bindingClassName;
                 List<ViewBinding> viewBindings = binding.viewBindings;
-                // binding 类
+                /**
+                 * 生成binding类 public class MainActivity_ViewBinding {}
+                 */
                 TypeSpec.Builder viewBindingBuilder = TypeSpec.classBuilder(bindingClassName.simpleName())
                         .addModifiers(Modifier.PUBLIC);
+                /**
+                 * 生成binding类中的成员变量 public MainActivity target;
+                 */
                 // public的target字段用来保存 Activity 引用
                 viewBindingBuilder.addField(targetTypeName, "target", Modifier.PUBLIC);
-                // 构造器
+                /**
+                 * 生成构造函数
+                 *
+                 *   public MainActivity_ViewBinding(MainActivity target) {
+                 *     this(target, target.getWindow().getDecorView());
+                 *   }
+                 */
                 MethodSpec.Builder activityViewBuilder = MethodSpec.constructorBuilder()
                         .addModifiers(Modifier.PUBLIC)
                         .addParameter(targetTypeName, "target");
                 activityViewBuilder.addStatement("this(target, target.getWindow().getDecorView())");
                 viewBindingBuilder.addMethod(activityViewBuilder.build());
-                // 第二个构造器
+
+                /**
+                 * 生成构造函数2
+                 *
+                 * public MainActivity_ViewBinding(MainActivity target, View source) {
+                 *     this.target = target;
+                 *
+                 *     target.mTitleTextView = (TextView) source.findViewById(2131165300);
+                 *   }
+                 */
                 MethodSpec.Builder viewBuilder = MethodSpec.constructorBuilder()
                         .addModifiers(Modifier.PUBLIC)
                         .addParameter(targetTypeName, "target")
                         .addParameter(ClassName.get("android.view", "View"), "source");
                 viewBuilder.addStatement("this.target = target");
                 viewBuilder.addCode("\n");
-                for (ViewBinding temp : viewBindings) {
+                for (ViewBinding temp : viewBindings) {//这里就是遍历所有要绑定的元素，进行findviewbyId
                     CodeBlock.Builder builder = CodeBlock.builder()
                             .add("target.$L = ", temp.name);
                     builder.add("($T) ", temp.type);

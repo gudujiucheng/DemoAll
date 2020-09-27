@@ -76,11 +76,15 @@ public class ZhuJieManager extends BaseManager {
         String date();
 
         int version() default 1;
+
+        String[] content() default {"content_test","hahah"};
+
     }
 
     @MethodInfo(//注解也是可以被混淆的，要特别留意这个事项。
             author = "zhangcan",
-            date = "2020年9月20日01:16:00")
+            date = "2020年9月20日01:16:00",
+            content = "66666")//数组可以直接写成字符串，也可以直接写成{"a","b"}
     public String getDescription() {
         return "no description";
     }
@@ -102,6 +106,8 @@ public class ZhuJieManager extends BaseManager {
                         log("author:" + annotation.author());
                         log("date:" + annotation.date());
                         log("version:" + annotation.version());
+                        log("content:" + annotation.content());//获取的是一个对象String[]
+                        log("content:" + annotation.content()[0]);//第一个
                     }
 
                 }
@@ -115,7 +121,7 @@ public class ZhuJieManager extends BaseManager {
             @Override
             public void onClick(View v) {
                 //测试通过注解获取的view设置文字是否成功
-                mActivity.startActivity(new Intent(mActivity,BindTestActivity.class));
+                mActivity.startActivity(new Intent(mActivity, BindTestActivity.class));
             }
         });
     }
