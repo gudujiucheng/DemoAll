@@ -35,5 +35,8 @@ public abstract class BaseManager implements IManager {
         }
     }
 
-
+    @Override
+    public int getPriority() {
+        return 0;
+    }
 }

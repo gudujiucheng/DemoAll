@@ -108,7 +108,12 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
             for (String key : allManagerMap.keySet()) {
                 Object manager = allManagerMap.get(key);
                 if (manager instanceof IManager) {
-                    mData.add(new ComponentItem(key, (IManager) manager));
+                    IManager currentManger =  (IManager) manager;
+                    ComponentItem componentItem = new ComponentItem(key, currentManger);
+                    if(currentManger.getPriority()!=0){//manager 优先级高于 componentItem 优先级配置
+                        componentItem.setPriority(currentManger.getPriority());
+                    }
+                    mData.add(componentItem);
                 } else {
                     showToast("注解获取的数据异常=====>>>>" + key);
                 }

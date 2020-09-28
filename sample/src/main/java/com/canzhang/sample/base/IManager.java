@@ -9,4 +9,5 @@ import java.util.List;
 
 public interface IManager {
     List<ComponentItem> getSampleItem(Activity activity);
+    int getPriority();
 }

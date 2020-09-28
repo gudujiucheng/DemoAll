@@ -28,6 +28,10 @@ public class OtherTestDemoManager extends BaseManager {
 
     private List<String> mList = new ArrayList<>();
 
+    @Override
+    public int getPriority() {
+        return 1000;
+    }
 
     @Override
     public List<ComponentItem> getSampleItem(Activity activity) {
