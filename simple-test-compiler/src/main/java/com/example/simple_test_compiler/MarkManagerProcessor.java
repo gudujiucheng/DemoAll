@@ -1,6 +1,7 @@
 package com.example.simple_test_compiler;
 
 import com.example.simple_test_annotations.MarkManager;
+import com.google.auto.common.MoreElements;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -24,6 +25,7 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.TypeMirror;
 
 /**
  * 注解处理器
@@ -35,7 +37,7 @@ import javax.lang.model.element.TypeElement;
  * java poet的使用 参考 https://blog.csdn.net/l540675759/article/details/82931785
  */
 @AutoService(Processor.class)
-public class MarkManagerProcessor extends AbstractProcessor {//FIXME 暂未实现
+public class MarkManagerProcessor extends AbstractProcessor {
 
     /**
      * 方法指定可以支持最新的 Java 版本（直接指定最新的就可以了）
@@ -76,22 +78,26 @@ public class MarkManagerProcessor extends AbstractProcessor {//FIXME 暂未实�
         TypeSpec.Builder managerMapClassBuilder = TypeSpec.classBuilder("Manger_Map_Auto_Generate")
                 .addModifiers(Modifier.PUBLIC);
 
-        managerMapClassBuilder.addField(ParameterizedTypeName.get(Map.class, String.class,Object.class), "sManagerMap", Modifier.PUBLIC, Modifier.STATIC);
+        managerMapClassBuilder.addField(ParameterizedTypeName.get(Map.class, String.class,Object.class), "sManagerMap", Modifier.PRIVATE, Modifier.STATIC);
 
         MethodSpec.Builder initManagerMethodBuilder = MethodSpec.methodBuilder("initManager")
-                .addModifiers(Modifier.PRIVATE)
-                .addModifiers(Modifier.STATIC);
+                .addModifiers(Modifier.PUBLIC)
+                .addModifiers(Modifier.STATIC)
+                .returns(ParameterizedTypeName.get(Map.class, String.class,Object.class));
 
 
         MethodSpec.Builder addManagerMethodBuilder = MethodSpec.methodBuilder("addManager")
-                .addModifiers(Modifier.PUBLIC)
+                .addModifiers(Modifier.PRIVATE)
                 .addModifiers(Modifier.STATIC)
                 .addParameter(ClassName.get("java.lang", "String"), "desc")
                 .addParameter(TypeName.OBJECT, "target")
                 .addStatement("sManagerMap.put(desc,target)");
 
 
+        //返回使用给定注释类型注释的元素
         for (Element element : roundEnvironment.getElementsAnnotatedWith(MarkManager.class)) {
+            TypeMirror typeMirror = element.asType();//返回此元素定义的类型
+            TypeName targetType = TypeName.get(typeMirror);
             //manager 类的描述
             String managerDesc = element.getAnnotation(MarkManager.class).value();
             System.out.println("--------------->>>>>管理类描述：" + managerDesc);
@@ -100,9 +106,12 @@ public class MarkManagerProcessor extends AbstractProcessor {//FIXME 暂未实�
             String name = simpleName.toString();
             System.out.println("--------------->>>>>注解类的类名：" + name);//ZhuJieManager
 
-            initManagerMethodBuilder.addStatement("addManager($S,$S)",managerDesc,simpleName);// addManager("注解相关测试例子");
+            //用法参见 https://blog.csdn.net/crazy1235/article/details/51876192
+            initManagerMethodBuilder.addStatement("addManager($S,new $T())",managerDesc,targetType);
 
         }
+
+        initManagerMethodBuilder.addStatement("return sManagerMap");
 
 
         TypeSpec managerMapClass = managerMapClassBuilder
@@ -110,8 +119,8 @@ public class MarkManagerProcessor extends AbstractProcessor {//FIXME 暂未实�
                 .addMethod(initManagerMethodBuilder.build())
                 .build();
 
+        JavaFile file = JavaFile.builder("com.canzhang.zhujie.test", managerMapClass).build();
 
-        JavaFile file = JavaFile.builder("com.test", managerMapClass).build();
 
         try {
 //                file.writeTo(System.out);
