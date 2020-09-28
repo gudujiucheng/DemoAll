@@ -8,6 +8,7 @@ import com.canzhang.sample.R;
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
 import com.example.base.utils.ToastUtil;
+import com.example.simple_test_annotations.MarkManager;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.List;
 /**
  * 内存相关测试(未得出明确结论)
  */
+@MarkManager(value = "回收测试")
 public class RamManager extends BaseManager {
 
     Activity activity;

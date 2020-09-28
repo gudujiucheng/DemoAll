@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
+import com.example.simple_test_annotations.MarkManager;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-
+@MarkManager(value = "设备信息获取相关")
 public class DeviceInfoTestManager extends BaseManager {
 
     private Activity mActivity;

@@ -11,13 +11,14 @@ import android.view.View;
 
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
+import com.example.simple_test_annotations.MarkManager;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@MarkManager(value = "android11适配测试")
 public class Android11TestManager extends BaseManager {
 
     private Activity mActivity;

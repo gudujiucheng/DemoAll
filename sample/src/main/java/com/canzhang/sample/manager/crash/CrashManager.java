@@ -6,6 +6,7 @@ import android.view.View;
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
 import com.canzhang.sample.manager.crash.share.FileShareUtils;
+import com.example.simple_test_annotations.MarkManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 /**
  * FIXME 怎么防止异常堆栈信息过长
  */
+@MarkManager(value = "捕获异常测试")
 public class CrashManager extends BaseManager {
 
     private Activity mActivity;

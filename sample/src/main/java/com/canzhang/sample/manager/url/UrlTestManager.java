@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
+import com.example.simple_test_annotations.MarkManager;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,6 +17,7 @@ import java.util.Set;
 /**
  * url 相关测试
  */
+@MarkManager(value = "url 相关测试")
 public class UrlTestManager extends BaseManager {
 
 

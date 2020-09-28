@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
+import com.example.simple_test_annotations.MarkManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
  *
  * 相关原理介绍：https://blog.csdn.net/woai110120130/article/details/83244075
  */
+@MarkManager(value = "USE NON SDK API TEST")
 public class UseNonSdkApiDemoManager extends BaseManager {
 
 

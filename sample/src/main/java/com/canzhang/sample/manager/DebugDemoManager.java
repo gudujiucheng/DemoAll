@@ -6,6 +6,7 @@ import android.view.View;
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
 import com.component.debugdialog.DebugDialog;
+import com.example.simple_test_annotations.MarkManager;
 
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.List;
 /**
  * DebugDialog 用法展示
  */
+@MarkManager(value = "调试弹窗")
 public class DebugDemoManager extends BaseManager {
 
 

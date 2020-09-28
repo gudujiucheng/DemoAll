@@ -8,11 +8,12 @@ import android.view.View;
 
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
+import com.example.simple_test_annotations.MarkManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@MarkManager(value = "sqlite 升级专项测试")
 public class SQLiteUpdateTestManager extends BaseManager {
 
     private Activity mActivity;

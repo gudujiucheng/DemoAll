@@ -8,11 +8,12 @@ import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
 import com.canzhang.sample.manager.block.fql_old.BlockManager;
 import com.canzhang.sample.manager.block.githup_test_refactor.BlockCanary;
+import com.example.simple_test_annotations.MarkManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@MarkManager(value = "卡顿测试")
 public class BlockTestManager extends BaseManager {
 
 

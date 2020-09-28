@@ -17,6 +17,7 @@ import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
 import com.canzhang.sample.manager.antifraud.notification.NotificationTestActivity;
 import com.example.base.utils.ToastUtil;
+import com.example.simple_test_annotations.MarkManager;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
 
@@ -26,6 +27,7 @@ import java.util.List;
 /**
  * 反欺诈数据采集测试
  */
+@MarkManager(value = "反欺诈数据采集测试")
 public class AntiFraudManager extends BaseManager {
 
     private Activity mActivity;

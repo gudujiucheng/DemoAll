@@ -4,6 +4,7 @@ import com.example.simple_test_annotations.MarkManager;
 import com.google.auto.common.MoreElements;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
@@ -11,6 +12,7 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -78,9 +80,15 @@ public class MarkManagerProcessor extends AbstractProcessor {
         TypeSpec.Builder managerMapClassBuilder = TypeSpec.classBuilder("Manger_Map_Auto_Generate")
                 .addModifiers(Modifier.PUBLIC);
 
-        managerMapClassBuilder.addField(ParameterizedTypeName.get(Map.class, String.class,Object.class), "sManagerMap", Modifier.PRIVATE, Modifier.STATIC);
+//        managerMapClassBuilder.addField(ParameterizedTypeName.get(Map.class, String.class,Object.class), "sManagerMap", Modifier.PRIVATE, Modifier.STATIC);
+        managerMapClassBuilder.addField(FieldSpec.builder(ParameterizedTypeName.get(Map.class, String.class,Object.class), "sManagerMap")
+                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                .initializer("new $T()", HashMap.class)
+                .build());
 
-        MethodSpec.Builder initManagerMethodBuilder = MethodSpec.methodBuilder("initManager")
+
+
+        MethodSpec.Builder initManagerMethodBuilder = MethodSpec.methodBuilder("getAllManager")
                 .addModifiers(Modifier.PUBLIC)
                 .addModifiers(Modifier.STATIC)
                 .returns(ParameterizedTypeName.get(Map.class, String.class,Object.class));

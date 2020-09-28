@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.canzhang.sample.base.IManager;
 import com.canzhang.sample.base.adapter.ComponentAdapter;
 import com.canzhang.sample.base.bean.ComponentItem;
 import com.canzhang.sample.manager.BrightnessDemoManager;
@@ -56,8 +57,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.base.base.BaseActivity;
 
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 
 /**
@@ -94,24 +100,28 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
      * 在这里添加要调试的组件数据(经常用的或者最新调整的，向前提)
      */
     private void initData() {
+        //
+        Map<String, Object> allManagerMap = ZhuJieManager.getAllManager();
+        if (allManagerMap == null || allManagerMap.size() == 0) {
+            showToast("注解获取的数据异常");
+        } else {
+            for (String key : allManagerMap.keySet()) {
+                Object manager = allManagerMap.get(key);
+                if (manager instanceof IManager) {
+                    mData.add(new ComponentItem(key, (IManager) manager));
+                } else {
+                    showToast("注解获取的数据异常=====>>>>" + key);
+                }
+            }
+        }
 
-        mData.add(new ComponentItem("设备信息获取相关", new DeviceInfoTestManager()));
-        mData.add(new ComponentItem("注解测试", new ZhuJieManager()));//TODO 这些代码也可以尝试使用注解实现，不用手动添加了
 
-        mData.add(new ComponentItem("android11适配测试", new Android11TestManager()));
-        mData.add(new ComponentItem("sqlite", new SQLiteTestManager()));
-        mData.add(new ComponentItem("sqlite 升级专项测试", new SQLiteUpdateTestManager()));
         mData.add(new ComponentItem("图片信息、压缩、旋转、颜色修改等测试", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showFragment(ImgTestFragment.newInstance());
             }
         }));
-        mData.add(new ComponentItem("反欺诈数据采集测试", new AntiFraudManager()));
-        mData.add(new ComponentItem("jni", new JniDemoManager()));
-        mData.add(new ComponentItem("卡顿测试", new BlockTestManager()));
-        mData.add(new ComponentItem("捕获异常测试", new CrashManager()));
-        mData.add(new ComponentItem("线程测试", new ThreadTestManager()));
         mData.add(new ComponentItem("flutter 测试", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,9 +161,6 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
                 showFragment(AidlClientFragment.newInstance());
             }
         }));
-        mData.add(new ComponentItem("url 相关测试", new UrlTestManager()));
-
-        mData.add(new ComponentItem("回收测试", new RamManager()));
 
         mData.add(new ComponentItem("字体测试", new View.OnClickListener() {
             @Override
@@ -168,8 +175,6 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
                 showFragment(CommonViewShowFragment.newInstance(CommonViewShowFragment.DASH_LINE));
             }
         }));
-        mData.add(new ComponentItem("activity 相关测试", new ActivityTestDemoManager()));
-        mData.add(new ComponentItem("cookie 测试", new CookieTestManager()));
         mData.add(new ComponentItem("WebView 相关测试", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -188,8 +193,6 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
                 start(ContainerActivity.class);
             }
         }));
-        mData.add(new ComponentItem("多线程相关测试", new ThreadTestManager()));
-        mData.add(new ComponentItem("USE NON SDK API TEST", new UseNonSdkApiDemoManager()));
         mData.add(new ComponentItem("权限测试", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -215,9 +218,6 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
                 showFragment(new EventDispatchFragment());
             }
         }));
-        mData.add(new ComponentItem("rxJava实际应用", new RxJavaTestDemoManager()));
-        mData.add(new ComponentItem("调试弹窗", new DebugDemoManager()));
-        mData.add(new ComponentItem("调节亮度测试", new BrightnessDemoManager()));
         mData.add(new ComponentItem("RecyclerView 多type类型(第三方框架)", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -258,6 +258,15 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
                 start(WeexActivity.class);
             }
         }));
+        Collections.sort(mData, new Comparator<ComponentItem>() {
+            @Override
+            public int compare(ComponentItem o1, ComponentItem o2) {
+                if (o1.priority != 0 || o2.priority != 0) {
+                    return o1.priority < o2.priority ? 1 : -1;
+                }
+                return Collator.getInstance(Locale.CHINA).compare(o1.name, o2.name);
+            }
+        });
     }
 
 

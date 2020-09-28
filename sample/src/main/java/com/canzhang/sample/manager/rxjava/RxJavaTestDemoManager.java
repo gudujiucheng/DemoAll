@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
+import com.example.simple_test_annotations.MarkManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ import io.reactivex.functions.Function;
 /**
  * rxjava  实际应用测试
  */
+@MarkManager(value = "rxJava实际应用")
 public class RxJavaTestDemoManager extends BaseManager {
 
 

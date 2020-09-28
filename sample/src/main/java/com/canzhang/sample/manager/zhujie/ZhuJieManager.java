@@ -15,14 +15,16 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 测试注解相关内容
  */
-@MarkManager(value = "注解相关测试例子")
+@MarkManager(value = "注解测试")
 public class ZhuJieManager extends BaseManager {
 
     public static final int CHECK_METHOD_COMPLETE = 1;//校验方法完整性
@@ -62,7 +64,7 @@ public class ZhuJieManager extends BaseManager {
         return new ComponentItem("注解优雅用法", "注解的简单用法：如何利用注解优雅的传递固定的几个数值示例", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setModeType(1);//报错
+//                setModeType(1);//报错,此报错不影响实际应用，仅做提示
                 setModeType(ZhuJieManager.CHECK_METHOD_COMPLETE);//正常
             }
         });
@@ -126,6 +128,19 @@ public class ZhuJieManager extends BaseManager {
                 mActivity.startActivity(new Intent(mActivity, BindTestActivity.class));
             }
         });
+    }
+
+
+    public static Map<String, Object> getAllManager(){
+        try {
+            Class<?> aClass = Class.forName("com.canzhang.zhujie.test.Manger_Map_Auto_Generate");
+            Method getAllManager = aClass.getMethod("getAllManager");
+            Map<String,Object> map = (Map<String, Object>) getAllManager.invoke(aClass);
+            return map;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

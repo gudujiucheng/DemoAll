@@ -14,6 +14,7 @@ import com.canzhang.sample.manager.thread.demo.fqlreport.UniversalReport;
 import com.canzhang.sample.manager.thread.fqlthreadpool.ThreadPoolUtils;
 import com.canzhang.sample.manager.thread.newThread.ExtendStyleThread;
 import com.example.base.base.AppProxy;
+import com.example.simple_test_annotations.MarkManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.concurrent.CountDownLatch;
 /**
  * 线程操作相关（并发等场景测试）
  */
+@MarkManager(value = "线程测试")
 public class ThreadTestManager extends BaseManager {
 
 

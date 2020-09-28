@@ -7,6 +7,7 @@ import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
 import com.canzhang.sample.manager.jni.JNICmake;
 import com.canzhang.sample.manager.jni.JNITest;
+import com.example.simple_test_annotations.MarkManager;
 import com.fenqile.ui.myself.apptest.JNICrash;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.List;
 /**
  * jni 用法展示
  */
+@MarkManager(value = "jni")
 public class JniDemoManager extends BaseManager {
 
 

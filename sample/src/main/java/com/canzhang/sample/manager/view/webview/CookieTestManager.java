@@ -12,6 +12,7 @@ import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
 import com.canzhang.sample.debug.DebugBaseApp;
 import com.example.base.base.AppProxy;
+import com.example.simple_test_annotations.MarkManager;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -32,6 +33,7 @@ import java.util.regex.Pattern;
  * <p>
  * TODO 还可以继续测试 会话cookie等场景
  */
+@MarkManager(value = "cookie 测试")
 public class CookieTestManager extends BaseManager {
     /**
      * 之前同步cookie需要用到CookieSyncManager类，现在这个类已经被deprecated。

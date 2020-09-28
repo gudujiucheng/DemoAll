@@ -14,6 +14,7 @@ import com.canzhang.sample.base.bean.ComponentItem;
 import com.canzhang.sample.manager.activity_test.task.SingleInstanceActivity;
 import com.canzhang.sample.manager.activity_test.task.SingleTaskActivity;
 import com.canzhang.sample.manager.activity_test.task.StandardActivity;
+import com.example.simple_test_annotations.MarkManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.List;
  * https://www.jianshu.com/p/a8f695841008
  *
  */
+@MarkManager(value = "activity 相关测试")
 public class ActivityTestDemoManager extends BaseManager {
 
     private Activity mActivity;

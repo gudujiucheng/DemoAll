@@ -9,6 +9,7 @@ public class ComponentItem {
     public String name;
     public String desc;
     public View.OnClickListener listener;
+    public int priority;
     public IManager manager;
 
 
@@ -41,5 +42,11 @@ public class ComponentItem {
     public ComponentItem(String name, View.OnClickListener listener) {
         this.name = name;
         this.listener = listener;
+    }
+
+
+    public ComponentItem setPriority(int priority) {
+        this.priority = priority;
+        return this;
     }
 }

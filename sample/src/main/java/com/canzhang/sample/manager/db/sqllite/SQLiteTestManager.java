@@ -18,11 +18,12 @@ import com.canzhang.sample.manager.db.sqllite.fql.CommonReportInfo;
 import com.canzhang.sample.manager.db.sqllite.fql.CommonReportSQLiteOpenHelper;
 import com.canzhang.sample.manager.db.sqllite.fql.CommonReportStorage;
 import com.canzhang.sample.manager.thread.demo.fqlreport.LogUtils;
+import com.example.simple_test_annotations.MarkManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@MarkManager(value = "sqlite")
 public class SQLiteTestManager extends BaseManager {
 
     private Activity mActivity;

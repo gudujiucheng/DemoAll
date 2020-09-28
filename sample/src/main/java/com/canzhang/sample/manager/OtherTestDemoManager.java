@@ -8,6 +8,7 @@ import android.view.View;
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
 import com.canzhang.sample.utils.AppUtils;
+import com.example.simple_test_annotations.MarkManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,6 +23,7 @@ import java.util.Random;
 /**
  * 小测试
  */
+@MarkManager(value = "其他测试")
 public class OtherTestDemoManager extends BaseManager {
 
     private List<String> mList = new ArrayList<>();

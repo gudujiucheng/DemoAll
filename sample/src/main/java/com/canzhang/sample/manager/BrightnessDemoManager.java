@@ -9,6 +9,7 @@ import android.view.WindowManager;
 
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
+import com.example.simple_test_annotations.MarkManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 /**
  * http://www.cnblogs.com/lwbqqyumidi/p/4127012.html
  */
+@MarkManager(value = "调节亮度测试")
 public class BrightnessDemoManager extends BaseManager {
 
     private int mBrightness = 0;
