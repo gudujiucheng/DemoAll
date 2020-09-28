@@ -206,4 +206,6 @@ dependencies {
     //自定义注解测试
     api project(':simplebutterknife-annotations')
     annotationProcessor project(':simplebutterknife-compiler')
+    api project(':simple-test-annotations')
+    annotationProcessor project(':simple-test-compiler')
 }

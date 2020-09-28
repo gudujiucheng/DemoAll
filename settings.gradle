@@ -1,3 +1,6 @@
+include ':simple-test-compiler'
+include ':simple-test-annotations'
+include ':simple-test-annotations'
 include ':simplebutterknife-annotations'
 include ':simplebutterknife-compiler'//include ':simplebutterknife-compiler'
 //include ':simplebutterknife-annotations'

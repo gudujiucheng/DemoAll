@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
+import com.example.simple_test_annotations.MarkManager;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -21,6 +22,7 @@ import java.util.List;
 /**
  * 测试注解相关内容
  */
+@MarkManager(value = "注解相关测试例子")
 public class ZhuJieManager extends BaseManager {
 
     public static final int CHECK_METHOD_COMPLETE = 1;//校验方法完整性
