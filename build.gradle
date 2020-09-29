@@ -17,13 +17,18 @@ buildscript {
         maven { url 'https://jitpack.io' }
     }
     dependencies {
+        /**
+         * classpath：一般是添加 buildscript 本身需要运行的东西，
+         * buildScript是用来加载gradle脚本自身需要使用的资源，
+         * 可以声明的资源包括依赖项、第三方插件、maven仓库地址等。
+         * 某种意义上来说，classpath 声明的依赖，不会编译到最终的 apk 里面。
+         */
         classpath 'com.android.tools.build:gradle:3.2.1'
         //美团多渠道打包
         classpath 'com.meituan.android.walle:plugin:1.1.6'
         classpath 'com.meituan.android.walle:plugin:1.1.6'
         classpath 'com.canzhang.android:bury-point-plugin:1.0.0-SNAPSHOT'
-//        classpath 'com.canzhang.android:trace-plugin:1.0.0-SNAPSHOT'
-
+        classpath 'com.canzhang.android:hunter-timing-plugin:1.0.0-SNAPSHOT'
         classpath ("com.tencent.matrix:matrix-gradle-plugin:${MATRIX_VERSION}") { changing = true }
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 

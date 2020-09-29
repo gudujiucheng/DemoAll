@@ -37,4 +37,7 @@ dependencies {
 //    annotationProcessor 'com.alibaba:' + rootProject.ext.arouterCompilerVersion
 
     api 'com.github.pinguo-zhouwei:CircleIndicatorView:v1.0.1'
+    //自定义注解测试
+    api project(':simple-test-annotations')
+    annotationProcessor project(':simple-test-compiler')
 }

@@ -1,3 +1,5 @@
+include ':hunter-timing-library'
+include ':hunter-timing-plugin'
 include ':simple-test-compiler'
 include ':simple-test-annotations'
 include ':simple-test-annotations'
@@ -13,8 +15,7 @@ include ':app',
         ':aidlservice',
         ':bury-point-plugin',
         ':mylibrary',
-        ':mycanrunlibrary',
-        ':trace_plugin'
+        ':mycanrunlibrary'
 //setBinding(new Binding([gradle: this]))
 //evaluate(new File(
 //        settingsDir,    //若做为原应用的子mudule，则为settingsDir

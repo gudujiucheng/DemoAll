@@ -10,11 +10,12 @@ import android.widget.Toast;
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
 import com.example.base.base.AppProxy;
+import com.example.simple_test_annotations.MarkManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@MarkManager(value = "用于快速copy")
 public class CopyManager extends BaseManager {
 
 
@@ -30,7 +31,7 @@ public class CopyManager extends BaseManager {
 
     private ComponentItem test() {
 
-        return new ComponentItem("", new View.OnClickListener() {
+        return new ComponentItem("用于快速copy", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

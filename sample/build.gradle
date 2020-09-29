@@ -5,7 +5,8 @@ if (isSampleRunAsApp.toBoolean()) {
     apply plugin: 'com.android.library'
 }
 
-apply plugin: 'com.canzhang.bury_point'
+apply plugin: 'com.canzhang.bury_point'//自定义埋点插件
+apply plugin: 'hunter-timing'// 慢方法检测插件
 
 //fqlAnalytics {
 //    isShowDebugInfo = true
@@ -33,14 +34,6 @@ apply plugin: 'com.canzhang.bury_point'
 //                          'com/taobao']
 //}
 
-apply plugin: 'com.tencent.matrix-plugin'
-matrix {
-    trace {
-        enable = false    //if you don't want to use trace canary, set false
-        baseMethodMapFile = "${project.buildDir}/matrix_output/Debug.methodmap"
-        blackListFile = "${project.projectDir}/matrixTrace/blackMethodList.txt"
-    }
-}
 
 android {
     signingConfigs {
@@ -191,9 +184,6 @@ dependencies {
     //第三方卡顿监控框架
     api 'com.github.markzhai:blockcanary-android:1.5.0'
 
-    //腾讯卡顿监控
-    implementation group: "com.tencent.matrix", name: "matrix-trace-canary", version: MATRIX_VERSION, changing: true
-
     //权限
     implementation 'com.yanzhenjie.permission:support:2.0.1'
 
@@ -208,4 +198,5 @@ dependencies {
     annotationProcessor project(':simplebutterknife-compiler')
     api project(':simple-test-annotations')
     annotationProcessor project(':simple-test-compiler')
+    implementation project(':hunter-timing-library')
 }

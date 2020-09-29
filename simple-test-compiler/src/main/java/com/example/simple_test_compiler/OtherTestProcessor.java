@@ -1,19 +1,15 @@
 package com.example.simple_test_compiler;
 
-import com.example.simple_test_annotations.MarkManager;
+import com.example.simple_test_annotations.CanTest;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
-import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.LinkedHashSet;
-import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -26,17 +22,9 @@ import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
 
-/**
- * 注解处理器
- * <p>
- * 利用了 Google 的 AutoService 为注解处理器自动生成 metadata 文件并将注解处理器jar文件加入构建路径，
- * 这样也就不需要再手动创建并更新 META-INF/services/javax.annotation.processing.Processor 文件了
- * 参考 java sip：https://www.jianshu.com/p/deeb39ccdc53
- * <p>
- * java poet的使用 参考 https://blog.csdn.net/l540675759/article/details/82931785
- */
+
 @AutoService(Processor.class)
-public class MarkManagerProcessor extends AbstractProcessor {
+public class OtherTestProcessor extends AbstractProcessor {
 
     /**
      * 方法指定可以支持最新的 Java 版本（直接指定最新的就可以了）
@@ -56,8 +44,8 @@ public class MarkManagerProcessor extends AbstractProcessor {
     @Override
     public Set<String> getSupportedAnnotationTypes() {
         Set<String> types = new LinkedHashSet<>();
-        //本例子 就是 处理MarkManager
-        types.add(MarkManager.class.getCanonicalName());
+        //本例子 就是 处理BINDView
+        types.add(CanTest.class.getCanonicalName());
         return types;
     }
 
@@ -70,74 +58,50 @@ public class MarkManagerProcessor extends AbstractProcessor {
      */
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
-
-        /**
-         * TypeSpec————用于生成类、接口、枚举对象的类
-         */
-        TypeSpec.Builder managerMapClassBuilder = TypeSpec.classBuilder("Manger_Map_Auto_Generate")
+        TypeSpec.Builder managerMapClassBuilder = TypeSpec.classBuilder("Test_Generate")
                 .addModifiers(Modifier.PUBLIC);
-
-//        managerMapClassBuilder.addField(ParameterizedTypeName.get(Map.class, String.class,Object.class), "sManagerMap", Modifier.PRIVATE, Modifier.STATIC);
-        managerMapClassBuilder.addField(FieldSpec.builder(ParameterizedTypeName.get(Map.class, String.class,Object.class), "sManagerMap")
-                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
-                .initializer("new $T()", HashMap.class)
-                .build());
+        ClassName StringType = ClassName.get("java.lang", "String");
 
 
 
-        MethodSpec.Builder initManagerMethodBuilder = MethodSpec.methodBuilder("getAllManager")
-                .addModifiers(Modifier.PUBLIC)
-                .addModifiers(Modifier.STATIC)
-                .returns(ParameterizedTypeName.get(Map.class, String.class,Object.class));
 
-
-        MethodSpec.Builder addManagerMethodBuilder = MethodSpec.methodBuilder("addManager")
-                .addModifiers(Modifier.PRIVATE)
-                .addModifiers(Modifier.STATIC)
-                .addParameter(ClassName.get("java.lang", "String"), "desc")
-                .addParameter(TypeName.OBJECT, "target")
-                .addStatement("sManagerMap.put(desc,target)");
 
 
         //返回使用给定注释类型注释的元素
-        for (Element element : roundEnvironment.getElementsAnnotatedWith(MarkManager.class)) {
+        for (Element element : roundEnvironment.getElementsAnnotatedWith(CanTest.class)) {
             TypeMirror typeMirror = element.asType();//返回此元素定义的类型
             TypeName targetType = TypeName.get(typeMirror);
             //manager 类的描述
-            String managerDesc = element.getAnnotation(MarkManager.class).value();
+            String managerDesc = element.getAnnotation(CanTest.class).value();
             System.out.println("--------------->>>>>管理类描述：" + managerDesc);
             // 注解元素的名字，即 Manager类名
             Name simpleName = element.getSimpleName();
             String name = simpleName.toString();
             System.out.println("--------------->>>>>注解类的类名：" + name);//ZhuJieManager
 
-            //用法参见 https://blog.csdn.net/crazy1235/article/details/51876192
-            initManagerMethodBuilder.addStatement("addManager($S,new $T())",managerDesc,targetType);
+            managerMapClassBuilder.addField(FieldSpec.builder(StringType, "sValue")
+                    .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                    .initializer("$S", managerDesc)
+                    .build());
 
         }
 
-        initManagerMethodBuilder.addStatement("return sManagerMap");
 
 
         TypeSpec managerMapClass = managerMapClassBuilder
-                .addMethod(addManagerMethodBuilder.build())
-                .addMethod(initManagerMethodBuilder.build())
                 .build();
 
         JavaFile file = JavaFile.builder("com.canzhang.zhujie.test", managerMapClass).build();
 
 
         try {
-//                file.writeTo(System.out);
             file.writeTo(processingEnv.getFiler());
         } catch (IOException e) {
             System.out.println("--------------->>>>>生成类异常：" + e.getMessage());
             e.printStackTrace();
         }
 
-
         return false;
     }
-
 
 }

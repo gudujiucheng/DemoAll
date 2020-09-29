@@ -10,8 +10,6 @@ import com.canzhang.sample.R;
 import com.canzhang.sample.manager.appstatus.AppStatus;
 import com.canzhang.sample.manager.appstatus.AppStatusChangeListener;
 import com.canzhang.sample.manager.block.githup_test_use.AppBlockCanaryContext;
-import com.canzhang.sample.manager.block.tencent_use.DynamicConfigImplDemo;
-import com.canzhang.sample.manager.block.tencent_use.TestPluginListener;
 import com.canzhang.sample.manager.weex.ImageAdapter;
 import com.canzhang.sample.manager.weex.view.FqlWeexFloatingAds;
 import com.canzhang.sample.manager.weex.view.FqlWeexQRCodeView;
@@ -21,18 +19,19 @@ import com.component.debugdialog.DebugDialog;
 import com.example.base.base.AppProxy;
 import com.example.base.utils.ToastUtil;
 import com.github.moduth.blockcanary.BlockCanary;
+import com.hunter.library.timing.BlockManager;
+import com.hunter.library.timing.IBlockHandler;
+import com.hunter.library.timing.impl.RankingBlockHandler;
 import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.common.WXException;
-import com.tencent.matrix.Matrix;
-import com.tencent.matrix.trace.TracePlugin;
-import com.tencent.matrix.trace.config.TraceConfig;
 
 
 /**
  * 调试模式下的 app（simple作为单独工程运行时候使用）
  */
 public class DebugBaseApp extends Application {
+    public static IBlockHandler sCustomBlockManager;
 
     @Override
     public void onCreate() {
@@ -61,44 +60,13 @@ public class DebugBaseApp extends Application {
             }
         });
 
+        //慢方法检测
+        sCustomBlockManager = new RankingBlockHandler(100);
+        BlockManager.installBlockManager(sCustomBlockManager);
+
 //        initBlockCanary();
-//        initTencentMatrix();
     }
 
-    private void initTencentMatrix() {
-
-        DynamicConfigImplDemo dynamicConfig = new DynamicConfigImplDemo();
-        boolean matrixEnable = dynamicConfig.isMatrixEnable();
-        boolean fpsEnable = dynamicConfig.isFPSEnable();
-        boolean traceEnable = dynamicConfig.isTraceEnable();
-
-
-        Matrix.Builder builder = new Matrix.Builder(this); // build matrix
-        builder.patchListener(new TestPluginListener(this)); // add general pluginListener
-
-        //trace
-        TraceConfig traceConfig = new TraceConfig.Builder()
-                .dynamicConfig(dynamicConfig)
-                .enableFPS(fpsEnable)
-                .enableEvilMethodTrace(traceEnable)
-                .enableAnrTrace(traceEnable)
-                .enableStartup(traceEnable)
-                .splashActivities("sample.tencent.matrix.SplashActivity;")
-                .isDebug(true)
-                .isDevEnv(false)
-                .build();
-
-        TracePlugin tracePlugin = (new TracePlugin(traceConfig));
-
-        builder.plugin(tracePlugin);
-
-        //init matrix
-        Matrix.init(builder.build());
-
-        //start only startup tracer, close other tracer.
-        tracePlugin.start();
-
-    }
 
     private void initBlockCanary() {
         // 在主进程初始化调用哈

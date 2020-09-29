@@ -3,6 +3,7 @@ package com.canzhang.sample.manager.zhujie;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.IntDef;
+import android.util.Log;
 import android.view.View;
 
 import com.canzhang.sample.base.BaseManager;
@@ -139,6 +140,7 @@ public class ZhuJieManager extends BaseManager {
             return map;
         } catch (Exception e) {
             e.printStackTrace();
+            Log.e("getAllManager",Log.getStackTraceString(e));
         }
         return null;
     }
