@@ -29,7 +29,6 @@ buildscript {
         classpath 'com.meituan.android.walle:plugin:1.1.6'
         classpath 'com.canzhang.android:bury-point-plugin:1.0.0-SNAPSHOT'
         classpath 'com.canzhang.android:hunter-timing-plugin:1.0.0-SNAPSHOT'
-        classpath ("com.tencent.matrix:matrix-gradle-plugin:${MATRIX_VERSION}") { changing = true }
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
 
