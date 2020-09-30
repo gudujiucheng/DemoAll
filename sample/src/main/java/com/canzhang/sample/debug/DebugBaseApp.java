@@ -6,6 +6,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.multidex.MultiDex;
+
 import com.canzhang.sample.R;
 import com.canzhang.sample.manager.appstatus.AppStatus;
 import com.canzhang.sample.manager.appstatus.AppStatusChangeListener;
@@ -68,6 +70,7 @@ public class DebugBaseApp extends Application {
     }
 
 
+
     private void initBlockCanary() {
         // 在主进程初始化调用哈
         BlockCanary.install(this, new AppBlockCanaryContext()).start();
@@ -89,10 +92,7 @@ public class DebugBaseApp extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-
-
-        this.getApplicationContext();
-
+        MultiDex.install(this);
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
