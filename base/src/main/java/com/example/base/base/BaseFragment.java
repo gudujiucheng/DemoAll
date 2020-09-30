@@ -3,17 +3,18 @@ package com.example.base.base;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-public class BaseFragment extends Fragment {
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.trello.rxlifecycle4.components.support.RxFragment;
+
+public class BaseFragment extends RxFragment {
     protected Context mContext;
 
     @Override
