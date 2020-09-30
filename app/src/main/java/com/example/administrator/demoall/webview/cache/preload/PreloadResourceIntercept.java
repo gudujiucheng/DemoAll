@@ -2,8 +2,8 @@ package com.example.administrator.demoall.webview.cache.preload;
 
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.webkit.WebResourceResponse;
 
@@ -15,7 +15,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.ArrayList;
 
 /**
  * @author owenli

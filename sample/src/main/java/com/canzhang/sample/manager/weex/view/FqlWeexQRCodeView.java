@@ -2,7 +2,7 @@ package com.canzhang.sample.manager.weex.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.text.TextUtils;
 import android.widget.ImageView;
 

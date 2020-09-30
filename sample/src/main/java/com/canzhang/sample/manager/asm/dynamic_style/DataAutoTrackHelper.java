@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.annotation.Keep;
-import android.support.v7.widget.SwitchCompat;
+import androidx.annotation.Keep;
+import androidx.appcompat.widget.SwitchCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -22,8 +22,6 @@ import android.widget.ToggleButton;
 import com.canzhang.sample.manager.thread.demo.fqlreport.LogUtils;
 
 import org.json.JSONObject;
-
-import java.lang.reflect.Field;
 
 /**
  * bury_point_sdk 插桩对应的实现方法
@@ -55,8 +53,8 @@ public class DataAutoTrackHelper {
             Button button = null;
             if (dialog instanceof android.app.AlertDialog) {
                 button = ((android.app.AlertDialog) dialog).getButton(whichButton);
-            } else if (dialog instanceof android.support.v7.app.AlertDialog) {
-                button = ((android.support.v7.app.AlertDialog) dialog).getButton(whichButton);
+            } else if (dialog instanceof androidx.appcompat.app.AlertDialog) {
+                button = ((androidx.appcompat.app.AlertDialog) dialog).getButton(whichButton);
             }
 
             String viewTag = ViewDataUtils.getViewTag(button);
@@ -183,8 +181,8 @@ public class DataAutoTrackHelper {
             ListView listView = null;
             if (dialog instanceof android.app.AlertDialog) {
                 listView = ((android.app.AlertDialog) dialog).getListView();
-            } else if (dialog instanceof android.support.v7.app.AlertDialog) {
-                listView = ((android.support.v7.app.AlertDialog) dialog).getListView();
+            } else if (dialog instanceof androidx.appcompat.app.AlertDialog) {
+                listView = ((androidx.appcompat.app.AlertDialog) dialog).getListView();
             }
 
             if (listView != null) {

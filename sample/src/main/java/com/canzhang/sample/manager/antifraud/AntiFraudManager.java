@@ -8,15 +8,14 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
 import com.canzhang.sample.manager.antifraud.notification.NotificationTestActivity;
-import com.example.base.utils.ToastUtil;
 import com.example.simple_test_annotations.MarkManager;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;

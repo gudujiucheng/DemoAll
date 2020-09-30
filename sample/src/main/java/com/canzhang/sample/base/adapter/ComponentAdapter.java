@@ -2,7 +2,7 @@ package com.canzhang.sample.base.adapter;
 
 
 import android.content.Intent;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 

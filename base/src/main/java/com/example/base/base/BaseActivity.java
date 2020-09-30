@@ -1,13 +1,13 @@
 package com.example.base.base;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
+
 import android.util.Log;
 import android.widget.Toast;
 
 import com.example.simple_test_annotations.CanTest;
-import com.example.simple_test_annotations.MarkManager;
 
 @CanTest(value = "注解测试")
 public class BaseActivity extends FragmentActivity {

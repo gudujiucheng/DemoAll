@@ -1,6 +1,6 @@
 package com.canzhang.sample.manager.view.recyclerView.bean;
 
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 

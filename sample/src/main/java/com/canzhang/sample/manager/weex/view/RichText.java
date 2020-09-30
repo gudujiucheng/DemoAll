@@ -2,7 +2,7 @@ package com.canzhang.sample.manager.weex.view;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.widget.TextView;
 
 import com.taobao.weex.WXSDKInstance;

@@ -10,9 +10,9 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.canzhang.sample.R;
-import com.canzhang.sample.manager.aidl.Book;
-import com.canzhang.sample.manager.aidl.IBookManager;
 import com.example.base.base.BaseFragment;
-
-import java.util.List;
 
 /**
  * aidl 客户端代码

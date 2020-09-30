@@ -1,7 +1,7 @@
 package com.example.base.utils;
 
 import android.app.Application;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.widget.Toast;
 
 import com.example.base.base.AppProxy;

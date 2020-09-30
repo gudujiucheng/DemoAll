@@ -10,7 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
     }
 
@@ -27,9 +27,9 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     testImplementation "junit:junit:${rootProject.ext.junitVersion}"
-    androidTestImplementation "com.android.support.test:runner:${rootProject.ext.supportTestRunnerVersion}"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:${rootProject.ext.supportTestEspressoCoreVersion}"
-    api "com.android.support:appcompat-v7:${rootProject.ext.supportVersion}"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    api 'androidx.appcompat:appcompat:1.0.0'
 
 
     //Arouter

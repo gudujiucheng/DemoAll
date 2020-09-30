@@ -2,7 +2,7 @@ package com.canzhang.sample.manager.zhujie;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
 import android.util.Log;
 import android.view.View;
 
@@ -16,7 +16,6 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;

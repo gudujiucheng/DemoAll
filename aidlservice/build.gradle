@@ -14,7 +14,7 @@ android {
         applicationId "com.canzhang.aidlservice"
 
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
     }
 
@@ -29,7 +29,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:${rootProject.ext.supportTestEspressoCoreVersion}"
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
     testImplementation "junit:junit:${rootProject.ext.junitVersion}"
-    androidTestImplementation "com.android.support.test:runner:${rootProject.ext.supportTestRunnerVersion}"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
 }

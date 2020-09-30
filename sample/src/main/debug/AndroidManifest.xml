@@ -52,7 +52,7 @@
         <activity android:name=".manager.antifraud.notification.NotificationTestActivity" />
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="com.canzhang.sample.FileProvider"
             android:exported="false"
             android:grantUriPermissions="true">

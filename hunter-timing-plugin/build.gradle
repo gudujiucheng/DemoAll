@@ -4,8 +4,8 @@ apply plugin: 'maven'
 dependencies {
     implementation gradleApi()
     implementation localGroovy()
-    implementation 'com.android.tools.build:gradle:3.2.1'//这个版本号要和外层保持一致 不然容易出现莫名其妙的问题
-    implementation 'com.android.tools.build:gradle-api:3.2.1'
+    implementation 'com.android.tools.build:gradle:'+rootProject.ext.toolGradleVersion//这个版本号要和外层保持一致 不然容易出现莫名其妙的问题
+    implementation 'com.android.tools.build:gradle-api:'+rootProject.ext.toolGradleVersion
     implementation 'commons-io:commons-io:2.6'
     implementation 'commons-codec:commons-codec:1.10'
     //noinspection GradleDependency

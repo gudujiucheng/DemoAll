@@ -1,8 +1,8 @@
 package com.example.administrator.demoall.floatView;
 
 import android.content.Context;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
 
 import com.example.administrator.demoall.R;
 

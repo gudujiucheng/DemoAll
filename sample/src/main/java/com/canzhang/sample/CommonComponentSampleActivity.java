@@ -1,11 +1,10 @@
 package com.canzhang.sample;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.canzhang.sample.base.adapter.ComponentAdapter;
 import com.canzhang.sample.base.IManager;

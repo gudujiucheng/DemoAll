@@ -1,3 +1,4 @@
+include ':hunter-transform'
 include ':hunter-timing-library'
 include ':hunter-timing-plugin'
 include ':simple-test-compiler'

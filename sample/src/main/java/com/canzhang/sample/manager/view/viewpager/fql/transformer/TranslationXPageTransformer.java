@@ -8,8 +8,8 @@ package com.canzhang.sample.manager.view.viewpager.fql.transformer;
  * https://www.jianshu.com/p/11a819bc5973
  */
 
-import android.support.annotation.NonNull;
-import android.support.v4.view.ViewPager;
+import androidx.annotation.NonNull;
+import androidx.viewpager.widget.ViewPager;
 import android.view.View;
 
 import com.canzhang.sample.R;
