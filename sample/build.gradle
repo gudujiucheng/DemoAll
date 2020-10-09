@@ -163,10 +163,6 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:' + rootProject.ext.glideVersion
     annotationProcessor 'com.github.bumptech.glide:compiler:' + rootProject.ext.glideVersion
 
-    //rxjava
-    implementation "io.reactivex.rxjava2:rxandroid:${rootProject.ext.rxandroid2Version}"
-    implementation "io.reactivex.rxjava2:rxjava:${rootProject.ext.rxjava2Version}"
-
     //阴影效果，这个会导致控件变小 https://github.com/JuHonggang/ShadowDrawable
     implementation 'com.github.JuHonggang:ShadowDrawable:0.1'
 
@@ -179,8 +175,7 @@ dependencies {
     implementation project(':base')
 //    implementation project(':flutter')
     implementation 'com.android.support:design:' + rootProject.ext.supportVersion
-    api "io.reactivex.rxjava2:rxandroid:${rootProject.ext.rxandroid2Version}"
-    api "io.reactivex.rxjava2:rxjava:${rootProject.ext.rxjava2Version}"
+
 
     //第三方卡顿监控框架
     api 'com.github.markzhai:blockcanary-android:1.5.0'

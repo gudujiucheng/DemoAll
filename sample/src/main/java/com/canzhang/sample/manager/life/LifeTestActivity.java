@@ -16,6 +16,7 @@ import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
+ * 对应开源框架：https://github.com/trello/RxLifecycle
  * 参考：https://www.jianshu.com/p/e75d320a668c
  */
 public class LifeTestActivity extends BaseActivity {
@@ -26,13 +27,19 @@ public class LifeTestActivity extends BaseActivity {
         setContentView(R.layout.sample_activity_life_test);
         TextView tvTest = findViewById(R.id.tv_life_test);
 
+        time(tvTest);
+
+
+    }
+
+    private void time(TextView tvTest) {
         Observable.interval(1, TimeUnit.SECONDS)//计时，每秒钟回调一次
                 .subscribeOn(Schedulers.io())//指定被观察者线程
                 .observeOn(AndroidSchedulers.mainThread())//指定观察者线程
                 .doOnDispose(new Action() {
                     @Override
                     public void run() throws Throwable {
-                        log("Life_test:--------------->>>>>>>Unsubscribing subscription from onPause() thread name:" + Thread.currentThread().getName());
+                        log("Life_test:--------------->>>>>>>取消观察 from DESTROY() thread name:" + Thread.currentThread().getName());
 
                     }
                 })
@@ -45,7 +52,5 @@ public class LifeTestActivity extends BaseActivity {
                         log("Life_test:倒计时" + aLong);
                     }
                 });
-
-
     }
 }
