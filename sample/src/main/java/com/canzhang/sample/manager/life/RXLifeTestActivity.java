@@ -25,7 +25,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * 对应开源框架：https://github.com/trello/RxLifecycle
  * 参考：https://www.jianshu.com/p/e75d320a668c
  */
-public class LifeTestActivity extends BaseActivity {
+public class RXLifeTestActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

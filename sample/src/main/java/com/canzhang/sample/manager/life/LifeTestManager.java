@@ -20,7 +20,17 @@ public class LifeTestManager extends BaseManager {
         super.getSampleItem(activity);
         List<ComponentItem> list = new ArrayList<>();
         list.add(test());
+        list.add(testGoogle());
         return list;
+    }
+
+    private ComponentItem testGoogle() {
+        return new ComponentItem("启动activity(google LifeCycle)", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mActivity.startActivity(new Intent(mActivity, GoogleLifeCycleTestActivity.class));
+            }
+        });
     }
 
     @Override
@@ -30,10 +40,10 @@ public class LifeTestManager extends BaseManager {
 
     private ComponentItem test() {
 
-        return new ComponentItem("启动activity", new View.OnClickListener() {
+        return new ComponentItem("启动activity(RxLife)", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mActivity.startActivity(new Intent(mActivity,LifeTestActivity.class));
+                mActivity.startActivity(new Intent(mActivity, RXLifeTestActivity.class));
             }
         });
     }
