@@ -51,7 +51,7 @@ public class MyLocationListener implements LifecycleObserver {//生命周期观�
         showLog("onPause");
     }
 
-    private void showLog(String msg) {
+    public void showLog(String msg) {
         Log.e("===MyLocationListener", msg);
     }
 

@@ -14,6 +14,8 @@ public class GoogleLifeCycleTestActivity extends AppCompatActivity {
         setContentView(R.layout.sample_activity_google_life_cycle_test);
         //添加观察者，建立关联
         getLifecycle().addObserver(new MyLocationListener(this));
+        //测试子类是否可以正常调用
+        getLifecycle().addObserver(new MyLocationListenerChild(this));
 
         /**
          * AppCompatActivity与V4中的Fragment都已默认实现了LifeCyclerOwner接口，基本上可以应对所有的情况了，
