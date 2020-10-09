@@ -18,6 +18,11 @@ import com.example.base.base.BaseActivity;
 
 /**
  * 官网：https://developer.android.com/topic/libraries/architecture/viewmodel
+ * 参考文章：https://zhuanlan.zhihu.com/p/76747541
+ * 原理分析：https://blog.csdn.net/xx326664162/article/details/90756817
+ * ViewModel用于存放页面所需的各种数据，它还包括一些业务逻辑等，比如我们可以在ViewModel对数据进行加工，获取等操作。
+ * 而对页面来说，它并不关心这些业务逻辑，它只关心需要展示的数据是什么，并且希望在数据发生变化时，能及时得到通知并做出更新。
+ * LiveData的作用就是，在ViewModel中的数据发生变化时通知页面。从LiveData（实时数据）这个名字，我们也能推测出，它的特性与作用。
  */
 public class LiveDataTestActivity extends BaseActivity {
 
@@ -32,8 +37,8 @@ public class LiveDataTestActivity extends BaseActivity {
 
         //这个数据仓库是存在activtiy持有的一个map里面的，activity没有销毁之前，都是存在的（当然如果是activity变更配置 也还是存在的，变更配置添加判断，不会清理数据）
         mTestViewModel = new ViewModelProvider(this).get(TestViewModel.class);//取出model 这里是根据类名获取的
-        MutableLiveData<String> nameEvent = mTestViewModel.getNameEvent();
-        nameEvent.observe(this, new Observer<String>() {
+        MutableLiveData<String> nameEvent = mTestViewModel.getNameEvent();//获取livedata
+        nameEvent.observe(this, new Observer<String>() {//设置观察者
             @Override
             public void onChanged(@Nullable String s) {
                 Log.i("LIVE_DATA", "onChanged: s = " + s);

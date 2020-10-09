@@ -77,7 +77,7 @@ public class LiveDataTestFragment extends BaseFragment {
     private void initView(View view) {
         TextView textView = view.findViewById(R.id.tv_test);
         textView.setText("当前位置" + mType);
-        //这里注意要使用宿主activity创建Provider 这样才能共享数据
+        //这里注意要使用宿主activity创建Provider 这样才能共享数据（传入的是 Fragment 所依附的 Activity。因而他们的 ViewModel 实例是相同的，从而可以做到共享数据）
         TestViewModel  mTestViewModel = new ViewModelProvider(requireActivity()).get(TestViewModel.class);//取出model 这里是根据类名获取的
         MutableLiveData<String> nameEvent = mTestViewModel.getNameEvent();
         nameEvent.observe(this, new Observer<String>() {
