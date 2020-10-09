@@ -1,4 +1,4 @@
-package com.canzhang.sample.manager.life;
+package com.canzhang.sample.manager.jetpack.lifecycle;
 
 import android.app.Activity;
 import android.content.Intent;

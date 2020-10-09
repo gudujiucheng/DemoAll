@@ -1,11 +1,6 @@
-package com.canzhang.sample.manager.life;
+package com.canzhang.sample.manager.jetpack.lifecycle;
 
 import android.content.Context;
-import android.util.Log;
-
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleObserver;
-import androidx.lifecycle.OnLifecycleEvent;
 
 
 /**

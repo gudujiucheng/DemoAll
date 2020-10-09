@@ -1,4 +1,4 @@
-package com.canzhang.sample.manager.life;
+package com.canzhang.sample.manager.jetpack.lifecycle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,9 @@ import android.os.Bundle;
 
 import com.canzhang.sample.R;
 
+/**
+ * 官方文档：https://developer.android.com/topic/libraries/architecture/lifecycle
+ */
 public class GoogleLifeCycleTestActivity extends AppCompatActivity {
 
     @Override
