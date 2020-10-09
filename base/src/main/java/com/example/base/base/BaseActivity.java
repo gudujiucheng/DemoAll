@@ -94,6 +94,6 @@ public class BaseActivity extends FragmentActivity  implements LifecycleProvider
     }
 
     public void log(String msg) {
-        Log.e("Test", "current class:"+getClass().getSimpleName()+" msg:"+msg+" hash:"+this.toString());
+        Log.e("Test", " msg:"+msg);
     }
 }

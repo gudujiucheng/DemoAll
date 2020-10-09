@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 
 import com.trello.rxlifecycle4.components.support.RxFragment;
 
-public class BaseFragment extends RxFragment {
+public class BaseFragment extends RxFragment {//基于 Rxjava 实现的生命周期管理
     protected Context mContext;
 
     @Override

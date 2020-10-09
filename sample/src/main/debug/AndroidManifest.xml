@@ -3,6 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.canzhang.sample">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- <uses-permission android:name="android.permission.READ_PHONE_STATE" /> -->
+    <!-- 自定义权限 -->
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
+    <uses-permission android:name="zc.permission.DANGEROUS_TEST" />
+    <uses-permission android:name="zc.permission.NORMAL_TEST" />
+
     <application
         android:name=".debug.DebugBaseApp"
         android:allowBackup="true"
@@ -10,8 +22,8 @@
         android:label="@string/sample_app_name"
         android:supportsRtl="true"
         tools:replace="android:allowBackup,android:icon,android:label">
-        <activity android:name=".manager.zhujie.BindTestActivity"></activity>
-
+        <activity android:name=".manager.life.LifeTestActivity"></activity>
+        <activity android:name=".manager.zhujie.BindTestActivity" />
         <activity
             android:name=".ComponentListActivity"
             android:alwaysRetainTaskState="true">
@@ -60,10 +72,10 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/sample_file_paths" />
         </provider>
+
         <service
             android:name=".manager.behavior.service.BehaviorService"
             android:exported="false" />
-
         <service
             android:name=".manager.antifraud.notification.NotificationCollectorService"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
@@ -72,17 +84,5 @@
             </intent-filter>
         </service>
     </application>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- <uses-permission android:name="android.permission.READ_PHONE_STATE" /> -->
-    <!-- 自定义权限 -->
-    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
-    <uses-permission android:name="zc.permission.DANGEROUS_TEST" />
-
-    <uses-permission android:name="zc.permission.NORMAL_TEST" />
 
 </manifest>

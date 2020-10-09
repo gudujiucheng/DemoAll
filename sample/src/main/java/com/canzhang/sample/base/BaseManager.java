@@ -1,15 +1,20 @@
 package com.canzhang.sample.base;
 
 
+import android.app.Activity;
 import android.app.Application;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.canzhang.sample.base.bean.ComponentItem;
 import com.canzhang.sample.debug.DebugBaseApp;
 import com.example.base.base.AppProxy;
 import com.component.debugdialog.DebugDialog;
 
+import java.util.List;
+
 public abstract class BaseManager implements IManager {
+    public Activity  mActivity;
 
     public BaseManager() {
 
@@ -38,5 +43,11 @@ public abstract class BaseManager implements IManager {
     @Override
     public int getPriority() {
         return 0;
+    }
+
+    @Override
+    public List<ComponentItem> getSampleItem(Activity activity) {
+        mActivity = activity;
+        return null;
     }
 }
