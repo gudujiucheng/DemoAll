@@ -30,6 +30,11 @@ public class SQLiteTestManager extends BaseManager {
 
 
     @Override
+    public int getPriority() {
+        return 5;
+    }
+
+    @Override
     public List<ComponentItem> getSampleItem(Activity activity) {
         mActivity = activity;
         List<ComponentItem> list = new ArrayList<>();
@@ -221,7 +226,7 @@ public class SQLiteTestManager extends BaseManager {
 
     private ComponentItem insert() {
 
-        return new ComponentItem("表内添加数据", new View.OnClickListener() {
+        return new ComponentItem("表内添加数据(两条)", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MyDatabaseHelper dbHelper = new MyDatabaseHelper(mActivity, "BookStore.db", null, 1);//升级到2

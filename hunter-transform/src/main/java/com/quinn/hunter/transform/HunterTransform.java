@@ -30,6 +30,10 @@ import java.util.Set;
 /**
  * Created by Quinn on 26/02/2017.
  * Transform to modify bytecode
+ *
+ * 一个插件框架，在它的基础上可以快速开发一个并发、增量的字节码编译插件，
+ * 帮助开发人员隐藏了Transform和ASM的绝大部分逻辑，开发者只需写少量的ASM code，
+ * 就可以开发一款编译插件，修改Android项目的字节码。
  */
 public class HunterTransform extends Transform {
 
@@ -70,7 +74,7 @@ public class HunterTransform extends Transform {
     }
 
     @Override
-    public boolean isIncremental() {
+    public boolean isIncremental() {//支持增量编译 提升编译速度（支持增量编译的话  需要根据文件的具体状态在下面的transform 进行进一步的调整）
         return true;
     }
 
@@ -91,7 +95,7 @@ public class HunterTransform extends Transform {
         logger.warn(getName() + " isIncremental = " + isIncremental + ", runVariant = "
                 + runVariant + ", emptyRun = " + emptyRun + ", inDuplcatedClassSafeMode = " + inDuplcatedClassSafeMode());
         long startTime = System.currentTimeMillis();
-        if(!isIncremental) {
+        if(!isIncremental) {//如果是非增量编译 则直接把已经生成的中间产物删除即可
             outputProvider.deleteAll();
         }
         URLClassLoader urlClassLoader = ClassLoaderHelper.getClassLoader(inputs, referencedInputs, project);
@@ -105,15 +109,15 @@ public class HunterTransform extends Transform {
                         jarInput.getContentTypes(),
                         jarInput.getScopes(),
                         Format.JAR);
-                if(isIncremental && !emptyRun) {
+                if(isIncremental && !emptyRun) {//增量编译需要额外处理
                     switch(status) {
-                        case NOTCHANGED:
+                        case NOTCHANGED://当前文件不需处理，甚至复制操作都不用；
                             break;
-                        case ADDED:
-                        case CHANGED:
+                        case ADDED://新增 正常处理，输出给下一个任务；
+                        case CHANGED://变更 正常处理，输出给下一个任务；
                             transformJar(jarInput.getFile(), dest, status);
                             break;
-                        case REMOVED:
+                        case REMOVED://移除outputProvider获取路径对应的文件。
                             if (dest.exists()) {
                                 FileUtils.forceDelete(dest);
                             }
@@ -134,7 +138,7 @@ public class HunterTransform extends Transform {
                         directoryInput.getContentTypes(), directoryInput.getScopes(),
                         Format.DIRECTORY);
                 FileUtils.forceMkdir(dest);
-                if(isIncremental && !emptyRun) {
+                if(isIncremental && !emptyRun) {//增量处理 同上
                     String srcDirPath = directoryInput.getFile().getAbsolutePath();
                     String destDirPath = dest.getAbsolutePath();
                     Map<File, Status> fileStatusMap = directoryInput.getChangedFiles();
@@ -178,6 +182,7 @@ public class HunterTransform extends Transform {
     }
 
     private void transformSingleFile(final File inputFile, final File outputFile, final String srcBaseDir) {
+        //实现并发处理 并发编译所有的jar、class，提升编译速度
         waitableExecutor.execute(() -> {
             bytecodeWeaver.weaveSingleClassToFile(inputFile, outputFile, srcBaseDir);
             return null;
@@ -193,6 +198,7 @@ public class HunterTransform extends Transform {
         final String outputDirPath = outputDir.getAbsolutePath();
         if (inputDir.isDirectory()) {
             for (final File file : com.android.utils.FileUtils.getAllFiles(inputDir)) {
+                //实现并发处理 并发编译所有的jar、class，提升编译速度
                 waitableExecutor.execute(() -> {
                     String filePath = file.getAbsolutePath();
                     File outputFile = new File(filePath.replace(inputDirPath, outputDirPath));
@@ -204,6 +210,7 @@ public class HunterTransform extends Transform {
     }
 
     private void transformJar(final File srcJar, final File destJar, Status status) {
+        //实现并发处理 并发编译所有的jar、class，提升编译速度
         waitableExecutor.execute(() -> {
             if(emptyRun) {
                 FileUtils.copyFile(srcJar, destJar);
@@ -215,6 +222,7 @@ public class HunterTransform extends Transform {
     }
 
     private void cleanDexBuilderFolder(File dest) {
+        //实现并发处理 并发编译所有的jar、class，提升编译速度
         waitableExecutor.execute(() -> {
             try {
                 String dexBuilderDir = replaceLastPart(dest.getAbsolutePath(), getName(), "dexBuilder");
