@@ -34,6 +34,8 @@ import java.util.Set;
  * 一个插件框架，在它的基础上可以快速开发一个并发、增量的字节码编译插件，
  * 帮助开发人员隐藏了Transform和ASM的绝大部分逻辑，开发者只需写少量的ASM code，
  * 就可以开发一款编译插件，修改Android项目的字节码。
+ *
+ * 参考文章：https://mp.weixin.qq.com/s/0rcOv1lx6ew6pPDhUmIGbw
  */
 public class HunterTransform extends Transform {
 
