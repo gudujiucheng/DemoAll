@@ -19,9 +19,9 @@ public class ExampleInstrumentedTest {
     @Test
     public void useAppContext() {
         // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getTargetContext();
-
-        assertEquals("com.canzhang.sample.test form dev merger test", appContext.getPackageName());
-        assertEquals("com.canzhang.sample.xxxxx merge form mergeTest test", appContext.getPackageName());
+//        Context appContext = InstrumentationRegistry.getTargetContext();
+//
+//        assertEquals("com.canzhang.sample.test form dev merger test", appContext.getPackageName());
+//        assertEquals("com.canzhang.sample.xxxxx merge form mergeTest test", appContext.getPackageName());
     }
 }
