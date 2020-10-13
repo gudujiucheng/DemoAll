@@ -1,6 +1,8 @@
 package com.canzhang.sample.manager.kotlin
 
 import android.app.Activity
+import android.content.Context
+import android.util.AttributeSet
 import android.view.View
 import com.canzhang.sample.base.BaseManager
 import com.canzhang.sample.base.bean.ComponentItem
@@ -21,14 +23,81 @@ class KotlinKTestManager : BaseManager() {
     internal val v3 = "同一模块下可见"//TODO 这个释义 需要理解下
 
     override fun getSampleItem(activity: Activity?): MutableList<ComponentItem> {
-        super.getSampleItem(activity)
+//        super.getSampleItem(activity)
         //集合定义方法
-        val itemList = mutableListOf(testAddItem(), testAddItem02());
+        val itemList = mutableListOf(testAddItem(), testAddItem02(), testAddItem03(), testAddItem04(), testAddItem05());
         return itemList;
     }
 
     override fun getPriority(): Int {
         return 6
+    }
+
+    private fun testAddItem05(): ComponentItem {//返回值的写法 也是一个冒号 后面加上返回值类型
+        return ComponentItem("静态修饰符", View.OnClickListener {
+            showToast(StaticTest.nameStatic)
+            StaticTest.speakStatic("调用静态方法");
+
+
+            //java 调用则必须要通过 instance 参见 JavaKotlinTest
+//            KotlinKTestManager.StaticTest.instance.getNameStatic();
+//            KotlinKTestManager.StaticTest.instance.speakStatic("哈哈哈哈");
+        })
+    }
+
+    class StaticTest {
+        var name: String = "AA"
+
+        fun speak() {}
+
+        //静态
+        companion object instance{//参考：https://www.jianshu.com/p/a5b0da8bbba3?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
+
+            var nameStatic: String = "BB"
+
+            fun speakStatic(tips: String) {
+                print(tips)
+            }
+
+        }
+    }
+
+    private fun testAddItem04(): ComponentItem {//返回值的写法 也是一个冒号 后面加上返回值类型
+        return ComponentItem("空指针", View.OnClickListener {
+            //一样会崩溃，如果上面activity 不赋值的话
+//           val applicationContext = mActivity.applicationContext
+
+            var name: String? = "哈哈哈"//这种带有？号的标示可以为空
+            name = null;
+            val len = name?.length//只有当name不为null的时候才调用   不加上？号就会报错
+            log("哈哈哈哈-->>name：$len")//这里打印的len 是  null
+
+
+            //Elvis 操作符 ?:
+            //在你的表达式为null的时候执行 ?:后面的操作
+            val len2 = name?.length ?: 666
+            log("哈哈哈哈-->>name：$len2")//这样打印的是666  有点类似于三元表达式
+
+
+            var str: String//不带？号的话，赋值null或者可为空的变量 编译器都会报错
+            str = "666"
+//            str = name;//报错
+//            str = null;//报错
+            str = name!!//不报错  当你操作的对象为空的时候，抛出空指针异常！ KotlinNullPointerException
+            val length = str.length;
+            log("哈哈哈哈-->>str：$length")
+
+
+        })
+
+    }
+
+    private fun testAddItem(): ComponentItem {//返回值的写法 也是一个冒号 后面加上返回值类型
+        return ComponentItem("创建一个对象，并调用方法", View.OnClickListener {
+            TestClass().log()
+            TestClassWithArgs("World!  from kotlin").log()
+        })
+
     }
 
     private fun testAddItem02(): ComponentItem {
@@ -39,6 +108,38 @@ class KotlinKTestManager : BaseManager() {
             TestInterface().test()
         })
     }
+
+    private fun testAddItem03(): ComponentItem {
+        return ComponentItem("继承测试", View.OnClickListener {
+            val s = Student("Runoob", 18, "S12346", 89)
+            println("学生名： ${s.name}")
+            println("年龄： ${s.age}")
+            println("学生号： ${s.no}")
+            println("成绩： ${s.score}")
+
+
+            MyView(mActivity)
+        })
+    }
+
+
+    //open表示可继承（不添加open则默认是final）,extends也被改为:（和实现接口一样,可以继续加接口 顺序无要求）
+    open class Person(var name: String, var age: Int) {// 基类
+
+    }
+
+    //如果子类有主构造函数， 则基类必须在主构造函数中立即初始化。
+    class Student(name: String, age: Int, var no: String, var score: Int) : Person(name, age) {//子类
+
+    }
+
+
+    class MyView : View {
+        //如果没有主构造函数，则需要在子构造函数调用基类构造函数
+        constructor(ctx: Context) : super(ctx)
+        constructor(ctx: Context, attrs: AttributeSet) : super(ctx, attrs)
+    }
+
 
     interface MyInterface {
         fun bar()   // 未实现
@@ -60,7 +161,8 @@ class KotlinKTestManager : BaseManager() {
             println("var 方法:$name")
         }
 
-        override var name: String//强制重写
+        override var name: String
+            //强制重写
             get() = "哈哈哈哈哈哈"
             set(value) {}
 
@@ -70,13 +172,6 @@ class KotlinKTestManager : BaseManager() {
 
     }
 
-    private fun testAddItem(): ComponentItem {//返回值的写法 也是一个冒号 后面加上返回值类型
-        return ComponentItem("创建一个对象，并调用方法", View.OnClickListener {
-            TestClass().log()
-            TestClassWithArgs("World!  from kotlin").log()
-        })
-
-    }
 
     //无参数的
     class TestClass() {
