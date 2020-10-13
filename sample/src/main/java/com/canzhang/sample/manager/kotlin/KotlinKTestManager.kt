@@ -65,7 +65,7 @@ class KotlinKTestManager : BaseManager() {
     private fun testAddItem04(): ComponentItem {//返回值的写法 也是一个冒号 后面加上返回值类型
         return ComponentItem("空指针", View.OnClickListener {
             //一样会崩溃，如果上面activity 不赋值的话
-//           val applicationContext = mActivity.applicationContext
+//           val applicationContext = mActivity.applicationContext//这里有个坑，如果BaseManager 是java 则这一行不会报错，只有是kotlin的时候才会报错
 
             var name: String? = "哈哈哈"//这种带有？号的标示可以为空
             name = null;
@@ -116,9 +116,6 @@ class KotlinKTestManager : BaseManager() {
             println("年龄： ${s.age}")
             println("学生号： ${s.no}")
             println("成绩： ${s.score}")
-
-
-            MyView(mActivity)
         })
     }
 
