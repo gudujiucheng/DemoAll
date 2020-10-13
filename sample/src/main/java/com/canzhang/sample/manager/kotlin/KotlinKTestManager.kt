@@ -33,6 +33,12 @@ class KotlinKTestManager : BaseManager() {
         return 6
     }
 
+    //TODO 还有集合 等概念需要熟悉 https://www.jianshu.com/p/d627bf3d5d72
+
+
+
+
+
     private fun testAddItem05(): ComponentItem {//返回值的写法 也是一个冒号 后面加上返回值类型
         return ComponentItem("静态修饰符", View.OnClickListener {
             showToast(StaticTest.nameStatic)
