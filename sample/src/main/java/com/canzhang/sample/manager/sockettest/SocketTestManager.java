@@ -1,22 +1,18 @@
-package com.canzhang.sample.copyfast;
+package com.canzhang.sample.manager.sockettest;
 
 import android.app.Activity;
-import android.app.Application;
-import android.os.Bundle;
-import android.util.Log;
+import android.content.Intent;
 import android.view.View;
-import android.widget.Toast;
 
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
-import com.example.base.base.AppProxy;
 import com.example.simple_test_annotations.MarkManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@MarkManager(value = "用于快速copy")
-public class CopyManager extends BaseManager {
+@MarkManager(value = "socket test")
+public class SocketTestManager extends BaseManager {
 
 
     @Override
@@ -27,13 +23,17 @@ public class CopyManager extends BaseManager {
         return list;
     }
 
+    @Override
+    public int getPriority() {
+        return 6;
+    }
 
     private ComponentItem test() {
 
-        return new ComponentItem("用于快速copy", new View.OnClickListener() {
+        return new ComponentItem("开启测试页面", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mActivity.startActivity(new Intent(mActivity,SocketTestActivity.class));
 
             }
         });

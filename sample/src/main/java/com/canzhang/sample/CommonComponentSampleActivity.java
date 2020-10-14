@@ -104,6 +104,7 @@ public class CommonComponentSampleActivity extends BaseActivity implements INoti
     protected void onDestroy() {
         super.onDestroy();
         log("onDestroy");
+        mIManager =null;
     }
 
 

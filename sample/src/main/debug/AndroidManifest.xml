@@ -22,7 +22,8 @@
         android:label="@string/sample_app_name"
         android:supportsRtl="true"
         tools:replace="android:allowBackup,android:icon,android:label">
-        <activity android:name=".manager.kotlin.KotlinTestActivity"></activity>
+        <activity android:name=".manager.sockettest.SocketTestActivity"></activity>
+        <activity android:name=".manager.kotlin.KotlinTestActivity" />
         <activity android:name=".manager.jetpack.livedata.LiveDataTestActivity" />
         <activity android:name=".manager.jetpack.lifecycle.GoogleLifeCycleTestActivity" />
         <activity android:name=".manager.jetpack.lifecycle.RXLifeTestActivity" />
