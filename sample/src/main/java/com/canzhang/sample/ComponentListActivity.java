@@ -162,6 +162,13 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
                 showFragment(CommonViewShowFragment.newInstance(CommonViewShowFragment.DASH_LINE));
             }
         }));
+
+        mData.add(new ComponentItem("投票", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFragment(CommonViewShowFragment.newInstance(CommonViewShowFragment.VOTE_VIEW));
+            }
+        }).setPriority(7));
         mData.add(new ComponentItem("WebView 相关测试", new View.OnClickListener() {
             @Override
             public void onClick(View v) {

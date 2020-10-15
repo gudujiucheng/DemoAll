@@ -69,9 +69,9 @@ public class Server {
                 DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
                 while(true){
                     i++;
-                    String msgRecv = dis.readUTF();
+                    String msgRecv = dis.readUTF();//接收来自客户端的数据
                     Log.e("CAN_TEST","msg from client:"+msgRecv);
-                    dos.writeUTF("sever send:"+msgRecv + i);
+                    dos.writeUTF(msgRecv + i);//服务端发送
                     dos.flush();
                 }
             } catch (IOException e) {

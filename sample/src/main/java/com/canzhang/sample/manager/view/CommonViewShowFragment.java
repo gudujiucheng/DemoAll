@@ -1,5 +1,7 @@
 package com.canzhang.sample.manager.view;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
@@ -10,7 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.canzhang.sample.R;
+import com.canzhang.sample.manager.view.voteview.VoteListener;
+import com.canzhang.sample.manager.view.voteview.VoteView;
 import com.example.base.base.BaseFragment;
+
+import java.util.LinkedHashMap;
 
 
 /**
@@ -19,9 +25,10 @@ import com.example.base.base.BaseFragment;
 public class CommonViewShowFragment extends BaseFragment {
     private static final String TYPE_KEY = "type_key";
     public static final int DASH_LINE = 1;
+    public static final int VOTE_VIEW = 2;
 
 
-    @IntDef({DASH_LINE})
+    @IntDef({DASH_LINE,VOTE_VIEW})
     public @interface Type {
 
     }
@@ -60,8 +67,54 @@ public class CommonViewShowFragment extends BaseFragment {
             case DASH_LINE:
                 view.findViewById(R.id.ll_dash_line).setVisibility(View.VISIBLE);
                 break;
+                case VOTE_VIEW:
+                    VoteView voteView = view.findViewById(R.id.vote_view);
+                    voteView.setVisibility(View.VISIBLE);
+
+                    LinkedHashMap<String, Integer> voteData = new LinkedHashMap<>();
+                    //造数据源
+                    voteData.put("美国", 0);
+                    voteData.put("英国", 15);
+                    voteData.put("中国", 3);
+                    voteData.put("俄罗斯", 33);
+                    voteData.put("日本", 99);
+
+                    voteView.initVote(voteData);
+                    voteView.setAnimationRate(600);
+                    voteView.setVoteListener(new VoteListener() {
+                        @Override
+                        public boolean onItemClick(View view, int index, boolean status) {
+                            if (!status) {
+                                showDialog(voteView, view);
+                            } else {
+                                voteView.notifyUpdateChildren(view, true);
+                            }
+                            return true;
+                        }
+                    });
+                view.findViewById(R.id.ll_dash_line).setVisibility(View.VISIBLE);
+                break;
         }
 
     }
-
+    /**
+     * 取消投票的 dialog
+     */
+    public void showDialog(final VoteView voteView, final View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(CommonViewShowFragment.this.mContext)
+                .setTitle("是否取消投票？")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        voteView.resetNumbers(); // 恢复初始投票数据
+                        voteView.notifyUpdateChildren(view, false);
+                    }
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+        builder.create().show();
+    }
 }
