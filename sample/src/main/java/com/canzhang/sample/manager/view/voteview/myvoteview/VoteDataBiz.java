@@ -99,11 +99,11 @@ public class VoteDataBiz {
     }
 
 
-    public static float getPercent(int a, int b) {
-
+    public static int getPercent(int a, int b) {
         if (b == 0) {
-            return 0f;
+            return 0;
         }
-        return new BigDecimal((float) a / b).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
+        //四舍五入
+        return Math.round((float) a * 100 / b);
     }
 }

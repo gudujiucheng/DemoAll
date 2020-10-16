@@ -6,8 +6,8 @@ public class VoteBean {
     boolean isChecked;
     //当前item投票总量
     int currentItemVoteNum;
-    //百分比
-    float percent;
+    //百分比*100
+    int percent;
 
     public VoteBean(int type) {
         this.type = type;

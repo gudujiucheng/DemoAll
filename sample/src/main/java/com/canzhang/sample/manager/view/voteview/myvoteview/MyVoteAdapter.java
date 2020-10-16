@@ -93,12 +93,13 @@ public class MyVoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
         });
         if (holder instanceof VoteHolder) {
+            VoteHolder voteHolder = (VoteHolder) holder;
             //设置是否已经投票的状态
-            ((VoteHolder) holder).voteItemView.setIsHasVote(mVoteDataBiz.mIsHasVote,bean.percent);
-            ((VoteHolder) holder).voteItemView.setContent(bean.title);
-            ((VoteHolder) holder).voteItemView.setNumber(bean.currentItemVoteNum);
-            ((VoteHolder) holder).voteItemView.setPercent(bean.percent);
-            ((VoteHolder) holder).voteItemView.setVoteItemIsChecked(bean.isChecked);
+            voteHolder.voteItemView.setIsHasVote(mVoteDataBiz.mIsHasVote,bean.percent);
+            voteHolder.voteItemView.setContent(bean.title);
+            voteHolder.voteItemView.setNumber(bean.currentItemVoteNum);
+            voteHolder.voteItemView.setPercent(bean.percent);
+            voteHolder.voteItemView.setVoteItemIsChecked(bean.isChecked);
         } else if (holder instanceof MoreVoteHolder) {
 
         }

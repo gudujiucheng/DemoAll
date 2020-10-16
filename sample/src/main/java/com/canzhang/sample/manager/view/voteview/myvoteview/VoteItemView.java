@@ -62,7 +62,7 @@ public class VoteItemView extends LinearLayout {
         mTvNumber.setText(number + "票");
     }
 
-    public void setPercent(float percent) {
+    public void setPercent(int percent) {
         mTvPercent.setText(percent + "%");
     }
 
@@ -78,7 +78,7 @@ public class VoteItemView extends LinearLayout {
         mAnimatorSet.setDuration(mAnimationRate);
     }
 
-    public void setIsHasVote(boolean selected, float percent) {//这里是设置是否已经投片的状态
+    public void setIsHasVote(boolean selected, int percent) {//这里是设置是否已经投片的状态
         setSelected(selected);
         setChildViewStatus(selected, percent);
         if (selected) {
@@ -108,7 +108,7 @@ public class VoteItemView extends LinearLayout {
     }
 
 
-    private void setChildViewStatus(boolean isSelected, float percent) {
+    private void setChildViewStatus(boolean isSelected, int percent) {
         if (isSelected) {
             progressBar.post(new Runnable() {
                 @Override
@@ -117,10 +117,12 @@ public class VoteItemView extends LinearLayout {
                 }
             });
             mTvNumber.setVisibility(VISIBLE);
+            mTvPercent.setVisibility(VISIBLE);
             mTvNumber.setAlpha(0.0f);
         } else {
             progressBar.setProgress(0);
             mTvNumber.setVisibility(GONE);
+            mTvPercent.setVisibility(GONE);
             tvVoteName.setTextColor(Color.parseColor("#8D9799"));
             tvVoteName.setCompoundDrawables(null, null, null, null);
             tvVoteName.animate().translationX(0).setDuration(mAnimationRate).start();
@@ -129,9 +131,8 @@ public class VoteItemView extends LinearLayout {
     }
 
 
-    private void progressBarAnimation(final ProgressBar progressBar, float percent) {
-        float result = percent * 100;
-        ValueAnimator animator = ValueAnimator.ofInt(0, (int) Math.ceil(result)).setDuration(mAnimationRate);
+    private void progressBarAnimation(final ProgressBar progressBar, int percent) {
+        ValueAnimator animator = ValueAnimator.ofInt(0, percent).setDuration(mAnimationRate);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
