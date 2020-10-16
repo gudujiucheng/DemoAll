@@ -7,6 +7,9 @@ import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +17,14 @@ import android.view.ViewGroup;
 import com.canzhang.sample.R;
 import com.canzhang.sample.manager.view.voteview.VoteListener;
 import com.canzhang.sample.manager.view.voteview.VoteView;
+import com.canzhang.sample.manager.view.voteview.myvoteview.MyVoteAdapter;
+import com.canzhang.sample.manager.view.voteview.myvoteview.VoteBean;
+import com.canzhang.sample.manager.view.voteview.myvoteview.VoteDataBiz;
 import com.example.base.base.BaseFragment;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 
 /**
@@ -74,10 +82,9 @@ public class CommonViewShowFragment extends BaseFragment {
                     LinkedHashMap<String, Integer> voteData = new LinkedHashMap<>();
                     //造数据源
                     voteData.put("美国", 0);
-                    voteData.put("英国", 15);
-                    voteData.put("中国", 3);
-                    voteData.put("俄罗斯", 33);
-                    voteData.put("日本", 99);
+                    voteData.put("英国", 1);
+                    voteData.put("中国", 1);
+
 
                     voteView.initVote(voteData);
                     voteView.setAnimationRate(600);
@@ -92,9 +99,24 @@ public class CommonViewShowFragment extends BaseFragment {
                             return true;
                         }
                     });
-                view.findViewById(R.id.ll_dash_line).setVisibility(View.VISIBLE);
                 break;
         }
+
+        RecyclerView recyclerView = view.findViewById(R.id.rv_app);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        List<VoteBean> voteBeans = new ArrayList<>();
+        voteBeans.add(new VoteBean(0).setTitle("好吃").setCurrentItemVoteNum(1));
+        voteBeans.add(new VoteBean(0).setTitle("不好吃").setCurrentItemVoteNum(2));
+        voteBeans.add(new VoteBean(0).setTitle("还行吧").setCurrentItemVoteNum(3 ));
+        voteBeans.add(new VoteBean(1));
+
+        recyclerView.setAdapter(new MyVoteAdapter(new VoteDataBiz(voteBeans,1,false), new MyVoteAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                showToast("点击："+position);
+
+            }
+        }));
 
     }
     /**
