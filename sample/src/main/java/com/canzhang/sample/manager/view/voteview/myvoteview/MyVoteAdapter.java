@@ -97,6 +97,7 @@ public class MyVoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             ((VoteHolder) holder).voteItemView.setIsHasVote(mVoteDataBiz.mIsHasVote,bean.percent);
             ((VoteHolder) holder).voteItemView.setContent(bean.title);
             ((VoteHolder) holder).voteItemView.setNumber(bean.currentItemVoteNum);
+            ((VoteHolder) holder).voteItemView.setPercent(bean.percent);
             ((VoteHolder) holder).voteItemView.setVoteItemIsChecked(bean.isChecked);
         } else if (holder instanceof MoreVoteHolder) {
 

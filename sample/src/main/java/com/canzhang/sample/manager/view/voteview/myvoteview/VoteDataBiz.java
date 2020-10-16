@@ -1,5 +1,7 @@
 package com.canzhang.sample.manager.view.voteview.myvoteview;
 
+import android.util.Log;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -19,7 +21,7 @@ public class VoteDataBiz {
     public boolean mIsHasVote;
 
 
-    public VoteDataBiz(List<VoteBean> voteData, int maxSelectNum,boolean isHasVote) {
+    public VoteDataBiz(List<VoteBean> voteData, int maxSelectNum, boolean isHasVote) {
         this.mVoteData = voteData;
         if (maxSelectNum > 0) {
             this.mMaxSelectNum = maxSelectNum;
@@ -28,13 +30,13 @@ public class VoteDataBiz {
         mTotalVoteNum = getTotalVoteNum();
     }
 
-    private int getTotalVoteNum(){
-        int totalVoteNum=0;
-        if(mVoteData==null||mVoteData.size()==0){
+    private int getTotalVoteNum() {
+        int totalVoteNum = 0;
+        if (mVoteData == null || mVoteData.size() == 0) {
             return totalVoteNum;
         }
         for (VoteBean item : mVoteData) {
-            totalVoteNum = totalVoteNum+item.currentItemVoteNum;
+            totalVoteNum = totalVoteNum + item.currentItemVoteNum;
         }
         return totalVoteNum;
     }
@@ -65,38 +67,43 @@ public class VoteDataBiz {
             return;
         }
         for (VoteBean item : mVoteData) {
-            if(item == bean){//当前选项
+            if (item == bean) {//当前选项
                 //已选中则总票数-1，未选中则总票数+1
-                if(item.isChecked){
+                if (item.isChecked) {
                     mTotalVoteNum--;
                     item.currentItemVoteNum--;
                     mIsHasVote = false;
-                }else{
+                } else {
                     mTotalVoteNum++;
                     item.currentItemVoteNum++;
                     mIsHasVote = true;
                 }
                 item.isChecked = !item.isChecked;
-            }else{//非当前选项
-                if(item.isChecked){
+            } else {//非当前选项
+                if (item.isChecked) {
                     mTotalVoteNum--;
                     item.currentItemVoteNum--;
                 }
-                item.isChecked =false;
+                item.isChecked = false;
             }
-            //更新百分比
-            item.percent = getPercent(item.currentItemVoteNum,mTotalVoteNum);
+
 
         }
-
+        //需要等循环完毕在更新百分比，防止总量错误
+        for (VoteBean item : mVoteData) {
+            //更新百分比
+            item.percent = getPercent(item.currentItemVoteNum, mTotalVoteNum);
+            Log.e("Test", "当前数量:" + item.currentItemVoteNum + " 总数量：" + mTotalVoteNum + " 百分比：" + item.percent);
+        }
 
     }
 
 
-    public static float getPercent(int a,int b) {
-        if(b==0){
+    public static float getPercent(int a, int b) {
+
+        if (b == 0) {
             return 0f;
         }
-        return new BigDecimal((float)a/b).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
+        return new BigDecimal((float) a / b).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
     }
 }

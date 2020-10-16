@@ -21,13 +21,12 @@ import com.canzhang.sample.R;
 public class VoteItemView extends LinearLayout {
 
     private ProgressBar progressBar;
+    private TextView tvVoteName;
+    private TextView mTvNumber;
+    private TextView mTvPercent;
 
-    private TextView contentView;
 
-    private TextView numberView;
-
-
-    private AnimatorSet animatorSet;
+    private AnimatorSet mAnimatorSet;
 
     private int mAnimationRate = 600;
 
@@ -42,35 +41,41 @@ public class VoteItemView extends LinearLayout {
 
     public VoteItemView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        inflate(getContext(), R.layout.vote_sub_view, this);
+        inflate(getContext(), R.layout.vote_item_view, this);
         initView();
         initAnimation();
     }
 
     private void initView() {
         progressBar = findViewById(R.id.progress_view);
-        contentView = findViewById(R.id.name_text_view);
-        numberView = findViewById(R.id.number_text_view);
-        numberView.setAlpha(0.0f);
+        tvVoteName = findViewById(R.id.tv_name);
+        mTvNumber = findViewById(R.id.tv_number);
+        mTvPercent = findViewById(R.id.tv_percent);
+        mTvNumber.setAlpha(0.0f);
     }
 
     public void setContent(String content) {
-        contentView.setText(content);
+        tvVoteName.setText(content);
     }
 
     public void setNumber(int number) {
-        numberView.setText(number + "人");
+        mTvNumber.setText(number + "票");
     }
 
+    public void setPercent(float percent) {
+        mTvPercent.setText(percent + "%");
+    }
+
+
     private void initAnimation() {
-        animatorSet = new AnimatorSet();
+        mAnimatorSet = new AnimatorSet();
         Animator[] arrayAnimator = new Animator[2];
-        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(contentView, "x", 30);
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(tvVoteName, "x", 30);
         arrayAnimator[0] = objectAnimator;
-        objectAnimator = ObjectAnimator.ofFloat(numberView, "alpha", 1.0f);
+        objectAnimator = ObjectAnimator.ofFloat(mTvNumber, "alpha", 1.0f);
         arrayAnimator[1] = objectAnimator;
-        animatorSet.playTogether(arrayAnimator);
-        animatorSet.setDuration(mAnimationRate);
+        mAnimatorSet.playTogether(arrayAnimator);
+        mAnimatorSet.setDuration(mAnimationRate);
     }
 
     public void setIsHasVote(boolean selected, float percent) {//这里是设置是否已经投片的状态
@@ -88,7 +93,7 @@ public class VoteItemView extends LinearLayout {
         post(new Runnable() {
             @Override
             public void run() {
-                animatorSet.start();
+                mAnimatorSet.start();
             }
         });
     }
@@ -97,7 +102,7 @@ public class VoteItemView extends LinearLayout {
         post(new Runnable() {
             @Override
             public void run() {
-                animatorSet.cancel();
+                mAnimatorSet.cancel();
             }
         });
     }
@@ -111,14 +116,14 @@ public class VoteItemView extends LinearLayout {
                     progressBarAnimation(progressBar, percent);
                 }
             });
-            numberView.setVisibility(VISIBLE);
-            numberView.setAlpha(0.0f);
+            mTvNumber.setVisibility(VISIBLE);
+            mTvNumber.setAlpha(0.0f);
         } else {
             progressBar.setProgress(0);
-            numberView.setVisibility(GONE);
-            contentView.setTextColor(Color.parseColor("#8D9799"));
-            contentView.setCompoundDrawables(null, null, null, null);
-            contentView.animate().translationX(0).setDuration(mAnimationRate).start();
+            mTvNumber.setVisibility(GONE);
+            tvVoteName.setTextColor(Color.parseColor("#8D9799"));
+            tvVoteName.setCompoundDrawables(null, null, null, null);
+            tvVoteName.animate().translationX(0).setDuration(mAnimationRate).start();
 
         }
     }
@@ -144,13 +149,13 @@ public class VoteItemView extends LinearLayout {
      */
     public void setVoteItemIsChecked(boolean status) {
         //选中文字颜色
-        contentView.setTextColor(Color.parseColor(status ? "#00C0EB" : "#8D9799"));
+        tvVoteName.setTextColor(Color.parseColor(status ? "#00C0EB" : "#8D9799"));
         //数字颜色
-        numberView.setTextColor(Color.parseColor(status ? "#00C0EB" : "#8D9799"));
+        mTvNumber.setTextColor(Color.parseColor(status ? "#00C0EB" : "#8D9799"));
         //带勾选框
         Drawable right = getResources().getDrawable(status ? R.mipmap.vote_selected : R.mipmap.vote_empty);
         right.setBounds(0, 0, right.getIntrinsicWidth(), right.getIntrinsicHeight());
-        contentView.setCompoundDrawables(null, null, right, null);
+        tvVoteName.setCompoundDrawables(null, null, right, null);
         //进度条颜色设置
         progressBar.setProgressDrawable(getResources().getDrawable(status ? R.drawable.select_progress_view_bg : R.drawable.unselect_progress_view_bg));
         setBackgroundResource(status ? R.drawable.select_bg : R.drawable.unselect_bg);
