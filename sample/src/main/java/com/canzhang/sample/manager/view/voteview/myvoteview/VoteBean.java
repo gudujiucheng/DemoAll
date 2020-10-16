@@ -4,6 +4,7 @@ public class VoteBean {
     int type;
     String title;
     boolean isChecked;
+    boolean isShow;
     //当前item投票总量
     int currentItemVoteNum;
     //百分比*100

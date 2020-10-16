@@ -19,17 +19,45 @@ public class VoteDataBiz {
     private int mMaxSelectNum = 1;
     //是否已经投票
     public boolean mIsHasVote;
+    //最大展示数量(多出的隐藏处理)
+    public int mMaxShowNum;
 
 
-    public VoteDataBiz(List<VoteBean> voteData, int maxSelectNum, boolean isHasVote) {
+    public VoteDataBiz(List<VoteBean> voteData, int maxSelectNum, boolean isHasVote,int maxShowNum) {
         this.mVoteData = voteData;
         if (maxSelectNum > 0) {
             this.mMaxSelectNum = maxSelectNum;
         }
         this.mIsHasVote = isHasVote;
         mTotalVoteNum = getTotalVoteNum();
+        this.mMaxShowNum = maxShowNum;
+
+        formatData();
     }
 
+    private void formatData() {
+        if(mVoteData==null||mVoteData.size()==0){
+            return;
+        }
+        int num=0;
+        for (int i = 0; i <mVoteData.size() ; i++) {
+            VoteBean item = mVoteData.get(i);
+            if(item.type==MyVoteAdapter.VOTE_TYPE){
+                num++;
+                if(num>mMaxShowNum){//控制展示隐藏
+                    item.isShow=false;
+                }else{
+                    item.isShow=true;
+                }
+            }
+        }
+
+    }
+
+    /**
+     * 获取投票总数
+     * @return
+     */
     private int getTotalVoteNum() {
         int totalVoteNum = 0;
         if (mVoteData == null || mVoteData.size() == 0) {

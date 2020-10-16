@@ -5,10 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.canzhang.sample.R;
+import com.example.base.utils.ToastUtil;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -17,9 +19,9 @@ import java.util.List;
 public class MyVoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
-    //投片
+    //具体投票item
     public static final int VOTE_TYPE = 0;
-    //更多
+    //更多item
     public static final int MORE_TYPE = 1;
 
     private List<VoteBean> mData;
@@ -75,7 +77,7 @@ public class MyVoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 }
                 switch (bean.type){
                     case MyVoteAdapter.MORE_TYPE:
-                        //TODO 跳转详情页面
+                        ToastUtil.toastShort("跳转详情页面");
                         break;
                     case MyVoteAdapter.VOTE_TYPE:
                         if(mVoteDataBiz!=null){//需要考虑不同的item类型
@@ -94,6 +96,18 @@ public class MyVoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         });
         if (holder instanceof VoteHolder) {
             VoteHolder voteHolder = (VoteHolder) holder;
+            ViewGroup.LayoutParams layoutParams = voteHolder.itemView.getLayoutParams();
+            if(bean.isShow){
+                voteHolder.itemView.setVisibility(View.VISIBLE);
+                layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            }else{
+                voteHolder.itemView.setVisibility(View.GONE);
+                layoutParams.height=0;
+                layoutParams.width=0;
+            }
+            voteHolder.itemView.setLayoutParams(layoutParams);
+            voteHolder.itemView.setVisibility(bean.isShow?View.VISIBLE:View.GONE);
             //设置是否已经投票的状态
             voteHolder.voteItemView.setIsHasVote(mVoteDataBiz.mIsHasVote,bean.percent);
             voteHolder.voteItemView.setContent(bean.title);

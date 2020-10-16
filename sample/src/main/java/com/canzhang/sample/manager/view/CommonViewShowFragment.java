@@ -108,9 +108,10 @@ public class CommonViewShowFragment extends BaseFragment {
         voteBeans.add(new VoteBean(0).setTitle("好吃").setCurrentItemVoteNum(1));
         voteBeans.add(new VoteBean(0).setTitle("不好吃").setCurrentItemVoteNum(2));
         voteBeans.add(new VoteBean(0).setTitle("还行吧").setCurrentItemVoteNum(3 ));
+        voteBeans.add(new VoteBean(0).setTitle("中立").setCurrentItemVoteNum(3 ));
         voteBeans.add(new VoteBean(1));
 
-        recyclerView.setAdapter(new MyVoteAdapter(new VoteDataBiz(voteBeans,1,false), new MyVoteAdapter.OnItemClickListener() {
+        recyclerView.setAdapter(new MyVoteAdapter(new VoteDataBiz(voteBeans,1,false,20), new MyVoteAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 showToast("点击："+position);
