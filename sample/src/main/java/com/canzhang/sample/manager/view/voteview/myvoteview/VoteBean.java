@@ -5,6 +5,8 @@ public class VoteBean {
     String title;
     boolean isChecked;
     boolean isShow;
+    //是否需要动画
+    public boolean isNeedAnim;
     //当前item投票总量
     int currentItemVoteNum;
     //百分比*100

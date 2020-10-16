@@ -1,6 +1,7 @@
 package com.canzhang.sample.manager.view.voteview.myvoteview;
 
 import android.util.Log;
+import android.util.Pair;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -14,41 +15,70 @@ public class VoteDataBiz {
     //总投票数量
     public int mTotalVoteNum;
     //投票数据
-    List<VoteBean> mVoteData;
+    Pair<VoteListInfoBean, List<VoteBean>> mVoteListInfoBeanListPair;
+    public List<VoteBean> mVoteData;
+    private VoteListInfoBean mVoteListInfoBean;
     //最多选几项
     private int mMaxSelectNum = 1;
-    //是否已经投票
-    public boolean mIsHasVote;
     //最大展示数量(多出的隐藏处理)
     public int mMaxShowNum;
+    //最大选项
+    public int maxSelectNum;
 
 
-    public VoteDataBiz(List<VoteBean> voteData, int maxSelectNum, boolean isHasVote,int maxShowNum) {
-        this.mVoteData = voteData;
-        if (maxSelectNum > 0) {
-            this.mMaxSelectNum = maxSelectNum;
+    public VoteDataBiz(Pair<VoteListInfoBean, List<VoteBean>> voteListInfoBeanListPair) {
+        this.mVoteListInfoBeanListPair = voteListInfoBeanListPair;
+        if (mVoteListInfoBeanListPair == null) {
+            return;
         }
-        this.mIsHasVote = isHasVote;
+        mVoteListInfoBean = mVoteListInfoBeanListPair.first;
+        mVoteData = mVoteListInfoBeanListPair.second;
+        if (mVoteListInfoBean != null) {
+            if (maxSelectNum > 0) {
+                this.mMaxSelectNum = maxSelectNum;
+            }
+
+            this.mMaxShowNum = mVoteListInfoBean.mMaxShowNum;
+        }
+
+
         mTotalVoteNum = getTotalVoteNum();
-        this.mMaxShowNum = maxShowNum;
+
 
         formatData();
     }
 
-    private void formatData() {
-        if(mVoteData==null||mVoteData.size()==0){
+    public boolean isHasVote() {
+        //注意始终要引用同一个对象
+        if (mVoteListInfoBean != null){
+            return mVoteListInfoBean.mIsHasVote;
+        }else{
+            return false;
+        }
+    }
+
+    public void setHasVote(boolean hasVote) {
+        if (mVoteListInfoBean == null){
             return;
         }
-        int num=0;
-        for (int i = 0; i <mVoteData.size() ; i++) {
+        mVoteListInfoBean.mIsHasVote = hasVote;
+    }
+
+    private void formatData() {
+        if (mVoteData == null || mVoteData.size() == 0) {
+            return;
+        }
+        int num = 0;
+        for (int i = 0; i < mVoteData.size(); i++) {
             VoteBean item = mVoteData.get(i);
-            if(item.type==MyVoteAdapter.VOTE_TYPE){
+            if (item.type == MyVoteAdapter.VOTE_TYPE) {
                 num++;
-                if(num>mMaxShowNum){//控制展示隐藏
-                    item.isShow=false;
-                }else{
-                    item.isShow=true;
+                if (num > mMaxShowNum) {//控制展示隐藏
+                    item.isShow = false;
+                } else {
+                    item.isShow = true;
                 }
+                item.percent = getPercent(item.currentItemVoteNum, mTotalVoteNum);
             }
         }
 
@@ -56,6 +86,7 @@ public class VoteDataBiz {
 
     /**
      * 获取投票总数
+     *
      * @return
      */
     private int getTotalVoteNum() {
@@ -78,12 +109,14 @@ public class VoteDataBiz {
         if (bean == null) {
             return;
         }
+        bean.isNeedAnim = true;
         if (mMaxSelectNum == 1) {//单选
             resetAndSelectCurrentItem(bean);
         } else {//FIXME 多选
             //多选应该是点击提交的时候 才更新数据，另外多选的ui样式也不同  这里暂时空值
         }
     }
+
 
     /**
      * （单选逻辑）重置已经选中的项目并选中当前项目
@@ -100,11 +133,11 @@ public class VoteDataBiz {
                 if (item.isChecked) {
                     mTotalVoteNum--;
                     item.currentItemVoteNum--;
-                    mIsHasVote = false;
+                    setHasVote(false);
                 } else {
                     mTotalVoteNum++;
                     item.currentItemVoteNum++;
-                    mIsHasVote = true;
+                    setHasVote(true);
                 }
                 item.isChecked = !item.isChecked;
             } else {//非当前选项

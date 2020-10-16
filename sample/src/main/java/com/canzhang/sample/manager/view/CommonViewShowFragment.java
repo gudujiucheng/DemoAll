@@ -3,6 +3,7 @@ package com.canzhang.sample.manager.view;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,8 @@ import com.canzhang.sample.manager.view.voteview.VoteView;
 import com.canzhang.sample.manager.view.voteview.myvoteview.MyVoteAdapter;
 import com.canzhang.sample.manager.view.voteview.myvoteview.VoteBean;
 import com.canzhang.sample.manager.view.voteview.myvoteview.VoteDataBiz;
+import com.canzhang.sample.manager.view.voteview.myvoteview.VoteItemView;
+import com.canzhang.sample.manager.view.voteview.myvoteview.VoteListInfoBean;
 import com.example.base.base.BaseFragment;
 
 import java.util.ArrayList;
@@ -36,7 +40,7 @@ public class CommonViewShowFragment extends BaseFragment {
     public static final int VOTE_VIEW = 2;
 
 
-    @IntDef({DASH_LINE,VOTE_VIEW})
+    @IntDef({DASH_LINE, VOTE_VIEW})
     public @interface Type {
 
     }
@@ -75,51 +79,93 @@ public class CommonViewShowFragment extends BaseFragment {
             case DASH_LINE:
                 view.findViewById(R.id.ll_dash_line).setVisibility(View.VISIBLE);
                 break;
-                case VOTE_VIEW:
-                    VoteView voteView = view.findViewById(R.id.vote_view);
-                    voteView.setVisibility(View.VISIBLE);
+            case VOTE_VIEW:
+                VoteView voteView = view.findViewById(R.id.vote_view);
+                voteView.setVisibility(View.VISIBLE);
 
-                    LinkedHashMap<String, Integer> voteData = new LinkedHashMap<>();
-                    //造数据源
-                    voteData.put("美国", 0);
-                    voteData.put("英国", 1);
-                    voteData.put("中国", 1);
+                LinkedHashMap<String, Integer> voteData = new LinkedHashMap<>();
+                //造数据源
+                voteData.put("美国", 0);
+                voteData.put("英国", 1);
+                voteData.put("中国", 1);
 
 
-                    voteView.initVote(voteData);
-                    voteView.setAnimationRate(600);
-                    voteView.setVoteListener(new VoteListener() {
-                        @Override
-                        public boolean onItemClick(View view, int index, boolean status) {
-                            if (!status) {
-                                showDialog(voteView, view);
-                            } else {
-                                voteView.notifyUpdateChildren(view, true);
-                            }
-                            return true;
+                voteView.initVote(voteData);
+                voteView.setAnimationRate(600);
+                voteView.setVoteListener(new VoteListener() {
+                    @Override
+                    public boolean onItemClick(View view, int index, boolean status) {
+                        if (!status) {
+                            showDialog(voteView, view);
+                        } else {
+                            voteView.notifyUpdateChildren(view, true);
                         }
-                    });
+                        return true;
+                    }
+                });
                 break;
         }
 
-        RecyclerView recyclerView = view.findViewById(R.id.rv_app);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        List<VoteBean> voteBeans = new ArrayList<>();
-        voteBeans.add(new VoteBean(0).setTitle("好吃").setCurrentItemVoteNum(1));
-        voteBeans.add(new VoteBean(0).setTitle("不好吃").setCurrentItemVoteNum(2));
-        voteBeans.add(new VoteBean(0).setTitle("还行吧").setCurrentItemVoteNum(3 ));
-        voteBeans.add(new VoteBean(0).setTitle("中立").setCurrentItemVoteNum(3 ));
-        voteBeans.add(new VoteBean(1));
+        //测试外层嵌套rv逻辑
+        RecyclerView outRecyclerView = view.findViewById(R.id.rv_app);
+        outRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        List<Pair<VoteListInfoBean, List<VoteBean>>> mDatas = new ArrayList<>();
 
-        recyclerView.setAdapter(new MyVoteAdapter(new VoteDataBiz(voteBeans,1,false,20), new MyVoteAdapter.OnItemClickListener() {
+        for (int i = 0; i <30 ; i++) {
+            List<VoteBean> voteBeans = new ArrayList<>();
+            voteBeans.add(new VoteBean(0).setTitle("好吃"+i).setCurrentItemVoteNum(1));
+            voteBeans.add(new VoteBean(0).setTitle("不好吃"+i).setCurrentItemVoteNum(2));
+            voteBeans.add(new VoteBean(0).setTitle("还行吧"+i).setCurrentItemVoteNum(3));
+            voteBeans.add(new VoteBean(0).setTitle("中立"+i).setCurrentItemVoteNum(3));
+            voteBeans.add(new VoteBean(1));
+            mDatas.add(new Pair<>(new VoteListInfoBean(1, i%2==0, 20),voteBeans));//FIXME 动画问题
+        }
+
+        outRecyclerView.setAdapter(new RecyclerView.Adapter() {
+            @NonNull
             @Override
-            public void onItemClick(View view, int position) {
-                showToast("点击："+position);
+            public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                return new TestHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_temp_out_item, parent, false));
+            }
+
+            @Override
+            public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+                Pair<VoteListInfoBean, List<VoteBean>> voteListInfoBeanListPair = mDatas.get(position);
+                ((TestHolder)holder).inRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                ((TestHolder)holder).inRecyclerView.setAdapter(new MyVoteAdapter(new VoteDataBiz(voteListInfoBeanListPair), new MyVoteAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+//                        showToast("点击：" + position);
+
+                    }
+                }));
 
             }
-        }));
+
+            @Override
+            public int getItemCount() {
+                return mDatas.size();
+            }
+        });
+
 
     }
+
+    class TestHolder extends RecyclerView.ViewHolder {
+
+        RecyclerView inRecyclerView;
+
+
+        public TestHolder(View itemView) {
+            super(itemView);
+            inRecyclerView = itemView.findViewById(R.id.rv_in);
+
+
+
+        }
+
+    }
+
     /**
      * 取消投票的 dialog
      */

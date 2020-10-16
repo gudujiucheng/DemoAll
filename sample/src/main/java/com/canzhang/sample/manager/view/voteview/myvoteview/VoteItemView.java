@@ -78,9 +78,11 @@ public class VoteItemView extends LinearLayout {
         mAnimatorSet.setDuration(mAnimationRate);
     }
 
-    public void setIsHasVote(boolean selected, int percent) {//这里是设置是否已经投片的状态
+    public void setIsHasVote(boolean selected, int percent,boolean isNeedAnim) {//这里是设置是否已经投片的状态
         setSelected(selected);
         setChildViewStatus(selected, percent);
+        mAnimationRate  = isNeedAnim?600:0;
+        mAnimatorSet.setDuration(mAnimationRate);
         if (selected) {
             start();
         } else {

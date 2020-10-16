@@ -81,6 +81,10 @@ public class MyVoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         break;
                     case MyVoteAdapter.VOTE_TYPE:
                         if(mVoteDataBiz!=null){//需要考虑不同的item类型
+                            if(mVoteDataBiz.isHasVote()){//不能取消选择
+                                ToastUtil.toastShort("跳转详情页面");
+                                return;
+                            }
                             mVoteDataBiz.onItemClick(bean);
                             notifyDataSetChanged();
                         }
@@ -109,7 +113,8 @@ public class MyVoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             voteHolder.itemView.setLayoutParams(layoutParams);
             voteHolder.itemView.setVisibility(bean.isShow?View.VISIBLE:View.GONE);
             //设置是否已经投票的状态
-            voteHolder.voteItemView.setIsHasVote(mVoteDataBiz.mIsHasVote,bean.percent);
+            voteHolder.voteItemView.setIsHasVote(mVoteDataBiz.isHasVote(),bean.percent,bean.isNeedAnim);
+            bean.isNeedAnim = false;
             voteHolder.voteItemView.setContent(bean.title);
             voteHolder.voteItemView.setNumber(bean.currentItemVoteNum);
             voteHolder.voteItemView.setPercent(bean.percent);
