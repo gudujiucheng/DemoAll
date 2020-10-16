@@ -8,21 +8,17 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.canzhang.sample.R;
 
-import java.text.NumberFormat;
-
 
 /**
  * 投票的子 view
  */
-public class VoteItemView extends LinearLayout implements VoteItemObserver {
+public class VoteItemView extends LinearLayout {
 
     private ProgressBar progressBar;
 
@@ -30,13 +26,11 @@ public class VoteItemView extends LinearLayout implements VoteItemObserver {
 
     private TextView numberView;
 
-    private int mTotalNumber = 1;
-
-    private int mCurrentNumber = 1;
 
     private AnimatorSet animatorSet;
 
     private int mAnimationRate = 600;
+
 
     public VoteItemView(Context context) {
         this(context, null);
@@ -65,7 +59,6 @@ public class VoteItemView extends LinearLayout implements VoteItemObserver {
     }
 
     public void setNumber(int number) {
-        mCurrentNumber = number;
         numberView.setText(number + "人");
     }
 
@@ -80,16 +73,16 @@ public class VoteItemView extends LinearLayout implements VoteItemObserver {
         animatorSet.setDuration(mAnimationRate);
     }
 
-    @Override
-    public void setSelected(boolean selected) {//这里是设置是否已经投片的状态
-        super.setSelected(selected);
-        setChildViewStatus(selected);
+    public void setIsHasVote(boolean selected, float percent) {//这里是设置是否已经投片的状态
+        setSelected(selected);
+        setChildViewStatus(selected, percent);
         if (selected) {
             start();
         } else {
             cancel();
         }
     }
+
 
     public void start() {
         post(new Runnable() {
@@ -110,12 +103,12 @@ public class VoteItemView extends LinearLayout implements VoteItemObserver {
     }
 
 
-    private void setChildViewStatus(boolean isSelected) {
+    private void setChildViewStatus(boolean isSelected, float percent) {
         if (isSelected) {
             progressBar.post(new Runnable() {
                 @Override
                 public void run() {
-                    progressBarAnimation(progressBar, mCurrentNumber, mTotalNumber);
+                    progressBarAnimation(progressBar, percent);
                 }
             });
             numberView.setVisibility(VISIBLE);
@@ -131,16 +124,8 @@ public class VoteItemView extends LinearLayout implements VoteItemObserver {
     }
 
 
-    @Override
-    public void setTotalNumber(int totalNumber) {
-        mTotalNumber = totalNumber;
-    }
-
-    private void progressBarAnimation(final ProgressBar progressBar, int current, int total) {
-        NumberFormat numberFormat = NumberFormat.getInstance();
-        numberFormat.setMaximumFractionDigits(3);
-        float result = ((float) current / (float) total) * 100;
-        Log.e("progressBarAnimation", "result" + Math.ceil(result));
+    private void progressBarAnimation(final ProgressBar progressBar, float percent) {
+        float result = percent * 100;
         ValueAnimator animator = ValueAnimator.ofInt(0, (int) Math.ceil(result)).setDuration(mAnimationRate);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -151,16 +136,13 @@ public class VoteItemView extends LinearLayout implements VoteItemObserver {
         animator.start();
     }
 
-    private int getCurrentIndex() {
-        return (int) getTag();
-    }
-
 
     /**
-     * 设置view选中状态 FIXME 改名
+     * 设置view选中状态
+     *
      * @param status
      */
-    public void changeChildrenViewStatus(boolean status) {
+    public void setVoteItemIsChecked(boolean status) {
         //选中文字颜色
         contentView.setTextColor(Color.parseColor(status ? "#00C0EB" : "#8D9799"));
         //数字颜色
@@ -171,13 +153,7 @@ public class VoteItemView extends LinearLayout implements VoteItemObserver {
         contentView.setCompoundDrawables(null, null, right, null);
         //进度条颜色设置
         progressBar.setProgressDrawable(getResources().getDrawable(status ? R.drawable.select_progress_view_bg : R.drawable.unselect_progress_view_bg));
-
-//        LayoutParams params = (LayoutParams) getLayoutParams();
-//        params.setMargins(0, 0, 0, 0);
-//        setLayoutParams(params);
         setBackgroundResource(status ? R.drawable.select_bg : R.drawable.unselect_bg);
-//        params.setMargins(0, 16, 0, 16);
-//        setLayoutParams(params);
     }
 
 }

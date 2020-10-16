@@ -1,7 +1,6 @@
 package com.canzhang.sample.manager.view.voteview.myvoteview;
 
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,6 @@ import com.canzhang.sample.R;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.List;
 
 public class MyVoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -76,19 +73,31 @@ public class MyVoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 if (mOnItemClickListener != null) {
                     mOnItemClickListener.onItemClick(holder.itemView, position);
                 }
-                if(mVoteDataBiz!=null){
-                    mVoteDataBiz.onItemClick(bean);
+                switch (bean.type){
+                    case MyVoteAdapter.MORE_TYPE:
+                        //TODO 跳转详情页面
+                        break;
+                    case MyVoteAdapter.VOTE_TYPE:
+                        if(mVoteDataBiz!=null){//需要考虑不同的item类型
+                            mVoteDataBiz.onItemClick(bean);
+                            notifyDataSetChanged();
+                        }
+                        break;
+                    default:
+                        break;
+
                 }
-                notifyDataSetChanged();
+
+
+
             }
         });
         if (holder instanceof VoteHolder) {
             //设置是否已经投票的状态
-            ((VoteHolder) holder).voteItemView.setSelected(mVoteDataBiz.mIsHasVote);
+            ((VoteHolder) holder).voteItemView.setIsHasVote(mVoteDataBiz.mIsHasVote,bean.percent);
             ((VoteHolder) holder).voteItemView.setContent(bean.title);
             ((VoteHolder) holder).voteItemView.setNumber(bean.currentItemVoteNum);
-            ((VoteHolder) holder).voteItemView.changeChildrenViewStatus(bean.isChecked);
-            ((VoteHolder) holder).voteItemView.setTotalNumber(mVoteDataBiz.mTotalVoteNum);
+            ((VoteHolder) holder).voteItemView.setVoteItemIsChecked(bean.isChecked);
         } else if (holder instanceof MoreVoteHolder) {
 
         }

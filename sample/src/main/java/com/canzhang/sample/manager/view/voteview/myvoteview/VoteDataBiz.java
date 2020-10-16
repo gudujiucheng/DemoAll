@@ -1,5 +1,6 @@
 package com.canzhang.sample.manager.view.voteview.myvoteview;
 
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -92,13 +93,10 @@ public class VoteDataBiz {
     }
 
 
-    public static String getPercent(int a,int b) {
+    public static float getPercent(int a,int b) {
         if(b==0){
-            return "0.0";
+            return 0f;
         }
-        DecimalFormat df = new DecimalFormat("0.00");
-        //四舍五入
-        df.setRoundingMode(RoundingMode.HALF_UP);
-        return df.format((float)a/b);
+        return new BigDecimal((float)a/b).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
     }
 }

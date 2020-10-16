@@ -7,7 +7,7 @@ public class VoteBean {
     //当前item投票总量
     int currentItemVoteNum;
     //百分比
-    String percent;
+    float percent;
 
     public VoteBean(int type) {
         this.type = type;
