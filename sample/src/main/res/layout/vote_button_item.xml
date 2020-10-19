@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_4"
+    app:rv_backgroundColor="@android:color/white"
+    app:rv_backgroundPressColor="@android:color/darker_gray"
+    app:rv_cornerRadius="5dp">
+
+    <Button
+        android:id="@+id/bt_vote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="投票"/>
+</LinearLayout>

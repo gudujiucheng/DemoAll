@@ -1,7 +1,25 @@
 package com.canzhang.sample.manager.view.voteview.myvoteview;
 
+import androidx.annotation.IntDef;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 public class VoteBean {
-    int type;
+
+    //具体投票item
+    public static final int VOTE_TYPE = 0;
+    //更多item
+    public static final int MORE_TYPE = 1;
+    //投票按钮类型(点击投票)
+    public static final int VOTE_BUTTON_TYPE = 2;
+
+    @IntDef({VOTE_TYPE, MORE_TYPE,VOTE_BUTTON_TYPE})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface VoteItemType {
+
+    }
+    @VoteItemType int type;
     String title;
     boolean isChecked;
     boolean isShow;
@@ -12,7 +30,7 @@ public class VoteBean {
     //百分比*100
     int percent;
 
-    public VoteBean(int type) {
+    public VoteBean(@VoteItemType int type) {
         this.type = type;
     }
 

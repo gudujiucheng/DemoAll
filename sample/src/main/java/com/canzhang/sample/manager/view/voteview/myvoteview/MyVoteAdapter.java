@@ -4,8 +4,8 @@ package com.canzhang.sample.manager.view.voteview.myvoteview;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,15 +19,9 @@ import java.util.List;
 public class MyVoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
-    //具体投票item
-    public static final int VOTE_TYPE = 0;
-    //更多item
-    public static final int MORE_TYPE = 1;
-
     private List<VoteBean> mData;
     private VoteDataBiz mVoteDataBiz;
     private OnItemClickListener mOnItemClickListener;
-
 
 
     public interface OnItemClickListener {
@@ -48,17 +42,16 @@ public class MyVoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
 
-
-
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
-        if (viewType == VOTE_TYPE) {
+        if (viewType == VoteBean.VOTE_TYPE) {
             return new VoteHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_vote_item, parent, false));
-        } else if (viewType == MORE_TYPE) {
+        } else if (viewType == VoteBean.MORE_TYPE) {
             return new MoreVoteHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_more_vote_item, parent, false));
-        } else{
-            return null;//TODO
+        } else if (viewType == VoteBean.VOTE_BUTTON_TYPE) {
+            return new VoteButtonHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.vote_button_item, parent, false));
+        }else{
+            return  null;
         }
 
 
@@ -75,13 +68,16 @@ public class MyVoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 if (mOnItemClickListener != null) {
                     mOnItemClickListener.onItemClick(holder.itemView, position);
                 }
-                switch (bean.type){
-                    case MyVoteAdapter.MORE_TYPE:
+                switch (bean.type) {
+                    case VoteBean.VOTE_BUTTON_TYPE:
+                        ToastUtil.toastShort("投票实现");//TODO
+                        break;
+                    case VoteBean.MORE_TYPE:
                         ToastUtil.toastShort("跳转详情页面");
                         break;
-                    case MyVoteAdapter.VOTE_TYPE:
-                        if(mVoteDataBiz!=null){//需要考虑不同的item类型
-                            if(mVoteDataBiz.isHasVote()){//不能取消选择
+                    case VoteBean.VOTE_TYPE:
+                        if (mVoteDataBiz != null) {//需要考虑不同的item类型
+                            if (mVoteDataBiz.isHasVote()) {//不能取消选择
                                 ToastUtil.toastShort("跳转详情页面");
                                 return;
                             }
@@ -95,32 +91,33 @@ public class MyVoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 }
 
 
-
             }
         });
         if (holder instanceof VoteHolder) {
             VoteHolder voteHolder = (VoteHolder) holder;
             ViewGroup.LayoutParams layoutParams = voteHolder.itemView.getLayoutParams();
-            if(bean.isShow){
+            if (bean.isShow) {
                 voteHolder.itemView.setVisibility(View.VISIBLE);
                 layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
                 layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-            }else{
+            } else {
                 voteHolder.itemView.setVisibility(View.GONE);
-                layoutParams.height=0;
-                layoutParams.width=0;
+                layoutParams.height = 0;
+                layoutParams.width = 0;
             }
             voteHolder.itemView.setLayoutParams(layoutParams);
-            voteHolder.itemView.setVisibility(bean.isShow?View.VISIBLE:View.GONE);
+            voteHolder.itemView.setVisibility(bean.isShow ? View.VISIBLE : View.GONE);
             //设置是否已经投票的状态
-            voteHolder.voteItemView.setIsHasVote(mVoteDataBiz.isHasVote(),bean.percent,bean.isNeedAnim);
+            voteHolder.voteItemView.setIsHasVote(mVoteDataBiz.isHasVote(), bean.percent, bean.isNeedAnim);
             bean.isNeedAnim = false;
             voteHolder.voteItemView.setContent(bean.title);
             voteHolder.voteItemView.setNumber(bean.currentItemVoteNum);
             voteHolder.voteItemView.setPercent(bean.percent);
             voteHolder.voteItemView.setVoteItemIsChecked(bean.isChecked);
         } else if (holder instanceof MoreVoteHolder) {
-
+            // can delete
+        } else if (holder instanceof VoteButtonHolder) {
+            // can delete
         }
     }
 
@@ -131,9 +128,9 @@ public class MyVoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
 
-    class VoteHolder extends RecyclerView.ViewHolder  {
+    class VoteHolder extends RecyclerView.ViewHolder {
 
-         VoteItemView voteItemView;
+        VoteItemView voteItemView;
 
 
         public VoteHolder(View itemView) {
@@ -151,12 +148,21 @@ public class MyVoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         public MoreVoteHolder(View itemView) {
             super(itemView);
-//            mTvDesc = (TextView) itemView.findViewById(R.id.tv_feature_house_desc);
+//            mTvDesc = (TextView) itemView.findViewById(R.id.bt_vote);
         }
     }
 
 
+    class VoteButtonHolder extends RecyclerView.ViewHolder {
 
+        Button mBtVote;
+
+        public VoteButtonHolder(View itemView) {
+            super(itemView);
+            mBtVote = itemView.findViewById(R.id.bt_vote);
+        }
+
+    }
 
 
 }

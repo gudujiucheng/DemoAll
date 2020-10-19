@@ -116,12 +116,14 @@ public class CommonViewShowFragment extends BaseFragment {
 
         for (int i = 0; i <30 ; i++) {
             List<VoteBean> voteBeans = new ArrayList<>();
-            voteBeans.add(new VoteBean(0).setTitle("好吃"+i).setCurrentItemVoteNum(1));
-            voteBeans.add(new VoteBean(0).setTitle("不好吃"+i).setCurrentItemVoteNum(2));
-            voteBeans.add(new VoteBean(0).setTitle("还行吧"+i).setCurrentItemVoteNum(3));
-            voteBeans.add(new VoteBean(0).setTitle("中立"+i).setCurrentItemVoteNum(3));
-            voteBeans.add(new VoteBean(1));
-            mDatas.add(new Pair<>(new VoteListInfoBean(1, i%2==0, 20),voteBeans));//FIXME 动画问题
+            voteBeans.add(new VoteBean(VoteBean.VOTE_TYPE).setTitle("好吃"+i).setCurrentItemVoteNum(1));
+
+            voteBeans.add(new VoteBean(VoteBean.VOTE_TYPE).setTitle("不好吃"+i).setCurrentItemVoteNum(2).setChecked(i%2==0));
+            voteBeans.add(new VoteBean(VoteBean.VOTE_TYPE).setTitle("还行吧"+i).setCurrentItemVoteNum(3));
+            voteBeans.add(new VoteBean(VoteBean.VOTE_TYPE).setTitle("中立"+i).setCurrentItemVoteNum(3));
+            voteBeans.add(new VoteBean(VoteBean.MORE_TYPE));
+            voteBeans.add(new VoteBean(VoteBean.VOTE_BUTTON_TYPE));
+            mDatas.add(new Pair<>(new VoteListInfoBean(1, i%2==0, 20),voteBeans));
         }
 
         outRecyclerView.setAdapter(new RecyclerView.Adapter() {

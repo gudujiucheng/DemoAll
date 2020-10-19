@@ -71,7 +71,7 @@ public class VoteDataBiz {
         int num = 0;
         for (int i = 0; i < mVoteData.size(); i++) {
             VoteBean item = mVoteData.get(i);
-            if (item.type == MyVoteAdapter.VOTE_TYPE) {
+            if (item.type == VoteBean.VOTE_TYPE) {
                 num++;
                 if (num > mMaxShowNum) {//控制展示隐藏
                     item.isShow = false;
