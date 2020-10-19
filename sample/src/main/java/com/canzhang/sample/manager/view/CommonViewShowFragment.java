@@ -3,6 +3,10 @@ package com.canzhang.sample.manager.view;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Pair;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
@@ -11,18 +15,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Pair;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.canzhang.sample.R;
 import com.canzhang.sample.manager.view.voteview.VoteListener;
 import com.canzhang.sample.manager.view.voteview.VoteView;
 import com.canzhang.sample.manager.view.voteview.myvoteview.MyVoteAdapter;
 import com.canzhang.sample.manager.view.voteview.myvoteview.VoteBean;
 import com.canzhang.sample.manager.view.voteview.myvoteview.VoteDataBiz;
-import com.canzhang.sample.manager.view.voteview.myvoteview.VoteItemView;
 import com.canzhang.sample.manager.view.voteview.myvoteview.VoteListInfoBean;
 import com.example.base.base.BaseFragment;
 
@@ -118,12 +116,10 @@ public class CommonViewShowFragment extends BaseFragment {
             List<VoteBean> voteBeans = new ArrayList<>();
             voteBeans.add(new VoteBean(VoteBean.VOTE_TYPE).setTitle("好吃"+i).setCurrentItemVoteNum(1));
 
-            voteBeans.add(new VoteBean(VoteBean.VOTE_TYPE).setTitle("不好吃"+i).setCurrentItemVoteNum(2).setChecked(i%2==0));
+            voteBeans.add(new VoteBean(VoteBean.VOTE_TYPE).setTitle("不好吃"+i).setCurrentItemVoteNum(2).setCheckedOnAfterVote(i%2==0));
             voteBeans.add(new VoteBean(VoteBean.VOTE_TYPE).setTitle("还行吧"+i).setCurrentItemVoteNum(3));
             voteBeans.add(new VoteBean(VoteBean.VOTE_TYPE).setTitle("中立"+i).setCurrentItemVoteNum(3));
-            voteBeans.add(new VoteBean(VoteBean.MORE_TYPE));
-            voteBeans.add(new VoteBean(VoteBean.VOTE_BUTTON_TYPE));
-            mDatas.add(new Pair<>(new VoteListInfoBean(1, i%2==0, 20),voteBeans));
+            mDatas.add(new Pair<>(new VoteListInfoBean(i%3, i%2==0, i%2==0?2:20),voteBeans));
         }
 
         outRecyclerView.setAdapter(new RecyclerView.Adapter() {

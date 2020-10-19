@@ -21,7 +21,11 @@ public class VoteBean {
     }
     @VoteItemType int type;
     String title;
-    boolean isChecked;
+    //投票前当前选项是否被选中
+    boolean isCheckedOnBeforeVote;
+    //投票后当前选项是否被选中
+    boolean isCheckedOnAfterVote;
+    //是否展示当前item
     boolean isShow;
     //是否需要动画
     public boolean isNeedAnim;
@@ -39,8 +43,8 @@ public class VoteBean {
         return this;
     }
 
-    public VoteBean setChecked(boolean checked) {
-        isChecked = checked;
+    public VoteBean setCheckedOnAfterVote(boolean checkedOnAfterVote) {
+        isCheckedOnAfterVote = checkedOnAfterVote;
         return this;
     }
 

@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.canzhang.sample.R;
@@ -24,6 +25,7 @@ public class VoteItemView extends LinearLayout {
     private TextView tvVoteName;
     private TextView mTvNumber;
     private TextView mTvPercent;
+    private RadioButton mRadioButton;
 
 
     private AnimatorSet mAnimatorSet;
@@ -51,6 +53,7 @@ public class VoteItemView extends LinearLayout {
         tvVoteName = findViewById(R.id.tv_name);
         mTvNumber = findViewById(R.id.tv_number);
         mTvPercent = findViewById(R.id.tv_percent);
+        mRadioButton = findViewById(R.id.rbt_vote);
         mTvNumber.setAlpha(0.0f);
     }
 
@@ -70,8 +73,10 @@ public class VoteItemView extends LinearLayout {
     private void initAnimation() {
         mAnimatorSet = new AnimatorSet();
         Animator[] arrayAnimator = new Animator[2];
+        //名称偏移
         ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(tvVoteName, "x", 30);
         arrayAnimator[0] = objectAnimator;
+        //票数渐显
         objectAnimator = ObjectAnimator.ofFloat(mTvNumber, "alpha", 1.0f);
         arrayAnimator[1] = objectAnimator;
         mAnimatorSet.playTogether(arrayAnimator);
@@ -120,11 +125,14 @@ public class VoteItemView extends LinearLayout {
             });
             mTvNumber.setVisibility(VISIBLE);
             mTvPercent.setVisibility(VISIBLE);
-            mTvNumber.setAlpha(0.0f);
+            mRadioButton.setVisibility(GONE);
+
         } else {
             progressBar.setProgress(0);
             mTvNumber.setVisibility(GONE);
+            mTvNumber.setAlpha(0.0f);
             mTvPercent.setVisibility(GONE);
+            mRadioButton.setVisibility(VISIBLE);
             tvVoteName.setTextColor(Color.parseColor("#8D9799"));
             tvVoteName.setCompoundDrawables(null, null, null, null);
             tvVoteName.animate().translationX(0).setDuration(mAnimationRate).start();
@@ -143,14 +151,21 @@ public class VoteItemView extends LinearLayout {
         });
         animator.start();
     }
-
-
     /**
-     * 设置view选中状态
+     * 设置view选中状态(投票前)
      *
-     * @param status
+     * @param isChecked 是否选中了当前选项
      */
-    public void setVoteItemIsChecked(boolean status) {
+    public void setBeforeVoteItemIsChecked(boolean isChecked) {
+        mRadioButton.setChecked(isChecked);
+    }
+
+        /**
+         * 设置view选中状态(投票后)
+         *
+         * @param status 是否投票给了当前选项
+         */
+    public void setAfterVoteItemIsChecked(boolean status) {
         //选中文字颜色
         tvVoteName.setTextColor(Color.parseColor(status ? "#00C0EB" : "#8D9799"));
         //数字颜色

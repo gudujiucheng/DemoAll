@@ -81,7 +81,8 @@ public class MyVoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                                 ToastUtil.toastShort("跳转详情页面");
                                 return;
                             }
-                            mVoteDataBiz.onItemClick(bean);
+                            //未投票状态
+                            mVoteDataBiz.onItemClickBeforeVote(bean);
                             notifyDataSetChanged();
                         }
                         break;
@@ -113,11 +114,19 @@ public class MyVoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             voteHolder.voteItemView.setContent(bean.title);
             voteHolder.voteItemView.setNumber(bean.currentItemVoteNum);
             voteHolder.voteItemView.setPercent(bean.percent);
-            voteHolder.voteItemView.setVoteItemIsChecked(bean.isChecked);
+            voteHolder.voteItemView.setBeforeVoteItemIsChecked(bean.isCheckedOnBeforeVote);
+            voteHolder.voteItemView.setAfterVoteItemIsChecked(bean.isCheckedOnAfterVote);
         } else if (holder instanceof MoreVoteHolder) {
             // can delete
         } else if (holder instanceof VoteButtonHolder) {
             // can delete
+            ((VoteButtonHolder)holder).mBtVote.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mVoteDataBiz.onSubmitVote();
+                    notifyDataSetChanged();
+                }
+            });
         }
     }
 
