@@ -112,7 +112,7 @@ public class CommonViewShowFragment extends BaseFragment {
         outRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         List<Pair<VoteListInfoBean, List<VoteBean>>> mDatas = new ArrayList<>();
 
-        for (int i = 0; i <30 ; i++) {
+        for (int i = 0; i <20 ; i++) {
             List<VoteBean> voteBeans = new ArrayList<>();
             voteBeans.add(new VoteBean(VoteBean.VOTE_TYPE).setTitle("好吃"+i).setCurrentItemVoteNum(1));
 
@@ -133,13 +133,7 @@ public class CommonViewShowFragment extends BaseFragment {
             public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
                 Pair<VoteListInfoBean, List<VoteBean>> voteListInfoBeanListPair = mDatas.get(position);
                 ((TestHolder)holder).inRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                ((TestHolder)holder).inRecyclerView.setAdapter(new MyVoteAdapter(new VoteDataBiz(voteListInfoBeanListPair), new MyVoteAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-//                        showToast("点击：" + position);
-
-                    }
-                }));
+                ((TestHolder)holder).inRecyclerView.setAdapter(new MyVoteAdapter(new VoteDataBiz(voteListInfoBeanListPair)));
 
             }
 

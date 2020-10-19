@@ -8,6 +8,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -85,16 +86,16 @@ public class VoteItemView extends LinearLayout {
 
     public void setIsHasVote(boolean selected, int percent,boolean isNeedAnim) {//这里是设置是否已经投片的状态
         setSelected(selected);
-        setChildViewStatus(selected, percent);
+        setChildViewStatus(selected, percent,isNeedAnim);
         mAnimationRate  = isNeedAnim?600:0;
         mAnimatorSet.setDuration(mAnimationRate);
+        Log.e("CAN_TEST","---------------->>>>isNeedAnim:"+isNeedAnim);
         if (selected) {
             start();
         } else {
             cancel();
         }
     }
-
 
     public void start() {
         post(new Runnable() {
@@ -115,14 +116,44 @@ public class VoteItemView extends LinearLayout {
     }
 
 
-    private void setChildViewStatus(boolean isSelected, int percent) {
+//    public void setIsHasVote(boolean selected, int percent,boolean isNeedAnim) {//这里是设置是否已经投片的状态
+//        setSelected(selected);
+//        setChildViewStatus(selected, percent,isNeedAnim);
+////        mAnimationRate  = isNeedAnim?600:0;
+////        mAnimatorSet.setDuration(mAnimationRate);
+//        Log.e("CAN_TEST","---------------->>>>isNeedAnim:"+isNeedAnim);
+//        if (selected) {
+//            if(isNeedAnim){
+//                start();
+//            }else{
+//                mTvNumber.setAlpha(1);
+//                tvVoteName.setX(30);
+//            }
+//
+//        } else {
+//            if(isNeedAnim){
+//                cancel();
+//            }else{
+//                mTvNumber.setAlpha(0);
+//                tvVoteName.setX(0);
+//            }
+//        }
+//    }
+
+
+    private void setChildViewStatus(boolean isSelected, int percent,boolean isNeedAnim) {
         if (isSelected) {
-            progressBar.post(new Runnable() {
-                @Override
-                public void run() {
-                    progressBarAnimation(progressBar, percent);
-                }
-            });
+            if(isNeedAnim){
+                progressBar.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBarAnimation(progressBar, percent);
+                    }
+                });
+            }else{
+                progressBar.setProgress(percent);
+            }
+
             mTvNumber.setVisibility(VISIBLE);
             mTvPercent.setVisibility(VISIBLE);
             mRadioButton.setVisibility(GONE);

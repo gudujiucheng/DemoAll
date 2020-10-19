@@ -64,6 +64,35 @@ public class VoteDataBiz {
     }
 
     /**
+     * 是否需要执行item动画
+     * @return
+     */
+    public boolean isNeedAnim() {
+        //注意始终要引用同一个对象
+        if (mVoteListInfoBean != null) {
+            return mVoteListInfoBean.mIsNeedAnim;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 是否需要执行item动画
+     * @return
+     */
+    public void setIsNeedAnim(boolean isNeedAnim) {
+        //注意始终要引用同一个对象
+        if (mVoteListInfoBean == null) {
+            return;
+        }
+        mVoteListInfoBean.mIsNeedAnim = isNeedAnim;
+    }
+
+
+
+
+
+    /**
      * 多选的项目数量调整
      *
      * @param isAdd 是：增加  否：减去
@@ -117,6 +146,7 @@ public class VoteDataBiz {
             }
         }
 
+        //FIXME 最好在外层控制  避免每次滑动创建大量对象
         if(mVoteData.size()>mMaxShowNum){////如果数量超出最大可展示数量则展示
             mVoteData.add(new VoteBean(VoteBean.MORE_TYPE));
         }
@@ -151,7 +181,6 @@ public class VoteDataBiz {
         if (bean == null) {
             return;
         }
-        bean.isNeedAnim = true;
         if (mMaxSelectNum <= 1) {//单选
             if (mMaxSelectNum < 0) {//容错
                 mMaxSelectNum = 1;
@@ -161,6 +190,7 @@ public class VoteDataBiz {
             //多选应该是点击提交的时候 才更新数据，另外多选的ui样式也不同  这里暂时空值
             resetAndSelectCurrentItemWithMultiple(bean);
         }
+
     }
 
     /**

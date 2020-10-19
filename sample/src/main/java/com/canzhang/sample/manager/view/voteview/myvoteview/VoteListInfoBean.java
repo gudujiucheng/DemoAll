@@ -11,6 +11,8 @@ public class VoteListInfoBean {
     public int mMaxShowNum;
     //当前已经选中的数量(用于记录多选场景下 当前已经选中的数量)
     public int mHasSelectedNumBeforeVote;
+    //是否需要动画
+    public boolean mIsNeedAnim;
 
     public VoteListInfoBean(int maxSelectNum, boolean isHasVote, int maxShowNum) {
         this.mIsHasVote = isHasVote;

@@ -27,8 +27,6 @@ public class VoteBean {
     boolean isCheckedOnAfterVote;
     //是否展示当前item
     boolean isShow;
-    //是否需要动画
-    public boolean isNeedAnim;
     //当前item投票总量
     int currentItemVoteNum;
     //百分比*100

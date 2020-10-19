@@ -1,6 +1,7 @@
 package com.canzhang.sample.manager.view.voteview.myvoteview;
 
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +22,8 @@ public class MyVoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private List<VoteBean> mData;
     private VoteDataBiz mVoteDataBiz;
-    private OnItemClickListener mOnItemClickListener;
 
 
-    public interface OnItemClickListener {
-        void onItemClick(View view, int position);
-    }
 
 
     @Override
@@ -35,10 +32,9 @@ public class MyVoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
 
-    public MyVoteAdapter(VoteDataBiz voteDataBiz, OnItemClickListener itemClickListener) {
+    public MyVoteAdapter(VoteDataBiz voteDataBiz) {
         this.mVoteDataBiz = voteDataBiz;
         this.mData = voteDataBiz.mVoteData;
-        this.mOnItemClickListener = itemClickListener;
     }
 
 
@@ -65,9 +61,6 @@ public class MyVoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mOnItemClickListener != null) {
-                    mOnItemClickListener.onItemClick(holder.itemView, position);
-                }
                 switch (bean.type) {
                     case VoteBean.VOTE_BUTTON_TYPE:
                         ToastUtil.toastShort("投票实现");//TODO
@@ -81,6 +74,7 @@ public class MyVoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                                 ToastUtil.toastShort("跳转详情页面");
                                 return;
                             }
+                            mVoteDataBiz.setIsNeedAnim(true);
                             //未投票状态
                             mVoteDataBiz.onItemClickBeforeVote(bean);
                             notifyDataSetChanged();
@@ -90,8 +84,6 @@ public class MyVoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         break;
 
                 }
-
-
             }
         });
         if (holder instanceof VoteHolder) {
@@ -109,8 +101,8 @@ public class MyVoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             voteHolder.itemView.setLayoutParams(layoutParams);
             voteHolder.itemView.setVisibility(bean.isShow ? View.VISIBLE : View.GONE);
             //设置是否已经投票的状态
-            voteHolder.voteItemView.setIsHasVote(mVoteDataBiz.isHasVote(), bean.percent, bean.isNeedAnim);
-            bean.isNeedAnim = false;
+            Log.e("CAN_TEST","----------------xxx>>>>isNeedAnim:"+mVoteDataBiz.isNeedAnim()+mVoteDataBiz);
+            voteHolder.voteItemView.setIsHasVote(mVoteDataBiz.isHasVote(), bean.percent, mVoteDataBiz.isNeedAnim());
             voteHolder.voteItemView.setContent(bean.title);
             voteHolder.voteItemView.setNumber(bean.currentItemVoteNum);
             voteHolder.voteItemView.setPercent(bean.percent);
@@ -125,6 +117,14 @@ public class MyVoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 public void onClick(View v) {
                     mVoteDataBiz.onSubmitVote();
                     notifyDataSetChanged();
+                    holder.itemView.post(new Runnable() {//这里注意要这么调用，避免时机不对 详细参考onBindViewHolder调用时机
+                        @Override
+                        public void run() {
+                            //设置无需动画
+                            mVoteDataBiz.setIsNeedAnim(false);
+                        }
+                    });
+
                 }
             });
         }
