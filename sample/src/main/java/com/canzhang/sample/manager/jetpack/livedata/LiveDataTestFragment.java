@@ -17,6 +17,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.canzhang.sample.R;
 import com.example.base.base.BaseFragment;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +36,7 @@ public class LiveDataTestFragment extends BaseFragment {
 
 
     @IntDef({TYPE_01, TYPE_02, TYPE_03})
+    @Retention(RetentionPolicy.SOURCE)
     public @interface Type {
 
     }

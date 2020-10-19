@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import com.canzhang.sample.R;
 import com.example.base.base.BaseFragment;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 
 public class CopyFragment extends BaseFragment {
     private static final String TYPE_KEY = "type_key";
@@ -21,6 +24,7 @@ public class CopyFragment extends BaseFragment {
 
 
     @IntDef({TYPE_01, TYPE_02, TYPE_03})
+    @Retention(RetentionPolicy.SOURCE)
     public @interface Type {
 
     }

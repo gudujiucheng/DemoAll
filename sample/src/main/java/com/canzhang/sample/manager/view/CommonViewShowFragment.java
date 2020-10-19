@@ -26,6 +26,8 @@ import com.canzhang.sample.manager.view.voteview.myvoteview.VoteItemView;
 import com.canzhang.sample.manager.view.voteview.myvoteview.VoteListInfoBean;
 import com.example.base.base.BaseFragment;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -41,6 +43,7 @@ public class CommonViewShowFragment extends BaseFragment {
 
 
     @IntDef({DASH_LINE, VOTE_VIEW})
+    @Retention(RetentionPolicy.SOURCE)
     public @interface Type {
 
     }

@@ -4,6 +4,8 @@ import androidx.annotation.IntDef;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
 public class AppItemBean implements MultiItemEntity {
@@ -17,6 +19,7 @@ public class AppItemBean implements MultiItemEntity {
     static final int APP_ITEM_02 = 2;
 
     @IntDef({APP_ITEM_01, APP_ITEM_02})
+    @Retention(RetentionPolicy.SOURCE)
     @interface ItemType {
     }
 
