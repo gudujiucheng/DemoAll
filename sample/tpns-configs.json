@@ -1,0 +1,13 @@
+{
+    "tpns": {
+        "access_id": "1500014321",
+        "access_key": "AD2OGNNS88QR"
+    },
+    "com.canzhang.sample": {
+        "channel": {
+            "enable": true
+        }
+    },
+    "debug": false,
+    "version": "1.2.1.1"
+}

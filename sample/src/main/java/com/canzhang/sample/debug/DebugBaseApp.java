@@ -8,6 +8,7 @@ import android.util.Log;
 
 import androidx.multidex.MultiDex;
 
+import com.canzhang.sample.BuildConfig;
 import com.canzhang.sample.R;
 import com.canzhang.sample.manager.appstatus.AppStatus;
 import com.canzhang.sample.manager.appstatus.AppStatusChangeListener;
@@ -27,6 +28,9 @@ import com.hunter.library.timing.impl.RankingBlockHandler;
 import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.common.WXException;
+import com.tencent.android.tpush.XGIOperateCallback;
+import com.tencent.android.tpush.XGPushConfig;
+import com.tencent.android.tpush.XGPushManager;
 
 
 /**
@@ -66,9 +70,26 @@ public class DebugBaseApp extends Application {
         sCustomBlockManager = new RankingBlockHandler(100);
         BlockManager.installBlockManager(sCustomBlockManager);
 
+        initPush();
+
 //        initBlockCanary();
     }
 
+    private void initPush() {
+        XGPushConfig.enableDebug(this, BuildConfig.DEBUG);
+        XGPushManager.registerPush(this, new XGIOperateCallback() {
+            @Override
+            public void onSuccess(Object data, int flag) {
+                //token在设备卸载重装的时候有可能会变
+                Log.d("TPush", "注册成功，设备token为：" + data);
+            }
+
+            @Override
+            public void onFail(Object data, int errCode, String msg) {
+                Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
+            }
+        });
+    }
 
 
     private void initBlockCanary() {
