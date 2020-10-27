@@ -81,14 +81,20 @@ public class DebugBaseApp extends Application {
             @Override
             public void onSuccess(Object data, int flag) {
                 //token在设备卸载重装的时候有可能会变
-                Log.d("TPush", "注册成功，设备token为：" + data);
+                Log.e("TPush", "注册成功，设备token为：" + data);
             }
 
             @Override
             public void onFail(Object data, int errCode, String msg) {
-                Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
+                Log.e("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
             }
         });
+
+        //打开第三方推送
+        XGPushConfig.enableOtherPush(getApplicationContext(), true);
+        //打开成功的话 会有如下日志提示（过滤标签 TPush）
+        //I/XINGE: [XGOtherPush] other push token is : 0865551032618726300001294600CN01 other push type: huawei
+        // I/XINGE: [a] binder other push token with accid = 2100274337  token = 17c32948df0346d5837d4748192e9d2f14c81e08 otherPushType = huawei otherPushToken = 0865551032618726300001294600CN01
     }
 
 

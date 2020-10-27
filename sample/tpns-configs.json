@@ -5,7 +5,22 @@
     },
     "com.canzhang.sample": {
         "channel": {
-            "enable": true
+            "enable": true,
+            "huawei": {
+                "app_id": "103112377"
+            },
+            "xiaomi": {
+                "app_id": "123456",
+                "app_key": "123456"
+            },
+            "vivo": {
+                "app_id": "123456",
+                "app_key": "123456"
+            },
+            "oppo": {
+                "app_id": "123456",
+                "app_key": "123456"
+            }
         }
     },
     "debug": false,
