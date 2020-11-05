@@ -20,8 +20,11 @@ public class BindTestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sample_activity_bind_test);
-//        SimpleButterKnife.bind(this);
-//        mTitleTextView.setText("哈哈哈哈哈哈哈");
+        SimpleButterKnife.bind(this);
+        mTitleTextView.setText("哈哈哈哈哈哈哈");
+
+
+        //其他：测试接收参数
         Uri uri = getIntent().getData();
         if (uri != null) {
             String url = uri.toString();

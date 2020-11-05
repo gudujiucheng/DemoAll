@@ -133,6 +133,7 @@ public class ZhuJieManager extends BaseManager {
 
     public static Map<String, Object> getAllManager(){
         try {
+            //生成文件路径：build/generated/source/kapt/debug/com/canzhang/zhujie/test/Manger_Map_Auto_Generate.java
             Class<?> aClass = Class.forName("com.canzhang.zhujie.test.Manger_Map_Auto_Generate");
             Method getAllManager = aClass.getMethod("getAllManager");
             Map<String,Object> map = (Map<String, Object>) getAllManager.invoke(aClass);

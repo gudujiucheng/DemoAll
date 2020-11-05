@@ -4,8 +4,9 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':simple-test-annotations')//自定义注解
     implementation 'com.google.auto:auto-common:0.10'
-    api 'com.squareup:javapoet:1.9.0'//用于方便的生成java类
-    compileOnly 'com.google.auto.service:auto-service:1.0-rc4'//避免手动创建meta文件 参见 https://www.jianshu.com/p/deeb39ccdc53
+    api 'com.squareup:javapoet:1.13.0'//用于方便的生成java类
+    annotationProcessor 'com.google.auto.service:auto-service:1.0-rc4'//避免手动创建meta文件 参见 https://www.jianshu.com/p/deeb39ccdc53
+    compileOnly 'com.google.auto.service:auto-service:1.0-rc4'
 }
 
 sourceCompatibility = "1.7"

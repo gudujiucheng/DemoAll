@@ -89,7 +89,6 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
         if (allManagerMap == null || allManagerMap.size() == 0) {
             showToast("注解获取的数据异常");
             mData.add(new ComponentItem("其他测试",new OtherTestDemoManager()));
-            mData.add(new ComponentItem("反欺诈测试",new AntiFraudManager()));
         } else {
             for (String key : allManagerMap.keySet()) {
                 Object manager = allManagerMap.get(key);
