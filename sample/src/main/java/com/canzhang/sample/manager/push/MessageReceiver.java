@@ -25,8 +25,8 @@ public class MessageReceiver extends XGPushBaseReceiver {
 	 * @param message 解析自定义的 JSON
 	 */
 	@Override
-	public void onTextMessage(Context context, XGPushTextMessage message) {
-
+	public void onTextMessage(Context context, XGPushTextMessage message) {//是主线程 主进程回调的
+		Log.i(LogTag, "~~~ onTextMessage message = " + message+" thread:"+Thread.currentThread().getName()+" 进程："+android.os.Process.myPid());
 //		收到消息:XGPushShowedResult [title=命令描述desc, content=命令内容xxxx, customContent={"key1":"hahaha","key2":"666666","key3":"\"哈哈哈\""}]
 		String text = "收到消息:" + message.toString();//可以参见上方真实数据格式   customContent就是扩展参数
 		// 获取自定义key-value

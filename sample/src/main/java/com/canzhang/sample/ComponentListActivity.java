@@ -12,6 +12,7 @@ import android.view.View;
 import com.canzhang.sample.base.IManager;
 import com.canzhang.sample.base.adapter.ComponentAdapter;
 import com.canzhang.sample.base.bean.ComponentItem;
+import com.canzhang.sample.manager.OtherTestDemoManager;
 import com.canzhang.sample.manager.aidl.AidlClientFragment;
 import com.canzhang.sample.manager.behavior.BehaviorTestActivity;
 import com.canzhang.sample.manager.eventdispatch.EventDispatchFragment;
@@ -86,6 +87,7 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
         Map<String, Object> allManagerMap = ZhuJieManager.getAllManager();
         if (allManagerMap == null || allManagerMap.size() == 0) {
             showToast("注解获取的数据异常");
+            mData.add(new ComponentItem("其他测试",new OtherTestDemoManager()));
         } else {
             for (String key : allManagerMap.keySet()) {
                 Object manager = allManagerMap.get(key);

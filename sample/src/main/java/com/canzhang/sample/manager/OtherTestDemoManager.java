@@ -1,6 +1,8 @@
 package com.canzhang.sample.manager;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -35,7 +37,10 @@ public class OtherTestDemoManager extends BaseManager {
 
     @Override
     public List<ComponentItem> getSampleItem(Activity activity) {
+        super.getSampleItem(activity);
         List<ComponentItem> list = new ArrayList<>();
+        list.add(testGenerate());
+        list.add(testLauncher());
         list.add(testTimeMillis());
         list.add(clearAppData(activity));
         list.add(methodTest());
@@ -44,11 +49,43 @@ public class OtherTestDemoManager extends BaseManager {
         return list;
     }
 
+    private ComponentItem testLauncher() {
+        return new ComponentItem("启动别的activity 页面", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setData(Uri.parse("xgscheme://com.tencent.push/1001?param={\"action\":\"sysNotification\",\"param\":{\"id\":1604226916},\"gameId\":10011,\"notify\":1}"));
+                mActivity.startActivity(intent);
+            }
+        });
+    }
+
+    private ComponentItem testGenerate() {
+        return new ComponentItem("另外一种生成参数的方法", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//具体参见                https://developer.huawei.com/consumer/cn/doc/development/HMS-Guides/push-basic-capability#h2-1576658726104
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                // Scheme协议（pushscheme://com.huawei.codelabpush/deeplink?）需要开发者自定义
+                intent.setData(Uri.parse("pushscheme://com.huawei.codelabpush/deeplink?"));
+                // 往intent中添加参数，用户可以根据自己的需求进行添加参数
+                intent.putExtra("name", "{\"action\":\"sysNotification\",\"param\":{\"id\":1603792829},\"gameId\":10011,\"notify\":1}");
+                intent.putExtra("age", 180);
+                // 必须带上该Flag
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                String intentUri = intent.toUri(Intent.URI_INTENT_SCHEME);
+                // 打印出的intentUri值就是设置到推送消息中intent字段的值
+                Log.d("TEST", "intentUri:"+intentUri);
+            }
+        });
+    }
+
+
     private ComponentItem testTimeMillis() {
         /**
          * https://github.com/instacart/truetime-android/issues
          */
-        return new ComponentItem("修改系统时间、测试时间戳","时间戳会随着更改系统的时间而更改，如果需要精准，可获取服务器时间，或者使用第三方获取库", new View.OnClickListener() {
+        return new ComponentItem("修改系统时间、测试时间戳", "时间戳会随着更改系统的时间而更改，如果需要精准，可获取服务器时间，或者使用第三方获取库", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String timeStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(System.currentTimeMillis());
