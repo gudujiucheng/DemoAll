@@ -2,19 +2,33 @@ package com.canzhang.sample.manager.antifraud.notification;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Message;
 import android.provider.Settings;
+import android.provider.Telephony;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
+
 import androidx.core.app.NotificationManagerCompat;
 
 import com.canzhang.sample.R;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.runtime.Permission;
+
 
 import java.util.Set;
 
 public class NotificationTestActivity extends Activity {
 
+    public static final String TAG = "NotificationTest";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +38,40 @@ public class NotificationTestActivity extends Activity {
             openNotificationListenSettings();
         }
         toggleNotificationListenerService();
+
+
+        findViewById(R.id.tv_read).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {//添加 删除短信已经搞不定了
+
+                AndPermission.with(NotificationTestActivity.this)
+                        .runtime()
+                        .permission(Permission.WRITE_EXTERNAL_STORAGE,Permission.READ_SMS)
+                        .onGranted(permissions -> {
+                            Log.e(TAG, "权限获取成功");
+                            Toast.makeText(NotificationTestActivity.this, "权限获取成功", Toast.LENGTH_SHORT).show();
+                            //访问内容提供者获取短信
+                            ContentResolver cr = getContentResolver();
+                            //短信内容提供者的主机名
+                            Cursor cursor = cr.query(Uri.parse("content://sms"),new String[]{"address","date","body","type"},null,null);
+                            while(cursor.moveToNext()){
+                                String address = cursor.getString(0);
+                                long date = cursor.getLong(1);
+                                String body = cursor.getString(2);
+                                String type = cursor.getString(3);
+
+                                Log.e(TAG,"address:"+address+" date:"+date+" body:"+body+" type:"+type);
+                            }
+                        })
+                        .onDenied(permissions -> {
+                            Log.e(TAG, "权限获取被拒绝");
+                            Toast.makeText(NotificationTestActivity.this, "权限获取被拒绝", Toast.LENGTH_SHORT).show();
+                        })
+                        .start();
+
+            }
+        });
+
 
     }
     //检测通知监听服务是否被授权

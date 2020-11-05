@@ -8,10 +8,11 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
+
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
@@ -31,6 +32,10 @@ public class AntiFraudManager extends BaseManager {
 
     private Activity mActivity;
 
+    @Override
+    public int getPriority() {
+        return 8;
+    }
 
     @Override
     public List<ComponentItem> getSampleItem(Activity activity) {
@@ -44,7 +49,8 @@ public class AntiFraudManager extends BaseManager {
     }
 
     private ComponentItem notificationTest() {
-        return new ComponentItem("通知监听测试", new View.OnClickListener() {
+        //更多参考：https://www.jianshu.com/p/981e7de2c7be
+        return new ComponentItem("通知监听测试（短信也可以监听到）", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mActivity.startActivity(new Intent(mActivity, NotificationTestActivity.class));
