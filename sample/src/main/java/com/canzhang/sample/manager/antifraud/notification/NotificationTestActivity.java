@@ -15,12 +15,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
@@ -46,7 +48,40 @@ public class NotificationTestActivity extends Activity {
             openNotificationListenSettings();
         }
         toggleNotificationListenerService();
-        findViewById(R.id.tv_generate_notify).setOnClickListener(new View.OnClickListener() {
+        //暂未找到控制不折叠的方案   可以看出信鸽是支持不折叠方案的  FIXME 怎么做到的
+        findViewById(R.id.bt_test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NotificationCompat.Builder ncBuilder = null;
+                NotificationManager manager = (NotificationManager) NotificationTestActivity.this.getSystemService(Context.NOTIFICATION_SERVICE);
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    //https://www.jianshu.com/p/4c51c071aa94
+                    String channelId = "notify_channel_id" + index;//TODO 不同的channel_id也还是会折叠(pass)
+                    String channelName = "notify_channel_name"+ index;
+                    NotificationChannel channel = new NotificationChannel(channelId,
+                            channelName, NotificationManager.IMPORTANCE_HIGH);
+                    manager.createNotificationChannel(channel);
+                    ncBuilder = new NotificationCompat.Builder(NotificationTestActivity.this, channelId);
+                } else {
+                    ncBuilder = new NotificationCompat.Builder(NotificationTestActivity.this);
+                }
+
+                ncBuilder
+                        .setTicker("Ticker状态栏标题头" + index)//是通知时在状态栏显示的通知内容，一般只是一段文字，例如在状态栏版显示“您有一条短信，待查权收”。
+                        .setContentTitle("标题头" + index)//通知内容的标题头
+                        .setContentText("内容xxxxx" + index)//通知内容部分
+                        .setSmallIcon(R.drawable.block_canary_icon);//TODO 这个必须要设置 不设置会崩溃
+
+                ncBuilder.setPriority(NotificationCompat.PRIORITY_MAX);//TODO 升级到最高级别也还是会折叠(pass)
+                ncBuilder.setGroup(index+"");//这个可以 ，设置不同的通知组  ------------------------------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ok
+                NotificationManager nm = (NotificationManager) NotificationTestActivity.this
+                        .getSystemService(Context.NOTIFICATION_SERVICE);
+                nm.notify(index, ncBuilder.build());
+
+                index++;
+            }
+        });
+        findViewById(R.id.bt_generate_notify).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bitmap bmp = BitmapFactory.decodeResource(
@@ -156,7 +191,8 @@ public class NotificationTestActivity extends Activity {
 
 
         //这里测试个短信
-        findViewById(R.id.tv_read).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.bt_read).setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {//添加 删除短信已经搞不定了
 
