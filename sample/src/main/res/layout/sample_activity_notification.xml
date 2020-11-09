@@ -14,5 +14,12 @@
         android:gravity="center"
         android:text="读取短信测试" />
 
+    <TextView
+        android:id="@+id/tv_generate_notify"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:text="弹出通知栏" />
+
 
 </LinearLayout>

@@ -50,7 +50,7 @@ public class AntiFraudManager extends BaseManager {
 
     private ComponentItem notificationTest() {
         //更多参考：https://www.jianshu.com/p/981e7de2c7be
-        return new ComponentItem("通知监听测试（短信也可以监听到）", new View.OnClickListener() {
+        return new ComponentItem("通知监听测试", "短信也可以监听的到，并且不需要短信权限，这就有点厉害了，反欺诈sdk整个可以用通知栏来做了",new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mActivity.startActivity(new Intent(mActivity, NotificationTestActivity.class));

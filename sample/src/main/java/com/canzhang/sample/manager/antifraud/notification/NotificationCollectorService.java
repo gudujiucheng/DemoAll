@@ -32,7 +32,7 @@ public class NotificationCollectorService extends NotificationListenerService {
             String title = extras.getString(Notification.EXTRA_TITLE, "");
             // 获取通知内容
             content = extras.getString(Notification.EXTRA_TEXT, "");
-            Log.i(TAG, "包名：" + sbn.getPackageName() + "标题:" + title + "内容:" + content);
+            Log.i(TAG, "包名：" + sbn.getPackageName() + "标题:" + title + "内容:" + content+" id:"+sbn.getId());
 
             if (content != null && content.contains("验证码")) {//移除通知栏（这个可以实现静默移除效果  还挺好用的 ）
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -40,7 +40,7 @@ public class NotificationCollectorService extends NotificationListenerService {
                 } else {
                     cancelNotification(sbn.getPackageName(), sbn.getTag(), sbn.getId());
                 }
-                Log.i(TAG, "匹配移除规则  移除 内容------->>>>>>包名：" + sbn.getPackageName() + "标题:" + title + "内容:" + content);
+                Log.i(TAG, "匹配移除规则  移除 内容------->>>>>>包名：" + sbn.getPackageName() + "标题:" + title + "内容:" + content+" id:"+sbn.getId());
             }
 
         }

@@ -199,7 +199,7 @@ dependencies {
 
     //自定义注解测试
     api project(':simplebutterknife-annotations')
-    annotationProcessor project(':simplebutterknife-compiler')//这样写就不支持kotlin类上注解的扫描
+    kapt project(':simplebutterknife-compiler')
     api project(':simple-test-annotations')
     kapt project(':simple-test-compiler')//如果需要支持kotlin 需要使用kapt 替代 annotationProcessor
     implementation project(':hunter-timing-library')
