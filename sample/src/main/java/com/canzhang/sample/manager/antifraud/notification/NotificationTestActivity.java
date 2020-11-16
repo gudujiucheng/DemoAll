@@ -48,7 +48,7 @@ public class NotificationTestActivity extends Activity {
             openNotificationListenSettings();
         }
         toggleNotificationListenerService();
-        //暂未找到控制不折叠的方案   可以看出信鸽是支持不折叠方案的  FIXME 怎么做到的
+        //暂未找到控制不折叠的方案   可以看出信鸽是支持不折叠方案的  是通过不同分组来实现的 setGroup(index+"")
         findViewById(R.id.bt_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

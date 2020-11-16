@@ -7,7 +7,7 @@ if (isSampleRunAsApp.toBoolean()) {
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'//引入kapt插件
 apply plugin: 'com.canzhang.bury_point'//自定义埋点插件
-apply plugin: 'hunter-timing'// 慢方法检测插件
+//apply plugin: 'hunter-timing'// 慢方法检测插件
 apply plugin: "com.tencent.android.tpns"//推送
 
 

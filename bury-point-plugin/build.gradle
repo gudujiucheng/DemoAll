@@ -11,6 +11,7 @@ dependencies {
     compile 'org.ow2.asm:asm-tree:6.0'
     compileOnly 'com.android.tools.build:gradle:3.2.1', {//这里注意需要保持版本一致，否则会报错
         exclude group:'org.ow2.asm'
+//        exclude module: "commons-io"  演示排除module  不用带版本号
     }
 }
 repositories {

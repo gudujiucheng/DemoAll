@@ -1,14 +1,21 @@
 package com.canzhang.sample.manager;
 
 import android.app.Activity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
+import androidx.core.app.NotificationCompat;
+
+import com.canzhang.sample.R;
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
+import com.canzhang.sample.manager.antifraud.notification.NotificationTestActivity;
 import com.canzhang.sample.utils.AppUtils;
 import com.example.simple_test_annotations.MarkManager;
 
@@ -39,6 +46,7 @@ public class OtherTestDemoManager extends BaseManager {
     public List<ComponentItem> getSampleItem(Activity activity) {
         super.getSampleItem(activity);
         List<ComponentItem> list = new ArrayList<>();
+        list.add(testAppStatus());
         list.add(testGenerate());
         list.add(testLauncher());
         list.add(testTimeMillis());
@@ -49,12 +57,28 @@ public class OtherTestDemoManager extends BaseManager {
         return list;
     }
 
+
+    private ComponentItem testAppStatus() {
+        return new ComponentItem("测试app当前运行状态", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mActivity==null){
+                    return;
+                }
+                Log.e("CAN_TEST", "isRunBackground:" + AppUtils.isRunBackground(mActivity) + " isRunForeground:" + AppUtils.isRunForeground(mActivity));
+            }
+        });
+    }
+
     private ComponentItem testLauncher() {
         return new ComponentItem("启动别的activity 页面", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setData(Uri.parse("xgscheme://com.tencent.push/1001?param={\"action\":\"sysNotification\",\"param\":{\"id\":1604226916},\"gameId\":10011,\"notify\":1}"));
+//                intent.setData(Uri.parse("xgscheme://com.tencent.push/1001?param={\"action\":\"sysNotification\",\"param\":{\"id\":1604226916},\"gameId\":10011,\"notify\":1}"));//过期的消息
+//                intent.setData(Uri.parse("xgscheme://com.tencent.push/1001?param={\"action\":\"sysNotification\",\"param\":{\"id\":1604914721},\"gameId\":20003,\"notify\":1}"));//该游戏id下没有角色
+//                intent.setData(Uri.parse("xgscheme://com.tencent.push/1001?param={\"action\":\"sysNotification\",\"param\":{\"id\":1604916160},\"gameId\":10011,\"notify\":1}"));//
+                intent.setData(Uri.parse("xgscheme://com.tencent.push/1001?param={\"action\":\"sysNotification\",\"param\":{\"id\":1605151191},\"gameId\":10011,\"notify\":1}"));//
                 mActivity.startActivity(intent);
             }
         });
@@ -75,7 +99,7 @@ public class OtherTestDemoManager extends BaseManager {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 String intentUri = intent.toUri(Intent.URI_INTENT_SCHEME);
                 // 打印出的intentUri值就是设置到推送消息中intent字段的值
-                Log.d("TEST", "intentUri:"+intentUri);
+                Log.d("TEST", "intentUri:" + intentUri);
             }
         });
     }
