@@ -10,6 +10,44 @@
         android:background="@android:color/white"
         android:orientation="vertical">
 
+        <Button
+            android:id="@+id/bt_get_check_support"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="是否支持HEIF"/>
+
+
+        <Button
+            android:id="@+id/bt_get_scan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="图片扫描"/>
+
+
+        <Button
+            android:id="@+id/bt_set_heif_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="显示heif文件 bitmap" />
+
+        <Button
+            android:id="@+id/bt_set_heif_img_02"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="显示heif文件 drawable" />
+
+        <Button
+            android:id="@+id/bt_set_heif_img_03"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="显示heif文件 raw" />
+
+        <Button
+            android:id="@+id/bt_bitmap_to_heif"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="android x bitmap编码成 heif" />
+
         <ImageView
             android:id="@+id/iv_icon"
             android:layout_width="wrap_content"
@@ -99,11 +137,15 @@
             android:layout_height="wrap_content"
             android:text="获取图片信息" />
 
+
         <Button
             android:id="@+id/bt_get_img_size_luban"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="第三方框架Luban" />
+
+
+
 
         <ImageView
             android:id="@+id/iv_test"

@@ -7,14 +7,20 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
+import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +28,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.canzhang.sample.R;
+import com.canzhang.sample.manager.img.HEIF.HEIFUtils;
 import com.example.base.base.BaseFragment;
 
 import java.io.BufferedInputStream;
@@ -91,12 +98,15 @@ public class ImgTestFragment extends BaseFragment {
         inSampleSize(view);
         getImgMsg(view);
 
+        heifTest(view, iv);
+
         view.findViewById(R.id.bt_get_img_size_luban).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 testLuban();
             }
         });
+
 
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,6 +123,69 @@ public class ImgTestFragment extends BaseFragment {
             }
         });
 
+    }
+
+    private void heifTest(View view, ImageView iv) {
+        view.findViewById(R.id.bt_bitmap_to_heif).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+//                HEIFUtils.bitmapSwitchToHeif("/storage/emulated/0/1_amytest/test_generate_heic.heic",100,100,BitmapFactory.decodeStream(inputStream));
+                String inputPath = new File(Environment.getExternalStorageDirectory(),
+                        "test_generate_heic.heic").getAbsolutePath();
+                Log.e("CAN_TEST","------------>>>>>>path:"+inputPath);
+                HEIFUtils.bitmapSwitchToHeif(inputPath,100,100,BitmapFactory.decodeFile("/storage/emulated/0/Pictures/Screenshots/Screenshot_20200916_214400_com.eg.android.AlipayGphone.jpg"));
+
+            }
+        });
+        view.findViewById(R.id.bt_get_check_support).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showToast(HEIFUtils.isSupportHeif() ? "支持" : "不支持");
+            }
+        });
+
+        view.findViewById(R.id.bt_get_scan).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HEIFUtils.getAllImagesLocal(getContext());
+            }
+        });
+        view.findViewById(R.id.bt_set_heif_img).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //android p 才能正常使用此方法，低于这个系统版本直接是获取到null
+//                Bitmap bitmap = HEIFUtils.getHeifImageFromSdcardUseBitmapFactory("/storage/emulated/0/1_amytest/heic_test.heic");//使用下方扫描图片功能 可以找出heic的图片
+                Bitmap bitmap = HEIFUtils.getHeifImageFromSdcardUseBitmapFactory("/storage/emulated/0/test_generate_heic.heic");//使用下方扫描图片功能 可以找出heic的图片
+                iv.setImageBitmap(bitmap);
+            }
+        });
+        view.findViewById(R.id.bt_set_heif_img_02).setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.P)
+            @Override
+            public void onClick(View v) {
+                try {
+                    //可以正常展示
+                    Drawable drawable = HEIFUtils.getHeifImageFromSdcardUseImageDecoder("/storage/emulated/0/1_amytest/heic_test.heic");
+                    iv.setImageDrawable(drawable);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    showToast("异常 " + e.getMessage());
+                }
+
+            }
+        });
+        view.findViewById(R.id.bt_set_heif_img_03).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //亲测在低版本还是不行
+                InputStream inputStream = getContext().getResources().openRawResource(R.raw.heic_test);
+                iv.setImageBitmap(BitmapFactory.decodeStream(inputStream));
+
+
+            }
+        });
     }
 
     /**

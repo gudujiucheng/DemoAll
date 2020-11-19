@@ -54,7 +54,9 @@ android {
     compileSdkVersion 30
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
+//        minSdkVersion 28
 //        targetSdkVersion rootProject.ext.targetSdkVersion
+
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -75,8 +77,8 @@ android {
             // 设置支持的SO库架构  注意部分SDK架构支持不全
             // Specifies the ABI configurations of your native
             // libraries Gradle should build and package with your APK.
-            abiFilters 'armeabi-v7a', 'arm64-v8a'
-            // 还可以添加 'x86', 'armeabi-v7a', 'arm64-v8a', 'mips', 'mips64'
+            abiFilters 'x86','armeabi-v7a', 'arm64-v8a'
+            // 还可以添加  'armeabi-v7a', 'arm64-v8a', 'mips', 'mips64'
         }
         multiDexEnabled true//开启分包
 
@@ -241,4 +243,9 @@ dependencies {
 
     //使用信鸽 导入华为推送sdk
     implementation 'com.tencent.tpns:huawei:1.2.1.0-release'
+
+    //heif编解码
+//    implementation "androidx.heifwriter:heifwriter:1.0.0"
+
+
 }

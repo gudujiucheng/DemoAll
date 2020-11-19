@@ -111,7 +111,7 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
             public void onClick(View v) {
                 showFragment(ImgTestFragment.newInstance());
             }
-        }));
+        }).setPriority(10));
         mData.add(new ComponentItem("flutter 测试", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
