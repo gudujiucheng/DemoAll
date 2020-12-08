@@ -2,11 +2,13 @@ package com.canzhang.sample;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 
 import com.canzhang.sample.base.IManager;
@@ -30,6 +32,7 @@ import com.canzhang.sample.manager.view.CommonViewShowFragment;
 import com.canzhang.sample.manager.view.editText.TestEditTextFragment;
 import com.canzhang.sample.manager.view.font.FontTestFragment;
 import com.canzhang.sample.manager.view.recyclerView.RecyclerFragment;
+import com.canzhang.sample.manager.view.recyclerView.RecyclerNativeTestFragment;
 import com.canzhang.sample.manager.view.recyclerView.RecyclerViewHeaderFooterFragment;
 import com.canzhang.sample.manager.view.shadow.ShadowFragment;
 import com.canzhang.sample.manager.view.viewpager.ViewPagerFragment;
@@ -58,6 +61,8 @@ import java.util.Map;
 public class ComponentListActivity extends BaseActivity implements INotifyListener {
     private RecyclerView mRecyclerView;
     private List<ComponentItem> mData = new ArrayList<>();
+
+    private int  mPriority = 1000;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,14 +93,14 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
         Map<String, Object> allManagerMap = ZhuJieManager.getAllManager();
         if (allManagerMap == null || allManagerMap.size() == 0) {
             showToast("注解获取的数据异常");
-            mData.add(new ComponentItem("其他测试",new OtherTestDemoManager()));
+            mData.add(new ComponentItem("其他测试", new OtherTestDemoManager()));
         } else {
             for (String key : allManagerMap.keySet()) {
                 Object manager = allManagerMap.get(key);
                 if (manager instanceof IManager) {
-                    IManager currentManger =  (IManager) manager;
+                    IManager currentManger = (IManager) manager;
                     ComponentItem componentItem = new ComponentItem(key, currentManger);
-                    if(currentManger.getPriority()!=0){//manager 优先级高于 componentItem 优先级配置
+                    if (currentManger.getPriority() != 0) {//manager 优先级高于 componentItem 优先级配置
                         componentItem.setPriority(currentManger.getPriority());
                     }
                     mData.add(componentItem);
@@ -221,7 +226,12 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
                 showFragment(new RecyclerFragment());
             }
         }));
-
+        mData.add(new ComponentItem("RecyclerView 多type类型(非框架)", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFragment(new RecyclerNativeTestFragment());
+            }
+        }).setPriority(20));
 
         mData.add(new ComponentItem("RecyclerView fql 刷新头部", new View.OnClickListener() {
             @Override
