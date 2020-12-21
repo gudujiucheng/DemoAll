@@ -28,6 +28,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.canzhang.sample.R;
 import com.canzhang.sample.manager.zhujie.BindTestActivity;
+import com.example.base.utils.ToastUtil;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
 
@@ -48,6 +49,17 @@ public class NotificationTestActivity extends Activity {
             openNotificationListenSettings();
         }
         toggleNotificationListenerService();
+        //通知权限是否开启
+        findViewById(R.id.bt_test_02).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (NotificationManagerCompat.from(NotificationTestActivity.this).areNotificationsEnabled()) {
+                    ToastUtil.toastShort("开启了");
+                } else {
+                    ToastUtil.toastShort("未开启");
+                }
+            }
+        });
         //暂未找到控制不折叠的方案   可以看出信鸽是支持不折叠方案的  是通过不同分组来实现的 setGroup(index+"")
         findViewById(R.id.bt_test).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +69,7 @@ public class NotificationTestActivity extends Activity {
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                     //https://www.jianshu.com/p/4c51c071aa94
                     String channelId = "notify_channel_id" + index;//TODO 不同的channel_id也还是会折叠(pass)
-                    String channelName = "notify_channel_name"+ index;
+                    String channelName = "notify_channel_name" + index;
                     NotificationChannel channel = new NotificationChannel(channelId,
                             channelName, NotificationManager.IMPORTANCE_HIGH);
                     manager.createNotificationChannel(channel);
@@ -73,7 +85,7 @@ public class NotificationTestActivity extends Activity {
                         .setSmallIcon(R.drawable.block_canary_icon);//TODO 这个必须要设置 不设置会崩溃
 
                 ncBuilder.setPriority(NotificationCompat.PRIORITY_MAX);//TODO 升级到最高级别也还是会折叠(pass)
-                ncBuilder.setGroup(index+"");//这个可以 ，设置不同的通知组  ------------------------------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ok
+                ncBuilder.setGroup(index + "");//这个可以 ，设置不同的通知组  ------------------------------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ok
                 NotificationManager nm = (NotificationManager) NotificationTestActivity.this
                         .getSystemService(Context.NOTIFICATION_SERVICE);
                 nm.notify(index, ncBuilder.build());
@@ -227,7 +239,7 @@ public class NotificationTestActivity extends Activity {
 
     }
 
-    //检测通知监听服务是否被授权
+    //检测通知监听服务是否被授权（注意这个非通知权限，和通知权限没有关系）
     public boolean isNotificationListenerEnabled(Context context) {
         Set<String> packageNames = NotificationManagerCompat.getEnabledListenerPackages(this);
         if (packageNames.contains(context.getPackageName())) {

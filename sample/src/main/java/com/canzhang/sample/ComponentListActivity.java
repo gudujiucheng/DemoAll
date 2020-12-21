@@ -35,6 +35,7 @@ import com.canzhang.sample.manager.view.recyclerView.RecyclerFragment;
 import com.canzhang.sample.manager.view.recyclerView.RecyclerNativeTestFragment;
 import com.canzhang.sample.manager.view.recyclerView.RecyclerViewHeaderFooterFragment;
 import com.canzhang.sample.manager.view.shadow.ShadowFragment;
+import com.canzhang.sample.manager.view.span.SpanFragment;
 import com.canzhang.sample.manager.view.viewpager.ViewPagerFragment;
 import com.canzhang.sample.manager.view.viewpager.fql.FqlViewPagerFragment;
 import com.canzhang.sample.manager.view.webview.WebViewFragment;
@@ -110,7 +111,12 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
             }
         }
 
-
+        mData.add(new ComponentItem("SpannableStringBuilder  测试", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFragment(new SpanFragment());
+            }
+        }).setPriority(11));
         mData.add(new ComponentItem("图片信息、压缩、旋转、颜色修改等测试", new View.OnClickListener() {
             @Override
             public void onClick(View v) {

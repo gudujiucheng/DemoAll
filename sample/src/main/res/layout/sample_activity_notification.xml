@@ -29,5 +29,12 @@
         android:gravity="center"
         android:text="测试通知栏折叠" />
 
+    <Button
+        android:id="@+id/bt_test_02"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:text="是否开启了通知权限" />
+
 
 </LinearLayout>
