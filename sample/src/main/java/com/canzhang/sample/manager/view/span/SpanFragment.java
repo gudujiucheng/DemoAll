@@ -1,10 +1,12 @@
 package com.canzhang.sample.manager.view.span;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,9 +50,25 @@ public class SpanFragment extends BaseFragment {
 
     private void initView(View view) {
         TextView textView = view.findViewById(R.id.tv_test);
-        SpannableStringBuilder ssb = new SpannableStringBuilder("我的后面添加图片：  ");
-        ssb.setSpan(new ImageSpan(getContext(), R.mipmap.ic_launcher), 9, 10, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        textView.setText(ssb);
+
+        String SELECT_TIPS = "(已选)";//调整颜色测试
+        String title = "xxxx";
+        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(String.format("%s"+SELECT_TIPS, title));
+        spannableStringBuilder.setSpan(new ForegroundColorSpan(Color.parseColor("#16131a")),0,title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableStringBuilder.setSpan(new ForegroundColorSpan(Color.parseColor("#9a9a9a")),title.length(),title.length()+SELECT_TIPS.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+
+        textView.setText(spannableStringBuilder);
+
+
+        SpannableStringBuilder ssb = new SpannableStringBuilder("前面添加图片");
+//        ssb.setSpan(new ImageSpan(getContext(), R.mipmap.ic_launcher), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+////        ssb.setSpan(new ImageSpan(getContext(), R.mipmap.ic_launcher_round), 1, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);//如果索引相同则会被替换   搞个占位 一截一截拼接比较好
+//        textView.setText(ssb);
+
+
+
+
 
         textView = view.findViewById(R.id.tv_test2);
         ssb = new SpannableStringBuilder("我的中 间添加图片  ");
