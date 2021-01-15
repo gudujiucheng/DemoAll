@@ -67,7 +67,6 @@ public class WebViewFragment extends BaseFragment implements View.OnClickListene
 //        settings.setAppCachePath("xxxx");     //设置Application Caches缓存目录
         settings.setDefaultTextEncodingName("utf-8"); //设置默认编码
         settings.setUseWideViewPort(false);      //将图片调整到适合webview的大小
-        settings.setSupportZoom(true);           //支持缩放
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);//支持内容重新布局
         settings.supportMultipleWindows();       //多窗口
         settings.setAllowFileAccess(true);       //设置可以访问文件
@@ -267,13 +266,15 @@ public class WebViewFragment extends BaseFragment implements View.OnClickListene
             case R.id.bt_jump: // 浏览器打开
 //                Uri parse = Uri.parse("https://www.baidu.com/");
                 //临时测试小程序打开
-                Uri parse = Uri.parse("https://m.q.qq.com/a/p/1108314714?s=pages%2fmain%2fliveRoom%2findex%3froomid%3d655543%26source%3dCFMSTAR");
+//                Uri parse = Uri.parse("https://m.q.qq.com/a/p/1108314714?s=pages%2fmain%2fliveRoom%2findex%3froomid%3d655543%26source%3dCFMSTAR");
+                Uri parse = Uri.parse("https://privacy.qq.com/document/priview/896637b6dc4f4b80b48163580d63e07e");
                 startActivity(new Intent(Intent.ACTION_VIEW, parse));
                 break;
             case R.id.bt_open_url: //webView 内打开
 //                mWebView.loadUrl("https://www.baidu.com/");
 //                mWebView.loadUrl("https://pt.m.fenqile.com/index.html#/app-video");
-                mWebView.loadUrl("https://m.q.qq.com/a/p/1108314714?s=pages%2fmain%2fliveRoom%2findex%3froomid%3d655543%26source%3dCFMSTAR");
+//                mWebView.loadUrl("https://m.q.qq.com/a/p/1108314714?s=pages%2fmain%2fliveRoom%2findex%3froomid%3d655543%26source%3dCFMSTAR");
+                mWebView.loadUrl("https://privacy.qq.com/document/priview/896637b6dc4f4b80b48163580d63e07e");
                 break;
             case R.id.bt_open_local_url: //打开本地html文件
                 mWebView.loadUrl("file:///android_asset/JavaAndJavaScriptCall.html");
