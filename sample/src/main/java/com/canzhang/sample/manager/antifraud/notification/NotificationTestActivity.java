@@ -60,6 +60,94 @@ public class NotificationTestActivity extends Activity {
                 }
             }
         });
+        findViewById(R.id.bt_generate_notify_03).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /**
+                 * 测试结论：
+                 * 同个id的通知，只会展示一个通知，如果是不同内容的话，则会一直更新内容部分
+                 */
+
+                NotificationCompat.Builder ncBuilder = null;
+                NotificationManager manager = (NotificationManager) NotificationTestActivity.this.getSystemService(Context.NOTIFICATION_SERVICE);
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+
+                    String channelId = "notify_channel_id";
+                    String channelName = "notify_channel_name";
+                    NotificationChannel channel = new NotificationChannel(channelId,
+                            channelName, NotificationManager.IMPORTANCE_DEFAULT);
+                    channel.setDescription("这是默认的chanel");
+                    channel.enableLights(true); //设置开启指示灯，如果设备有的话
+                    channel.setLightColor(Color.RED); //设置指示灯颜色
+                    channel.setShowBadge(true);
+                    manager.createNotificationChannel(channel);//注册到系统中去，这里可以接收多个channel
+
+                    ncBuilder = new NotificationCompat.Builder(NotificationTestActivity.this, channelId);
+                } else {
+                    ncBuilder = new NotificationCompat.Builder(NotificationTestActivity.this);
+                }
+
+                ncBuilder
+                        .setSmallIcon(R.drawable.block_canary_icon)
+                        .setDefaults(Notification.DEFAULT_ALL)
+                        .setTicker("Ticker状态栏标题头" + index)
+                        .setContentTitle("标题头" + index)
+                        .setNumber(index)//测试 设置角标数量 看看能否成功
+                        .setContentText("内容xxxxx" + index);
+
+                NotificationManager nm = (NotificationManager) NotificationTestActivity.this
+                        .getSystemService(Context.NOTIFICATION_SERVICE);
+                /**
+                 * 测试同一个id 不同的内容,不断触发弹出通知，看看到底会是什么样子
+                 */
+                nm.notify(1000, ncBuilder.build());
+                index++;
+
+            }
+        });
+        findViewById(R.id.bt_generate_notify_02).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /**
+                 * 测试结论：
+                 * 同个id的通知，只会展示一个通知，如果是不同内容的话，则会一直更新内容部分
+                 */
+
+                NotificationCompat.Builder ncBuilder = null;
+                NotificationManager manager = (NotificationManager) NotificationTestActivity.this.getSystemService(Context.NOTIFICATION_SERVICE);
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+
+                    String channelId = "notify_channel_id";
+                    String channelName = "notify_channel_name";
+                    NotificationChannel channel = new NotificationChannel(channelId,
+                            channelName, NotificationManager.IMPORTANCE_DEFAULT);
+                    channel.setDescription("这是默认的chanel");
+                    channel.enableLights(true); //设置开启指示灯，如果设备有的话
+                    channel.setLightColor(Color.RED); //设置指示灯颜色
+                    manager.createNotificationChannel(channel);//注册到系统中去，这里可以接收多个channel
+
+                    ncBuilder = new NotificationCompat.Builder(NotificationTestActivity.this, channelId);
+                } else {
+                    ncBuilder = new NotificationCompat.Builder(NotificationTestActivity.this);
+                }
+
+                ncBuilder
+                        .setSmallIcon(R.drawable.block_canary_icon)//左上角的小鼠标，一般是设置应用图标
+                        .setDefaults(Notification.DEFAULT_ALL)//使用一些默认选项，灯光、震动啥的
+                        .setTicker("Ticker状态栏标题头" + index)//是通知时在状态栏显示的通知内容，一般只是一段文字，例如在状态栏版显示“您有一条短信，待查权收”。
+                        .setContentTitle("标题头" + index)//通知内容的标题头
+                        .setContentText("内容xxxxx" + index);//通知内容部分
+
+                NotificationManager nm = (NotificationManager) NotificationTestActivity.this
+                        .getSystemService(Context.NOTIFICATION_SERVICE);
+                /**
+                 * 测试同一个id 不同的内容,不断触发弹出通知，看看到底会是什么样子
+                 */
+                nm.notify(1000, ncBuilder.build());
+                index++;
+
+            }
+        });
         //暂未找到控制不折叠的方案   可以看出信鸽是支持不折叠方案的  是通过不同分组来实现的 setGroup(index+"")
         findViewById(R.id.bt_test).setOnClickListener(new View.OnClickListener() {
             @Override

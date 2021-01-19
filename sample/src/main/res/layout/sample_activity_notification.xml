@@ -23,6 +23,21 @@
 
 
     <Button
+        android:id="@+id/bt_generate_notify_02"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:text="弹出通知栏(同id测试)" />
+
+    <Button
+        android:id="@+id/bt_generate_notify_03"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:text="弹出通知栏(桌面图标红点测试)" />
+
+
+    <Button
         android:id="@+id/bt_test"
         android:layout_width="match_parent"
         android:layout_height="100dp"

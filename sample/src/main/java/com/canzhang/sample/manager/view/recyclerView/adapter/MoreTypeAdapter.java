@@ -2,9 +2,13 @@ package com.canzhang.sample.manager.view.recyclerView.adapter;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -87,6 +91,46 @@ public class MoreTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             });
         }
 
+        if (holder instanceof TwoColumnHolder) {
+            ((TwoColumnHolder) holder).tvName.setText(bean.getText());
+            /**
+             * TODO 针对textview 获取宽度偶现异常，暂时未找到原因（需要重新梳理一遍绘制相关内容），获取宽度为o的时候，表现的没有父布局
+             */
+            ((TwoColumnHolder) holder).tvName.post(new Runnable() {
+                @Override
+                public void run() {
+                    int width = ((TwoColumnHolder) holder).tvName.getWidth();
+                    if(width==0){
+                        Log.e("CAN_TEST","--------->>>>>width:"+ width +" text:"+bean.getText());
+                    }else{
+                        Log.d("CAN_TEST","--------->>>>>width:"+ width +" text:"+bean.getText());
+                    }
+
+                    ViewParent parent = holder.itemView.getParent();
+                    int index= 1;
+                    while (parent!=null){//从日志可以看出 被塞入了ListView的时候出的问题
+                        Log.d("CAN_TEST","parent :"+index+" "+parent.getClass().getSimpleName());
+                        parent = parent.getParent();
+                        index++;
+                    }
+                    if(index==1){
+                        Log.e("CAN_TEST","--------->>>>>异常 无父布局: text:"+bean.getText());
+                    }
+
+                }
+            });
+            ((TwoColumnHolder) holder).imageView.post(new Runnable() {
+                @Override
+                public void run() {
+                    int width = ((TwoColumnHolder) holder).imageView.getWidth();
+                    if(width==0){
+                        Log.e("CAN_TEST","------xxxx--->>>>>width:"+ width +" text:"+bean.getText());
+                    }else{
+                        Log.d("CAN_TEST","-------xxxx-->>>>>width:"+ width +" text:"+bean.getText());
+                    }
+                }
+            });
+        }
 
     }
 
@@ -119,8 +163,12 @@ public class MoreTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     //类型1
     class TwoColumnHolder extends RecyclerView.ViewHolder {
+        TextView tvName;
+        ImageView imageView;
         public TwoColumnHolder(View itemView) {
             super(itemView);
+            tvName = itemView.findViewById(R.id.tv_name);
+            imageView = itemView.findViewById(R.id.iv_img);
         }
     }
 
