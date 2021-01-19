@@ -1,4 +1,4 @@
-package com.canzhang.hb.luckyredpackage;
+package com.canzhang.hb.go;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,14 +15,13 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.canzhang.hb.R;
-import com.canzhang.hb.luckyredpackage.utils.Logg;
+import com.canzhang.hb.go.utils.Logg;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.AdapterStatus;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author xj_luo

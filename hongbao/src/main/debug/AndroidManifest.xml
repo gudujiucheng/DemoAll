@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.canzhang.hb.luckyredpackage.application.LPApplication"
+        android:name="com.canzhang.hb.go.application.LPApplication"
         android:allowBackup="true"
         android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
@@ -19,7 +19,7 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-2385563559269229~3310471699" />
 
-        <activity android:name="com.canzhang.hb.luckyredpackage.MainActivity">
+        <activity android:name="com.canzhang.hb.go.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,7 +28,7 @@
         </activity>
 
         <service
-            android:name="com.canzhang.hb.luckyredpackage.service.AssistBackgroundService"
+            android:name="com.canzhang.hb.go.service.AssistBackgroundService"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />

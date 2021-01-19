@@ -1,15 +1,8 @@
-package com.canzhang.hb.luckyredpackage.utils;
+package com.canzhang.hb.go.utils;
 
 import android.accessibilityservice.AccessibilityService;
-import android.accessibilityservice.GestureDescription;
-import android.graphics.Path;
-import android.graphics.Rect;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
-
-import androidx.annotation.RequiresApi;
 
 import java.util.List;
 

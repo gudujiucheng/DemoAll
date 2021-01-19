@@ -1,4 +1,4 @@
-package com.canzhang.hb.luckyredpackage.config;
+package com.canzhang.hb.go.config;
 
 import android.content.Context;
 import android.content.SharedPreferences;

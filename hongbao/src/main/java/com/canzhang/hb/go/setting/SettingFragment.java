@@ -1,4 +1,4 @@
-package com.canzhang.hb.luckyredpackage.setting;
+package com.canzhang.hb.go.setting;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,8 +12,8 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
 import com.canzhang.hb.R;
-import com.canzhang.hb.luckyredpackage.config.ConfigManger;
-import com.canzhang.hb.luckyredpackage.utils.Logg;
+import com.canzhang.hb.go.config.ConfigManger;
+import com.canzhang.hb.go.utils.Logg;
 
 
 

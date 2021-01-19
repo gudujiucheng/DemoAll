@@ -1,4 +1,4 @@
-package com.canzhang.hb.luckyredpackage.utils;
+package com.canzhang.hb.go.utils;
 
 import android.content.Context;
 import android.os.Build;

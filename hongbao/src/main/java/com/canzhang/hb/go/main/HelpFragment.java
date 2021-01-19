@@ -1,4 +1,4 @@
-package com.canzhang.hb.luckyredpackage.main;
+package com.canzhang.hb.go.main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

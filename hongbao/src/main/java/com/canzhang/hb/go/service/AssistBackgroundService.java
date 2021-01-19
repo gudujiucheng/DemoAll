@@ -1,14 +1,13 @@
-package com.canzhang.hb.luckyredpackage.service;
+package com.canzhang.hb.go.service;
 
 import android.accessibilityservice.AccessibilityService;
 import android.os.SystemClock;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
-import com.canzhang.hb.luckyredpackage.config.ConfigManger;
-import com.canzhang.hb.luckyredpackage.utils.AccessibilityHelper;
-import com.canzhang.hb.luckyredpackage.utils.Logg;
-import com.canzhang.hb.luckyredpackage.utils.ScreenUtil;
+import com.canzhang.hb.go.config.ConfigManger;
+import com.canzhang.hb.go.utils.AccessibilityHelper;
+import com.canzhang.hb.go.utils.Logg;
 
 
 /**

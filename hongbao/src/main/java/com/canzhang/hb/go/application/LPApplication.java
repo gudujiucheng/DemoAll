@@ -1,10 +1,10 @@
-package com.canzhang.hb.luckyredpackage.application;
+package com.canzhang.hb.go.application;
 
 import android.app.Application;
 
 import androidx.annotation.NonNull;
 
-import com.canzhang.hb.luckyredpackage.config.ConfigManger;
+import com.canzhang.hb.go.config.ConfigManger;
 
 
 /**

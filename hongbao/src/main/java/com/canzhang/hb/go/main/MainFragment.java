@@ -1,4 +1,4 @@
-package com.canzhang.hb.luckyredpackage.main;
+package com.canzhang.hb.go.main;
 
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.content.Context;
@@ -21,7 +21,7 @@ import androidx.navigation.Navigation;
 
 import com.canzhang.hb.BuildConfig;
 import com.canzhang.hb.R;
-import com.canzhang.hb.luckyredpackage.utils.Logg;
+import com.canzhang.hb.go.utils.Logg;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
