@@ -1,6 +1,5 @@
 package com.canzhang.hb.luckyredpackage.utils;
 
-import android.os.Build;
 import android.util.Log;
 
 import com.canzhang.hb.BuildConfig;

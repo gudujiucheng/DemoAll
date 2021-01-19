@@ -36,11 +36,6 @@ public class AssistBackgroundService extends AccessibilityService {
      */
     private static String CHAT_LIST_PAGE = " com.tencent.mm.ui.LauncherUI";
 
-    /**
-     * 获取屏幕宽高
-     */
-    private int screenWidth = ScreenUtil.SCREEN_WIDTH;
-    private int screenHeight = ScreenUtil.SCREEN_HEIGHT;
 
     @Override
     protected void onServiceConnected() {
@@ -61,8 +56,10 @@ public class AssistBackgroundService extends AccessibilityService {
         if (className.equals(ACTIVITY_DIALOG_LUCKYMONEY)) {
             Logg.i(CHILD_TAG, "当前为红包弹出框页面");
             int delay = ConfigManger.getInstance().getOpenDelayTime();
-            Logg.i(CHILD_TAG, "当前为红包弹出框页面,延时 " + delay + "毫秒点击 开 ");
-            SystemClock.sleep(delay);
+            if (delay != 0) {
+                Logg.i(CHILD_TAG, "当前为红包弹出框页面,延时 " + delay + "毫秒点击 开 ");
+                SystemClock.sleep(delay);
+            }
             AccessibilityHelper.openPackage(this);
             isHongBaoOpen = true;
             return;

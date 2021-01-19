@@ -16,11 +16,6 @@ import com.canzhang.hb.luckyredpackage.config.ConfigManger;
 import com.canzhang.hb.luckyredpackage.utils.Logg;
 
 
-/**
- * @author xj.luo
- * @email xj_luo@foxmail.com
- * @date Created on 2020/11/17
- */
 
 public class SettingFragment extends PreferenceFragmentCompat implements Preference.OnPreferenceChangeListener {
 

@@ -42,5 +42,5 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:text="步骤1：点击 开启插件 按钮，跳转到无障碍辅助页面；\n步骤2：在无障碍辅助页面，找到易红包助手开关，滑动打开；\n步骤3：进入要抢红包的群，坐等红包进账。" />
+        android:text="步骤1：点击 开启插件 按钮，跳转到无障碍辅助页面；\n步骤2：在无障碍辅助页面，找到红包助手开关，滑动打开；\n步骤3：进入要抢红包的群，坐等红包进账。" />
 </LinearLayout>

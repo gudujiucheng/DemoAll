@@ -37,6 +37,7 @@
             android:textIsSelectable="false"
             android:visibility="visible" />
 
+        <!-- 测试用：ca-app-pub-3940256099942544/6300978111-->
         <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
             android:id="@+id/id_adView"
             android:layout_width="match_parent"

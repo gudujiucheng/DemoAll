@@ -10,11 +10,7 @@ import com.canzhang.hb.R;
 import com.canzhang.hb.luckyredpackage.application.LPApplication;
 
 
-/**
- * @author xj.luo
- * @email xj_luo@foxmail.com
- * @date Created on 2020/10/30
- */
+
 
 public class ToastUtils {
     public static Toast mToast = null;

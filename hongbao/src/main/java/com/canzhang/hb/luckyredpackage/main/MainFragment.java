@@ -1,17 +1,9 @@
 package com.canzhang.hb.luckyredpackage.main;
 
-import androidx.lifecycle.ViewModelProviders;
-
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
 import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,21 +14,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
 import com.canzhang.hb.BuildConfig;
 import com.canzhang.hb.R;
+import com.canzhang.hb.luckyredpackage.utils.Logg;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.RequestConfiguration;
+import com.google.android.gms.ads.LoadAdError;
 
-
-import java.util.Arrays;
 import java.util.List;
 
 public class MainFragment extends Fragment {
 
-    private MainViewModel mViewModel;
     private AccessibilityManager accessibilityManager;
 
     private LinearLayout accessibilityControlLayout;
@@ -62,9 +56,6 @@ public class MainFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        // TODO: Use the ViewModel
-
     }
 
     @Override
@@ -105,6 +96,32 @@ public class MainFragment extends Fragment {
 
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+        mAdView.setAdListener(new AdListener() {
+
+            public void onAdClosed() {
+                Logg.e("CAN_TEST","onAdClosed");
+            }
+
+            public void onAdFailedToLoad(LoadAdError var1) {
+                Logg.e("CAN_TEST","onAdFailedToLoad:"+var1.toString());
+            }
+
+            public void onAdOpened() {
+                Logg.e("CAN_TEST","onAdOpened");
+            }
+
+            public void onAdLoaded() {
+                Logg.e("CAN_TEST","onAdLoaded");
+            }
+
+            public void onAdClicked() {
+                Logg.e("CAN_TEST","onAdClicked");
+            }
+
+            public void onAdImpression() {
+                Logg.e("CAN_TEST","onAdImpression");
+            }
+        });
 
         TextView versionView = view.findViewById(R.id.id_version_text);
         String version = BuildConfig.VERSION_NAME;

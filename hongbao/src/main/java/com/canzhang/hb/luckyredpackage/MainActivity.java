@@ -15,9 +15,14 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.canzhang.hb.R;
+import com.canzhang.hb.luckyredpackage.utils.Logg;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.AdapterStatus;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author xj_luo
@@ -43,6 +48,12 @@ public class MainActivity extends AppCompatActivity {
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
+                Map<String, AdapterStatus> adapterStatusMap = initializationStatus.getAdapterStatusMap();
+                for(Map.Entry<String, AdapterStatus> entry : adapterStatusMap.entrySet()){
+                    String mapKey = entry.getKey();
+                    AdapterStatus mapValue = entry.getValue();
+                    Logg.i("CAN_TEST",mapKey+": des="+mapValue.getDescription()+" state="+mapValue.getInitializationState()+" latency="+mapValue.getLatency());
+                }
 
             }
         });
