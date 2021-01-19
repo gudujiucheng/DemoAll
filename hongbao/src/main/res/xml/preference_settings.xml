@@ -7,17 +7,17 @@
         app:iconSpaceReserved="false">
 
         <EditTextPreference
-            android:defaultValue="201"
+            android:defaultValue="0"
             android:dialogTitle="请输入延时时间"
             android:key="edit_click_time_preference"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:summary="201 ms"
+            android:summary="0 ms"
             android:title="点击红包延迟时间"
             app:iconSpaceReserved="false" />
         <EditTextPreference
             android:defaultValue="151"
-            android:dialogTitle="请输入延时时间"
+            android:dialogTitle="请输入延时时间(如果不延迟，可能view未渲染完毕，导致不会自动打开)"
             android:key="edit_time_preference"
             android:selectAllOnFocus="true"
             android:singleLine="true"

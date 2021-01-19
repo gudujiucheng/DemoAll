@@ -3,23 +3,29 @@
     package="com.canzhang.hb">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
-        android:name="com.canzhang.hb.go.application.LPApplication"
+        android:name=".go.application.LPApplication"
         android:allowBackup="true"
         android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <!--参考：https://blog.csdn.net/qq_34947883/article/details/89641482
-        https://developers.google.com/admob/android/quick-start?hl=zh-CN#import_the_mobile_ads_sdk -->
+        <service
+            android:name=".go.service.ForegroundService"
+            android:enabled="true"
+            android:exported="true"></service>
+        <!--
+        参考：https://blog.csdn.net/qq_34947883/article/details/89641482
+        https://developers.google.com/admob/android/quick-start?hl=zh-CN#import_the_mobile_ads_sdk
+        -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-2385563559269229~3310471699" />
 
-        <activity android:name="com.canzhang.hb.go.MainActivity">
+        <activity android:name=".go.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,11 +34,12 @@
         </activity>
 
         <service
-            android:name="com.canzhang.hb.go.service.AssistBackgroundService"
+            android:name=".go.service.AssistBackgroundService"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
             </intent-filter>
+
             <meta-data
                 android:name="android.accessibilityservice"
                 android:resource="@xml/accessible_service_config" />

@@ -9,12 +9,15 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.canzhang.hb.R;
+import com.canzhang.hb.go.service.ForegroundService;
 import com.canzhang.hb.go.utils.Logg;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.AdapterStatus;
@@ -27,6 +30,7 @@ import java.util.Map;
  * @author xj_luo
  */
 public class MainActivity extends AppCompatActivity {
+    private Intent mForegroundService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,29 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
+        //启动服务
+        if (!ForegroundService.serviceIsLive) {
+            // Android 8.0使用startForegroundService在前台启动新服务
+            mForegroundService = new Intent(this, ForegroundService.class);
+            mForegroundService.putExtra("Foreground", "This is a foreground service.");
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(mForegroundService);
+            } else {
+                startService(mForegroundService);
+            }
+        } else {
+            Toast.makeText(this, "前台服务正在运行中...", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //停止服务
+//        mForegroundService = new Intent(this, ForegroundService.class);
+//        stopService(mForegroundService);
     }
 
     @Override

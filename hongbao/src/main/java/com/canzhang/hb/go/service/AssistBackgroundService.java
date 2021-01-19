@@ -55,9 +55,11 @@ public class AssistBackgroundService extends AccessibilityService {
         if (className.equals(ACTIVITY_DIALOG_LUCKYMONEY)) {
             Logg.i(CHILD_TAG, "当前为红包弹出框页面");
             int delay = ConfigManger.getInstance().getOpenDelayTime();
-            if (delay != 0) {
+            if (delay > 0) {
                 Logg.i(CHILD_TAG, "当前为红包弹出框页面,延时 " + delay + "毫秒点击 开 ");
                 SystemClock.sleep(delay);
+            }else{
+                Logg.e(CHILD_TAG, "无延迟点击");
             }
             AccessibilityHelper.openPackage(this);
             isHongBaoOpen = true;
@@ -79,7 +81,11 @@ public class AssistBackgroundService extends AccessibilityService {
         if (hongBaoParent != null) {
             Logg.i(CHILD_TAG, "找到红包，点击红包");
             int delay2 = ConfigManger.getInstance().getClickDelayTime();
-            SystemClock.sleep(delay2);
+            if (delay2 > 0) {
+                SystemClock.sleep(delay2);
+            }else{
+                Logg.e(CHILD_TAG, "无延迟点击2");
+            }
             boolean success = AccessibilityHelper.clickHongbao(hongBaoParent);
             Logg.i(CHILD_TAG, success ? "红包被点击了 " : "红包没有被点击 ");
         }
