@@ -32,6 +32,6 @@ public class ConfigManger {
     }
 
     public int getClickDelayTime() {
-        return Integer.parseInt(preferences.getString("edit_click_time_preference", "0"));
+        return Integer.parseInt(preferences.getString("edit_click_time_preference", "201"));
     }
 }
