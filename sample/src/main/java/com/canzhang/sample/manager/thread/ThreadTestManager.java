@@ -1,6 +1,7 @@
 package com.canzhang.sample.manager.thread;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.View;
 
 import com.canzhang.sample.base.BaseManager;
@@ -33,6 +34,7 @@ public class ThreadTestManager extends BaseManager {
         UniversalReport.init(AppProxy.getInstance().getApplication());
 
         List<ComponentItem> list = new ArrayList<>();
+        list.add(testThreadLimit());
         list.add(testSync());
         list.add(testLocal());
         list.add(testFqlThreadPool());
@@ -54,8 +56,59 @@ public class ThreadTestManager extends BaseManager {
         return list;
     }
 
+
+    private ComponentItem testThreadLimit() {
+
+        /**
+         * 测试结论：
+         *     java.lang.OutOfMemoryError: pthread_create (1040KB stack) failed: Out of memory
+         *         at java.lang.Thread.nativeCreate(Native Method)
+         *         at java.lang.Thread.start(Thread.java:893)
+         *         at com.canzhang.sample.manager.thread.ThreadTestManager$1$1.run(ThreadTestManager.java:82)
+         *         at java.lang.Thread.run(Thread.java:929)
+         *
+         *         参见：https://www.jianshu.com/p/e574f0ffdb42
+         */
+
+        return new ComponentItem("测试线程在安卓设备的上线限制", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        for (int i = 0; i < 5000; i++) {//在华为上面  差不多是3000左右的样子 会挂掉
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Log.d("CAN_TEST", "线程执行了：" + Thread.currentThread().getName());
+                                    try {
+                                        Thread.sleep(1000 * 60);//防止线程自动销毁
+                                        Log.e("CAN_TEST", "线程销毁了：" + Thread.currentThread().getName());
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }, "测试线程上线子线程" + i).start();
+                            try {
+                                Thread.sleep(2);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                    }
+                }, "测试线程上线：").start();
+
+
+            }
+        });
+    }
+
     private ComponentItem countDownLatchTest() {
-        return new ComponentItem("测试 countDownLatch应用 ", "countDownLatch这个类使一个线程等待其他线程各自执行完毕后再执行。",new View.OnClickListener() {
+        return new ComponentItem("测试 countDownLatch应用 ", "countDownLatch这个类使一个线程等待其他线程各自执行完毕后再执行。", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //是通过一个计数器来实现的，计数器的初始值是线程的数量。每当一个线程执行完毕后，计数器的值就-1，当计数器的值为0时，表示所有线程都执行完毕，然后在闭锁上等待的线程就可以恢复工作了。
@@ -123,7 +176,7 @@ public class ThreadTestManager extends BaseManager {
                 }
 
 
-                for (int i = 0; i <20; i++) {
+                for (int i = 0; i < 20; i++) {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
