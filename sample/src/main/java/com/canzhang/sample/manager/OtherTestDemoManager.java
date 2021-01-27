@@ -3,8 +3,11 @@ package com.canzhang.sample.manager;
 import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Handler;
 import android.util.Log;
@@ -46,6 +49,7 @@ public class OtherTestDemoManager extends BaseManager {
     public List<ComponentItem> getSampleItem(Activity activity) {
         super.getSampleItem(activity);
         List<ComponentItem> list = new ArrayList<>();
+        list.add(testJiXing());
         list.add(testAppStatus());
         list.add(testGenerate());
         list.add(testLauncher());
@@ -57,6 +61,69 @@ public class OtherTestDemoManager extends BaseManager {
         return list;
     }
 
+    private ComponentItem testJiXing() {
+        return new ComponentItem("获取桌面应用包名", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mActivity==null){
+                    return;
+                }
+                isSupport();
+
+
+            }
+        });
+    }
+
+    private boolean isSupport() {
+        Intent launchIntent = mActivity.getPackageManager().getLaunchIntentForPackage(mActivity.getPackageName());
+        if (launchIntent == null) {
+            Log.e("CAN_TEST", "Unable to find launch intent for package " + mActivity.getPackageName());
+            return false ;
+        }
+        ComponentName sComponentName = launchIntent.getComponent();
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        List<ResolveInfo> resolveInfos = mActivity.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        for (ResolveInfo resolveInfo : resolveInfos) {
+            String currentHomePackage = resolveInfo.activityInfo.packageName;
+            Log.d("CAN_TEST","currentHomePackage:"+currentHomePackage);
+        }
+        //Turns out framework does not guarantee to put DEFAULT Activity on top of the list.
+        ResolveInfo resolveInfoDefault = mActivity.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        validateInfoList(resolveInfoDefault, resolveInfos);
+
+        for (ResolveInfo resolveInfo : resolveInfos) {
+            String currentHomePackage = resolveInfo.activityInfo.packageName;
+            Log.e("CAN_TEST","currentHomePackage:"+currentHomePackage);
+        }
+        return true;
+    }
+
+
+    /**
+     * Making sure the default Home activity is on top of the returned list
+     *
+     * @param defaultActivity default Home activity
+     * @param resolveInfos    list of all Home activities in the system
+     */
+    private static void validateInfoList(ResolveInfo defaultActivity, List<ResolveInfo> resolveInfos) {
+        int indexToSwapWith = 0;
+        int resolveInfosSize = 0;
+        if (resolveInfos != null) {
+            resolveInfosSize = resolveInfos.size();
+            for (int i = 0; i < resolveInfosSize; i++) {
+                ResolveInfo resolveInfo = resolveInfos.get(i);
+                String currentActivityName = resolveInfo.activityInfo.packageName;
+                if (currentActivityName.equals(defaultActivity.activityInfo.packageName)) {
+                    indexToSwapWith = i;
+                }
+            }
+        }
+        if (resolveInfosSize>1 && resolveInfosSize > indexToSwapWith) {
+            Collections.swap(resolveInfos, 0, indexToSwapWith);
+        }
+    }
 
     private ComponentItem testAppStatus() {
         return new ComponentItem("测试app当前运行状态", new View.OnClickListener() {
@@ -81,7 +148,7 @@ public class OtherTestDemoManager extends BaseManager {
 //                intent.setData(Uri.parse("xgscheme://com.tencent.push/1001?param={\"action\":\"sysNotification\",\"param\":{\"id\":1605151191},\"gameId\":10011,\"notify\":1}"));//
 //                intent.setData(Uri.parse("xgscheme://com.tencent.push/1001?param={\"action\":\"sysNotification\",\"param\":{\"id\":1606110600},\"gameId\":1001,\"notify\":1}"));//
 //                intent.setData(Uri.parse("xgscheme://com.tencent.push/1001?param={\"action\":\"sysNotification\",\"param\":{\"id\":1606893900},\"gameId\":10011,\"notify\":1}"));//
-                intent.setData(Uri.parse("xgscheme://com.tencent.push/1001?param={\"action\":\"sysNotification\",\"param\":{\"id\":1610449200},\"gameId\":10011,\"notify\":1}"));//
+                intent.setData(Uri.parse("xgscheme://com.tencent.push/1001?param={\"action\":\"sysNotification\",\"param\":{\"id\":1611122400},\"gameId\":20003,\"notify\":1}"));//
                 mActivity.startActivity(intent);
                 String a = null;
                 String b = "1"+a;
