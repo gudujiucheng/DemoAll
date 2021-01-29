@@ -16,9 +16,9 @@ import com.canzhang.hb.go.utils.Logg;
  * @date Created on 2020/11/13
  */
 
-public class AssistBackgroundService extends AccessibilityService {
+public class WxService extends AccessibilityService {
 
-    private static final String CHILD_TAG = AssistBackgroundService.class.getSimpleName();
+    private static final String CHILD_TAG = WxService.class.getSimpleName();
 
     /**
      * 红包弹出的class的名字

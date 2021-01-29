@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
-        android:title="抢红包参数设置"
+        android:title="插件1：参数设置"
         app:iconSpaceReserved="false">
 
         <EditTextPreference
@@ -26,6 +26,29 @@
             app:iconSpaceReserved="false" />
 
 
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        android:title="插件2：参数设置" >
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_watch_notification"
+            android:summary="勾选则在通知栏有红包信息提醒时，自动抢红包"
+            app:iconSpaceReserved="false"
+            android:title="监视系统通知栏提醒" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_watch_list"
+            android:summary="勾选则在微信聊天列表中有红包信息时，自动抢红包"
+            app:iconSpaceReserved="false"
+            android:title="监视聊天列表页面" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="pref_watch_chat"
+            android:summary="勾选则在微信聊天页面中有红包信息时，自动抢红包"
+            app:iconSpaceReserved="false"
+            android:title="监视当前聊天页面" />
     </PreferenceCategory>
 
     <PreferenceCategory
