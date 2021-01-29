@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -214,11 +215,14 @@ public class MainFragment extends Fragment {
         List<AccessibilityServiceInfo> accessibilityServices =
                 accessibilityManager.getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_GENERIC);
         for (AccessibilityServiceInfo info : accessibilityServices) {
-            if (info.getId().equals(this.getContext().getPackageName() + "/.service.AssistBackgroundService")) {
+            Log.d("CAN_TEST","AccessibilityServiceInfo id:"+info.getId());
+            if (info.getId().contains( "go.service.AssistBackgroundService")) {
                 return true;
             }
+
         }
         return false;
     }
+
 
 }
