@@ -6,36 +6,7 @@ if (isSampleRunAsApp.toBoolean()) {
 }
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'//引入kapt插件
-apply plugin: 'com.canzhang.bury_point'//自定义埋点插件
-//apply plugin: 'hunter-timing'// 慢方法检测插件
 apply plugin: "com.tencent.android.tpns"//推送
-
-
-//fqlAnalytics {
-//    isShowDebugInfo = true
-//    //需要排除的包
-//    excludePackageList = ['com/lexinfintech/component/auto_view_point',
-//                          'com/lexinfintech/component/debugdialog',
-//                          'android/support',
-//                          'com/mob',
-//                          'com/tencent',
-//                          'cn/sharesdk',
-//                          'com/taobao']
-//    //排除包中  需要定向插桩的包（仅针对属于needExcludePackageList 中部分需要插桩的子包，方便配置，例如 'android/support'大部分不需要埋点，而其中的TabLayout需要特殊埋点需求）
-//    needModifyPackageList = ['android/support/design/widget/TabLayout']
-//}
-
-//apply plugin: 'com.canzhang.slow_method_plugin'
-//slowMethodConfig {
-//    isShowDebugInfo = true
-//    //需要排除的包
-//    excludePackageList = ['com/canzhang/sample/manager/asm/slow_method',
-//                          'android/support',
-//                          'com/mob',
-//                          'com/tencent',
-//                          'cn/sharesdk',
-//                          'com/taobao']
-//}
 
 
 android {
@@ -204,7 +175,7 @@ dependencies {
     kapt project(':simplebutterknife-compiler')
     api project(':simple-test-annotations')
     kapt project(':simple-test-compiler')//如果需要支持kotlin 需要使用kapt 替代 annotationProcessor
-    implementation project(':hunter-timing-library')
+
 
 
     //集成上面的Rxjava之后 居然要求分包了

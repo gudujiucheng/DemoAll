@@ -22,9 +22,6 @@ import com.component.debugdialog.DebugDialog;
 import com.example.base.base.AppProxy;
 import com.example.base.utils.ToastUtil;
 import com.github.moduth.blockcanary.BlockCanary;
-import com.hunter.library.timing.BlockManager;
-import com.hunter.library.timing.IBlockHandler;
-import com.hunter.library.timing.impl.RankingBlockHandler;
 import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.common.WXException;
@@ -37,7 +34,7 @@ import com.tencent.android.tpush.XGPushManager;
  * 调试模式下的 app（simple作为单独工程运行时候使用）
  */
 public class DebugBaseApp extends Application {
-    public static IBlockHandler sCustomBlockManager;
+
 
     @Override
     public void onCreate() {
@@ -66,9 +63,6 @@ public class DebugBaseApp extends Application {
             }
         });
 
-        //慢方法检测
-        sCustomBlockManager = new RankingBlockHandler(100);
-        BlockManager.installBlockManager(sCustomBlockManager);
 
         initPush();
 

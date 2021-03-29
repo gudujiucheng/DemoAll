@@ -1,7 +1,4 @@
 include ':hongbao'
-include ':hunter-transform'
-include ':hunter-timing-library'
-include ':hunter-timing-plugin'
 include ':simple-test-compiler'
 include ':simple-test-annotations'
 include ':simple-test-annotations'
@@ -15,7 +12,6 @@ include ':app',
         ':base',
         ':debug-dialog',
         ':aidlservice',
-        ':bury-point-plugin',
         ':mylibrary',
         ':mycanrunlibrary'
 //setBinding(new Binding([gradle: this]))
