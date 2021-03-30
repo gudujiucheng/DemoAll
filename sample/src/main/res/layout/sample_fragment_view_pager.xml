@@ -49,5 +49,16 @@
         android:layout_height="wrap_content"
         android:text="设置动画时间" />
 
+    <com.canzhang.sample.manager.view.viewpager.verticalorhorizontal.VerticalOrHorizontalViewPager
+        android:id="@+id/vh_view_page"
+        android:layout_width="match_parent"
+        android:layout_height="150dp" />
+
+    <Button
+        android:id="@+id/bt_switch_direct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="切换方向" />
+
 
 </LinearLayout>

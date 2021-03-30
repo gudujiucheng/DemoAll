@@ -2,9 +2,6 @@ package com.canzhang.sample.manager.view.viewpager;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.viewpager.widget.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,11 +13,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.viewpager.widget.ViewPager;
+
 import com.canzhang.sample.R;
 import com.canzhang.sample.manager.view.recyclerView.bean.PageItem;
 import com.canzhang.sample.manager.view.viewpager.fql.banner.FixedSpeedScroller;
 import com.canzhang.sample.manager.view.viewpager.fql.transformer.TranslationXPageTransformer;
 import com.canzhang.sample.manager.view.viewpager.loop.LoopPagerAdapter;
+import com.canzhang.sample.manager.view.viewpager.verticalorhorizontal.VerticalOrHorizontalViewPager;
 import com.example.base.base.BaseFragment;
 
 import java.lang.reflect.Field;
@@ -42,9 +44,12 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  */
 public class ViewPagerFragment extends BaseFragment {
     private ViewPager mVp;
+    private VerticalOrHorizontalViewPager mVHVp;
     private ViewPagerIndicator mIndicator;
     private List<PageItem> mData = new ArrayList<>();
+    private List<PageItem> mVhData = new ArrayList<>();
     private CustomPagerAdapter<PageItem> mCustomPagerAdapter;
+    private CustomPagerAdapter<PageItem> mVhCustomPagerAdapter;
 
     @Nullable
     @Override
@@ -58,6 +63,7 @@ public class ViewPagerFragment extends BaseFragment {
     private void initData() {
         for (int i = 0; i < 10; i++) {
             mData.add(new PageItem(R.mipmap.ic_launcher, "xxxx" + i));
+            mVhData.add(new PageItem(R.mipmap.ic_launcher, "横竖" + i));
         }
         initNormal();
 //        initLoop();
@@ -77,12 +83,14 @@ public class ViewPagerFragment extends BaseFragment {
      */
     private void initNormal() {
         setAdapter();
+        setVhAdapter();
     }
 
     int i = 0;
 
     private void initView(View view) {
         mVp = view.findViewById(R.id.vp);
+        mVHVp = view.findViewById(R.id.vh_view_page);
         mVp.setPageTransformer(true, new TranslationXPageTransformer());
         mIndicator = view.findViewById(R.id.vp_indicator);
 
@@ -108,6 +116,14 @@ public class ViewPagerFragment extends BaseFragment {
                 mVp.setPageTransformer(i % 2 == 0, new TranslationXPageTransformer());
             }
         });
+        view.findViewById(R.id.bt_switch_direct).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                index++;
+                mVHVp.setOrientation(index % 2);
+
+            }
+        });
         final EditText etTime = view.findViewById(R.id.et_time);
         view.findViewById(R.id.bt_set_anim_time).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,6 +138,8 @@ public class ViewPagerFragment extends BaseFragment {
         });
 
     }
+
+    private int index = 0;
 
 
     public void setDurationTime(int time) {
@@ -167,6 +185,36 @@ public class ViewPagerFragment extends BaseFragment {
         mVp.setAdapter(mCustomPagerAdapter);
         mIndicator.setViewPager(mVp);
 
+    }
+
+    private void setVhAdapter() {
+        mVHVp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                log("onPageSelected 当前position：" + position);
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        mVhCustomPagerAdapter = new CustomPagerAdapter<PageItem>() {
+            @Override
+            protected View getViewGroupItemView(ViewGroup container, PageItem pageItem, int position) {
+                return getRealView(container, pageItem, position);
+            }
+        };
+        mVhCustomPagerAdapter.setList(mVhData);
+        mVHVp.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        mVHVp.setAdapter(mVhCustomPagerAdapter);
     }
 
 

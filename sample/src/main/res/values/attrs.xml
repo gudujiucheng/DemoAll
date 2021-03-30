@@ -16,4 +16,13 @@
         </attr>
     </declare-styleable>
 
+    <!--横向或者纵向滚动的ViewPage-->
+
+    <declare-styleable name="VerticalOrHorizontalViewPager" tools:ignore="ResourceName">
+        <attr name="orientation" tools:ignore="ResourceName">
+            <enum name="horizontal" value="0"/>
+            <enum name="vertical" value="1"/>
+        </attr>
+    </declare-styleable>
+
 </resources>
