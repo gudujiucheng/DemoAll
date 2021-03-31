@@ -39,6 +39,10 @@ public class VerticalOrHorizontalTransformer implements ViewPager.PageTransforme
                 view.setTranslationX(view.getWidth() * -position);//跟手势逆向，从而保证竖向模式下，横向保持不
                 //set Y position to swipe in from top
                 view.setTranslationY(position * view.getHeight());//竖向按照手势比例进行纵向偏移，达到竖向滑动效果
+            }else{
+                //归位，避免横竖屏切换还保留之前状态的位移
+                view.setTranslationX(0);
+                view.setTranslationY(0);
             }
             //水平方向不需要变更，跟着手势走就好了
         } else { // (1,+Infinity]
