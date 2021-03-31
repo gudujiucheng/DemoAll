@@ -45,7 +45,7 @@ public class VerticalOrHorizontalViewPager extends ViewPager {
         }
         TypedArray a = getContext().obtainStyledAttributes(attrs,
                 R.styleable.VerticalOrHorizontalViewPager);
-        orientation = a.getInt(R.styleable.DashLineView_dash_line_orientation, HORIZONTAL);
+        orientation = a.getInt(R.styleable.VerticalOrHorizontalViewPager_orientation, HORIZONTAL);
         setPageTransformer(true, verticalOrHorizontalTransformer = new VerticalOrHorizontalTransformer(HORIZONTAL));
         a.recycle();
     }
