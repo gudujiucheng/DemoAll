@@ -6,17 +6,22 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
- * @author owenli
- * @date 2018/11/27
+ * 定长队列
  */
 public class LimitQueue<E> implements Queue<E> {
     //队列长度
     private int limit;
-
+    //是否去重
+    private boolean deduplication = true;
     Queue<E> queue = new ConcurrentLinkedQueue<E>();
 
     public LimitQueue(int limit) {
+        this(limit, true);
+    }
+
+    public LimitQueue(int limit, boolean deduplication) {
         this.limit = limit;
+        this.deduplication = deduplication;
     }
 
     /**
@@ -26,9 +31,10 @@ public class LimitQueue<E> implements Queue<E> {
      */
     @Override
     public boolean offer(E e) {
-        //如果已有先移除
-        queue.remove(e);
-
+        if (deduplication) {
+            //如果已有先移除
+            queue.remove(e);
+        }
         if (queue.size() >= limit) {
             //如果超出长度,入队时,先出队
             queue.poll();
@@ -64,8 +70,18 @@ public class LimitQueue<E> implements Queue<E> {
         return limit;
     }
 
+    @Deprecated //限制长度，不要调用这个，未添加判断
     @Override
     public boolean add(E e) {
+        if (deduplication) {
+            //如果已有先移除
+            queue.remove(e);
+        }
+
+        if (queue.size() >= limit) {
+            //如果超出长度,入队时,先出队
+            queue.poll();
+        }
         return queue.add(e);
     }
 
@@ -81,7 +97,7 @@ public class LimitQueue<E> implements Queue<E> {
 
     @Override
     public boolean isEmpty() {
-        return queue.size() == 0 ? true : false;
+        return queue.size() == 0;
     }
 
     @Override
@@ -96,7 +112,17 @@ public class LimitQueue<E> implements Queue<E> {
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
-        return queue.addAll(c);
+        if (c.size() > this.limit) {
+            return false;
+        } else {
+            if (deduplication) {
+                queue.removeAll(c);
+            }
+            for (int var2 = c.size() + queue.size() - this.limit; var2 > 0; --var2) {
+                queue.poll();
+            }
+            return queue.addAll(c);
+        }
     }
 
     @Override
