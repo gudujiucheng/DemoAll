@@ -49,6 +49,8 @@ public class OtherTestDemoManager extends BaseManager {
     public List<ComponentItem> getSampleItem(Activity activity) {
         super.getSampleItem(activity);
         List<ComponentItem> list = new ArrayList<>();
+        list.add(testAddUrlParams());
+        list.add(testScheme());
         list.add(testJiXing());
         list.add(testAppStatus());
         list.add(testGenerate());
@@ -60,7 +62,51 @@ public class OtherTestDemoManager extends BaseManager {
         list.add(mainTest());
         return list;
     }
+    int index = 0;
+    private ComponentItem testAddUrlParams(){
+        return new ComponentItem("测试uri拼接参数", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                String url="";
+                switch (index%3){
+                    case 0:
+                        url = "https://www.baidu.com/s?";//无参数
+                        break;
+                    case 1:
+                        url = "https://www.baidu.com/s?wd=haha";//有参数
+                        break;
+                    case 2:
+                        url = "https://www.baidu.com/s?key=haha";//有同名参数 (测试结果：不会去重)
+                        break;
+                }
+                Uri.Builder builder = Uri.parse(url).buildUpon();
+                builder.appendQueryParameter("key", "{\"result\":0,\"returnCode\":0,\"returnMsg\":\"\"}");
+                index++;
+                Log.e("CAN_TEST",builder.toString());
+            }
+        });
+    }
+    private ComponentItem testScheme() {
+        return new ComponentItem("通过scheme打开页面", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mActivity==null){
+                    return;
+                }
+
+                //cf 打开url 的方法   其中要求 三个参数都必须有值
+                String url = "cfpage://webopenapi?action=20002&gameId=1&url=https://bb.img.qq.com/clsq/protocol/cf/protocol.html";
+//                String url = "cfpage://webopenapi?action=20002&gameId=10011&url=https://cf.qq.com/act/5326/a20210323ld/index.html";
+//                String url = "cfpage://webopenapi/startApp";//可以打开 但是应用在后台的时候 似乎唤起不到前台
+//                String url = "cfpage://webopenapi";//可以
+//                String url = "cfpage://";//不可以
+                Intent in = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                mActivity.startActivity(in);
+
+            }
+        });
+    }
     private ComponentItem testJiXing() {
         return new ComponentItem("获取桌面应用包名", new View.OnClickListener() {
             @Override

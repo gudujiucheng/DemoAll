@@ -14,6 +14,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
+ * TODO 还有bug 屏幕太大 滑动有点不跟手  直接使用viewpage2 效果更好一些
  * 支持viewPager 竖直水平滚动效果，需配合{@link VerticalOrHorizontalTransformer}  使用
  */
 public class VerticalOrHorizontalViewPager extends ViewPager {
@@ -46,7 +47,7 @@ public class VerticalOrHorizontalViewPager extends ViewPager {
         TypedArray a = getContext().obtainStyledAttributes(attrs,
                 R.styleable.VerticalOrHorizontalViewPager);
         orientation = a.getInt(R.styleable.VerticalOrHorizontalViewPager_orientation, HORIZONTAL);
-        setPageTransformer(true, verticalOrHorizontalTransformer = new VerticalOrHorizontalTransformer(HORIZONTAL));
+        setPageTransformer(true, verticalOrHorizontalTransformer = new VerticalOrHorizontalTransformer(orientation));
         a.recycle();
     }
 
