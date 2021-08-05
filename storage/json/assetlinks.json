@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.canzhang.sample",
+    "sha256_cert_fingerprints":
+    ["50:41:09:75:88:FA:89:EE:26:8F:3E:FA:E8:52:D4:E5:35:C2:FF:22:02:C9:BB:4C:C4:AD:D6:6A:A3:31:D0:E1"]
+  }
+}]
