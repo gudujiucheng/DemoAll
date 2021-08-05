@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/holo_red_dark"
+    tools:context=".manager.statusbar.FullscreenActivity">
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/sample_ic_vp_banner_bg"/>
+
+   <Button
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:onClick="hideStatusBar"
+       android:text="隐藏状态栏"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="changeStatusBarColor"
+        android:text="修改状态栏颜色"/>
+
+</LinearLayout>

@@ -1,9 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
 
-
-
-
     <!--虚线-->
     <attr name="dash_line_color" format="color" tools:ignore="ResourceName" />
     <attr name="dash_line_clearance" format="dimension" tools:ignore="ResourceName" />
@@ -11,8 +8,8 @@
         <attr name="dash_line_color" tools:ignore="ResourceName" />
         <attr name="dash_line_clearance" tools:ignore="ResourceName" />
         <attr name="dash_line_orientation" tools:ignore="ResourceName">
-            <enum name="horizontal" value="0"/>
-            <enum name="vertical" value="1"/>
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
         </attr>
     </declare-styleable>
 
@@ -20,9 +17,13 @@
 
     <declare-styleable name="VerticalOrHorizontalViewPager" tools:ignore="ResourceName">
         <attr name="orientation" tools:ignore="ResourceName">
-            <enum name="horizontal" value="0"/>
-            <enum name="vertical" value="1"/>
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
         </attr>
+    </declare-styleable>
+    <declare-styleable name="FullscreenAttrs">
+        <attr name="fullscreenBackgroundColor" format="color" />
+        <attr name="fullscreenTextColor" format="color" />
     </declare-styleable>
 
 </resources>

@@ -4,13 +4,22 @@
         <item name="android:windowBackground">@drawable/splash</item>
         <item name="android:windowIsTranslucent">false</item>
     </style>
-B
+    B
 
     <style name="Sample_AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <!--空背景 减少Overdraw-->
         <item name="android:windowBackground">@null</item>
         <item name="android:windowIsTranslucent">false</item>
         <item name="colorAccent">@color/sample_theme_color</item>
+    </style>
+
+    <style name="Widget.AppTheme.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+
+    <style name="Widget.AppTheme.ButtonBar.Fullscreen" parent="">
+        <item name="android:background">@color/black_overlay</item>
+        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
 
 </resources>

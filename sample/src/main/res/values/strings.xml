@@ -1,4 +1,7 @@
 <resources>
     <string name="sample_app_name">sample</string>
     <string name="sample_btn_status">按钮状态</string>
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

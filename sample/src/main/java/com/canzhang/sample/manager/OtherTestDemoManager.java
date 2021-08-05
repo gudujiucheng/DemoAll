@@ -1,10 +1,7 @@
 package com.canzhang.sample.manager;
 
 import android.app.Activity;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -13,12 +10,9 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
-import androidx.core.app.NotificationCompat;
-
-import com.canzhang.sample.R;
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
-import com.canzhang.sample.manager.antifraud.notification.NotificationTestActivity;
+import com.canzhang.sample.manager.statusbar.FullscreenActivity;
 import com.canzhang.sample.utils.AppUtils;
 import com.example.simple_test_annotations.MarkManager;
 
@@ -49,6 +43,7 @@ public class OtherTestDemoManager extends BaseManager {
     public List<ComponentItem> getSampleItem(Activity activity) {
         super.getSampleItem(activity);
         List<ComponentItem> list = new ArrayList<>();
+        list.add(testStatusBar());
         list.add(testAddUrlParams());
         list.add(testScheme());
         list.add(testJiXing());
@@ -63,7 +58,14 @@ public class OtherTestDemoManager extends BaseManager {
         return list;
     }
     int index = 0;
-    private ComponentItem testAddUrlParams(){
+    private ComponentItem testStatusBar(){
+        return new ComponentItem("状态栏测试", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mActivity.startActivity(new Intent(mActivity, FullscreenActivity.class));
+            }
+        });
+    }    private ComponentItem testAddUrlParams(){
         return new ComponentItem("测试uri拼接参数", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
