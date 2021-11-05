@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/white"
     android:orientation="vertical">
+
+    <com.canzhang.sample.manager.view.roundview.RoundLinearLayout
+        android:id="@+id/ll_test"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_margin="20dp"
+        app:rv_backgroundColor="@color/colorPrimary"
+        app:rv_backgroundPressColor="@color/colorAccent"
+        app:rv_cornerRadius_BL="@dimen/dp_4"
+        app:rv_cornerRadius_BR="@dimen/dp_10"
+        app:rv_cornerRadius_TL="@dimen/dp_10"
+        android:background="@color/colorAccent"
+        app:rv_cornerRadius_TR="@dimen/dp_4">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:text="哈哈哈哈哈哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶hi嗯哼IE哈哈哈哈哈哈哈哈哈和"
+            android:layout_height="wrap_content"/>
+    </com.canzhang.sample.manager.view.roundview.RoundLinearLayout>
+
+
+
 
     <LinearLayout
         android:id="@+id/ll_dash_line"
@@ -13,7 +35,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="@dimen/dp_40"
-        tools:visibility="visible"
         android:visibility="gone">
 
         <com.canzhang.sample.manager.view.DashLineView
@@ -21,8 +42,7 @@
             android:layout_height="2dp"
             app:dash_line_clearance="5dp"
             app:dash_line_color="#DCDCDE"
-            app:dash_line_orientation="horizontal"
-            />
+            app:dash_line_orientation="horizontal" />
 
 
         <com.canzhang.sample.manager.view.DashLineView
@@ -31,32 +51,40 @@
             android:layout_gravity="center_horizontal"
             app:dash_line_clearance="5dp"
             app:dash_line_color="@color/colorPrimary"
-            app:dash_line_orientation="vertical"
-          />
+            app:dash_line_orientation="vertical" />
 
 
     </LinearLayout>
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/ll_vote"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:gravity="center"
-        android:text="投票"
-        android:textSize="15dp"
-        android:textStyle="bold" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-    <com.canzhang.sample.manager.view.voteview.VoteView
-        android:id="@+id/vote_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="25dp"
-        android:background="#EEF9FB" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:gravity="center"
+            android:text="投票"
+            android:textSize="15dp"
+            android:textStyle="bold" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_app"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <com.canzhang.sample.manager.view.voteview.VoteView
+            android:id="@+id/vote_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:background="#EEF9FB" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_app"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
 
 
 </LinearLayout>

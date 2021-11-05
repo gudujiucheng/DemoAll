@@ -2,15 +2,19 @@ package com.canzhang.sample.manager.view;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Outline;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -75,15 +79,23 @@ public class CommonViewShowFragment extends BaseFragment {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initView(View view) {
+        //这种可以快速实现view的裁剪 参考：https://developer.android.com/training/material/shadows-clipping?hl=zh-cn
+//        view.findViewById(R.id.ll_test).setOutlineProvider(new ViewOutlineProvider() {
+//            @Override
+//            public void getOutline(View view, Outline outline) {
+//                 outline.setRoundRect(0,0,300,400,50);
+//            }
+//        });
+//        view.findViewById(R.id.ll_test).setClipToOutline(true);
         switch (mType) {
             case DASH_LINE:
                 view.findViewById(R.id.ll_dash_line).setVisibility(View.VISIBLE);
                 break;
             case VOTE_VIEW:
+                view.findViewById(R.id.ll_vote).setVisibility(View.VISIBLE);
                 VoteView voteView = view.findViewById(R.id.vote_view);
-                voteView.setVisibility(View.VISIBLE);
-
                 LinkedHashMap<String, Integer> voteData = new LinkedHashMap<>();
                 //造数据源
                 voteData.put("美国", 0);

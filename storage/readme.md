@@ -7,3 +7,5 @@ https://raw.githubusercontent.com/gudujiucheng/DemoAll/dev/storage/test.json
 https://raw.githubusercontent.com/gudujiucheng/DemoAll/dev/storage/img/role.png
 
 https://raw.githubusercontent.com/gudujiucheng/DemoAll/dev/storage/json/weapon.json
+
+https://raw.githubusercontent.com/gudujiucheng/DemoAll/dev/storage/json/assetlinks.json
