@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+    <item android:drawable="@drawable/sample_ic_vp_banner_bg" android:duration="250"/>
+    <item android:drawable="@drawable/sample_ic_vp_banner" android:duration="250"/>
+    <item android:drawable="@drawable/block_canary_icon" android:duration="250"/>
+    <item android:drawable="@drawable/splash" android:duration="250"/>
+</animation-list>

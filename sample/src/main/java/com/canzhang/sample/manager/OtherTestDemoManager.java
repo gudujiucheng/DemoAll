@@ -19,6 +19,7 @@ import com.example.simple_test_annotations.MarkManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -98,13 +99,32 @@ public class OtherTestDemoManager extends BaseManager {
                 }
 
                 //cf 打开url 的方法   其中要求 三个参数都必须有值
-                String url = "cfpage://webopenapi?action=20002&gameId=1&url=https://bb.img.qq.com/clsq/protocol/cf/protocol.html";
+//                String url = "cfpage://webopenapi?action=20002&gameId=1&url=https://bb.img.qq.com/clsq/protocol/cf/protocol.html";
 //                String url = "cfpage://webopenapi?action=20002&gameId=10011&url=https://cf.qq.com/act/5326/a20210323ld/index.html";
 //                String url = "cfpage://webopenapi/startApp";//可以打开 但是应用在后台的时候 似乎唤起不到前台
 //                String url = "cfpage://webopenapi";//可以
 //                String url = "cfpage://";//不可以
-                Intent in = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                mActivity.startActivity(in);
+
+//                ConfigManager.getInstance().putStringConfig(GlobalData.ArgumentsKey.KEY_START_APP_FROM_BROWSWER_CONFIG, uri.toString());
+
+                JSONObject param = new JSONObject();
+                try{
+                    param.put("type",10032);
+                    param.put("belongGameId",10011);
+                    param.put("uri","https://mwegame.qq.com/fe/cf/rank2/rankMid");
+
+                    String url = "cfpage://webopenapi?action=20003&button="+ URLEncoder.encode(param.toString(),"utf-8");
+                    Log.e("TEST",url);
+                    Log.e("TEST",url);
+
+//                    url = "cfpage://webopenapi?action=20003&button=%7b%22type%22%3a10032%2c%22belongGameId%22%3a10011%2c%22uri%22%3a%22https%253A%252F%252Ftest.mwegame.qq.com%252Fact%252Fcfm%252Fa20191210egg%252Findex.html%22%7d";
+                    Intent in = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    mActivity.startActivity(in);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+
 
             }
         });

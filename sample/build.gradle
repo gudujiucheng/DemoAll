@@ -21,14 +21,15 @@ android {
             v2SigningEnabled true
         }
     }
-    resourcePrefix project.getName() + "_"
-    compileSdkVersion 30
+    //限定资源命名规范
+//    resourcePrefix project.getName() + "_"
+    compileSdkVersion 31
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
+        minSdkVersion 21
 //        minSdkVersion 28
 //        targetSdkVersion rootProject.ext.targetSdkVersion
 
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
         //作为单独工程，需要设置applicationID
@@ -223,4 +224,6 @@ dependencies {
 //    implementation "androidx.heifwriter:heifwriter:1.0.0"
 
     implementation 'com.jaeger.statusbarutil:library:1.4.0'
+
+    implementation "androidx.core:core-splashscreen:1.0.0-alpha02"
 }

@@ -34,28 +34,26 @@ public class Task {
             File[] files = resFile.listFiles();
 
             if (!resFile.getPath().contains("build")
-//                    && resFile.getName().startsWith("drawable")//FIXME 开头
-                    && resFile.getPath().contains("dnfip")//FIXME 开头
-                    && resFile.getName().equals("output")//FIXME 开头
+                    && resFile.getName().startsWith("drawable")//FIXME 开头
+//                    && resFile.getPath().contains("dnfip")//FIXME 开头
+//                    && resFile.getName().equals("output")//FIXME 开头
 
                     && files != null && files.length > 0) {
 
-//                if (!resFile.getPath().contains("skins") && !resFile.getPath().contains("skin.cf")) {
-//                    return;
-//                }
+
 //                if (!resFile.getPath().contains("apps") && !resFile.getPath().contains("app.cf")) {
 //                    return;
 //                }
-                System.out.println("当前路径：" + resFile.getPath());
+
 
                 try {
-//                    for (int i = 0; i < files.length; i++) {
-//                        boolean output = files[i].getName().equals("output");
-//                        if (output) {
-//                            System.out.println("已经执行过了：" + resFile.getAbsolutePath());
-//                            return;
-//                        }
-//                    }
+                    for (int i = 0; i < files.length; i++) {
+                        boolean output = files[i].getName().endsWith(".9.png");
+                        if (output) {
+                            System.out.println("当前路径：" + resFile.getPath()+"    "+num++);
+                            return;
+                        }
+                    }
 //                    long start = System.currentTimeMillis();
 //                    Process pr = Runtime.getRuntime().exec("super-tinypng", null, resFile);
 //                    InputStreamReader isr = new InputStreamReader(pr.getInputStream());
@@ -72,10 +70,10 @@ public class Task {
 //                    System.out.println("执行完毕：" + resFile.getAbsolutePath() + " 耗时：" + (System.currentTimeMillis() - start) + "ms " + num++);
 
 
-                    if (resFile.getPath().contains("output")) {
-                        fun(resFile, new File(resFile.getPath().replace("output", "")));
-                        deleteDir(resFile);
-                    }
+//                    if (resFile.getPath().contains("output")) {
+//                        fun(resFile, new File(resFile.getPath().replace("output", "")));
+//                        deleteDir(resFile);
+//                    }
 
 
                 } catch (Exception e) {

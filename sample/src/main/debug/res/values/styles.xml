@@ -1,4 +1,20 @@
 <resources>
 
+    # 父级必须是 Theme.SplashScreen
+    <style name="Theme.TestSplashScreen.Starting" parent="Theme.SplashScreen">
+        # 启动画面的背景，默认使用 windowBackground
+        <item name="windowSplashScreenBackground">@color/colorPrimary</item>
+        # 指定 icon，支持静态 drawable 或动画 vector drawable (亲测低版本动画不管用)
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_animate_icon</item>
+        # 动画 icon 时长，上限 1000 ms
+        <item name="windowSplashScreenAnimationDuration">1000</item>
+        # 启动画面退出后 Activity 的主题
+        <item name="postSplashScreenTheme">@style/Theme.LAUNCH_THEME</item>
+    </style>
 
+    <style name="Theme.LAUNCH_THEME" parent="Theme.AppCompat.NoActionBar">
+
+        <item name="android:windowBackground">@drawable/debug_icon_debug</item>
+
+    </style>
 </resources>

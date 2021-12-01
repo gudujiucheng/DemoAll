@@ -246,6 +246,13 @@ public class SQLiteTestManager extends BaseManager {
                 values.put("pages", 510);
                 values.put("price", 19.95);
                 db.insert("Book", null, values); // 插入第二条数据
+                values.clear();
+//                // 开始组装第三条 重复数据
+//                values.put("name", "The Da Vinci Code");
+//                values.put("author", "Dan Brown");
+//                values.put("pages", 454);
+//                values.put("price", 16.96);
+//                db.insert("Book", null, values); // 重复数据（用户更新条数测试）
             }
         });
     }
@@ -255,12 +262,13 @@ public class SQLiteTestManager extends BaseManager {
         return new ComponentItem("更新数据", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyDatabaseHelper dbHelper = new MyDatabaseHelper(mActivity, "BookStore.db", null, 2);//升级到2
+                MyDatabaseHelper dbHelper = new MyDatabaseHelper(mActivity, "BookStore.db", null, 1);//升级到2
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
                 ContentValues values = new ContentValues();
                 values.put("price", 10.99);
                 //将名字是The Da Vinci Code的这本书的价格改成10.99
-                db.update("Book", values, "name = ?", new String[]{"The Da Vinci Code"});
+                int book = db.update("Book", values, "name = ?", new String[]{"The Da Vinci Code"});
+                showToast("更新："+book);
             }
         });
     }
@@ -297,7 +305,8 @@ public class SQLiteTestManager extends BaseManager {
                         log("book name is " + name);
                         log("book author is " + author);
                         log("book pages is " + pages);
-                        log("book price is " + price);
+                        log("book price is " + price+"\n\n\n\n\n\n");
+                        log("------\n\n\n\n\n\n");
                     } while (cursor.moveToNext());
                 }
                 cursor.close();

@@ -1,22 +1,29 @@
 package com.canzhang.sample;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.view.animation.AnticipateInterpolator;
+import android.window.SplashScreenView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.splashscreen.SplashScreen;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.View;
-
 import com.canzhang.sample.base.IManager;
 import com.canzhang.sample.base.adapter.ComponentAdapter;
 import com.canzhang.sample.base.bean.ComponentItem;
 import com.canzhang.sample.manager.OtherTestDemoManager;
 import com.canzhang.sample.manager.aidl.AidlClientFragment;
-import com.canzhang.sample.manager.antifraud.AntiFraudManager;
 import com.canzhang.sample.manager.behavior.BehaviorTestActivity;
 import com.canzhang.sample.manager.eventdispatch.EventDispatchFragment;
 import com.canzhang.sample.manager.flutter_test.FlutterTestActivity;
@@ -67,7 +74,8 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        getApplication().setTheme(R.style.Sample_AppThemeSplash);
+        SplashScreen.installSplashScreen(this);
+//        getApplication().setTheme(R.style.Sample_AppThemeSplash);
 //        setTheme(R.style.Sample_AppThemeSplash);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sample_activity_component_list);
@@ -77,7 +85,41 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
         initRecyclerView();
         setTitle("组件应用范例");
         log("onCreate");
+
+        //关闭动画
+//        splashScreenCloseAnimation();
     }
+
+    //这个api 需要高版本才能使用，低版本应用不了   参考：https://blog.csdn.net/g984160547/article/details/121117959
+    @RequiresApi(api = Build.VERSION_CODES.S)
+    private void splashScreenCloseAnimation() {
+        getSplashScreen().setOnExitAnimationListener(new android.window.SplashScreen.OnExitAnimationListener() {
+            @Override
+            public void onSplashScreenExit(@NonNull SplashScreenView splashScreenView) {
+                final ObjectAnimator slideUp = ObjectAnimator.ofFloat(
+                        splashScreenView,
+                        View.TRANSLATION_Y,
+                        0f,
+                        -splashScreenView.getHeight()
+                );
+                slideUp.setInterpolator(new AnticipateInterpolator());
+                slideUp.setDuration(2000);
+
+                // 在自定义动画结束时调用splashScreenView.remove();
+                slideUp.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        //移除启动画面
+                        splashScreenView.remove();
+                    }
+                });
+
+                // 启动动画
+                slideUp.start();
+            }
+        });
+    }
+
 
     /**
      * 需要提前做的一些事情
