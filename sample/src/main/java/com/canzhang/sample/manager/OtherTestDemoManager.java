@@ -107,13 +107,18 @@ public class OtherTestDemoManager extends BaseManager {
 
 //                ConfigManager.getInstance().putStringConfig(GlobalData.ArgumentsKey.KEY_START_APP_FROM_BROWSWER_CONFIG, uri.toString());
 
-                JSONObject param = new JSONObject();
+                JSONObject button = new JSONObject();
                 try{
-                    param.put("type",10032);
-                    param.put("belongGameId",10011);
-                    param.put("uri","https://mwegame.qq.com/fe/cf/rank2/rankMid");
+                    button.put("type",10005);
+                    button.put("belongGameId",10011);
+//                    button.put("uri","com.tencent.gamehelper.ui.moment.TopicMomentActivity");
+                    button.put("uri","/momentTopic");
+                    JSONObject param =  new JSONObject();
+                    param.put("id",482);
+                    param.put("name","#Qqqqqqq#");
+                    button.put("param",param);
 
-                    String url = "cfpage://webopenapi?action=20003&button="+ URLEncoder.encode(param.toString(),"utf-8");
+                    String url = "cfpage://webopenapi?action=20003&button="+ URLEncoder.encode(button.toString(),"utf-8");
                     Log.e("TEST",url);
                     Log.e("TEST",url);
 
