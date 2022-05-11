@@ -58,21 +58,25 @@ public class OtherTestDemoManager extends BaseManager {
         list.add(mainTest());
         return list;
     }
+
     int index = 0;
-    private ComponentItem testStatusBar(){
+
+    private ComponentItem testStatusBar() {
         return new ComponentItem("状态栏测试", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mActivity.startActivity(new Intent(mActivity, FullscreenActivity.class));
             }
         });
-    }    private ComponentItem testAddUrlParams(){
+    }
+
+    private ComponentItem testAddUrlParams() {
         return new ComponentItem("测试uri拼接参数", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String url="";
-                switch (index%3){
+                String url = "";
+                switch (index % 3) {
                     case 0:
                         url = "https://www.baidu.com/s?";//无参数
                         break;
@@ -86,17 +90,19 @@ public class OtherTestDemoManager extends BaseManager {
                 Uri.Builder builder = Uri.parse(url).buildUpon();
                 builder.appendQueryParameter("key", "{\"result\":0,\"returnCode\":0,\"returnMsg\":\"\"}");
                 index++;
-                Log.e("CAN_TEST",builder.toString());
+                Log.e("CAN_TEST", builder.toString());
             }
         });
     }
+
     private ComponentItem testScheme() {
         return new ComponentItem("通过scheme打开页面", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mActivity==null){
+                if (mActivity == null) {
                     return;
                 }
+//                http://tapd.woa.com/gamehelper_client_doc/markdown_wikis/show/#1220383062001980329
 
                 //cf 打开url 的方法   其中要求 三个参数都必须有值
 //                String url = "cfpage://webopenapi?action=20002&gameId=1&url=https://bb.img.qq.com/clsq/protocol/cf/protocol.html";
@@ -108,37 +114,66 @@ public class OtherTestDemoManager extends BaseManager {
 //                ConfigManager.getInstance().putStringConfig(GlobalData.ArgumentsKey.KEY_START_APP_FROM_BROWSWER_CONFIG, uri.toString());
 
                 JSONObject button = new JSONObject();
-                try{
-                    button.put("type",10005);
-                    button.put("belongGameId",10011);
-//                    button.put("uri","com.tencent.gamehelper.ui.moment.TopicMomentActivity");
-                    button.put("uri","/momentTopic");
-                    JSONObject param =  new JSONObject();
-                    param.put("id",482);
-                    param.put("name","#Qqqqqqq#");
-                    button.put("param",param);
+                try {
+                    button.put("type", 10005);
+//                    button.put("belongGameId", 10011); //可以不要了
 
-                    String url = "cfpage://webopenapi?action=20003&button="+ URLEncoder.encode(button.toString(),"utf-8");
-                    Log.e("TEST",url);
-                    Log.e("TEST",url);
+//                    button.put("uri","com.tencent.gamehelper.ui.moment.TopicMomentActivity");
+//                    button.put("uri","momentTopic?id=252&name=#DNF十周年#");
+//                    JSONObject param =  new JSONObject();
+//                    param.put("id",482);
+//                    param.put("name","#Qqqqqqq#");
+//                    button.put("param",param);
+
+
+//                    button.put("uri","moment_detail?feedId=35262&type=0");
+
+
+//                    button.put("uri", "submitMoment");
+//                    JSONObject param = new JSONObject();
+//                    param.put("topic", "#如何看待免费皮肤枪#");
+//                    param.put("topicGameId", 10038);
+////                    param.put("fromPage", "topic");
+//                    button.put("param", param);
+
+
+//                    button.put("uri","homepage?userId=497257227");
+
+
+//                    JSONObject param = new JSONObject();
+////                    param.put("userId", 497257227);
+//                    param.put("TO_USER_ID", 497257227);
+//                    button.put("param", param);
+
+
+
+//                    button.put("uri","submit_work?submit_work_type=1");
+                    button.put("uri","submitMoment");
+
+
+                    Log.e("TEST", button.toString());
+                    String url = "cfpage://webopenapi?action=20003&button=" + URLEncoder.encode(button.toString(), "utf-8");
+//                    String url = "flutter_host?route=" + Uri.encode("weapon_wiki_list?gameId=10011&name=武器百科");
+                    Log.e("TEST", url);
+
 
 //                    url = "cfpage://webopenapi?action=20003&button=%7b%22type%22%3a10032%2c%22belongGameId%22%3a10011%2c%22uri%22%3a%22https%253A%252F%252Ftest.mwegame.qq.com%252Fact%252Fcfm%252Fa20191210egg%252Findex.html%22%7d";
                     Intent in = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                     mActivity.startActivity(in);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-
 
 
             }
         });
     }
+
     private ComponentItem testJiXing() {
         return new ComponentItem("获取桌面应用包名", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mActivity==null){
+                if (mActivity == null) {
                     return;
                 }
                 isSupport();
@@ -152,7 +187,7 @@ public class OtherTestDemoManager extends BaseManager {
         Intent launchIntent = mActivity.getPackageManager().getLaunchIntentForPackage(mActivity.getPackageName());
         if (launchIntent == null) {
             Log.e("CAN_TEST", "Unable to find launch intent for package " + mActivity.getPackageName());
-            return false ;
+            return false;
         }
         ComponentName sComponentName = launchIntent.getComponent();
         Intent intent = new Intent(Intent.ACTION_MAIN);
@@ -160,7 +195,7 @@ public class OtherTestDemoManager extends BaseManager {
         List<ResolveInfo> resolveInfos = mActivity.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
         for (ResolveInfo resolveInfo : resolveInfos) {
             String currentHomePackage = resolveInfo.activityInfo.packageName;
-            Log.d("CAN_TEST","currentHomePackage:"+currentHomePackage);
+            Log.d("CAN_TEST", "currentHomePackage:" + currentHomePackage);
         }
         //Turns out framework does not guarantee to put DEFAULT Activity on top of the list.
         ResolveInfo resolveInfoDefault = mActivity.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
@@ -168,7 +203,7 @@ public class OtherTestDemoManager extends BaseManager {
 
         for (ResolveInfo resolveInfo : resolveInfos) {
             String currentHomePackage = resolveInfo.activityInfo.packageName;
-            Log.e("CAN_TEST","currentHomePackage:"+currentHomePackage);
+            Log.e("CAN_TEST", "currentHomePackage:" + currentHomePackage);
         }
         return true;
     }
@@ -193,7 +228,7 @@ public class OtherTestDemoManager extends BaseManager {
                 }
             }
         }
-        if (resolveInfosSize>1 && resolveInfosSize > indexToSwapWith) {
+        if (resolveInfosSize > 1 && resolveInfosSize > indexToSwapWith) {
             Collections.swap(resolveInfos, 0, indexToSwapWith);
         }
     }
@@ -202,7 +237,7 @@ public class OtherTestDemoManager extends BaseManager {
         return new ComponentItem("测试app当前运行状态", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mActivity==null){
+                if (mActivity == null) {
                     return;
                 }
                 Log.e("CAN_TEST", "isRunBackground:" + AppUtils.isRunBackground(mActivity) + " isRunForeground:" + AppUtils.isRunForeground(mActivity));
@@ -224,8 +259,8 @@ public class OtherTestDemoManager extends BaseManager {
                 intent.setData(Uri.parse("xgscheme://com.tencent.push/1001?param={\"action\":\"sysNotification\",\"param\":{\"id\":1612348200},\"gameId\":1001,\"notify\":1}"));//
                 mActivity.startActivity(intent);
                 String a = null;
-                String b = "1"+a;
-                Log.e("CAN_TEST","b:"+b);
+                String b = "1" + a;
+                Log.e("CAN_TEST", "b:" + b);
             }
         });
     }

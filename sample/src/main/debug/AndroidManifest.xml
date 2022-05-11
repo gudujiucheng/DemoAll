@@ -58,9 +58,10 @@
 
         <activity
             android:name=".ComponentListActivity"
-            android:theme="@style/Theme.LAUNCH_THEME"
+
             android:alwaysRetainTaskState="true"
             android:exported="true">
+<!--            android:theme="@style/Theme.LAUNCH_THEME"-->
             <!--        autoVerify="true"    这段代码是通知Android系统，本app在安装时需要对于安全host进行验证，验证后拉起app就不需要弹框安全提示，而是直接跳转app了-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

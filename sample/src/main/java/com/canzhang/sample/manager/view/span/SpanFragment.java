@@ -3,6 +3,7 @@ package com.canzhang.sample.manager.view.span;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
@@ -14,10 +15,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.canzhang.sample.R;
 import com.example.base.base.BaseFragment;
@@ -89,6 +88,14 @@ public class SpanFragment extends BaseFragment {
         //需要添加这一行 点击才会生效，暂时先不管是干啥的  后面在研究
         textView.setMovementMethod(LinkMovementMethod.getInstance());
 
+
+
+        //测试有背景的标签
+        textView = view.findViewById(R.id.tv_test4);
+        String label = "#我要上墙hahahhahahhahahahahahahahhahahahahahahahahahahah嘿嘿嘿#";
+        SpannableString spannableString=new SpannableString(label+"xxxx");
+        spannableString.setSpan(new BackgroundImgSpan(Color.parseColor("#12DBD1"),Color.parseColor("#FFFFFF")), 0, label.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        textView.setText(spannableString);
 
     }
 
