@@ -7,11 +7,11 @@ import android.database.sqlite.SQLiteFullException;
 import android.database.sqlite.SQLiteStatement;
 import android.util.LongSparseArray;
 
-
 import com.canzhang.sample.manager.db.sqllite.BRL.db.bean.BaseBRLBean;
 import com.canzhang.sample.manager.thread.demo.fqlreport.LogUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -75,7 +75,7 @@ public class BRLReportDBManager {
         if (database == null) {
             return null;
         }
-
+        HashMap<String, List<String>> map  = new HashMap<>();
         Cursor c = database.query(BRLSQLiteOpenHelper.TABLE_NAME,
                 new String[]{BRLSQLiteOpenHelper.COLUMN_ID,
                         BRLSQLiteOpenHelper.COLUMN_TYPE,

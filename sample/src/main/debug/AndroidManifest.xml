@@ -24,6 +24,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/sample_app_name"
+        android:hardwareAccelerated="true"
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         tools:replace="android:allowBackup,android:icon,android:label"

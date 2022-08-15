@@ -119,22 +119,17 @@ public class OtherTestDemoManager extends BaseManager {
 //                    button.put("belongGameId", 10011); //可以不要了
 
 //                    button.put("uri","com.tencent.gamehelper.ui.moment.TopicMomentActivity");
-//                    button.put("uri","momentTopic?id=252&name=#DNF十周年#");
-//                    JSONObject param =  new JSONObject();
-//                    param.put("id",482);
-//                    param.put("name","#Qqqqqqq#");
-//                    button.put("param",param);
+                    button.put("uri","momentTopic");
+                    JSONObject param =  new JSONObject();
+                    param.put("id",482);
+                    param.put("name","#Qqqqqqq#");
+                    button.put("param",param);
 
 
 //                    button.put("uri","moment_detail?feedId=35262&type=0");
 
 
-//                    button.put("uri", "submitMoment");
-//                    JSONObject param = new JSONObject();
-//                    param.put("topic", "#如何看待免费皮肤枪#");
-//                    param.put("topicGameId", 10038);
-////                    param.put("fromPage", "topic");
-//                    button.put("param", param);
+
 
 
 //                    button.put("uri","homepage?userId=497257227");
@@ -147,17 +142,75 @@ public class OtherTestDemoManager extends BaseManager {
 
 
 
-//                    button.put("uri","submit_work?submit_work_type=1");
-                    button.put("uri","submitMoment");
+//                    button.put("uri","make_team_page");
 
+
+                    //dnf改版后，这样传递会导致乱码，需要使用兼容方案
+//                    button.put("uri", "submitMoment?&topicGameId=20003&topic="+URLEncoder.encode("#什么道具值得买#", "utf-8"));
+
+                    //兼容方案
+//                    button.put("uri", "submitMoment");
+//                    JSONObject param = new JSONObject();
+//                    param.put("topic", "#什么道具值得买#");
+//                    param.put("topicGameId", 20003);
+////                    param.put("fromPage", "topic");
+//                    button.put("param", param);
+
+
+
+
+                    //跳转到个人主页=作品tab
+//                    button.put("uri", "com.tencent.gamehelper.ui.main.MainActivity");
+//                    JSONObject param = new JSONObject();
+//                    param.put("type", "10015");//这个主要是用来定位跳转什么大页面的  比如主页、情报站等
+//                    param.put("subTabName", "works");
+//                    button.put("param", param);
+
+                    //跳转到作品发布
+//                    button.put("uri", "submit_work");
+//                    JSONObject param = new JSONObject();
+//                    //1是图文  2 是视频
+//                    param.put("submit_work_type", 2 );
+//                    param.put("submit_work_game_id", 20003 );
+//                    button.put("param", param);
+
+
+
+                    //跳转精选下的某个子tab
+//                    button.put("uri", "com.tencent.gamehelper.ui.main.MainActivity");
+//                    JSONObject param = new JSONObject();
+//                    param.put("subTabName", "视频");
+//                    button.put("param", param);//由于默认第一个就是精选，所以这里的type 可以不填写
+
+
+
+                    //跳转到动态 精选tab
+//                    button.put("uri", "com.tencent.gamehelper.ui.main.MainActivity");
+//                    JSONObject param = new JSONObject();
+//                    param.put("type", "10027");//这个主要是用来定位跳转什么大页面的（底栏类型）  比如主页、情报站等
+//                    param.put("subTabName", "精选");
+//                    button.put("param", param);
+
+
+                    //顶部带角色切换打开web页面
+//                    button.put("type", 10032);
+//                    button.put("uri", "https://bb.img.qq.com/clsq/protocol/cf/protocol.html");
+
+
+                    //不带角色 打开web页面，这个不用type类型
+//                    String  uri = "https://bb.img.qq.com/clsq/protocol/cf/protocol.html";
+//                    String url = "cfpage://webopenapi?action=20002&url=" + uri;
 
                     Log.e("TEST", button.toString());
-                    String url = "cfpage://webopenapi?action=20003&button=" + URLEncoder.encode(button.toString(), "utf-8");
-//                    String url = "flutter_host?route=" + Uri.encode("weapon_wiki_list?gameId=10011&name=武器百科");
+                    String url = "cfpage://webopenapi?action=20003&button=" + URLEncoder.encode(button.toString(), "utf-8")
+                            +"&reportParam="+URLEncoder.encode("{\"modId\":550,\"xxx\":true,\"source\":\"shouyou\"}", "utf-8");
+
+
+
+
+
+
                     Log.e("TEST", url);
-
-
-//                    url = "cfpage://webopenapi?action=20003&button=%7b%22type%22%3a10032%2c%22belongGameId%22%3a10011%2c%22uri%22%3a%22https%253A%252F%252Ftest.mwegame.qq.com%252Fact%252Fcfm%252Fa20191210egg%252Findex.html%22%7d";
                     Intent in = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                     mActivity.startActivity(in);
                 } catch (Exception e) {

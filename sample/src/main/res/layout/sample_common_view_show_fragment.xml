@@ -5,28 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <com.canzhang.sample.manager.view.BannerMaskContainerView
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/colorAccent"
+            android:layout_height="100dp"
+            />
+    </com.canzhang.sample.manager.view.BannerMaskContainerView>
 
     <com.canzhang.sample.manager.view.roundview.RoundLinearLayout
         android:id="@+id/ll_test"
         android:layout_width="300dp"
         android:layout_height="100dp"
         android:layout_margin="20dp"
+        android:background="@color/colorAccent"
         app:rv_backgroundColor="@color/colorPrimary"
         app:rv_backgroundPressColor="@color/colorAccent"
         app:rv_cornerRadius_BL="@dimen/dp_4"
         app:rv_cornerRadius_BR="@dimen/dp_10"
         app:rv_cornerRadius_TL="@dimen/dp_10"
-        android:background="@color/colorAccent"
         app:rv_cornerRadius_TR="@dimen/dp_4">
 
         <TextView
             android:layout_width="match_parent"
-            android:text="哈哈哈哈哈哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶hi嗯哼IE哈哈哈哈哈哈哈哈哈和"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="哈哈哈哈哈哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶h哈呵呵呵呵呵额黑恶hi嗯哼IE哈哈哈哈哈哈哈哈哈和" />
     </com.canzhang.sample.manager.view.roundview.RoundLinearLayout>
-
-
 
 
     <LinearLayout

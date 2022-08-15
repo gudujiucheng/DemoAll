@@ -217,7 +217,7 @@ public class ComponentListActivity extends BaseActivity implements INotifyListen
             public void onClick(View v) {
                 showFragment(CommonViewShowFragment.newInstance(CommonViewShowFragment.DASH_LINE));
             }
-        }));
+        }).setPriority(100));
 
         mData.add(new ComponentItem("投票", new View.OnClickListener() {
             @Override
