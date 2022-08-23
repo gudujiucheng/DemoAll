@@ -2,14 +2,14 @@ package com.canzhang.sample.manager.view;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.graphics.Outline;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewOutlineProvider;
+import android.widget.TextView;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.canzhang.sample.R;
+import com.canzhang.sample.manager.view.span.HtmlTagHandler;
 import com.canzhang.sample.manager.view.voteview.VoteListener;
 import com.canzhang.sample.manager.view.voteview.VoteView;
 import com.canzhang.sample.manager.view.voteview.myvoteview.MyVoteAdapter;
@@ -89,6 +90,18 @@ public class CommonViewShowFragment extends BaseFragment {
 //            }
 //        });
 //        view.findViewById(R.id.ll_test).setClipToOutline(true);
+
+
+       String HTML_TEXT =
+                "<p><font size=\"30\" color=\"red\">设置了字号和颜色</font></p>" +
+                        "<b><font size=\"5\" color=\"blue\">设置字体加粗 蓝色 5号</font></font></b></br>" +
+                        "<h1>这个是H1标签</h1></br>" +
+                        "<p>这里显示图片：</p><img src=\"https://img0.pconline.com.cn/pconline/1808/06/11566885_13b_thumb.jpg\"";
+
+        TextView tv =  view.findViewById(R.id.tv_test);
+//        tv.setText(Html.fromHtml("已选<font size=\"100\" color=\"#e96639\">" +"100" + "</font>张 <font size=\"10\" color=\"#e96639\">  66666</font>",null,new SizeLabel(30)));
+        tv.setText(Html.fromHtml(HTML_TEXT.replaceAll("font","cf_font"),null,new HtmlTagHandler(getContext(),"cf_font")));
+
         switch (mType) {
             case DASH_LINE:
                 view.findViewById(R.id.ll_dash_line).setVisibility(View.VISIBLE);

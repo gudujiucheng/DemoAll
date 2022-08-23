@@ -119,17 +119,22 @@ public class OtherTestDemoManager extends BaseManager {
 //                    button.put("belongGameId", 10011); //可以不要了
 
 //                    button.put("uri","com.tencent.gamehelper.ui.moment.TopicMomentActivity");
-                    button.put("uri","momentTopic");
-                    JSONObject param =  new JSONObject();
-                    param.put("id",482);
-                    param.put("name","#Qqqqqqq#");
-                    button.put("param",param);
+//                    button.put("uri","momentTopic");
+//                    JSONObject param =  new JSONObject();
+//                    param.put("id",482);
+//                    param.put("name","#Qqqqqqq#");
+//                    button.put("param",param);
+
+
 
 
 //                    button.put("uri","moment_detail?feedId=35262&type=0");
 
 
 
+
+
+                    button.put("uri","infodetail?iInfoId=1065106881");
 
 
 //                    button.put("uri","homepage?userId=497257227");
@@ -203,7 +208,7 @@ public class OtherTestDemoManager extends BaseManager {
 
                     Log.e("TEST", button.toString());
                     String url = "cfpage://webopenapi?action=20003&button=" + URLEncoder.encode(button.toString(), "utf-8")
-                            +"&reportParam="+URLEncoder.encode("{\"modId\":550,\"xxx\":true,\"source\":\"shouyou\"}", "utf-8");
+                           /* +"&reportParam="+URLEncoder.encode("{\"modId\":550,\"xxx\":true,\"source\":\"shouyou\"}", "utf-8")*/;
 
 
 

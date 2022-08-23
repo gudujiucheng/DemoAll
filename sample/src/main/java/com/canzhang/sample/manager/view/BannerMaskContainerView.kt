@@ -12,14 +12,16 @@ import com.example.base.utils.ScreenUtil
 class BannerMaskContainerView : FrameLayout {
 
 
-    private val mMaskHeight = ScreenUtil.dip2px(context, 10f)
-    private val mLineWidth = ScreenUtil.dip2px(context, 1f)
-    private val mBoldLineWidth = ScreenUtil.dip2px(context, 3f)
+    private val mBaseDp = ScreenUtil.dip2px(context, 1f)
+    private val mMaskHeight = 10 * mBaseDp
 
-    private val mSideLength = ScreenUtil.dip2px(context, 18f)
-    private val mDp30 = ScreenUtil.dip2px(context, 30f)
+    private val mLineWidth = mBaseDp
+    private val mBoldLineWidth = 3 * mBaseDp
 
-    private val mSmallSideLength = ScreenUtil.dip2px(context, 14f)
+    private val mSideLength = 18 * mBaseDp
+    private val mSmallSideLength = 14 * mBaseDp
+
+
     private var mIndicatorCount = 3
     private var mIsNormalStyle = false
     private var mCoverMaskPath: Path? = null
@@ -90,16 +92,10 @@ class BannerMaskContainerView : FrameLayout {
                     lineTo(0f, mSideLength)
                     //到底竖线
                     lineTo(0f, height.toFloat())
-                    //到斜线之前的横线
-                    paint.strokeWidth = mBoldLineWidth
-                    lineTo(mDp30, height.toFloat())
-                    paint.strokeWidth = mLineWidth
-                    lineTo(startPoint - mDp30, height.toFloat())
-                    paint.strokeWidth = mBoldLineWidth
+                    //横线
                     lineTo(startPoint, height.toFloat())
                     //斜线1
                     lineTo(startPoint + mMaskHeight, height - mMaskHeight)
-
                     //横线
                     lineTo(width - startPoint - mMaskHeight, height - mMaskHeight)
                     //斜线2
@@ -137,13 +133,13 @@ class BannerMaskContainerView : FrameLayout {
             }
             paint.strokeWidth = mBoldLineWidth
             //局部画粗线
-            canvas.drawLine(mSideLength + mDp30, 0f, mSideLength, 0f, paint)
+            canvas.drawLine(mSideLength + 30*mBaseDp, 0f, mSideLength, 0f, paint)
             canvas.drawLine(mSideLength, 0f, 0f, mSideLength, paint)
             canvas.drawLine(0f, mSideLength, 0f, height.toFloat(), paint)
             canvas.drawLine(0f, mSideLength, 0f, height.toFloat(), paint)
-            canvas.drawLine(0f, height.toFloat(), mDp30, height.toFloat(), paint)
+            canvas.drawLine(0f, height.toFloat(), 30*mBaseDp, height.toFloat(), paint)
             //靠近斜线的一段粗线
-            canvas.drawLine(startPoint - mDp30,
+            canvas.drawLine(startPoint - 30*mBaseDp,
                 height.toFloat(),
                 startPoint,
                 height.toFloat(),
@@ -155,7 +151,7 @@ class BannerMaskContainerView : FrameLayout {
                 height - mMaskHeight,
                 paint)
             //小横粗线1
-            canvas.drawLine(startPoint + mMaskHeight - mBoldLineWidth / 3,
+            canvas.drawLine(startPoint + mMaskHeight - mBaseDp,
                 height - mMaskHeight,
                 startPoint + mMaskHeight + ScreenUtil.dip2px(context, 10f),
                 height - mMaskHeight, paint)
@@ -164,7 +160,7 @@ class BannerMaskContainerView : FrameLayout {
             //小横粗线2
             canvas.drawLine(width - startPoint - mMaskHeight - ScreenUtil.dip2px(context, 10f),
                 height - mMaskHeight,
-                width - startPoint - mMaskHeight + mBoldLineWidth / 3,
+                width - startPoint - mMaskHeight + mBaseDp,
                 height - mMaskHeight, paint)
 
 
@@ -179,12 +175,12 @@ class BannerMaskContainerView : FrameLayout {
             //小横小3
             canvas.drawLine(width - startPoint,
                 height.toFloat(),
-                width - startPoint + mDp30,
+                width - startPoint + 30*mBaseDp,
                 height.toFloat(),
                 paint)
 
             //拐角前横线
-            canvas.drawLine(width - mDp30,
+            canvas.drawLine(width - 30*mBaseDp,
                 height.toFloat(),
                 width.toFloat(),
                 height.toFloat(),
@@ -200,7 +196,7 @@ class BannerMaskContainerView : FrameLayout {
             //顶部拐角横线
             canvas.drawLine(width.toFloat(),
                 0f,
-                width.toFloat() - mDp30,
+                width.toFloat() - 40*mBaseDp,
                 0f,
                 paint)
 
