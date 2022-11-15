@@ -7,8 +7,11 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+
+import androidx.annotation.Nullable;
 
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
@@ -19,13 +22,18 @@ import com.example.simple_test_annotations.MarkManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * 小测试
@@ -75,24 +83,128 @@ public class OtherTestDemoManager extends BaseManager {
             @Override
             public void onClick(View v) {
 
+//                String url = "";
+//                switch (index % 3) {
+//                    case 0:
+//                        url = "https://www.baidu.com/s?";//无参数
+//                        break;
+//                    case 1:
+//                        url = "https://www.baidu.com/s?wd=haha";//有参数
+//                        break;
+//                    case 2:
+//                        url = "https://www.baidu.com/s?key=haha";//有同名参数 (测试结果：不会去重)
+//                        break;
+//                }
+//                Uri.Builder builder = Uri.parse(url).buildUpon();
+//                builder.appendQueryParameter("key", "{\"result\":0,\"returnCode\":0,\"returnMsg\":\"\"}");
+//                index++;
+//                Log.e("CAN_TEST", builder.toString());
+
+
+
+
+
                 String url = "";
                 switch (index % 3) {
                     case 0:
-                        url = "https://www.baidu.com/s?";//无参数
+                        url = "test?";
                         break;
                     case 1:
-                        url = "https://www.baidu.com/s?wd=haha";//有参数
+                        url = "/test";
                         break;
                     case 2:
-                        url = "https://www.baidu.com/s?key=haha";//有同名参数 (测试结果：不会去重)
+                        url = "https://www.baidu.com/s?y=#777&key=haha&x=8";//有同名参数 (测试结果：不会去重)
                         break;
                 }
-                Uri.Builder builder = Uri.parse(url).buildUpon();
-                builder.appendQueryParameter("key", "{\"result\":0,\"returnCode\":0,\"returnMsg\":\"\"}");
                 index++;
-                Log.e("CAN_TEST", builder.toString());
+                HashMap<String, Object> map = new HashMap<>();
+                map.put("key","haha");
+                url = appendParamsToUrl(url,map);
+                Log.e("CAN_TEST", url);
+
+
+
+
+
             }
         });
+    }
+
+
+    private static String appendParamsToUrl(String url, Map<String, Object> params) {
+        if (TextUtils.isEmpty(url) || params == null || params.isEmpty()) {
+            return url;
+        }
+
+        Uri uri = Uri.parse(url);
+        if (uri.isOpaque()) {
+            return url;
+        }
+
+        if (!url.contains("?")) {
+            url = url + "?";
+        }
+        String urlStart = url.split("\\?")[0];
+        Set<String> queryParameterNames = uri.getQueryParameterNames();
+        for (String name : queryParameterNames) {
+            if(TextUtils.isEmpty(name)){
+                continue;
+            }
+            //去重
+            params.put(name, uri.getQueryParameter(name));
+        }
+
+        String paramsStr =parseUrlQuery(params, true);
+
+        return urlStart + "?" + paramsStr;
+
+    }
+
+
+    public static String parseUrlQuery(Map<String, Object> params, boolean encodeKV) {
+        if (params == null || params.size() == 0)
+            return "";
+        StringBuilder sb = new StringBuilder();
+        Set<Map.Entry<String, Object>> entrySet = params.entrySet();
+        for (Map.Entry<String, Object> entry : entrySet) {
+            String key = entry.getKey();
+            Object object = entry.getValue();
+            String value = (object == null ? "" : object.toString());
+            if (encodeKV) {
+                key = getUrlEncodeValue(key);
+                value = getUrlEncodeValue(value);
+            }
+            sb.append(key)
+                    .append("=")
+                    .append(value)
+                    .append("&");
+        }
+        if (sb.length() > 0) {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        return sb.toString();
+    }
+
+    public static String getUrlEncodeValue(String origValue) {
+        if (origValue == null) {
+            origValue = "";
+        }
+        try {
+            return URLEncoder.encode(origValue, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return URLEncoder.encode(origValue);
+        }
+    }
+
+    public static String getURLDecodeValue(String origValue) {
+        if (origValue == null) {
+            origValue = "";
+        }
+        try {
+            return URLDecoder.decode(origValue, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return URLDecoder.decode(origValue);
+        }
     }
 
     private ComponentItem testScheme() {
@@ -134,7 +246,7 @@ public class OtherTestDemoManager extends BaseManager {
 
 
 
-                    button.put("uri","infodetail?iInfoId=1065106881");
+//                    button.put("uri","infodetail?iInfoId=1065106881");
 
 
 //                    button.put("uri","homepage?userId=497257227");
@@ -147,7 +259,7 @@ public class OtherTestDemoManager extends BaseManager {
 
 
 
-//                    button.put("uri","make_team_page");
+                    button.put("uri","make_team_page");
 
 
                     //dnf改版后，这样传递会导致乱码，需要使用兼容方案

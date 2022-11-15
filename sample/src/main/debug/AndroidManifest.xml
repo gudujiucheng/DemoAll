@@ -120,6 +120,12 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
+
+        <service
+            android:name="com.canzhang.sample.manager.log.service.LogInfoService"
+            android:enabled="true"
+            android:exported="true"
+            android:process="mati.log.hook"/>
     </application>
 
 </manifest>
