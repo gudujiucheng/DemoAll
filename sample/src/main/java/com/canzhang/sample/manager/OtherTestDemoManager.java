@@ -8,10 +8,10 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.JsonReader;
+import android.util.JsonToken;
 import android.util.Log;
 import android.view.View;
-
-import androidx.annotation.Nullable;
 
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
@@ -19,9 +19,14 @@ import com.canzhang.sample.manager.statusbar.FullscreenActivity;
 import com.canzhang.sample.utils.AppUtils;
 import com.example.simple_test_annotations.MarkManager;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -52,6 +57,7 @@ public class OtherTestDemoManager extends BaseManager {
     public List<ComponentItem> getSampleItem(Activity activity) {
         super.getSampleItem(activity);
         List<ComponentItem> list = new ArrayList<>();
+        list.add(testJson());
         list.add(testStatusBar());
         list.add(testAddUrlParams());
         list.add(testScheme());
@@ -65,6 +71,155 @@ public class OtherTestDemoManager extends BaseManager {
         list.add(jsonTest());
         list.add(mainTest());
         return list;
+    }
+
+
+    private ComponentItem testJson() {
+        return new ComponentItem("json解析（测试老的仓库、百科解析代码异常）", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 全标准json （原来没有针对这个名字做特殊处理，会被当成 object对待，解析到第二级的时候会报错）
+                String str = "{\"weapon_category\":{\"2\":\"步枪\",\"3\":\"狙击枪\",\"4\":\"机枪\",\"5\":\"冲锋枪\",\"6\":\"霰弹枪\",\"7\":\"副武器\",\"8\":\"近战武器\",\"9\":\"投掷武器\"},\"weaponSubCategorys\":{\"4\":{\"545730837\":\"RPK机枪\",\"569944754\":\"ULTIMAX-100\",\"636632646\":\"M60\",\"627144989\":\"MG3\",\"594617926\":\"加特林机枪\",\"537432322\":\"刘易斯轻机枪\",\"647881692\":\"M249 MINIMI\"},\"5\":{\"632181826\":\"P90\",\"541814031\":\"UMP45\",\"585040663\":\"UZI\",\"537836702\":\"Vector\",\"639802501\":\"汤姆逊冲锋枪\"}},\"last_timestamp\":1670396864,\"path\":\"https:\\/\\/mcdn.gtimg.com\\/bbcdn\\/cfhd\\/serial\\/\",\"list\":[{\"iWeaponId\":\"644249529\",\"szModel\":\"1\",\"szCate\":\"8\",\"szName\":\"蝴蝶刀\",\"iRaity\":\"1\",\"iSaleCate\":\"1\",\"iSalePrice\":\"暂时未知\",\"szShelfTime\":\"1\",\"szDesc\":\"1\",\"szSeries\":\"1\",\"szSmallPic\":\"6442495291_small.png\",\"szBigPic\":\"6442495291_small.png\",\"szScreenPic\":\"6442495293.png\",\"iArmPower\":\"1\",\"iArmDegree\":\"1\",\"iArmFireRate\":\"1\",\"iArmStable\":\"1\",\"iArmHandMove\":\"1\",\"iArmThrough\":\"1\",\"iArmPortable\":\"1\",\"iArmChangeBomb\":\"1\",\"iArmBomb\":\"1\",\"iArmRange\":\"1\",\"iArmLoadBomb\":\"1\",\"szAccPower\":\"1\",\"szAccDegree\":\"1\",\"szAccFireRate\":\"1\",\"szAccStable\":\"1\",\"szAccHandMove\":\"1\",\"szAccThrough\":\"1\",\"szAccPortable\":\"1\",\"szAccChangeBomb\":\"1\",\"szAccBomb\":\"1\",\"szCovHeader\":\"1\",\"szCovArm\":\"1\",\"szCovAbdomen\":\"1\",\"szCovLeg\":\"1\",\"szStore\":\"1\",\"propLevel\":\"10\",\"weaponSubCategory\":\"\",\"notShow\":0},{\"iWeaponId\":\"588363690\",\"szModel\":\"1\",\"szCate\":\"3\",\"szName\":\"SCAR-SSR\",\"iRaity\":\"1\",\"iSaleCate\":\"1\",\"iSalePrice\":\"5000\",\"szShelfTime\":\"1\",\"szDesc\":\"1\",\"szSeries\":\"1\",\"szSmallPic\":\"588363690_small.png\",\"szBigPic\":\"588363690.png\",\"szScreenPic\":\"\",\"iArmPower\":\"0\",\"iArmDegree\":\"0\",\"iArmFireRate\":\"0\",\"iArmStable\":\"0\",\"iArmHandMove\":\"0\",\"iArmThrough\":\"0\",\"iArmPortable\":\"0\",\"iArmChangeBomb\":\"0\",\"iArmBomb\":\"0\",\"iArmRange\":\"1\",\"iArmLoadBomb\":\"1\",\"szAccPower\":\"1\",\"szAccDegree\":\"1\",\"szAccFireRate\":\"1\",\"szAccStable\":\"1\",\"szAccHandMove\":\"1\",\"szAccThrough\":\"1\",\"szAccPortable\":\"1\",\"szAccChangeBomb\":\"\",\"szAccBomb\":\"\",\"szCovHeader\":\"1\",\"szCovArm\":\"1\",\"szCovAbdomen\":\"1\",\"szCovLeg\":\"1\",\"szStore\":\"1\",\"propLevel\":\"\",\"weaponSubCategory\":\"\",\"notShow\":0}]}";
+
+                //weaponSubCategorys 整个是个字符串 （这个也不行，因为是没有针对这个名字处理，所以默认会当成object，也就是weaponSubCategorys 必须是个object ）
+                str = "{\"weapon_category\":{\"2\":\"步枪\",\"3\":\"狙击枪\",\"4\":\"机枪\",\"5\":\"冲锋枪\",\"6\":\"霰弹枪\",\"7\":\"副武器\",\"8\":\"近战武器\",\"9\":\"投掷武器\"},\"weaponSubCategorys\":\"{\\\"4\\\":{\\\"545730837\\\":\\\"RPK机枪\\\",\\\"569944754\\\":\\\"ULTIMAX-100\\\",\\\"636632646\\\":\\\"M60\\\",\\\"627144989\\\":\\\"MG3\\\",\\\"594617926\\\":\\\"加特林机枪\\\",\\\"537432322\\\":\\\"刘易斯轻机枪\\\",\\\"647881692\\\":\\\"M249 MINIMI\\\"},\\\"5\\\":{\\\"632181826\\\":\\\"P90\\\",\\\"541814031\\\":\\\"UMP45\\\",\\\"585040663\\\":\\\"UZI\\\",\\\"537836702\\\":\\\"Vector\\\",\\\"639802501\\\":\\\"汤姆逊冲锋枪\\\"}}\",\"last_timestamp\":1670396864,\"path\":\"https:\\/\\/mcdn.gtimg.com\\/bbcdn\\/cfhd\\/serial\\/\",\"list\":[{\"iWeaponId\":\"644249529\",\"szModel\":\"1\",\"szCate\":\"8\",\"szName\":\"蝴蝶刀\",\"iRaity\":\"1\",\"iSaleCate\":\"1\",\"iSalePrice\":\"暂时未知\",\"szShelfTime\":\"1\",\"szDesc\":\"1\",\"szSeries\":\"1\",\"szSmallPic\":\"6442495291_small.png\",\"szBigPic\":\"6442495291_small.png\",\"szScreenPic\":\"6442495293.png\",\"iArmPower\":\"1\",\"iArmDegree\":\"1\",\"iArmFireRate\":\"1\",\"iArmStable\":\"1\",\"iArmHandMove\":\"1\",\"iArmThrough\":\"1\",\"iArmPortable\":\"1\",\"iArmChangeBomb\":\"1\",\"iArmBomb\":\"1\",\"iArmRange\":\"1\",\"iArmLoadBomb\":\"1\",\"szAccPower\":\"1\",\"szAccDegree\":\"1\",\"szAccFireRate\":\"1\",\"szAccStable\":\"1\",\"szAccHandMove\":\"1\",\"szAccThrough\":\"1\",\"szAccPortable\":\"1\",\"szAccChangeBomb\":\"1\",\"szAccBomb\":\"1\",\"szCovHeader\":\"1\",\"szCovArm\":\"1\",\"szCovAbdomen\":\"1\",\"szCovLeg\":\"1\",\"szStore\":\"1\",\"propLevel\":\"10\",\"weaponSubCategory\":\"\",\"notShow\":0},{\"iWeaponId\":\"588363690\",\"szModel\":\"1\",\"szCate\":\"3\",\"szName\":\"SCAR-SSR\",\"iRaity\":\"1\",\"iSaleCate\":\"1\",\"iSalePrice\":\"5000\",\"szShelfTime\":\"1\",\"szDesc\":\"1\",\"szSeries\":\"1\",\"szSmallPic\":\"588363690_small.png\",\"szBigPic\":\"588363690.png\",\"szScreenPic\":\"\",\"iArmPower\":\"0\",\"iArmDegree\":\"0\",\"iArmFireRate\":\"0\",\"iArmStable\":\"0\",\"iArmHandMove\":\"0\",\"iArmThrough\":\"0\",\"iArmPortable\":\"0\",\"iArmChangeBomb\":\"0\",\"iArmBomb\":\"0\",\"iArmRange\":\"1\",\"iArmLoadBomb\":\"1\",\"szAccPower\":\"1\",\"szAccDegree\":\"1\",\"szAccFireRate\":\"1\",\"szAccStable\":\"1\",\"szAccHandMove\":\"1\",\"szAccThrough\":\"1\",\"szAccPortable\":\"1\",\"szAccChangeBomb\":\"\",\"szAccBomb\":\"\",\"szCovHeader\":\"1\",\"szCovArm\":\"1\",\"szCovAbdomen\":\"1\",\"szCovLeg\":\"1\",\"szStore\":\"1\",\"propLevel\":\"\",\"weaponSubCategory\":\"\",\"notShow\":0}]}";
+
+                // weaponSubCategorys：{"name":"xxxx 这里改成字符串"}
+                str ="{\"weapon_category\":{\"2\":\"步枪\",\"3\":\"狙击枪\",\"4\":\"机枪\",\"5\":\"冲锋枪\",\"6\":\"霰弹枪\",\"7\":\"副武器\",\"8\":\"近战武器\",\"9\":\"投掷武器\"},\"weaponSubCategorys\":{\"4\":\"{\\\"545730837\\\":\\\"RPK机枪\\\",\\\"569944754\\\":\\\"ULTIMAX-100\\\",\\\"636632646\\\":\\\"M60\\\",\\\"627144989\\\":\\\"MG3\\\",\\\"594617926\\\":\\\"加特林机枪\\\",\\\"537432322\\\":\\\"刘易斯轻机枪\\\",\\\"647881692\\\":\\\"M249 MINIMI\\\"}\",\"5\":\"{\\\"632181826\\\":\\\"P90\\\",\\\"541814031\\\":\\\"UMP45\\\",\\\"585040663\\\":\\\"UZI\\\",\\\"537836702\\\":\\\"Vector\\\",\\\"639802501\\\":\\\"汤姆逊冲锋枪\\\"}\"},\"last_timestamp\":1670396864,\"path\":\"https:\\/\\/mcdn.gtimg.com\\/bbcdn\\/cfhd\\/serial\\/\",\"list\":[{\"iWeaponId\":\"644249529\",\"szModel\":\"1\",\"szCate\":\"8\",\"szName\":\"蝴蝶刀\",\"iRaity\":\"1\",\"iSaleCate\":\"1\",\"iSalePrice\":\"暂时未知\",\"szShelfTime\":\"1\",\"szDesc\":\"1\",\"szSeries\":\"1\",\"szSmallPic\":\"6442495291_small.png\",\"szBigPic\":\"6442495291_small.png\",\"szScreenPic\":\"6442495293.png\",\"iArmPower\":\"1\",\"iArmDegree\":\"1\",\"iArmFireRate\":\"1\",\"iArmStable\":\"1\",\"iArmHandMove\":\"1\",\"iArmThrough\":\"1\",\"iArmPortable\":\"1\",\"iArmChangeBomb\":\"1\",\"iArmBomb\":\"1\",\"iArmRange\":\"1\",\"iArmLoadBomb\":\"1\",\"szAccPower\":\"1\",\"szAccDegree\":\"1\",\"szAccFireRate\":\"1\",\"szAccStable\":\"1\",\"szAccHandMove\":\"1\",\"szAccThrough\":\"1\",\"szAccPortable\":\"1\",\"szAccChangeBomb\":\"1\",\"szAccBomb\":\"1\",\"szCovHeader\":\"1\",\"szCovArm\":\"1\",\"szCovAbdomen\":\"1\",\"szCovLeg\":\"1\",\"szStore\":\"1\",\"propLevel\":\"10\",\"weaponSubCategory\":\"\",\"notShow\":0},{\"iWeaponId\":\"588363690\",\"szModel\":\"1\",\"szCate\":\"3\",\"szName\":\"SCAR-SSR\",\"iRaity\":\"1\",\"iSaleCate\":\"1\",\"iSalePrice\":\"5000\",\"szShelfTime\":\"1\",\"szDesc\":\"1\",\"szSeries\":\"1\",\"szSmallPic\":\"588363690_small.png\",\"szBigPic\":\"588363690.png\",\"szScreenPic\":\"\",\"iArmPower\":\"0\",\"iArmDegree\":\"0\",\"iArmFireRate\":\"0\",\"iArmStable\":\"0\",\"iArmHandMove\":\"0\",\"iArmThrough\":\"0\",\"iArmPortable\":\"0\",\"iArmChangeBomb\":\"0\",\"iArmBomb\":\"0\",\"iArmRange\":\"1\",\"iArmLoadBomb\":\"1\",\"szAccPower\":\"1\",\"szAccDegree\":\"1\",\"szAccFireRate\":\"1\",\"szAccStable\":\"1\",\"szAccHandMove\":\"1\",\"szAccThrough\":\"1\",\"szAccPortable\":\"1\",\"szAccChangeBomb\":\"\",\"szAccBomb\":\"\",\"szCovHeader\":\"1\",\"szCovArm\":\"1\",\"szCovAbdomen\":\"1\",\"szCovLeg\":\"1\",\"szStore\":\"1\",\"propLevel\":\"\",\"weaponSubCategory\":\"\",\"notShow\":0}]}";
+
+                //带上品级
+                str = "{\"weapon_category\":{\"2\":\"步枪\",\"3\":\"狙击枪\",\"4\":\"机枪\",\"5\":\"冲锋枪\",\"6\":\"霰弹枪\",\"7\":\"副武器\",\"8\":\"近战武器\",\"9\":\"投掷武器\"},\"propLevels\":{\"1\":\"传说级\",\"2\":\"王者级\",\"3\":\"炫金级\",\"4\":\"英雄级\",\"5\":\"源级\",\"6\":\"挑战级\",\"7\":\"精英级\",\"8\":\"通用级\",\"9\":\"强化级\",\"10\":\"普通\"},\"weaponSubCategorys\":{\"4\":\"{\\\"545730837\\\":\\\"RPK机枪\\\",\\\"569944754\\\":\\\"ULTIMAX-100\\\",\\\"636632646\\\":\\\"M60\\\",\\\"627144989\\\":\\\"MG3\\\",\\\"594617926\\\":\\\"加特林机枪\\\",\\\"537432322\\\":\\\"刘易斯轻机枪\\\",\\\"647881692\\\":\\\"M249 MINIMI\\\"}\",\"5\":\"{\\\"632181826\\\":\\\"P90\\\",\\\"541814031\\\":\\\"UMP45\\\",\\\"585040663\\\":\\\"UZI\\\",\\\"537836702\\\":\\\"Vector\\\",\\\"639802501\\\":\\\"汤姆逊冲锋枪\\\"}\"},\"last_timestamp\":1670396864,\"path\":\"https:\\/\\/mcdn.gtimg.com\\/bbcdn\\/cfhd\\/serial\\/\",\"list\":[{\"iWeaponId\":\"644249529\",\"szModel\":\"1\",\"szCate\":\"8\",\"szName\":\"蝴蝶刀\",\"iRaity\":\"1\",\"iSaleCate\":\"1\",\"iSalePrice\":\"暂时未知\",\"szShelfTime\":\"1\",\"szDesc\":\"1\",\"szSeries\":\"1\",\"szSmallPic\":\"6442495291_small.png\",\"szBigPic\":\"6442495291_small.png\",\"szScreenPic\":\"6442495293.png\",\"iArmPower\":\"1\",\"iArmDegree\":\"1\",\"iArmFireRate\":\"1\",\"iArmStable\":\"1\",\"iArmHandMove\":\"1\",\"iArmThrough\":\"1\",\"iArmPortable\":\"1\",\"iArmChangeBomb\":\"1\",\"iArmBomb\":\"1\",\"iArmRange\":\"1\",\"iArmLoadBomb\":\"1\",\"szAccPower\":\"1\",\"szAccDegree\":\"1\",\"szAccFireRate\":\"1\",\"szAccStable\":\"1\",\"szAccHandMove\":\"1\",\"szAccThrough\":\"1\",\"szAccPortable\":\"1\",\"szAccChangeBomb\":\"1\",\"szAccBomb\":\"1\",\"szCovHeader\":\"1\",\"szCovArm\":\"1\",\"szCovAbdomen\":\"1\",\"szCovLeg\":\"1\",\"szStore\":\"1\",\"propLevel\":\"10\",\"weaponSubCategory\":\"\",\"notShow\":0},{\"iWeaponId\":\"588363690\",\"szModel\":\"1\",\"szCate\":\"3\",\"szName\":\"SCAR-SSR\",\"iRaity\":\"1\",\"iSaleCate\":\"1\",\"iSalePrice\":\"5000\",\"szShelfTime\":\"1\",\"szDesc\":\"1\",\"szSeries\":\"1\",\"szSmallPic\":\"588363690_small.png\",\"szBigPic\":\"588363690.png\",\"szScreenPic\":\"\",\"iArmPower\":\"0\",\"iArmDegree\":\"0\",\"iArmFireRate\":\"0\",\"iArmStable\":\"0\",\"iArmHandMove\":\"0\",\"iArmThrough\":\"0\",\"iArmPortable\":\"0\",\"iArmChangeBomb\":\"0\",\"iArmBomb\":\"0\",\"iArmRange\":\"1\",\"iArmLoadBomb\":\"1\",\"szAccPower\":\"1\",\"szAccDegree\":\"1\",\"szAccFireRate\":\"1\",\"szAccStable\":\"1\",\"szAccHandMove\":\"1\",\"szAccThrough\":\"1\",\"szAccPortable\":\"1\",\"szAccChangeBomb\":\"\",\"szAccBomb\":\"\",\"szCovHeader\":\"1\",\"szCovArm\":\"1\",\"szCovAbdomen\":\"1\",\"szCovLeg\":\"1\",\"szStore\":\"1\",\"propLevel\":\"\",\"weaponSubCategory\":\"\",\"notShow\":0}]}";
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(str.getBytes())));
+                JsonReader reader = new JsonReader(in);
+                try {
+                    reader.beginObject();
+                    while (reader.hasNext()) {
+
+                        String name = reader.nextName();
+
+                        Log.e("can_test", "name:" + name);
+
+                        if ("last_timestamp".equals(name)) {
+                            long lastModify = reader.nextLong() * 1000l;
+                            Log.d("can_test", " last_timestamp:" + lastModify);
+                        } else if ("path".equals(name)) {
+                            String path = reader.nextString();
+                            Log.d("can_test", "name:" + name + " path:" + path);
+                        } else if ("list".equals(name)) {
+                            reader.beginArray();
+                            while (reader.hasNext()) {
+                                Map<String, Object> map = readObject(reader);
+                            }
+                            reader.endArray();
+                        } else {
+                            reader.beginObject();
+                            JSONObject tmp = new JSONObject();
+                            while (reader.hasNext()) {
+                                String k = reader.nextName();
+                                String v = reader.nextString();
+                                Log.d("can_test", "k:" + k + " v:" + v);
+                                tmp.put(k, v);
+                            }
+                            reader.endObject();
+                        }
+
+                    }
+                    reader.endObject();
+
+                    reader.close();
+                    in.close();
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+    }
+
+    private static Map<String, Object> readObject(JsonReader reader) {
+
+        Map<String, Object> valuesMap = new HashMap<>();
+        try {
+            reader.beginObject();
+
+
+            while (reader.hasNext()) {
+                String k = reader.nextName();
+
+                JsonToken jsonToken = reader.peek();
+                if (jsonToken == JsonToken.BEGIN_ARRAY) {
+
+                    reader.beginArray();
+                    JSONArray array = new JSONArray();
+
+                    while (reader.hasNext()) {
+                        String item = reader.nextString();
+                        array.put(item);
+                    }
+
+                    valuesMap.put(k, array.toString());
+
+                    reader.endArray();
+
+                } else if (jsonToken == JsonToken.BEGIN_OBJECT) {
+
+                    Map<String, Object> map = readObject(reader);
+                    valuesMap.put(k, map);
+
+                } else if (jsonToken == JsonToken.BOOLEAN) {
+
+                    boolean v = reader.nextBoolean();
+                    valuesMap.put(k, v);
+
+                } else if (jsonToken == JsonToken.NUMBER) {
+
+                    String strNum = reader.nextString();
+                    if (strNum.contains(".")) {
+                        double v = parseDouble(strNum, 0d);
+                        valuesMap.put(k, v);
+                    } else {
+                        long v = parseLong(strNum, 0L);
+                        valuesMap.put(k, v);
+                    }
+
+                } else if (jsonToken == JsonToken.NULL) {
+                    //do nothing
+                    reader.nextNull();
+                } else {
+                    try {
+                        String v = reader.nextString();
+                        valuesMap.put(k, v);
+                    } catch (Exception e) {
+                        Log.e("CAN_TEST", e.getMessage(), e);
+                    }
+
+                }
+            }
+            reader.endObject();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return valuesMap;
+    }
+
+
+    public static long parseLong(String value, long def) {
+        try {
+            return Long.parseLong(value);
+        } catch (NumberFormatException var4) {
+            return def;
+        }
+    }
+
+    public static double parseDouble(String value, double def) {
+        try {
+            return Double.parseDouble(value);
+        } catch (NumberFormatException var4) {
+            return def;
+        }
     }
 
     int index = 0;
@@ -101,9 +256,6 @@ public class OtherTestDemoManager extends BaseManager {
 //                Log.e("CAN_TEST", builder.toString());
 
 
-
-
-
                 String url = "";
                 switch (index % 3) {
                     case 0:
@@ -118,12 +270,9 @@ public class OtherTestDemoManager extends BaseManager {
                 }
                 index++;
                 HashMap<String, Object> map = new HashMap<>();
-                map.put("key","haha");
-                url = appendParamsToUrl(url,map);
+                map.put("key", "haha");
+                url = appendParamsToUrl(url, map);
                 Log.e("CAN_TEST", url);
-
-
-
 
 
             }
@@ -147,14 +296,14 @@ public class OtherTestDemoManager extends BaseManager {
         String urlStart = url.split("\\?")[0];
         Set<String> queryParameterNames = uri.getQueryParameterNames();
         for (String name : queryParameterNames) {
-            if(TextUtils.isEmpty(name)){
+            if (TextUtils.isEmpty(name)) {
                 continue;
             }
             //去重
             params.put(name, uri.getQueryParameter(name));
         }
 
-        String paramsStr =parseUrlQuery(params, true);
+        String paramsStr = parseUrlQuery(params, true);
 
         return urlStart + "?" + paramsStr;
 
@@ -238,12 +387,7 @@ public class OtherTestDemoManager extends BaseManager {
 //                    button.put("param",param);
 
 
-
-
 //                    button.put("uri","moment_detail?feedId=35262&type=0");
-
-
-
 
 
 //                    button.put("uri","infodetail?iInfoId=1065106881");
@@ -258,8 +402,7 @@ public class OtherTestDemoManager extends BaseManager {
 //                    button.put("param", param);
 
 
-
-                    button.put("uri","make_team_page");
+                    button.put("uri", "make_team_page");
 
 
                     //dnf改版后，这样传递会导致乱码，需要使用兼容方案
@@ -272,8 +415,6 @@ public class OtherTestDemoManager extends BaseManager {
 //                    param.put("topicGameId", 20003);
 ////                    param.put("fromPage", "topic");
 //                    button.put("param", param);
-
-
 
 
                     //跳转到个人主页=作品tab
@@ -292,13 +433,11 @@ public class OtherTestDemoManager extends BaseManager {
 //                    button.put("param", param);
 
 
-
                     //跳转精选下的某个子tab
 //                    button.put("uri", "com.tencent.gamehelper.ui.main.MainActivity");
 //                    JSONObject param = new JSONObject();
 //                    param.put("subTabName", "视频");
 //                    button.put("param", param);//由于默认第一个就是精选，所以这里的type 可以不填写
-
 
 
                     //跳转到动态 精选tab
@@ -320,14 +459,11 @@ public class OtherTestDemoManager extends BaseManager {
 
                     Log.e("TEST", button.toString());
                     String url = "cfpage://webopenapi?action=20003&button=" + URLEncoder.encode(button.toString(), "utf-8")
-                           /* +"&reportParam="+URLEncoder.encode("{\"modId\":550,\"xxx\":true,\"source\":\"shouyou\"}", "utf-8")*/;
-
-
-
-
+                            /* +"&reportParam="+URLEncoder.encode("{\"modId\":550,\"xxx\":true,\"source\":\"shouyou\"}", "utf-8")*/;
 
 
                     Log.e("TEST", url);
+                    Log.e("TEST", URLEncoder.encode(url, "utf-8"));
                     Intent in = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                     mActivity.startActivity(in);
                 } catch (Exception e) {
