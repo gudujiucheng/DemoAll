@@ -88,7 +88,7 @@ public class NotificationTestActivity extends Activity {
                 }
 
                 ncBuilder
-                        .setSmallIcon(R.drawable.block_canary_icon)
+                        .setSmallIcon(R.drawable.debug_icon_debug)
                         .setDefaults(Notification.DEFAULT_ALL)
                         .setTicker("Ticker状态栏标题头" + index)
                         .setContentTitle("标题头" + index)
@@ -132,7 +132,7 @@ public class NotificationTestActivity extends Activity {
                 }
 
                 ncBuilder
-                        .setSmallIcon(R.drawable.block_canary_icon)//左上角的小鼠标，一般是设置应用图标
+                        .setSmallIcon(R.drawable.debug_icon_debug)//左上角的小鼠标，一般是设置应用图标
                         .setDefaults(Notification.DEFAULT_ALL)//使用一些默认选项，灯光、震动啥的
                         .setTicker("Ticker状态栏标题头" + index)//是通知时在状态栏显示的通知内容，一般只是一段文字，例如在状态栏版显示“您有一条短信，待查权收”。
                         .setContentTitle("标题头" + index)//通知内容的标题头
@@ -170,7 +170,7 @@ public class NotificationTestActivity extends Activity {
                         .setTicker("Ticker状态栏标题头" + index)//是通知时在状态栏显示的通知内容，一般只是一段文字，例如在状态栏版显示“您有一条短信，待查权收”。
                         .setContentTitle("标题头" + index)//通知内容的标题头
                         .setContentText("内容xxxxx" + index)//通知内容部分
-                        .setSmallIcon(R.drawable.block_canary_icon);//TODO 这个必须要设置 不设置会崩溃
+                        .setSmallIcon(R.drawable.debug_icon_debug);//TODO 这个必须要设置 不设置会崩溃
 
                 ncBuilder.setPriority(NotificationCompat.PRIORITY_MAX);//TODO 升级到最高级别也还是会折叠(pass)
                 ncBuilder.setGroup(index + "");//这个可以 ，设置不同的通知组  ------------------------------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ok
@@ -268,7 +268,7 @@ public class NotificationTestActivity extends Activity {
 
 
                 ncBuilder
-                        .setSmallIcon(R.drawable.block_canary_icon)//左上角的小鼠标，一般是设置应用图标
+                        .setSmallIcon(R.drawable.debug_icon_debug)//左上角的小鼠标，一般是设置应用图标
                         .setLargeIcon(bmp)//内容部分的大图标，可以根据内容设置不同的图标
                         .setTicker("Ticker状态栏标题头" + index)//是通知时在状态栏显示的通知内容，一般只是一段文字，例如在状态栏版显示“您有一条短信，待查权收”。
                         .setContentTitle("标题头" + index)//通知内容的标题头

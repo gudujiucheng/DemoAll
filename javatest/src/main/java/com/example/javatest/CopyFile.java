@@ -18,13 +18,13 @@ public class CopyFile {
     int i= 0;
 
     private File resFile;
-    private File desFile = new File("F:/360MoveData/Users/canzhang/Desktop/mock");
-    File newFile = new File(desFile, "代码段" + ".doc");
+    private File desFile = new File("/Users/canzhang/StudioProjects");
+    File newFile = new File(desFile, "IOS代码段" + ".doc");
     BufferedWriter bw;
 
     public static void main(String[] args) {
         try {
-            new CopyFile().copyFiles("F:/workspace/lepay_android/app/src/main/java");
+            new CopyFile().copyFiles("/Users/canzhang/StudioProjects/GameHelperiOS");
         } catch (Exception e) {
 
         }
@@ -49,9 +49,9 @@ public class CopyFile {
 
 
             System.out.println(resFile.toString());
-//            if(!resFile.toString().endsWith(".m")){
-//                return;
-//            }
+            if(!resFile.toString().endsWith(".m")){
+                return;
+            }
 //            System.out.println("处理的文件："+resFile.toString());
             // 复制文件 字符流 复制图片会出错的
             BufferedReader br = new BufferedReader(new FileReader(resFile));

@@ -3,6 +3,6 @@
     android:oneshot="false">
     <item android:drawable="@drawable/sample_ic_vp_banner_bg" android:duration="250"/>
     <item android:drawable="@drawable/sample_ic_vp_banner" android:duration="250"/>
-    <item android:drawable="@drawable/block_canary_icon" android:duration="250"/>
+    <item android:drawable="@drawable/sample_ic_vp_banner_bg" android:duration="250"/>
     <item android:drawable="@drawable/splash" android:duration="250"/>
 </animation-list>

@@ -6,7 +6,6 @@ if (isSampleRunAsApp.toBoolean()) {
 }
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'//引入kapt插件
-apply plugin: "com.tencent.android.tpns"//推送
 
 
 android {
@@ -23,13 +22,13 @@ android {
     }
     //限定资源命名规范
 //    resourcePrefix project.getName() + "_"
-    compileSdkVersion 31
+    compileSdkVersion 33
     defaultConfig {
         minSdkVersion 21
 //        minSdkVersion 28
 //        targetSdkVersion rootProject.ext.targetSdkVersion
 
-        targetSdkVersion 31
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
         //作为单独工程，需要设置applicationID
@@ -164,7 +163,7 @@ dependencies {
 
 
     //第三方卡顿监控框架
-    api 'com.github.markzhai:blockcanary-android:1.5.0'
+//    api 'com.github.markzhai:blockcanary-android:1.5.0'
 
     //权限
     implementation 'com.yanzhenjie.permission:support:2.0.1'
@@ -217,8 +216,7 @@ dependencies {
     // optional - Test helpers for LiveData
     testImplementation "androidx.arch.core:core-testing:$arch_version"
 
-    //使用信鸽 导入华为推送sdk
-    implementation 'com.tencent.tpns:huawei:1.2.1.0-release'
+
 
     //heif编解码
 //    implementation "androidx.heifwriter:heifwriter:1.0.0"

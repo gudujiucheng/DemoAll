@@ -22,47 +22,35 @@
     <application
         android:name=".debug.DebugBaseApp"
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/sample_app_name"
-        android:hardwareAccelerated="true"
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         tools:replace="android:allowBackup,android:icon,android:label"
         tools:targetApi="q">
         <activity android:name=".manager.statusbar.FullscreenActivity" />
         <!-- 如果 targetSdkVersion >= 29 上，还需要在清单文件中加上 android:requestLegacyExternalStorage="true" -->
-        <activity android:name=".manager.sockettest.SocketTestActivity" />
-        <activity android:name=".manager.kotlin.KotlinTestActivity" />
-        <activity android:name=".manager.jetpack.livedata.LiveDataTestActivity" />
-        <activity android:name=".manager.jetpack.lifecycle.GoogleLifeCycleTestActivity" />
+        <activity
+            android:name=".manager.sockettest.SocketTestActivity"
+            android:exported="true" />
+        <activity
+            android:name=".manager.kotlin.KotlinTestActivity"
+            android:exported="true" />
+        <activity
+            android:name=".manager.jetpack.livedata.LiveDataTestActivity"
+            android:exported="true" />
+        <activity
+            android:name=".manager.jetpack.lifecycle.GoogleLifeCycleTestActivity"
+            android:exported="true" />
         <activity android:name=".manager.jetpack.lifecycle.RXLifeTestActivity" />
-        <activity android:name=".manager.zhujie.BindTestActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <!-- 通过自定义 data 块内容指定您的完整 scheme，按照您的配置，将会组成形如"语义名://主机名/路径名"   canscheme://com.can.push/my_push_test 的 url 标识 -->
-                <!-- 为防止和其他应用的跳转目标页面冲突，您可以使用带有 app 名称、app 包名等可以唯一标记应用的字段进行配置 -->
-                <data
-                    android:host="com.can.push"
-                    android:path="/my_push_test"
-                    android:scheme="canscheme" />
-            </intent-filter>
-        </activity>
-
-        <receiver android:name=".manager.push.MessageReceiver">
-            <intent-filter>
-                <action android:name="com.tencent.android.xg.vip.action.PUSH_MESSAGE" />
-                <action android:name="com.tencent.android.xg.vip.action.FEEDBACK" />
-            </intent-filter>
-        </receiver>
 
         <activity
             android:name=".ComponentListActivity"
 
             android:alwaysRetainTaskState="true"
             android:exported="true">
-<!--            android:theme="@style/Theme.LAUNCH_THEME"-->
+            <!--            android:theme="@style/Theme.LAUNCH_THEME"-->
             <!--        autoVerify="true"    这段代码是通知Android系统，本app在安装时需要对于安全host进行验证，验证后拉起app就不需要弹框安全提示，而是直接跳转app了-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -82,23 +70,41 @@
         </activity> <!-- android:alwaysRetainTaskState="true" -->
         <activity
             android:name=".CommonComponentSampleActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
-        <activity android:name=".manager.qrcode.QRCodeActivity" />
-        <activity android:name=".manager.weex.WeexActivity" />
-        <activity android:name=".manager.fragment_test.ContainerActivity" />
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true" />
+        <activity
+            android:name=".manager.qrcode.QRCodeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".manager.weex.WeexActivity"
+            android:exported="true" />
+        <activity
+            android:name=".manager.fragment_test.ContainerActivity"
+            android:exported="true" />
         <activity
             android:name=".manager.activity_test.TranslateActivity"
+            android:exported="true"
             android:theme="@android:style/Theme.Translucent" />
-        <activity android:name=".manager.flutter_test.FlutterTestActivity" />
-        <activity android:name=".manager.activity_test.task.StandardActivity" />
+        <activity
+            android:name=".manager.flutter_test.FlutterTestActivity"
+            android:exported="true" />
+        <activity
+            android:name=".manager.activity_test.task.StandardActivity"
+            android:exported="true" />
         <activity
             android:name=".manager.activity_test.task.SingleInstanceActivity"
+            android:exported="true"
             android:launchMode="singleInstance" />
         <activity
             android:name=".manager.activity_test.task.SingleTaskActivity"
+            android:exported="true"
             android:launchMode="singleTask" />
-        <activity android:name=".manager.behavior.BehaviorTestActivity" />
-        <activity android:name=".manager.antifraud.notification.NotificationTestActivity" />
+        <activity
+            android:name=".manager.behavior.BehaviorTestActivity"
+            android:exported="true" />
+        <activity
+            android:name=".manager.antifraud.notification.NotificationTestActivity"
+            android:exported="true" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -115,6 +121,7 @@
             android:exported="false" />
         <service
             android:name=".manager.antifraud.notification.NotificationCollectorService"
+            android:exported="true"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService" />
@@ -125,7 +132,7 @@
             android:name="com.canzhang.sample.manager.log.service.LogInfoService"
             android:enabled="true"
             android:exported="true"
-            android:process="mati.log.hook"/>
+            android:process="mati.log.hook" />
     </application>
 
 </manifest>

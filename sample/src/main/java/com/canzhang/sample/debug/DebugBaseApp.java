@@ -12,7 +12,6 @@ import com.canzhang.sample.BuildConfig;
 import com.canzhang.sample.R;
 import com.canzhang.sample.manager.appstatus.AppStatus;
 import com.canzhang.sample.manager.appstatus.AppStatusChangeListener;
-import com.canzhang.sample.manager.block.githup_test_use.AppBlockCanaryContext;
 import com.canzhang.sample.manager.weex.ImageAdapter;
 import com.canzhang.sample.manager.weex.view.FqlWeexFloatingAds;
 import com.canzhang.sample.manager.weex.view.FqlWeexQRCodeView;
@@ -21,13 +20,10 @@ import com.canzhang.sample.manager.weex.view.RichText;
 import com.component.debugdialog.DebugDialog;
 import com.example.base.base.AppProxy;
 import com.example.base.utils.ToastUtil;
-import com.github.moduth.blockcanary.BlockCanary;
 import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.common.WXException;
-import com.tencent.android.tpush.XGIOperateCallback;
-import com.tencent.android.tpush.XGPushConfig;
-import com.tencent.android.tpush.XGPushManager;
+
 
 
 /**
@@ -63,39 +59,11 @@ public class DebugBaseApp extends Application {
             }
         });
 
-
-        initPush();
-
-//        initBlockCanary();
-    }
-
-    private void initPush() {
-        XGPushConfig.enableDebug(this, BuildConfig.DEBUG);
-        XGPushManager.registerPush(this, new XGIOperateCallback() {
-            @Override
-            public void onSuccess(Object data, int flag) {
-                //token在设备卸载重装的时候有可能会变
-                Log.e("TPush", "注册成功，设备token为：" + data);
-            }
-
-            @Override
-            public void onFail(Object data, int errCode, String msg) {
-                Log.e("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
-            }
-        });
-
-        //打开第三方推送
-        XGPushConfig.enableOtherPush(getApplicationContext(), true);
-        //打开成功的话 会有如下日志提示（过滤标签 TPush）
-        //I/XINGE: [XGOtherPush] other push token is : 0865551032618726300001294600CN01 other push type: huawei
-        // I/XINGE: [a] binder other push token with accid = 2100274337  token = 17c32948df0346d5837d4748192e9d2f14c81e08 otherPushType = huawei otherPushToken = 0865551032618726300001294600CN01
     }
 
 
-    private void initBlockCanary() {
-        // 在主进程初始化调用哈
-        BlockCanary.install(this, new AppBlockCanaryContext()).start();
-    }
+
+
 
     private void initWeex() {
         InitConfig config = new InitConfig.Builder().setImgAdapter(new ImageAdapter()).build();
