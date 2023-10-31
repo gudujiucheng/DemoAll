@@ -5,7 +5,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Environment;
+
 import androidx.core.app.ActivityCompat;
+
 import android.util.Log;
 import android.view.View;
 
@@ -20,9 +22,13 @@ import java.util.List;
 
 @MarkManager(value = "android11适配测试")
 public class Android11TestManager extends BaseManager {
-
+    public static final String LOCAL_SCRIPT_DIR = Environment.getExternalStorageDirectory() + "/Download/";
     private Activity mActivity;
 
+    @Override
+    public int getPriority() {
+        return 100;
+    }
 
     @Override
     public List<ComponentItem> getSampleItem(Activity activity) {
@@ -30,7 +36,26 @@ public class Android11TestManager extends BaseManager {
         mActivity = activity;
         List<ComponentItem> list = new ArrayList<>();
         list.add(test());
+        list.add(storageTest());
         return list;
+    }
+
+    private ComponentItem storageTest() {
+        return new ComponentItem("android 存储文件到外部目录测试", v -> {
+
+            AndPermission.with(mActivity)
+                    .runtime()
+                    .permission(Permission.READ_EXTERNAL_STORAGE)
+                    .onGranted(permissions -> {
+
+                        FileUtil.writeFile(LOCAL_SCRIPT_DIR + "/actionhelp.json", "哈哈哈哈哈哈");
+                        showToast("权限获取成功");
+                    })
+                    .onDenied(permissions -> {
+                        showToast("权限获取被拒绝");
+                    })
+                    .start();
+        });
     }
 
 

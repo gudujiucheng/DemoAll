@@ -376,7 +376,7 @@ public class OtherTestDemoManager extends BaseManager {
 
                 JSONObject button = new JSONObject();
                 try {
-//                    button.put("type", 10005);
+                    button.put("type", 10005);
 //                    button.put("belongGameId", 10011); //可以不要了
 
 //                    button.put("uri","com.tencent.gamehelper.ui.moment.TopicMomentActivity");
@@ -393,7 +393,7 @@ public class OtherTestDemoManager extends BaseManager {
 //                    button.put("uri","infodetail?iInfoId=1074933404");
 
 
-//                    button.put("uri","homepage?userId=497257227");
+                    button.put("uri","homepage?currentUserId=0");
 
 
 //                    JSONObject param = new JSONObject();
@@ -458,15 +458,15 @@ public class OtherTestDemoManager extends BaseManager {
 //                    String url = "cfpage://webopenapi?action=20002&url=" + uri;
 
 
-                    button.put("type","10003");
-                    button.put("uri","https://act.xinyue.qq.com/bb/act/a6a9af4b3ef4049a0b87be484aa3e8385/index.html?areaid=2&myopenid=A982E104ECBE64CEF6FF9D561E274415&pay_token=C40347A25F4C514280B8075D2B01E3C1&access_token=A7B4CF4EEDD1689D3C110B6C187177AF&acctype=qq&platid=1&partition=1&roleid=1893277184");
+//                    button.put("type","10003");
+//                    button.put("uri","https://mwegame.qq.com/fe/helper/wakeup?cGameId=1001&button=%7B%22type%22%3A10005%2C%22uri%22%3A%22homepage%3FuserId%3D497257227%22%7D");
 
                     Log.e("TEST", button.toString());
-//                    String url = "cfpage://webopenapi?action=20003&button=" + URLEncoder.encode(button.toString(), "utf-8")
-                    String url = "cfpage://webopenapi?action=20002&url=https://act.xinyue.qq.com/bb/act/a6a9af4b3ef4049a0b87be484aa3e8385/index.html?areaid=2&myopenid=A982E104ECBE64CEF6FF9D561E274415&pay_token=C40347A25F4C514280B8075D2B01E3C1&access_token=A7B4CF4EEDD1689D3C110B6C187177AF&acctype=qq&platid=1&partition=1&roleid=1893277184"
-                            /* +"&reportParam="+URLEncoder.encode("{\"modId\":550,\"xxx\":true,\"source\":\"shouyou\"}", "utf-8")*/;
-
-                            url = "cfpage://webopenapi?action=20002&url=http://cfm.qq.com/cp/a20230418jycjb/index.html";
+                    String url = "cfpage://webopenapi?action=20003&button=" + URLEncoder.encode(button.toString(), "utf-8");
+//                    String url = "cfpage://webopenapi?action=20002&url=https://act.xinyue.qq.com/bb/act/a6a9af4b3ef4049a0b87be484aa3e8385/index.html?areaid=2&myopenid=A982E104ECBE64CEF6FF9D561E274415&pay_token=C40347A25F4C514280B8075D2B01E3C1&access_token=A7B4CF4EEDD1689D3C110B6C187177AF&acctype=qq&platid=1&partition=1&roleid=1893277184"
+//                            /* +"&reportParam="+URLEncoder.encode("{\"modId\":550,\"xxx\":true,\"source\":\"shouyou\"}", "utf-8")*/;
+//
+//                            url = "cfpage://webopenapi?action=20002&url=http://cfm.qq.com/cp/a20230418jycjb/index.html";
 
                     Log.e("TEST", url);
                     Log.e("TEST", URLEncoder.encode(url, "utf-8"));
