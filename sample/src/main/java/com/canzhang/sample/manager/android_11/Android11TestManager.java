@@ -22,7 +22,6 @@ import java.util.List;
 
 @MarkManager(value = "android11适配测试")
 public class Android11TestManager extends BaseManager {
-    public static final String LOCAL_SCRIPT_DIR = Environment.getExternalStorageDirectory() + "/Download/";
     private Activity mActivity;
 
     @Override
@@ -37,6 +36,7 @@ public class Android11TestManager extends BaseManager {
         List<ComponentItem> list = new ArrayList<>();
         list.add(test());
         list.add(storageTest());
+        list.add(readTest());
         return list;
     }
 
@@ -48,8 +48,28 @@ public class Android11TestManager extends BaseManager {
                     .permission(Permission.READ_EXTERNAL_STORAGE)
                     .onGranted(permissions -> {
 
-                        FileUtil.writeFile(LOCAL_SCRIPT_DIR + "/actionhelp.json", "哈哈哈哈哈哈");
+                        //虽然可以正常写入，但是实际测试别的app 读取不到
+
+                        FileUtil.writeFile(Environment.getExternalStorageDirectory() + "/Download/actionhelp.json", "哈哈哈哈哈哈");
                         showToast("权限获取成功");
+                    })
+                    .onDenied(permissions -> {
+                        showToast("权限获取被拒绝");
+                    })
+                    .start();
+        });
+    }
+
+    private ComponentItem readTest() {
+        return new ComponentItem("android 读取外部目录测试", v -> {
+
+            AndPermission.with(mActivity)
+                    .runtime()
+                    .permission(Permission.READ_EXTERNAL_STORAGE)
+                    .onGranted(permissions -> {
+                        //这个Download 似乎比较特殊，在android 13上 ，读写都能成功（不同app之间也可以）
+                        String s = FileUtil.readFile(Environment.getExternalStorageDirectory() + "/Download/actionhelp.json");
+                        showToast("结果："+s);
                     })
                     .onDenied(permissions -> {
                         showToast("权限获取被拒绝");

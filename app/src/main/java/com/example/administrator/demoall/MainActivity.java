@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.Settings;
 import androidx.annotation.NonNull;
 import com.google.android.material.tabs.TabLayout;
@@ -26,6 +27,10 @@ import com.example.administrator.demoall.permission.PermissionActivity;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.Permission;
 
+import java.io.ByteArrayOutputStream;
+import java.io.Closeable;
+import java.io.File;
+import java.io.FileInputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -152,9 +157,64 @@ public class MainActivity extends AppCompatActivity {
 
 //        testAES();
 
-        startActivity(new Intent(this, PermissionActivity.class));
+//        startActivity(new Intent(this, PermissionActivity.class));
+        //测试从公共目录获取文件
+        AndPermission.with(this)
+                .runtime()
+                .permission(Permission.READ_EXTERNAL_STORAGE)
+                .onGranted(permissions -> {
+                    //这个Download 似乎比较特殊，在android 13上 ，读写都能成功（不同app之间）
+                    String path = Environment.getExternalStorageDirectory() + "/Download/actionhelp.json";
+                    String s = readFile(path,1024);
+                    Toast.makeText(this,"读取结果："+s,Toast.LENGTH_LONG).show();
+                })
+                .onDenied(permissions -> {
+                    Toast.makeText(this,"权限获取被拒绝",Toast.LENGTH_LONG).show();
+                })
+                .start();
 
 
+
+    }
+
+
+    public static String readFile(String fileName, int initCapacity) {
+        File file = new File(fileName);
+        if (!file.exists()) {
+            return null;
+        }
+
+        FileInputStream fis = null;
+        ByteArrayOutputStream bos = null;
+        String result = null;
+        try {
+            fis = new FileInputStream(file);
+            byte[] bytes = new byte[1024];
+            bos = new ByteArrayOutputStream(initCapacity);
+            int len;
+            while ((len = fis.read(bytes)) > 0) {
+                bos.write(bytes, 0, len);
+            }
+            result = new String(bos.toByteArray());
+            //            Log.d("readFile:" + result);
+        } catch (Exception e) {
+           throw new RuntimeException(e);
+        } finally {
+            safeClose(bos);
+            safeClose(fis);
+        }
+
+        return result;
+    }
+
+    public static void safeClose(Closeable closeable) {
+        if (closeable != null) {
+            try {
+                closeable.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     int i = 0;
