@@ -1,13 +1,23 @@
 package com.canzhang.sample.manager.android_11;
 
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.File;
@@ -16,6 +26,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -71,7 +83,7 @@ public class FileUtil {
     /**
      * 写文件， 老式IO方式
      *
-     * @param file 文件
+     * @param file    文件
      * @param message 写入信息
      * @return 是否成功
      */
@@ -89,7 +101,7 @@ public class FileUtil {
             } catch (IOException e) {
                 Log.e("createFile error: ", "", e);
                 e.printStackTrace();
-                throw  new RuntimeException(e);
+                throw new RuntimeException(e);
             }
         }
 
@@ -100,8 +112,8 @@ public class FileUtil {
             fout.write(message.getBytes());
             result = true;
         } catch (Exception e) {
-            Log.e("writeFile ", "",e);
-            throw  new RuntimeException(e);
+            Log.e("writeFile ", "", e);
+            throw new RuntimeException(e);
         } finally {
             safeClose(fout);
         }
@@ -144,7 +156,7 @@ public class FileUtil {
     /**
      * 读文件， 老式IO方式
      *
-     * @param fileName 文件名
+     * @param fileName     文件名
      * @param initCapacity 读取缓存大小
      * @return 文件内容
      */
@@ -173,8 +185,6 @@ public class FileUtil {
     }
 
 
-
-
     public static String readFile(String fileName) {
         //使用和读取缓存一样的大小来处理
         return readFile(fileName, DEFAULT_FILE_BUFFER_SIZE);
@@ -183,7 +193,7 @@ public class FileUtil {
     /**
      * 读文件， 老式IO方式
      *
-     * @param fileName 文件名
+     * @param fileName     文件名
      * @param initCapacity 读取缓存大小
      * @return 文件内容
      */
@@ -269,6 +279,7 @@ public class FileUtil {
 
     /**
      * 确认路径是否存在
+     *
      * @param dirPath
      * @return
      */
@@ -285,7 +296,7 @@ public class FileUtil {
     /**
      * 压缩文件为压缩包
      *
-     * @param source 源文件
+     * @param source      源文件
      * @param zipFilePath 被压缩成的文件名
      * @return 返回压缩后的文件
      */
@@ -330,6 +341,7 @@ public class FileUtil {
 
     /**
      * 压缩一个文件
+     *
      * @param resFile
      * @param zipOut
      * @throws IOException
@@ -350,6 +362,7 @@ public class FileUtil {
 
     /**
      * 删除文件
+     *
      * @param file 需要删除的文件
      * @return
      */
@@ -386,6 +399,7 @@ public class FileUtil {
 
     /**
      * 文件不存在则创建
+     *
      * @param path
      * @return
      */
@@ -408,6 +422,7 @@ public class FileUtil {
 
     /**
      * 删除最早的文件
+     *
      * @param dir
      * @param maxCount
      */
@@ -435,6 +450,7 @@ public class FileUtil {
 
     /**
      * inputStream转Byte
+     *
      * @param inputStream
      * @return
      * @throws Exception
@@ -447,6 +463,7 @@ public class FileUtil {
 
     /**
      * inputStream转String
+     *
      * @param inputStream
      * @return
      * @throws Exception
@@ -463,7 +480,7 @@ public class FileUtil {
     }
 
     public static File tryGetAvailableFeedbackFile(String folderPath, String fileName,
-            String suffix) {
+                                                   String suffix) {
         return FileUtil.ensureDir(folderPath) ? new File(folderPath + fileName + "." + suffix) :
                 null;
     }
@@ -471,7 +488,7 @@ public class FileUtil {
     /**
      * copy file
      *
-     * @param src source file
+     * @param src  source file
      * @param dest target file
      * @throws IOException
      */
@@ -541,4 +558,110 @@ public class FileUtil {
         fos.flush();//刷新缓冲区
         fos.getFD().sync();
     }
+
+    //-----------------------------兼容android高版本的api，使用最新的分区存储方案
+    public static void saveFile(Context context, String relativePath, String content) {
+        //使用分区存储
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            saveFileUsingMediaStore(context, relativePath, content);
+        } else {
+            saveFileUsingEnvironment(relativePath, content);
+        }
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    private static void saveFileUsingMediaStore(Context context, String fileName, String content) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MediaStore.Downloads.DISPLAY_NAME, fileName);
+        contentValues.put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS);
+        ContentResolver contentResolver = context.getContentResolver();
+        Uri uri = contentResolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues);
+
+        if (uri != null) {
+            try (OutputStream outputStream = contentResolver.openOutputStream(uri)) {
+                if (outputStream != null) {
+                    outputStream.write(content.getBytes());
+                    outputStream.flush();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            throw new RuntimeException("saveFileUsingMediaStore fail,the uri is null ");
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    private static String readFileUsingMediaStore(Context context, String fileName) {
+        String selection = MediaStore.Downloads.DISPLAY_NAME + "=?";
+        String[] selectionArgs = new String[]{fileName};
+        ContentResolver contentResolver = context.getContentResolver();
+        Cursor cursor = contentResolver.query(MediaStore.Downloads.EXTERNAL_CONTENT_URI, null, selection, selectionArgs, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            int idColumn = cursor.getColumnIndexOrThrow(MediaStore.Downloads._ID);
+            long id = cursor.getLong(idColumn);
+            Uri contentUri = ContentUris.withAppendedId(MediaStore.Downloads.EXTERNAL_CONTENT_URI, id);
+
+            try (InputStream inputStream = contentResolver.openInputStream(contentUri)) {
+                return readFromInputStream(inputStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                cursor.close();
+            }
+
+        }
+        return null;
+    }
+
+    private static void saveFileUsingEnvironment(String fileName, String content) {
+        File file = new File(Environment.getExternalStorageDirectory(), "/Download/" + fileName);
+        try {
+            File parentFile = file.getParentFile();
+            if (parentFile != null && !parentFile.exists()) {
+                parentFile.mkdirs();
+            }
+            try (FileOutputStream outputStream = new FileOutputStream(file)) {
+                outputStream.write(content.getBytes());
+                outputStream.flush();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static String readFile(Context context, String relativePath) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            return readFileUsingMediaStore(context, relativePath);
+        } else {
+            return readFileUsingEnvironment(relativePath);
+        }
+    }
+
+
+
+    private static String readFileUsingEnvironment(String relativePath) {
+        File file = new File(Environment.getExternalStorageDirectory(), "/Download/" + relativePath);
+        if (file.exists()) {
+            try (InputStream inputStream = new FileInputStream(file)) {
+                return readFromInputStream(inputStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    private static String readFromInputStream(InputStream inputStream) throws IOException {
+        StringBuilder stringBuilder = new StringBuilder();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            stringBuilder.append(line);
+        }
+        return stringBuilder.toString();
+    }
+
 }

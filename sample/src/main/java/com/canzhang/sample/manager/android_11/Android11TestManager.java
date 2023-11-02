@@ -5,11 +5,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Environment;
-
-import androidx.core.app.ActivityCompat;
-
 import android.util.Log;
 import android.view.View;
+
+import androidx.core.app.ActivityCompat;
 
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
@@ -35,9 +34,45 @@ public class Android11TestManager extends BaseManager {
         mActivity = activity;
         List<ComponentItem> list = new ArrayList<>();
         list.add(test());
+        list.add(newWrite());
+        list.add(newRead());
         list.add(storageTest());
         list.add(readTest());
+
         return list;
+    }
+
+    private ComponentItem newWrite() {
+        return new ComponentItem("android 存储外部目录文件测试(兼容高版本api，官方写法)", v -> {
+
+            AndPermission.with(mActivity)
+                    .runtime()
+                    .permission(Permission.READ_EXTERNAL_STORAGE)
+                    .onGranted(permissions -> {
+                        FileUtil.saveFile(mActivity, "test", "我是新的api 哈哈哈哈");
+                    })
+                    .onDenied(permissions -> {
+                        showToast("权限获取被拒绝");
+                    })
+                    .start();
+        });
+    }
+
+    private ComponentItem newRead() {
+        return new ComponentItem("android 读取外部目录测试(兼容高版本api，官方写法)", v -> {
+
+            AndPermission.with(mActivity)
+                    .runtime()
+                    .permission(Permission.READ_EXTERNAL_STORAGE)
+                    .onGranted(permissions -> {
+                        String s = FileUtil.readFile(mActivity, "test");
+                        showToast("结果：" + s);
+                    })
+                    .onDenied(permissions -> {
+                        showToast("权限获取被拒绝");
+                    })
+                    .start();
+        });
     }
 
     private ComponentItem storageTest() {
@@ -60,6 +95,7 @@ public class Android11TestManager extends BaseManager {
         });
     }
 
+
     private ComponentItem readTest() {
         return new ComponentItem("android 读取外部目录测试", v -> {
 
@@ -69,7 +105,7 @@ public class Android11TestManager extends BaseManager {
                     .onGranted(permissions -> {
                         //这个Download 似乎比较特殊，在android 13上 ，读写都能成功（不同app之间也可以）
                         String s = FileUtil.readFile(Environment.getExternalStorageDirectory() + "/Download/actionhelp.json");
-                        showToast("结果："+s);
+                        showToast("结果：" + s);
                     })
                     .onDenied(permissions -> {
                         showToast("权限获取被拒绝");
