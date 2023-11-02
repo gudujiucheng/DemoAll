@@ -12,6 +12,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
+import com.example.base.utils.FileUtil;
 import com.example.simple_test_annotations.MarkManager;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
@@ -49,7 +50,7 @@ public class Android11TestManager extends BaseManager {
                     .runtime()
                     .permission(Permission.READ_EXTERNAL_STORAGE)
                     .onGranted(permissions -> {
-                        FileUtil.saveFile(mActivity, "test", "我是新的api 哈哈哈哈");
+                        FileUtil.saveFile(mActivity, "testxxx", "我是新的api 哈哈哈哈wwwwww333333333333");
                     })
                     .onDenied(permissions -> {
                         showToast("权限获取被拒绝");
@@ -65,7 +66,7 @@ public class Android11TestManager extends BaseManager {
                     .runtime()
                     .permission(Permission.READ_EXTERNAL_STORAGE)
                     .onGranted(permissions -> {
-                        String s = FileUtil.readFile(mActivity, "test");
+                        String s = FileUtil.readFile(mActivity, "testxxx");
                         showToast("结果：" + s);
                     })
                     .onDenied(permissions -> {

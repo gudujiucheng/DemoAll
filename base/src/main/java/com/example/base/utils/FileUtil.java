@@ -1,4 +1,4 @@
-package com.canzhang.sample.manager.android_11;
+package com.example.base.utils;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -572,9 +572,13 @@ public class FileUtil {
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     private static void saveFileUsingMediaStore(Context context, String fileName, String content) {
+        // 检查并删除同名文件
+        deleteExistingFile(context, fileName);
+
         ContentValues contentValues = new ContentValues();
         contentValues.put(MediaStore.Downloads.DISPLAY_NAME, fileName);
         contentValues.put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS);
+        contentValues.put(MediaStore.Downloads.IS_PENDING, 1); // 添加 IS_PENDING 列
         ContentResolver contentResolver = context.getContentResolver();
         Uri uri = contentResolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues);
 
@@ -587,11 +591,30 @@ public class FileUtil {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            // 完成文件写入后，将 IS_PENDING 列的值设置为 0
+            contentValues.clear();
+            contentValues.put(MediaStore.Downloads.IS_PENDING, 0);
+            contentResolver.update(uri, contentValues, null, null);
         } else {
-            throw new RuntimeException("saveFileUsingMediaStore fail,the uri is null ");
+            throw new RuntimeException("saveFileUsingMediaStore fail, the uri is null");
         }
     }
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    private static void deleteExistingFile(Context context, String fileName) {
+        ContentResolver contentResolver = context.getContentResolver();
+        String[] projection = {MediaStore.Downloads._ID};
+        String selection = MediaStore.Downloads.DISPLAY_NAME + "=?";
+        String[] selectionArgs = {fileName};
 
+        try (Cursor cursor = contentResolver.query(MediaStore.Downloads.EXTERNAL_CONTENT_URI, projection, selection, selectionArgs, null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                long id = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Downloads._ID));
+                Uri deleteUri = ContentUris.withAppendedId(MediaStore.Downloads.EXTERNAL_CONTENT_URI, id);
+                contentResolver.delete(deleteUri, null, null);
+            }
+        }
+    }
     @RequiresApi(api = Build.VERSION_CODES.Q)
     private static String readFileUsingMediaStore(Context context, String fileName) {
         String selection = MediaStore.Downloads.DISPLAY_NAME + "=?";
