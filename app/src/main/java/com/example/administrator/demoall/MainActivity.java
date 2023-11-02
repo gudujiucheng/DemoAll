@@ -52,14 +52,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < 20; i++) {
             lists.add(new TestBean().setType(i % 2));
         }
-//        final BaseAdapter adapter;
-//        recyclerView.setAdapter(adapter = new TestAdapter(lists));
-//        adapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(BaseAdapter adapter, View view, int position) {
-//                Toast.makeText(MainActivity.this, "当前位置：" + position, Toast.LENGTH_SHORT).show();
-//            }
-//        });
+
         CouponItemAdapter adapter;
         recyclerView.setAdapter(adapter = new CouponItemAdapter(this, lists, new BaseTypeFooterAdapter.OnItemClickListener<TestBean>() {
             @Override
@@ -74,31 +67,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "加载更多", Toast.LENGTH_SHORT).show();
             }
         }, recyclerView);
-
-
-//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-//                super.onScrollStateChanged(recyclerView, newState);
-//                if (newState == SCROLL_STATE_DRAGGING ) {
-//                    if (recyclerView.computeVerticalScrollOffset() > 0) {// 有滚动距离，说明可以加载更多，解决了 items 不能充满 RecyclerView
-//
-//                        boolean isBottom = false ;
-//
-//                        // 也可以使用 方法2
-//                         isBottom = !recyclerView.canScrollVertically(1) ;
-//                        if (isBottom) {
-//                            Toast.makeText(MainActivity.this, "加载更多", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//            }
-//        });
 
 
     }
@@ -175,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                 .runtime()
                 .permission(Permission.READ_EXTERNAL_STORAGE)
                 .onGranted(permissions -> {
-                    String s = FileUtil.readFile(this, "testxxx");
+                    String s = FileUtil.readStringFromPublicDownLoadPath(this, "cannnzhang");
                     Toast.makeText(this,"读取结果："+s,Toast.LENGTH_LONG).show();
                 })
                 .onDenied(permissions -> {
@@ -185,6 +153,21 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+
+
+    public void test02(View view) {
+
+        AndPermission.with(this)
+                .runtime()
+                .permission(Permission.READ_EXTERNAL_STORAGE)
+                .onGranted(permissions -> {
+                   FileUtil.saveStringToPublicDownLoadPath(this, "testxxx","来自app 存储的内容");
+                })
+                .onDenied(permissions -> {
+                    Toast.makeText(this,"权限获取被拒绝",Toast.LENGTH_LONG).show();
+                })
+                .start();
     }
 
 
@@ -325,6 +308,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
+
 
 
 }

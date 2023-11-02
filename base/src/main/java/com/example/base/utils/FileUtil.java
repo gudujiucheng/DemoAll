@@ -560,12 +560,31 @@ public class FileUtil {
     }
 
     //-----------------------------兼容android高版本的api，使用最新的分区存储方案
-    public static void saveFile(Context context, String relativePath, String content) {
+
+
+
+
+
+
+
+
+
+    public static void saveStringToPublicDownLoadPath(Context context, String relativePath, String content) {
         //使用分区存储
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             saveFileUsingMediaStore(context, relativePath, content);
         } else {
             saveFileUsingEnvironment(relativePath, content);
+        }
+    }
+
+
+
+    public static String readStringFromPublicDownLoadPath(Context context, String relativePath) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            return readFileUsingMediaStore(context, relativePath);
+        } else {
+            return readFileUsingEnvironment(relativePath);
         }
     }
 
@@ -655,13 +674,6 @@ public class FileUtil {
     }
 
 
-    public static String readFile(Context context, String relativePath) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            return readFileUsingMediaStore(context, relativePath);
-        } else {
-            return readFileUsingEnvironment(relativePath);
-        }
-    }
 
 
 

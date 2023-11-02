@@ -9,11 +9,17 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:background="@color/theme_color"
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:onClick="test"
-        android:layout_height="100dp" />
+        android:text="按钮1" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="test02"
+        android:text="按钮2" />
 
 
     <com.google.android.material.tabs.TabLayout
@@ -22,17 +28,13 @@
         android:layout_height="52dp"
         android:background="@android:color/white"
         app:tabBackground="@android:color/transparent"
+        app:tabGravity="center"
         app:tabIndicatorHeight="0dp"
         app:tabMode="scrollable"
-        app:tabGravity="center"
         app:tabPaddingEnd="8dp"
         app:tabPaddingStart="8dp"
         app:tabSelectedTextColor="#3180FF"
         app:tabTextColor="#84888F" />
-
-
-
-
 
 
     <androidx.recyclerview.widget.RecyclerView

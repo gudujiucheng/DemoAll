@@ -28,7 +28,7 @@ android {
 //        minSdkVersion 28
 //        targetSdkVersion rootProject.ext.targetSdkVersion
 
-        targetSdkVersion 33
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         //作为单独工程，需要设置applicationID

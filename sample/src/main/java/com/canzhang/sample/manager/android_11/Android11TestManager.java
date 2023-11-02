@@ -50,7 +50,7 @@ public class Android11TestManager extends BaseManager {
                     .runtime()
                     .permission(Permission.READ_EXTERNAL_STORAGE)
                     .onGranted(permissions -> {
-                        FileUtil.saveFile(mActivity, "testxxx", "我是新的api 哈哈哈哈wwwwww333333333333");
+                        FileUtil.saveStringToPublicDownLoadPath(mActivity, "cannnzhang", "我是新的api 哈哈哈哈wwwwww333333333333");
                     })
                     .onDenied(permissions -> {
                         showToast("权限获取被拒绝");
@@ -66,7 +66,7 @@ public class Android11TestManager extends BaseManager {
                     .runtime()
                     .permission(Permission.READ_EXTERNAL_STORAGE)
                     .onGranted(permissions -> {
-                        String s = FileUtil.readFile(mActivity, "testxxx");
+                        String s = FileUtil.readStringFromPublicDownLoadPath(mActivity, "cannnzhang");
                         showToast("结果：" + s);
                     })
                     .onDenied(permissions -> {
