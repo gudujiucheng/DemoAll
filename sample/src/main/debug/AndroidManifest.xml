@@ -135,4 +135,8 @@
             android:process="mati.log.hook" />
     </application>
 
+    <queries>
+        <package android:name="com.example.administrator.demoall" />
+    </queries>
+
 </manifest>

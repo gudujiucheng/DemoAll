@@ -2,8 +2,11 @@ package com.canzhang.sample.manager.android_11;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +26,8 @@ import java.util.List;
 @MarkManager(value = "android11适配测试")
 public class Android11TestManager extends BaseManager {
     private Activity mActivity;
+    private String AUTHORITY = "com.tencent.replayHelper.provider";
+    private String ACTION_HELP_JSON = "ACTION_HELP_JSON";
 
     @Override
     public int getPriority() {
@@ -39,8 +44,58 @@ public class Android11TestManager extends BaseManager {
         list.add(newRead());
         list.add(storageTest());
         list.add(readTest());
+        //无需权限，但是需要  <queries>  声明
+        list.add(testProviderWrite());
+        list.add(testProviderRead());
+        list.add(testProviderDelete());
 
         return list;
+    }
+
+    /**
+     * 在高版本上面，如果想读一个app的数据，还需要通过 <queries> 标签添加要读app的白名单，这样才能读到，比如我们要读A app的，就得声明A app的包名
+     *
+     * @return
+     */
+    private ComponentItem testProviderWrite() {
+        return new ComponentItem("外部存储不行了，使用provider 写", v -> {
+            // 在A应用中，创建一个ContentValues对象，将字符串作为键值对添加到其中
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(ACTION_HELP_JSON, "Hello, world! by can 222222");
+
+            // 使用ContentResolver将数据插入到ContentProvider中
+            mActivity.getContentResolver().insert(getProviderUri(), contentValues);
+        });
+    }
+
+    private Uri getProviderUri() {
+        return Uri.parse("content://" + AUTHORITY + "/" + ACTION_HELP_JSON);
+    }
+
+    private ComponentItem testProviderRead() {
+        return new ComponentItem("外部存储不行了，使用provider 读", v -> {
+            Cursor cursor = mActivity.getContentResolver().query(getProviderUri(), null, null, null, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                int columnIndex = cursor.getColumnIndex(ACTION_HELP_JSON);
+                String myString = cursor.getString(columnIndex);
+                showToast("获取的值：" + myString);
+                cursor.close();
+            } else {
+                showToast("没有读到值");
+            }
+        });
+    }
+
+
+    private ComponentItem testProviderDelete() {
+        return new ComponentItem("外部存储不行了，使用provider 删", v -> {
+            int deletedRows = mActivity.getContentResolver().delete(getProviderUri(), null, null);
+            if (deletedRows > 0) {
+                showToast("删除成功");
+            } else {
+                showToast("删除失败");
+            }
+        });
     }
 
     private ComponentItem newWrite() {

@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 //美团多渠道打包
 apply from: 'walle-multiple-channel.gradle'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'//引入kapt插件
 
 android {
     compileSdkVersion 30
@@ -10,6 +12,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
 

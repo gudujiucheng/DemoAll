@@ -13,12 +13,20 @@ import java.io.File;
 
 import static com.example.administrator.demoall.MainActivity.TAG;
 
+import androidx.multidex.MultiDex;
+
 public class BaseApp extends Application {
     ActivityLifecycleCallbacks callbacks;
     public static Context mContext;
 
     public Context getAppContext() {
         return getApplicationContext();
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(base);
     }
 
     @Override
