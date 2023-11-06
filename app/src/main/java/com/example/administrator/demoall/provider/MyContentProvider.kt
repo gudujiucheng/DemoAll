@@ -20,7 +20,7 @@ class MyContentProvider : ContentProvider() {
         uriMatcher = UriMatcher(UriMatcher.NO_MATCH)
         //路径匹配规则，可以添加多个
         //例如：content://com.tencent.replayHelper.provider.PersonProvider/ACTION_HELP_JSON,返回值就是(ACTION_HELP_JSON_CODE)=1
-        uriMatcher?.addURI(AUTHORITY, "/$ACTION_HELP_JSON", ACTION_HELP_JSON_CODE)
+        uriMatcher?.addURI(AUTHORITY, ACTION_HELP_JSON, ACTION_HELP_JSON_CODE)
         return true
     }
 
