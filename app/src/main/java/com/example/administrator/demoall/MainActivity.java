@@ -5,6 +5,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
@@ -23,6 +25,7 @@ import com.example.administrator.demoall.fqladapter.BaseTypeFooterAdapter;
 import com.example.administrator.demoall.fqladapter.test.CouponItemAdapter;
 import com.example.administrator.demoall.myadapter.test.TestBean;
 import com.example.base.utils.FileUtil;
+import com.example.base.utils.PictureUtils;
 import com.google.android.material.tabs.TabLayout;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.Permission;
@@ -310,6 +313,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void test03(View view) {
 
+
+        AndPermission.with(this)
+                .runtime()
+                .permission(Permission.READ_EXTERNAL_STORAGE)
+                .onGranted(permissions -> {
+                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.sample_footer_loading);
+                    PictureUtils.saveBitmapToPicture(this,bitmap,"can/test/sample_footer_loading.png");
+                })
+                .onDenied(permissions -> {
+                    Toast.makeText(this, "权限获取失败 x", Toast.LENGTH_SHORT).show();
+                })
+                .start();
+    }
+
+    public void test04(View view) {
+        PictureUtils.getImagesInRelativePath(this, "can/test/");
+    }
+
+    public void test05(View view) {
+        PictureUtils.deleteImagesInRelativePath(this, "can/test/");
+    }
 }
 

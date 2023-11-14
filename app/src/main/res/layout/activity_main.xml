@@ -21,6 +21,24 @@
         android:onClick="test02"
         android:text="按钮2" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="test03"
+        android:text="存储图片、兼容新旧版本方案" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="test04"
+        android:text="读取图片、兼容新旧版本方案" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="test05"
+        android:text="删除图片、兼容新旧版本方案" />
+
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_coupon"

@@ -112,7 +112,7 @@ class MyContentProvider : ContentProvider() {
     }
 
     companion object {
-        private const val AUTHORITY = "com.tencent.replayHelper.provider"
+        private const val AUTHORITY = "com.tencent.replayHelper.providerx"
         private const val ACTION_HELP_JSON = "ACTION_HELP_JSON"
         private const val ACTION_HELP_JSON_CODE = 1
     }

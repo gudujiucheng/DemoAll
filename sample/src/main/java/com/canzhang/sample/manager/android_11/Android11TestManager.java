@@ -6,6 +6,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
@@ -13,9 +15,11 @@ import android.view.View;
 
 import androidx.core.app.ActivityCompat;
 
+import com.canzhang.sample.R;
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
 import com.example.base.utils.FileUtil;
+import com.example.base.utils.PictureUtils;
 import com.example.simple_test_annotations.MarkManager;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
@@ -26,7 +30,7 @@ import java.util.List;
 @MarkManager(value = "android11适配测试")
 public class Android11TestManager extends BaseManager {
     private Activity mActivity;
-    private String AUTHORITY = "com.tencent.replayHelper.provider";
+    private String AUTHORITY = "com.tencent.replayHelper.providerx";
     private String ACTION_HELP_JSON = "ACTION_HELP_JSON";
 
     @Override
@@ -49,7 +53,44 @@ public class Android11TestManager extends BaseManager {
         list.add(testProviderRead());
         list.add(testProviderDelete());
 
+        list.add(testSaveMediaStoreImg());
+        list.add(testGetImgFromMediaStoreImg());
+        list.add(testDeleteImgFromMediaStoreImg());
+
         return list;
+    }
+
+
+    private ComponentItem testSaveMediaStoreImg() {
+        return new ComponentItem("存储图片、兼容新旧版本方案", v -> {
+
+            AndPermission.with(mActivity)
+                    .runtime()
+                    .permission(Permission.READ_EXTERNAL_STORAGE)
+                    .onGranted(permissions -> {
+                        Bitmap bitmap = BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.debug_icon_debug);
+                        PictureUtils.saveBitmapToPicture(mActivity, bitmap, "can/test/debug_icon_debug.png");
+                    })
+                    .onDenied(permissions -> {
+                        showToast("权限获取被拒绝");
+                    })
+                    .start();
+
+        });
+    }
+
+
+    private ComponentItem testGetImgFromMediaStoreImg() {
+        return new ComponentItem("读取图片、兼容新旧版本方案", v -> {
+            PictureUtils.getImagesInRelativePath(mActivity, "can/test/");
+        });
+    }
+
+
+    private ComponentItem testDeleteImgFromMediaStoreImg() {
+        return new ComponentItem("删除图片、兼容新旧版本方案", v -> {
+            PictureUtils.deleteImagesInRelativePath(mActivity, "can/test/");
+        });
     }
 
     /**

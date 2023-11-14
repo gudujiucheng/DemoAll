@@ -57,7 +57,7 @@
 
         <provider
             android:name="com.example.administrator.demoall.provider.MyContentProvider"
-            android:authorities="com.tencent.replayHelper.provider"
+            android:authorities="com.tencent.replayHelper.providerx"
             android:enabled="true"
             android:exported="true" />
     </application>
