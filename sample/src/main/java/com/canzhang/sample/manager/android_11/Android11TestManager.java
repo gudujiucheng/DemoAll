@@ -66,7 +66,7 @@ public class Android11TestManager extends BaseManager {
 
             AndPermission.with(mActivity)
                     .runtime()
-                    .permission(Permission.READ_EXTERNAL_STORAGE)
+                    .permission(Permission.WRITE_EXTERNAL_STORAGE)
                     .onGranted(permissions -> {
                         Bitmap bitmap = BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.debug_icon_debug);
                         PictureUtils.saveBitmapToPicture(mActivity, bitmap, "can/test/debug_icon_debug.png");

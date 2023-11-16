@@ -318,7 +318,7 @@ public class MainActivity extends AppCompatActivity {
 
         AndPermission.with(this)
                 .runtime()
-                .permission(Permission.READ_EXTERNAL_STORAGE)
+                .permission(Permission.WRITE_EXTERNAL_STORAGE)
                 .onGranted(permissions -> {
                     Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.sample_footer_loading);
                     PictureUtils.saveBitmapToPicture(this,bitmap,"can/test/sample_footer_loading.png");

@@ -184,7 +184,7 @@ public class PictureUtils {
             File saveDir = relativePath != null ? new File(pictures, relativePath) : pictures;
 
             if (!saveDir.exists() && !saveDir.mkdirs()) {
-                Log.e(TAG, "save: error: can't create Pictures directory");
+                Log.e(TAG, "save: error: can't create  directory："+saveDir);
                 return null;
             }
             // 文件路径查重，重复的话在文件名后拼接数字
