@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -20,10 +21,13 @@ import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
 import com.example.base.utils.FileUtil;
 import com.example.base.utils.PictureUtils;
+import com.example.base.utils.shot.ScreenshotTranslucentActivity;
+import com.example.base.utils.shot.ScreenshotUtil;
 import com.example.simple_test_annotations.MarkManager;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,10 +60,47 @@ public class Android11TestManager extends BaseManager {
         list.add(testSaveMediaStoreImg());
         list.add(testGetImgFromMediaStoreImg());
         list.add(testDeleteImgFromMediaStoreImg());
+        list.add(testGetShotPermission());
+        list.add(testShot());
 
         return list;
     }
 
+    private ComponentItem testGetShotPermission() {
+        return new ComponentItem("截屏权限申请", v -> {
+            Intent intent = new Intent(mActivity,
+                    ScreenshotTranslucentActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mActivity.startActivity(intent);
+        });
+    }
+
+    private ComponentItem testShot() {
+        return new ComponentItem("截屏", v -> {
+            AndPermission.with(mActivity)
+                    .runtime()
+                    .permission(Permission.RECORD_AUDIO)
+                    .onGranted(permissions -> {
+                        ScreenshotUtil.get().init(mActivity);
+                        ScreenshotUtil.get().screenshot(new ScreenshotUtil.ShotListener() {
+                            @Override
+                            public void onSuccess(Bitmap bitmap) {
+
+                            }
+
+                            @Override
+                            public void onError(String message) {
+
+                            }
+                        },false);
+//                        ScreenshotUtil.screenshotByDecorView(mActivity, "xx/xx/can.png");
+                    })
+                    .onDenied(permissions -> {
+                        showToast("权限获取被拒绝");
+                    })
+                    .start();
+
+        });
+    }
 
     private ComponentItem testSaveMediaStoreImg() {
         return new ComponentItem("存储图片、兼容新旧版本方案", v -> {
