@@ -2,6 +2,7 @@ package com.example.administrator.demoall;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -100,19 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void test(View view) {
 
-//        LoadingDialog.get(this).show();
 
-        //fenqile:// 这个是打不开的
-        //fenqile://app 这样才能打得开
-//        Intent action = new Intent(Intent.ACTION_VIEW, Uri.parse("fenqile://app/webview?url=\"https://www.baidu.com/\""));
-//        startActivity(action);
-//
-//        FloatingView floatingView = new FloatingView();
-//        floatingView.customView(R.layout.lx_floating_view);
-//        floatingView.customView(new LXCustomView(MainActivity.this));
-//        floatingView.getView().setLayoutParams(floatingView.getParams());
-
-//        FloatingView.get().attach(this).add();
 
 
         //测试miui相关问题。
@@ -335,6 +324,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void test05(View view) {
         PictureUtils.deleteImagesInRelativePath(this, "can/test/");
+    }
+
+    public void testShot(View view) {
+        //通知截屏
+//        Intent intent = new Intent("sample_screenshot")
+//                .setPackage("com.canzhang.sample");
+//        startService(intent);
+
+        Intent intent = new Intent();
+        intent.setComponent(new ComponentName("com.canzhang.sample", "com.canzhang.sample.shot.MessageService"));
+        intent.setAction("sample_screenshot");
+        startService(intent);
+
     }
 }
 

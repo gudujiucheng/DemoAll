@@ -1,15 +1,17 @@
-package com.example.base.utils.shot;
+package com.canzhang.sample.shot;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.IBinder;
 
 import com.example.base.R;
+import com.example.base.utils.PictureUtils;
 
 /**
  * Author: darrenzeng

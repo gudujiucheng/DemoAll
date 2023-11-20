@@ -19,15 +19,14 @@ import androidx.core.app.ActivityCompat;
 import com.canzhang.sample.R;
 import com.canzhang.sample.base.BaseManager;
 import com.canzhang.sample.base.bean.ComponentItem;
+import com.canzhang.sample.shot.ScreenshotTranslucentActivity;
+import com.canzhang.sample.shot.ScreenshotUtil;
 import com.example.base.utils.FileUtil;
 import com.example.base.utils.PictureUtils;
-import com.example.base.utils.shot.ScreenshotTranslucentActivity;
-import com.example.base.utils.shot.ScreenshotUtil;
 import com.example.simple_test_annotations.MarkManager;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,28 +75,23 @@ public class Android11TestManager extends BaseManager {
 
     private ComponentItem testShot() {
         return new ComponentItem("截屏", v -> {
-            AndPermission.with(mActivity)
-                    .runtime()
-                    .permission(Permission.RECORD_AUDIO)
-                    .onGranted(permissions -> {
-                        ScreenshotUtil.get().init(mActivity);
-                        ScreenshotUtil.get().screenshot(new ScreenshotUtil.ShotListener() {
-                            @Override
-                            public void onSuccess(Bitmap bitmap) {
 
-                            }
+            ScreenshotUtil.get().screenshot(new ScreenshotUtil.ShotListener() {
+                @Override
+                public void onSuccess(Bitmap bitmap) {
 
-                            @Override
-                            public void onError(String message) {
+                    //这个也行
+                    PictureUtils.saveBitmapToPicture(mActivity, bitmap, "can_sample/testX.png");
 
-                            }
-                        },false);
+                }
+
+                @Override
+                public void onError(String message) {
+
+                }
+            }, false);
+            // 这个也可以
 //                        ScreenshotUtil.screenshotByDecorView(mActivity, "xx/xx/can.png");
-                    })
-                    .onDenied(permissions -> {
-                        showToast("权限获取被拒绝");
-                    })
-                    .start();
 
         });
     }

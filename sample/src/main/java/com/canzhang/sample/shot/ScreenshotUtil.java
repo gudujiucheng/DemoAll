@@ -1,4 +1,4 @@
-package com.example.base.utils.shot;
+package com.canzhang.sample.shot;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -6,7 +6,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.ImageFormat;
 import android.graphics.PixelFormat;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.VirtualDisplay;
@@ -62,20 +61,22 @@ public class ScreenshotUtil {
         if (mMediaProjection == null || mVirtualDisplay == null || mLandScapeVirtualDisplay == null) {
             Log.e(TAG, "mMediaProjection == null || mVirtualDisplay == null || mLandScapeVirtualDisplay == null");
             mImageReader = ImageReader
-                .newInstance(ScreenUtil.getScreenWidth(mActivity), ScreenUtil.getScreenHeight(mActivity),
-                        PixelFormat.RGBA_8888, 1);
+                    .newInstance(ScreenUtil.getScreenWidth(mActivity), ScreenUtil.getScreenHeight(mActivity),
+                            PixelFormat.RGBA_8888, 1);
             mLandScapeImageReader = ImageReader
-                .newInstance(ScreenUtil.getScreenHeight(mActivity), ScreenUtil.getScreenWidth(mActivity),
-                        PixelFormat.RGBA_8888, 1);
+                    .newInstance(ScreenUtil.getScreenHeight(mActivity), ScreenUtil.getScreenWidth(mActivity),
+                            PixelFormat.RGBA_8888, 1);
             mediaProjectionManager = (MediaProjectionManager) mActivity
-                .getSystemService(Context.MEDIA_PROJECTION_SERVICE);
+                    .getSystemService(Context.MEDIA_PROJECTION_SERVICE);
             try {
                 mActivity.startActivityForResult(mediaProjectionManager
-                    .createScreenCaptureIntent(), REQUEST_MEDIA_PROJECTION);
+                        .createScreenCaptureIntent(), REQUEST_MEDIA_PROJECTION);
             } catch (ActivityNotFoundException e) {
                 isSupportMediaProjection = false;
                 Log.e(TAG, e.toString());
             }
+        }else{
+            mActivity.finish();
         }
         isRequestInit = true;
     }
@@ -84,13 +85,13 @@ public class ScreenshotUtil {
         stop();
         mMediaProjection = mediaProjectionManager.getMediaProjection(Activity.RESULT_OK, mResultData);
         mVirtualDisplay = mMediaProjection.createVirtualDisplay("screen-mirror",
-            ScreenUtil.getScreenWidth(mContext), ScreenUtil.getScreenHeight(mContext),
-            ScreenUtil.getScreenDensityDpi(mContext), DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR,
-            mImageReader.getSurface(), null, null);
+                ScreenUtil.getScreenWidth(mContext), ScreenUtil.getScreenHeight(mContext),
+                ScreenUtil.getScreenDensityDpi(mContext), DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR,
+                mImageReader.getSurface(), null, null);
         mLandScapeVirtualDisplay = mMediaProjection.createVirtualDisplay("screen-mirror",
-            ScreenUtil.getScreenHeight(mContext), ScreenUtil.getScreenWidth(mContext),
-            ScreenUtil.getScreenDensityDpi(mContext), DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR,
-            mLandScapeImageReader.getSurface(), null, null);
+                ScreenUtil.getScreenHeight(mContext), ScreenUtil.getScreenWidth(mContext),
+                ScreenUtil.getScreenDensityDpi(mContext), DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR,
+                mLandScapeImageReader.getSurface(), null, null);
     }
 
 
@@ -109,9 +110,11 @@ public class ScreenshotUtil {
     }
 
     private void startCapture(ShotListener mShotListener, boolean landScape) {
+        Log.d("CAN_SCREEN_SHOT", "begin startCapture");
         index++;
         if (index > SCREEN_CAPTURE_RETRY_TIMES) {
             mShotListener.onError("截屏失败，重试次数超过了 -> " + mMediaProjection + " -> " + mVirtualDisplay);
+            Log.e("CAN_SCREEN_SHOT", "截屏失败，重试次数超过了 -> " + mMediaProjection + " -> " + mVirtualDisplay);
             return;
         }
         Image image;
@@ -121,6 +124,7 @@ public class ScreenshotUtil {
             image = mImageReader.acquireLatestImage();//FIXME can 这里获取不到图像
         }
         if (image == null) {
+            Log.e("CAN_SCREEN_SHOT", "get image fail retry times:" + index);
             try {
                 Thread.sleep(SCREEN_CAPTURE_RETRY_WAIT);
             } catch (InterruptedException e) {
@@ -128,7 +132,9 @@ public class ScreenshotUtil {
             }
             startCapture(mShotListener, landScape);
         } else {
+
             Bitmap bitmap = covetBitmap(image);
+            Log.d("CAN_SCREEN_SHOT", "get image success bitmap:" + bitmap);
             if (bitmap != null) {
                 mShotListener.onSuccess(bitmap);
             }

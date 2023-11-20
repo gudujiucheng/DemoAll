@@ -1,20 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.base">
 
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
     <application>
 
-        <activity
-            android:name=".utils.shot.ScreenshotTranslucentActivity"
-            android:launchMode="singleTask"
-            android:multiprocess="true"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
-
-        <service
-            android:name=".utils.shot.ShotScreenService"
-            android:enabled="true"
-            android:foregroundServiceType="mediaProjection" />
 
     </application>
 </manifest>

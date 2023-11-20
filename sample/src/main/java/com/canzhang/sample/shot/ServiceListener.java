@@ -1,4 +1,4 @@
-package com.example.base.utils.shot;
+package com.canzhang.sample.shot;
 
 /**
  * Author: darrenzeng

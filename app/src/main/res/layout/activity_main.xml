@@ -39,6 +39,12 @@
         android:onClick="test05"
         android:text="删除图片、兼容新旧版本方案" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="testShot"
+        android:text="给sample app 发通知截屏" />
+
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_coupon"

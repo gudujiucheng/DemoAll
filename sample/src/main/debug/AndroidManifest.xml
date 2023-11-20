@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.canzhang.sample">
 
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -133,6 +135,30 @@
             android:enabled="true"
             android:exported="true"
             android:process="mati.log.hook" />
+
+        <activity
+            android:name="com.canzhang.sample.shot.ScreenshotTranslucentActivity"
+            android:launchMode="singleTask"
+            android:multiprocess="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+
+        <service
+            android:name="com.canzhang.sample.shot.ShotScreenService"
+            android:enabled="true"
+            android:exported="true"
+            android:foregroundServiceType="mediaProjection">
+        </service>
+        <service
+            android:name="com.canzhang.sample.shot.MessageService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <!--方便联动测试的，方便别的app调用-->
+                <action android:name="sample_screenshot" />
+            </intent-filter>
+
+        </service>
+
     </application>
 
     <queries>
