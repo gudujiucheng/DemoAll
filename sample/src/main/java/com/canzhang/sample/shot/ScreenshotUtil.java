@@ -76,7 +76,14 @@ public class ScreenshotUtil {
                 Log.e(TAG, e.toString());
             }
         }else{
-            mActivity.finish();
+            //如果是高版本api  比如 api 33 需要每次都得申请权限才能截图，否则就返回空，并且每次申请权限之后仅能截图一次，大坑
+            try {
+                mActivity.startActivityForResult(mediaProjectionManager
+                        .createScreenCaptureIntent(), REQUEST_MEDIA_PROJECTION);
+            } catch (ActivityNotFoundException e) {
+                isSupportMediaProjection = false;
+                Log.e(TAG, e.toString());
+            }
         }
         isRequestInit = true;
     }
