@@ -27,6 +27,7 @@ import com.example.simple_test_annotations.MarkManager;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class Android11TestManager extends BaseManager {
     private Activity mActivity;
     private String AUTHORITY = "com.tencent.replayHelper.providerx";
     private String ACTION_HELP_JSON = "ACTION_HELP_JSON";
-
+    private static CommandExecutor cmdExecutor;
     @Override
     public int getPriority() {
         return 100;
@@ -45,6 +46,8 @@ public class Android11TestManager extends BaseManager {
     public List<ComponentItem> getSampleItem(Activity activity) {
 
         mActivity = activity;
+        cmdExecutor = new CommandExecutor();
+        cmdExecutor.init();
         List<ComponentItem> list = new ArrayList<>();
         list.add(test());
         list.add(newWrite());
@@ -61,10 +64,25 @@ public class Android11TestManager extends BaseManager {
         list.add(testDeleteImgFromMediaStoreImg());
         list.add(testGetShotPermission());
         list.add(testShot());
+        list.add(testShotByCmd());
 
         return list;
     }
 
+    private ComponentItem testShotByCmd() {
+        return new ComponentItem("使用命令截图", v -> {
+//            try {
+                //直接执行这个命令会直接crash 提示没有权限
+//                Runtime.getRuntime().exec("adb shell  screencap -p  /storage/emulated/0/Tencent/aaa.jpg");
+
+
+                //这样开个服务，也需要链接到电脑本身进行才行，才能顺利执行相关命令
+                cmdExecutor.exec("adb shell  screencap -p  /storage/emulated/0/Tencent/aaa.jpg");
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+        });
+    }
     private ComponentItem testGetShotPermission() {
         return new ComponentItem("截屏权限申请", v -> {
             Intent intent = new Intent(mActivity,
