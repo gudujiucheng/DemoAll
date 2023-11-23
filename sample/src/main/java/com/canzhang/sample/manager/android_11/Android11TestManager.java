@@ -2,6 +2,7 @@ package com.canzhang.sample.manager.android_11;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -37,6 +38,7 @@ public class Android11TestManager extends BaseManager {
     private String AUTHORITY = "com.tencent.replayHelper.providerx";
     private String ACTION_HELP_JSON = "ACTION_HELP_JSON";
     private static CommandExecutor cmdExecutor;
+
     @Override
     public int getPriority() {
         return 100;
@@ -65,34 +67,59 @@ public class Android11TestManager extends BaseManager {
         list.add(testGetShotPermission());
         list.add(testShot());
         list.add(testShotByCmd());
+        list.add(testShotByServiceGet());
+        list.add(testShotByService());
 
         return list;
+    }
+
+    private ComponentItem testShotByServiceGet() {
+        return new ComponentItem("开启录屏服务截图 权限申请", v -> {
+
+//            AndPermission.with(mActivity).runtime().permission(Permission.RECORD_AUDIO).onGranted(permissions -> {
+                Intent intent = new Intent(mActivity, com.canzhang.sample.shot2.ScreenshotTranslucentActivity.class);
+                mActivity.startActivity(intent);
+//            }).onDenied(permissions -> {
+//                showToast("权限获取被拒绝");
+//            }).start();
+
+        });
+    }
+
+    private ComponentItem testShotByService() {
+        return new ComponentItem("开启录屏服务截图", v -> {
+            Intent intent = new Intent();
+            intent.setComponent(new ComponentName("com.canzhang.sample", "com.canzhang.sample.shot2.ShotScreenService"));
+            intent.setAction("sample_screenshot_new");
+            mActivity.startService(intent);
+
+        });
     }
 
     private ComponentItem testShotByCmd() {
         return new ComponentItem("使用命令截图", v -> {
 //            try {
-                //直接执行这个命令会直接crash 提示没有权限
+            //直接执行这个命令会直接crash 提示没有权限
 //                Runtime.getRuntime().exec("adb shell  screencap -p  /storage/emulated/0/Tencent/aaa.jpg");
 
 
-                //这样开个服务，也需要链接到电脑本身进行才行，才能顺利执行相关命令
-                cmdExecutor.exec("adb shell  screencap -p  /storage/emulated/0/Tencent/aaa.jpg");
+            //这样开个服务，也需要链接到电脑本身进行才行，才能顺利执行相关命令
+            cmdExecutor.exec("adb shell  screencap -p  /storage/emulated/0/Tencent/aaa.jpg");
 //            } catch (IOException e) {
 //                throw new RuntimeException(e);
 //            }
         });
     }
+
     private ComponentItem testGetShotPermission() {
-        return new ComponentItem("截屏权限申请", v -> {
-            Intent intent = new Intent(mActivity,
-                    ScreenshotTranslucentActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        return new ComponentItem("（老逻辑）截屏权限申请", v -> {
+            Intent intent = new Intent(mActivity, ScreenshotTranslucentActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mActivity.startActivity(intent);
         });
     }
 
     private ComponentItem testShot() {
-        return new ComponentItem("截屏", v -> {
+        return new ComponentItem("（老逻辑）截屏", v -> {
 
             ScreenshotUtil.get().screenshot(new ScreenshotUtil.ShotListener() {
                 @Override
@@ -117,17 +144,12 @@ public class Android11TestManager extends BaseManager {
     private ComponentItem testSaveMediaStoreImg() {
         return new ComponentItem("存储图片、兼容新旧版本方案", v -> {
 
-            AndPermission.with(mActivity)
-                    .runtime()
-                    .permission(Permission.WRITE_EXTERNAL_STORAGE)
-                    .onGranted(permissions -> {
-                        Bitmap bitmap = BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.debug_icon_debug);
-                        PictureUtils.saveBitmapToPicture(mActivity, bitmap, "can/test/debug_icon_debug.png");
-                    })
-                    .onDenied(permissions -> {
-                        showToast("权限获取被拒绝");
-                    })
-                    .start();
+            AndPermission.with(mActivity).runtime().permission(Permission.WRITE_EXTERNAL_STORAGE).onGranted(permissions -> {
+                Bitmap bitmap = BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.debug_icon_debug);
+                PictureUtils.saveBitmapToPicture(mActivity, bitmap, "can/test/debug_icon_debug.png");
+            }).onDenied(permissions -> {
+                showToast("权限获取被拒绝");
+            }).start();
 
         });
     }
@@ -195,53 +217,38 @@ public class Android11TestManager extends BaseManager {
     private ComponentItem newWrite() {
         return new ComponentItem("android 存储外部目录文件测试(兼容高版本api，官方写法)", v -> {
 
-            AndPermission.with(mActivity)
-                    .runtime()
-                    .permission(Permission.READ_EXTERNAL_STORAGE)
-                    .onGranted(permissions -> {
-                        FileUtil.saveStringToPublicDownLoadPath(mActivity, "cannnzhang", "我是新的api 哈哈哈哈wwwwww333333333333");
-                    })
-                    .onDenied(permissions -> {
-                        showToast("权限获取被拒绝");
-                    })
-                    .start();
+            AndPermission.with(mActivity).runtime().permission(Permission.READ_EXTERNAL_STORAGE).onGranted(permissions -> {
+                FileUtil.saveStringToPublicDownLoadPath(mActivity, "cannnzhang", "我是新的api 哈哈哈哈wwwwww333333333333");
+            }).onDenied(permissions -> {
+                showToast("权限获取被拒绝");
+            }).start();
         });
     }
 
     private ComponentItem newRead() {
         return new ComponentItem("android 读取外部目录测试(兼容高版本api，官方写法)", v -> {
 
-            AndPermission.with(mActivity)
-                    .runtime()
-                    .permission(Permission.READ_EXTERNAL_STORAGE)
-                    .onGranted(permissions -> {
-                        String s = FileUtil.readStringFromPublicDownLoadPath(mActivity, "cannnzhang");
-                        showToast("结果：" + s);
-                    })
-                    .onDenied(permissions -> {
-                        showToast("权限获取被拒绝");
-                    })
-                    .start();
+            AndPermission.with(mActivity).runtime().permission(Permission.READ_EXTERNAL_STORAGE).onGranted(permissions -> {
+                String s = FileUtil.readStringFromPublicDownLoadPath(mActivity, "cannnzhang");
+                showToast("结果：" + s);
+            }).onDenied(permissions -> {
+                showToast("权限获取被拒绝");
+            }).start();
         });
     }
 
     private ComponentItem storageTest() {
         return new ComponentItem("android 存储文件到外部目录测试", v -> {
 
-            AndPermission.with(mActivity)
-                    .runtime()
-                    .permission(Permission.READ_EXTERNAL_STORAGE)
-                    .onGranted(permissions -> {
+            AndPermission.with(mActivity).runtime().permission(Permission.READ_EXTERNAL_STORAGE).onGranted(permissions -> {
 
-                        //虽然可以正常写入，但是实际测试别的app 读取不到
+                //虽然可以正常写入，但是实际测试别的app 读取不到
 
-                        FileUtil.writeFile(Environment.getExternalStorageDirectory() + "/Download/actionhelp.json", "哈哈哈哈哈哈");
-                        showToast("权限获取成功");
-                    })
-                    .onDenied(permissions -> {
-                        showToast("权限获取被拒绝");
-                    })
-                    .start();
+                FileUtil.writeFile(Environment.getExternalStorageDirectory() + "/Download/actionhelp.json", "哈哈哈哈哈哈");
+                showToast("权限获取成功");
+            }).onDenied(permissions -> {
+                showToast("权限获取被拒绝");
+            }).start();
         });
     }
 
@@ -249,18 +256,13 @@ public class Android11TestManager extends BaseManager {
     private ComponentItem readTest() {
         return new ComponentItem("android 读取外部目录测试", v -> {
 
-            AndPermission.with(mActivity)
-                    .runtime()
-                    .permission(Permission.READ_EXTERNAL_STORAGE)
-                    .onGranted(permissions -> {
-                        //这个Download 似乎比较特殊，在android 13上 ，读写都能成功（不同app之间也可以）
-                        String s = FileUtil.readFile(Environment.getExternalStorageDirectory() + "/Download/actionhelp.json");
-                        showToast("结果：" + s);
-                    })
-                    .onDenied(permissions -> {
-                        showToast("权限获取被拒绝");
-                    })
-                    .start();
+            AndPermission.with(mActivity).runtime().permission(Permission.READ_EXTERNAL_STORAGE).onGranted(permissions -> {
+                //这个Download 似乎比较特殊，在android 13上 ，读写都能成功（不同app之间也可以）
+                String s = FileUtil.readFile(Environment.getExternalStorageDirectory() + "/Download/actionhelp.json");
+                showToast("结果：" + s);
+            }).onDenied(permissions -> {
+                showToast("权限获取被拒绝");
+            }).start();
         });
     }
 
@@ -270,21 +272,16 @@ public class Android11TestManager extends BaseManager {
         return new ComponentItem("getExternalStorageDirectory", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AndPermission.with(mActivity)
-                        .runtime()
-                        .permission(Permission.READ_EXTERNAL_STORAGE)
-                        .onGranted(permissions -> {
+                AndPermission.with(mActivity).runtime().permission(Permission.READ_EXTERNAL_STORAGE).onGranted(permissions -> {
 //                            showToast("权限获取成功");
-                            String firstSDPath = getFirstSDPath(mActivity);
-                            //Environment.getExternalStorageDirectory() 在 API Level 29 开始已被弃用，开发者应迁移至 Context#getExternalFilesDir(String), MediaStore, 或Intent#ACTION_OPEN_DOCUMENT。
-                            Log.e("Amdroid11TestManager", "firstSDPath:" + firstSDPath);
-                            showToast(firstSDPath);
+                    String firstSDPath = getFirstSDPath(mActivity);
+                    //Environment.getExternalStorageDirectory() 在 API Level 29 开始已被弃用，开发者应迁移至 Context#getExternalFilesDir(String), MediaStore, 或Intent#ACTION_OPEN_DOCUMENT。
+                    Log.e("Amdroid11TestManager", "firstSDPath:" + firstSDPath);
+                    showToast(firstSDPath);
 
-                        })
-                        .onDenied(permissions -> {
-                            showToast("权限获取被拒绝");
-                        })
-                        .start();
+                }).onDenied(permissions -> {
+                    showToast("权限获取被拒绝");
+                }).start();
 
             }
         });
@@ -292,8 +289,7 @@ public class Android11TestManager extends BaseManager {
 
 
     public static String getFirstSDPath(Context context) {
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             return Environment.getExternalStorageDirectory().getAbsolutePath();
         } else {
             return "";

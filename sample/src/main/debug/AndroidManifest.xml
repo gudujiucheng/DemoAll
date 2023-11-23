@@ -141,13 +141,13 @@
             android:launchMode="singleTask"
             android:multiprocess="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+        <activity android:name=".shot2.ScreenshotTranslucentActivity" />
 
         <service
             android:name="com.canzhang.sample.shot.ShotScreenService"
             android:enabled="true"
             android:exported="true"
-            android:foregroundServiceType="mediaProjection">
-        </service>
+            android:foregroundServiceType="mediaProjection"></service>
         <service
             android:name="com.canzhang.sample.shot.MessageService"
             android:enabled="true"
@@ -158,6 +158,11 @@
             </intent-filter>
 
         </service>
+        <service
+            android:name=".shot2.ShotScreenService"
+            android:enabled="true"
+            android:exported="true"
+            android:foregroundServiceType="mediaProjection" />
 
     </application>
 

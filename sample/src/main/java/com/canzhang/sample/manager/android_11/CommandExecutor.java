@@ -70,7 +70,7 @@ public class CommandExecutor {
         Log.d("CommandExecutor", "CommandExecutor.socketConnect()");
         try {
             // 创建客户端 Socket
-            return new Socket(InetAddress.getLocalHost(), SOCKET_PORT);
+            return new Socket("10.45.7.101", SOCKET_PORT);
         } catch (IOException e) {
             e.printStackTrace();
             Log.e("CommandExecutor", "连接 socket 失败：" + e.toString());
