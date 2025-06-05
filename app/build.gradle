@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
-//美团多渠道打包
-apply from: 'walle-multiple-channel.gradle'
+
 
 android {
     compileSdkVersion 28
@@ -74,7 +73,5 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:${rootProject.ext.glideVersion}"
 
     implementation "com.tencent:mmkv:${rootProject.ext.mmkvVersion}"
-    //美团多渠道打包
-    implementation "com.meituan.android.walle:library:${rootProject.ext.walleVersion}"
 
 }

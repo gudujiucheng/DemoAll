@@ -42,7 +42,6 @@ ext {
     fastjsonVersion = '1.1.46.android'
     weexVersion = '0.20.3.0-beta'
     mmkvVersion = '1.0.14'
-    walleVersion = '1.1.6'
     roundViewVersion = '1.1.4@aar'
 
     arouterApiVersion = '1.4.1'
