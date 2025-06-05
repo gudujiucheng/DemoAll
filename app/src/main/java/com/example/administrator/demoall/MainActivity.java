@@ -17,7 +17,6 @@ import com.example.administrator.demoall.myadapter.BaseAdapter;
 import com.example.administrator.demoall.myadapter.test.TestAdapter;
 import com.example.administrator.demoall.myadapter.test.TestBean;
 import com.lxj.xrefreshlayout.FqlRefreshLayout;
-import com.meituan.android.walle.WalleChannelReader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,12 +125,6 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .setNegativeButton("d", null).setCancelable(false);
         builder.create().show();
-    }
-
-    public void showChannel(View view) {
-        //获取渠道
-        String channel = WalleChannelReader.getChannel(this.getApplicationContext());
-        Toast.makeText(this, "当前包的渠道是：" + channel, Toast.LENGTH_LONG).show();
     }
 }
 

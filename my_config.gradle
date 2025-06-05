@@ -40,7 +40,6 @@ ext {
     permissionVersion = '2.0.0-rc12'
     glideVersion = '4.8.0'
     fastjsonVersion = '1.1.46.android'
-    weexVersion = '0.20.3.0-beta'
     mmkvVersion = '1.0.14'
     roundViewVersion = '1.1.4@aar'
 

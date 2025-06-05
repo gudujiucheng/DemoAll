@@ -77,7 +77,6 @@ dependencies {
     implementation 'com.google.zxing:core:' + rootProject.ext.zxingCoreVersion
     //weex
     implementation "com.alibaba:fastjson:${rootProject.ext.fastjsonVersion}"
-    implementation "com.taobao.android:weex_sdk:${rootProject.ext.weexVersion}"
     //glide
     implementation 'com.github.bumptech.glide:glide:' + rootProject.ext.glideVersion
     annotationProcessor 'com.github.bumptech.glide:compiler:' + rootProject.ext.glideVersion

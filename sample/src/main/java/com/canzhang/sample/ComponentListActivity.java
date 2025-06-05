@@ -21,7 +21,6 @@ import com.canzhang.sample.manager.recyclerView.RecyclerViewActivity;
 import com.canzhang.sample.manager.rxjava.RxJavaTestDemoManager;
 import com.canzhang.sample.manager.viewpager.ViewPagerFragment;
 import com.canzhang.sample.manager.viewpager.fql.FqlViewPagerFragment;
-import com.canzhang.sample.manager.weex.WeexActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.base.base.BaseActivity;
@@ -59,6 +58,7 @@ public class ComponentListActivity extends BaseActivity {
         mData.add(new ComponentItem("jni", new JniDemoManager()));
         mData.add(new ComponentItem("调试弹窗", new DebugDemoManager()));
         mData.add(new ComponentItem("调节亮度测试", new BrightnessDemoManager()));
+        mData.add(new ComponentItem("调节亮度测试", new BrightnessDemoManager()));
         mData.add(new ComponentItem("多type类型(非原生)", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,12 +83,6 @@ public class ComponentListActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 start(QRCodeActivity.class);
-            }
-        }));
-        mData.add(new ComponentItem("weex测试", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                start(WeexActivity.class);
             }
         }));
     }
